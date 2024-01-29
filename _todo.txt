@@ -1,5 +1,15 @@
-
 * "Hello world" in Assembler
 * Write a simple xUnit
 * Develop a "primary" routine
 * Develop a secondary routine and interpreter
+
+
+xunit -
+* test runner
+* assertions
+* reporting
+
+create a procedure - a "normal" one
+code
+call assert
+exit
