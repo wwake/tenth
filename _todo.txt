@@ -1,9 +1,15 @@
+* Write TEST_START and TEST_END macros
 
 * Write a simple xUnit
+* Idea from MudShark666: You can put all source files in a folder then use "cat folder/*.s > merged.s"
+
 * Develop a "primary" routine
 * Develop a secondary routine and interpreter
 
-TEN-24-01: 2024-01-30 - Introducing Tenth
+TEN-24-02: 2024-01-30 - Unit Testing Framework
+
+
+TEN-24-01: 2024-01-29 - Introducing Tenth
 * "Hello World" in assembler
 * Figure out procedure calls (wasn't pushing LR)
 * Figure out simple macros for exit and print
