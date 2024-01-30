@@ -4,6 +4,12 @@
 * Develop a "primary" routine
 * Develop a secondary routine and interpreter
 
+TEN-24-01: 2024-01-30 - Introducing Tenth
+* "Hello World" in assembler
+* Figure out procedure calls (wasn't pushing LR)
+* Figure out simple macros for exit and print
+* Start creating a simple xUnit
+
 
 xunit -
 * test runner
