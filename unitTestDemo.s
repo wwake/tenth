@@ -10,22 +10,27 @@
 
 .macro print message, length
   mov X0, #1       // stdout
-  adr X1, \message
+  adr X1, message\@
   mov X2, #\length
   mov X16, #4      // write
-svc 0
+
+  svc 0
+  b exit\@
+
+  message\@:
+  .ascii "\message"
+
+  .align 2
+
+  exit\@:
+    nop
+
 .endm
 
 _start:
-  print hereMessage, 5
-  exit
-
   bl test1
 
   exit
-//  mov     X0, #0      // Use 0 return code
-//  mov     X16, #1     // Service command code 1 terminates this program
-//  svc     0           // Call MacOS to terminate the program
   ret
 
 .align 2
