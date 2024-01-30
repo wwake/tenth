@@ -1,0 +1,22 @@
+.macro TEST_START testname
+.align 2
+.text
+\testname:
+  str lr, [sp, #-16]!
+
+  b L_TS_EXIT_\@
+
+L_TS_\testname:
+.asciz "\testname"
+
+.align 2
+
+L_TS_EXIT_\@:
+    NOP
+.endm
+
+
+.macro TEST_END
+  ldr lr, [sp], #16
+  ret
+.endm

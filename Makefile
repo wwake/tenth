@@ -7,13 +7,13 @@ all: HelloWorld.out unitTestDemo.out
 #	as -o HelloWorld.o HelloWorld.s
 
 %.out: %.o
-	ld -macos_version_min 14.0.0 -o $@ $< -lSystem -syslibroot `xcrun -sdk macosx --show-sdk-path` -e _start -arch arm64
+	ld -macos_version_min 14.0.0 -o $@ $^ -lSystem -syslibroot `xcrun -sdk macosx --show-sdk-path` -e _start -arch arm64
 
-unitTestDemo.int: unix_functions.S unitTestDemo.s
+unitTestDemo.int: unix_functions.S asUnit.S unitTestDemo.s
 	cat $^ >$@
 
 %.o: %.int
 	as -o $@ $^
 
 clean:
-		rm -f *.o *.out
+		rm -f *.o *.int *.out
