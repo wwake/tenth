@@ -1,13 +1,17 @@
-* Write TEST_START and TEST_END macros
-
-* Write a simple xUnit
+* Make a script to run make and out
+* Make a c-like print function that takes an asciz string
+* Improve test framework to show test name and pass or fail
 * Idea from MudShark666: You can put all source files in a folder then use "cat folder/*.s > merged.s"
 
 * Develop a "primary" routine
 * Develop a secondary routine and interpreter
 
 TEN-24-02: 2024-01-30 - Unit Testing Framework
-
+* Write a simple xUnit:
+  + Write TEST_START and TEST_END macros
+  + Moved test macros to asUnit.mnacros
+* Used TDD to create a strlen function
+* Moved strlen to cLike.s
 
 TEN-24-01: 2024-01-29 - Introducing Tenth
 * "Hello World" in assembler
