@@ -1,19 +1,17 @@
-all: HelloWorld.out unitTestDemo.out
+all: unitTestDemo.out
 
-#HelloWorld: HelloWorld.o
-#	ld -macos_version_min 14.0.0 -o HelloWorld HelloWorld.o -lSystem -syslibroot `xcrun -sdk macosx --show-sdk-path` -e _start -arch arm64
-
-#HelloWorld.o: HelloWorld.s
-#	as -o HelloWorld.o HelloWorld.s
-
-%.out: %.o
-	ld -macos_version_min 14.0.0 -o $@ $^ -lSystem -syslibroot `xcrun -sdk macosx --show-sdk-path` -e _start -arch arm64
-
-unitTestDemo.int: unix_functions.S asUnit.S unitTestDemo.s
+unitTestDemo.int: unix_functions.macros asUnit.macros unitTestDemo.s
 	cat $^ >$@
+
+cLike.o: cLike.s
+	as -o $@ $^
 
 %.o: %.int
 	as -o $@ $^
+
+unitTestDemo.out: cLike.o unitTestDemo.o
+	ld -macos_version_min 14.0.0 -o $@ $^ -lSystem -syslibroot `xcrun -sdk macosx --show-sdk-path` -e _start -arch arm64
+
 
 clean:
 		rm -f *.o *.int *.out
