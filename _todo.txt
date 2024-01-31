@@ -1,10 +1,12 @@
-* Make a script to run make and out
 * Make a c-like print function that takes an asciz string
 * Improve test framework to show test name and pass or fail
 * Idea from MudShark666: You can put all source files in a folder then use "cat folder/*.s > merged.s"
 
 * Develop a "primary" routine
 * Develop a secondary routine and interpreter
+
+TEN-24-03: 2024-01-31 - Print
+* Use "make && ./unitTestDemo.out" to run more quickly 
 
 TEN-24-02: 2024-01-30 - Unit Testing Framework
 * Write a simple xUnit:
