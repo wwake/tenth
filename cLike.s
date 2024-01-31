@@ -23,26 +23,6 @@ loop:
 l_return:
   ret
 
-
-.macro print_old message, length
-  mov X0, #1       // stdout
-  adr X1, message\@
-  mov X2, #\length
-  mov X16, #4      // write
-
-  svc 0
-  b exit\@
-
-  message\@:
-  .ascii "\message"
-
-  .align 2
-
-  exit\@:
-    nop
-
-.endm
-
 // print
 // input: x0 is address of a 0-terminated string
 // process:

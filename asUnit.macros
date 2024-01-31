@@ -1,6 +1,6 @@
+
 .macro TEST_START testname
 .align 2
-.text
 \testname:
   str lr, [sp, #-16]!
 

@@ -12,12 +12,6 @@ _start:
 
 
 TEST_START empty_string_length_0
-  B L_after_data
-L_empty_string:
-.asciz ""
-.align 2
-
-L_after_data:
   adr x0, L_empty_string
 
   bl strlen
@@ -27,13 +21,12 @@ L_after_data:
   bl assertEqual
 TEST_END
 
-TEST_START knows_length_for_nonempty_string
-  B L_after_data_hello
-L_data_hello:
-.asciz "Hello world!"
+L_empty_string:
+.asciz ""
 .align 2
 
-L_after_data_hello:
+
+TEST_START knows_length_for_nonempty_string
   adr x0, L_data_hello
 
   bl strlen
@@ -42,3 +35,7 @@ L_after_data_hello:
   adr x2, L_TS_knows_length_for_nonempty_string
   bl assertEqual
 TEST_END
+
+L_data_hello:
+.asciz "Hello world!"
+.align 2
