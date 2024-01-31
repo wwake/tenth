@@ -14,8 +14,9 @@ unitTestDemo.out: asUnit.o cLike.o unitTestDemo.o
 	$(LD) -o $@ $^
 
 
-cLike.o: cLike.s
-	as -o $@ $^
+cLike.o: unix_functions.macros cLike.s
+	cat $^ >cLike.int
+	as -o $@ cLike.int
 
 cLikeTests.int: unix_functions.macros asUnit.macros cLikeTests.s
 	cat $^ >$@
