@@ -10,11 +10,13 @@
 \testname:
   str lr, [sp, #-16]!
 
-
+  adr x0, L_TS_\testname
+  bl print
+  
   b L_TS_EXIT_\@
 
 L_TS_\testname:
-.asciz "\testname"
+.asciz "\testname - "
 
 .align 2
 

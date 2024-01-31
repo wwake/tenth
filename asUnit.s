@@ -1,20 +1,28 @@
 .global assertEqual
 
 .align 2
-// assertEqual: prints message if x0 != x1
+// assertEqual: prints pass if x0 == x1, or fail message if x0 != x1
 assertEqual:
-  cmp x0, x1
-  bne failed
-  ret
+    str lr, [sp, #-16]!
+            
+    cmp x0, x1
+    bne failed
+    
+    adr x0, passMessage
+    bl print
+    
+    ldr lr, [sp], #16
+    ret
 
 failed:
-  mov X0, #1
-  adr X1, failedMessage
-  mov X2, #7
-  mov X16, #4
-  svc 0
+    adr x0, failedMessage
+    bl print
 
-  ret
+    ldr lr, [sp], #16
+    ret
+
+passMessage:
+    .asciz "Pass\n"
 
 failedMessage:
-  .ascii "Failed\n"
+    .ascii "Failed\n"
