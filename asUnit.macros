@@ -4,6 +4,7 @@
 \testname:
   str lr, [sp, #-16]!
 
+
   b L_TS_EXIT_\@
 
 L_TS_\testname:

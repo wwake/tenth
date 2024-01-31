@@ -1,4 +1,3 @@
-* Make a c-like print function that takes an asciz string
 * Improve test framework to show test name and pass or fail
 * Idea from MudShark666: You can put all source files in a folder then use "cat folder/*.s > merged.s"
 
@@ -8,6 +7,7 @@
 TEN-24-03: 2024-01-31 - Print
 * Use "make && ./unitTestDemo.out" to run more quickly 
 * Extracted cLikeTests.s and asUnit.s, and adjusted makefile
+* Make a c-like print function that takes an asciz string
 
 TEN-24-02: 2024-01-30 - Unit Testing Framework
 * Write a simple xUnit:

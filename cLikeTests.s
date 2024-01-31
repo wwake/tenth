@@ -23,11 +23,13 @@ TEST_END
 
 L_empty_string:
 .asciz ""
-.align 2
 
 
 TEST_START knows_length_for_nonempty_string
   adr x0, L_data_hello
+
+  bl print
+  unix_exit
 
   bl strlen
 
@@ -37,5 +39,4 @@ TEST_START knows_length_for_nonempty_string
 TEST_END
 
 L_data_hello:
-.asciz "Hello world!"
-.align 2
+.asciz "Hello world!\n"
