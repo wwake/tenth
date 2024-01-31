@@ -21,7 +21,7 @@ L_exiting:
     ret
 
 passMessage:
-    .asciz "Pass\n"
+    .asciz "\033[32mPass\033[0m\n"
 
 failedMessage:
-    .ascii "Failed\n"
+    .ascii "\033[31mFail\033[0m\n"
