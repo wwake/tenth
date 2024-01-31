@@ -28,12 +28,9 @@ L_empty_string:
 TEST_START knows_length_for_nonempty_string
   adr x0, L_data_hello
 
-  bl print
-  unix_exit
-
   bl strlen
 
-  mov x1, #12
+  mov x1, #13
   adr x2, L_TS_knows_length_for_nonempty_string
   bl assertEqual
 TEST_END

@@ -6,16 +6,15 @@ assertEqual:
     str lr, [sp, #-16]!
             
     cmp x0, x1
-    bne failed
+    bne L_failed
     
     adr x0, passMessage
-    bl print
+    b L_exiting
     
-    ldr lr, [sp], #16
-    ret
-
-failed:
+L_failed:
     adr x0, failedMessage
+
+L_exiting:
     bl print
 
     ldr lr, [sp], #16
