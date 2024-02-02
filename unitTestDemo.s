@@ -1,11 +1,11 @@
-.global _start                         // Provide program starting address to linker
+.global _start          // Provide program starting address to linker
 
 .extern nl
 
 .align 2
 
 _start:
-    str     lr, [sp, #-16]!
+    str lr, [sp, #-16]!
     
     bl nl
     

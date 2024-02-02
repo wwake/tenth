@@ -25,3 +25,5 @@ passMessage:
 
 failedMessage:
     .ascii "\033[31mFail\033[0m\n"
+
+.align 2

@@ -15,7 +15,7 @@ L_TS_\testname:
 .align 2
 
 L_TS_EXIT_\@:
-    NOP
+    nop
 .endm
 
 

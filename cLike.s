@@ -42,8 +42,8 @@ print:
   
   mov x2, x0
   mov x1, x10
-  mov X0, #1       // stdout
-  mov X16, #4      // write
+  mov x0, #1       // stdout
+  mov x16, #4      // write
   svc 0
 
   ldr lr, [sp], #16

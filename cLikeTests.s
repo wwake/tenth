@@ -1,7 +1,7 @@
-.global _start             // Provide program starting address to linker
+.global _start
 
 _start:
-  str   lr, [sp, #-16]!
+  str lr, [sp, #-16]!
 
   bl empty_string_length_0
   bl knows_length_for_nonempty_string
