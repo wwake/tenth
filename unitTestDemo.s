@@ -1,8 +1,13 @@
 .global _start                         // Provide program starting address to linker
+
+.extern nl
+
 .align 2
 
 _start:
     str     lr, [sp, #-16]!
+    
+    bl nl
     
     ADR x0, hello
     bl print

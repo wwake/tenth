@@ -1,13 +1,18 @@
-* Improve test framework to show test name and pass or fail
-* Idea from MudShark666: You can put all source files in a folder then use "cat folder/*.s > merged.s"
 
 * Develop a "primary" routine
 * Develop a secondary routine and interpreter
+
+TEN-24-04: 2024-02-01 - Primaries and Secondaries
+* Looked at a scheme for building primary and secondary code blocks
+* Tried to build a primary - ran into a major barrier that you can't put relocatable addresses of code into data statements (Mac assembler limitation).
+* Explored Mudshark666's idea of building a table of BL instructions, then digging the addresses out. Looks feasible. 
+* We worked out how BL works: has 24 bits of room for a PC-relative address offset. The target address is right-shifted twice (as addresses must be on word boundaries), then it's two high bytes are masked off. Bit 24 tells you whether it's a positive or negative offset.
 
 TEN-24-03: 2024-01-31 - Print
 * Use "make && ./unitTestDemo.out" to run more quickly 
 * Extracted cLikeTests.s and asUnit.s, and adjusted makefile
 * Make a c-like print function that takes an asciz string
+* Improve test framework to print test name and pass or fail
 
 TEN-24-02: 2024-01-30 - Unit Testing Framework
 * Write a simple xUnit:
