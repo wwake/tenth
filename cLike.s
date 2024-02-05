@@ -34,17 +34,19 @@ l_return:
 // output: none
 //
 print:
-  str   lr, [sp, #-16]!
+  str lr, [sp, #-16]!
+  str x28, [sp, #8]
   
-  mov x10, x0
+  mov x28, x0
   
   bl strlen
   
   mov x2, x0
-  mov x1, x10
+  mov x1, x28
   mov x0, #1       // stdout
   mov x16, #4      // write
   svc 0
 
+  ldr x28, [sp, #8]
   ldr lr, [sp], #16
   ret

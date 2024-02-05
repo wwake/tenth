@@ -40,11 +40,14 @@ _start:
     
     bl nl
     
+    
     ADR x0, hello
     bl print
 
-    bl test1
-    bl test2
+    bl testPrint
+
+   // bl test1
+    // bl test2
 
     unix_exit
     ldr lr, [sp], #16
@@ -53,6 +56,18 @@ _start:
 hello:
 .asciz "Hello!\n"
 .align 2
+
+TEST_START testPrint
+    mov x28, #42
+    ADR x0, hello
+    bl print
+    
+    mov x0, x28
+    mov x1, #42
+    adr x2, L_TS_testPrint
+    bl assertEqual
+TEST_END
+
 
 TEST_START test1
     mov x0, #2

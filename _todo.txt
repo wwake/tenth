@@ -1,8 +1,9 @@
-
 * Check print - uses x10 - is that callee can trash?
 * Develop push and add primaries
 * Develop a 1+2 secondary
 * Develop the secondary interpreter
+
+TEN-24-05: 2024-02-05 - Stack Primaries
 
 TEN-24-04: 2024-02-01 - Primaries and Secondaries
 * Looked at a scheme for building primary and secondary code blocks
