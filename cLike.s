@@ -26,7 +26,7 @@ l_return:
 // print
 // input: x0 is address of a 0-terminated string
 // process:
-//   x10 - holds address while strlen called
+//   x28 - holds address while strlen called
 //   x0 - holds port # for stdout
 //   x1 - holds address of string to write
 //   x2 - holds length of string

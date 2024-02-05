@@ -1,16 +1,17 @@
 .global nl
+.global _push
 
 .align 2
 
 // PRIMARY
 .ascii "nl\0....."  // Name - 16 bytes
-.align 2
+.align 4
 .quad 0xdeadbeef
 
 .quad 0             // Link to previous entry
 .quad .+8         // Offset to code
 
-.align 2
+.p2align 2
 // code
 nl:
     str   lr, [sp, #-16]!
@@ -24,7 +25,7 @@ nl:
 L_nl_character:
     .asciz "\n"
     
-.align 2
+.p2align 2
 
 
 table:
@@ -34,3 +35,9 @@ table:
     bl _start
 .quad 0
 
+.p2align 2
+
+_push:
+    ldr x0, [x20], #8
+    str x0, [x19], #8
+    ret
