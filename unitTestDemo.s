@@ -10,7 +10,7 @@ _start:
     bl nl
     
     
-    ADR x0, hello
+    adr x0, hello
     bl print
 
     bl testPrint
@@ -28,7 +28,7 @@ hello:
 
 TEST_START testPrint
     mov x28, #42
-    ADR x0, hello
+    adr x0, hello
     bl print
     
     mov x0, x28
