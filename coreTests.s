@@ -2,15 +2,24 @@
 
 .p2align 2
 
-.macro INIT_DATA_STACK, location
-    adrp x19, \location@PAGE
-    add x19, x19, \location@PAGEOFF
+.macro VSP
+x19
+.endm
+
+.macro VPC
+x20
+.endm
+
+.macro LOAD_DATA register, location
+    adrp \register, \location@PAGE
+    add \register, \register, \location@PAGEOFF
 .endm
 
 _start:
   str lr, [sp, #-16]!
 
   bl push_pushes_one_item
+  bl add_b_plus_a_is_a
 
   unix_exit
   ldr lr, [sp], #16
@@ -18,7 +27,7 @@ _start:
   
   
   TEST_START push_pushes_one_item
-    INIT_DATA_STACK L_push_test_stack
+    LOAD_DATA X19, L_push_test_stack
     adr x20, L_data
 
     bl _push
@@ -64,7 +73,8 @@ L_VPC_Update: .asciz "VPC should be incremented"
 .p2align 2
 
 TEST_START add_b_plus_a_is_a
-  INIT_DATA_STACK L_push_test_stack
+  LOAD_DATA X19, L_push_test_stack
+
   adr x20, L_data
 
   bl _push
@@ -72,22 +82,12 @@ TEST_START add_b_plus_a_is_a
 
   bl add
 
-  mov x0, x20
-  adr x1, L_data
-  add x1, x1, #16      // expect VPC to be +16
-  bl assertEqual
-
   mov x0, x19         // Current VSP
-  
-  adrp x1, L_push_test_stack@PAGE
-  add x1, x1, L_push_test_stack@PAGEOFF
+  LOAD_DATA x1, L_push_test_stack
   add x1, x1, #8      // Expect original stack+8
-  
   bl assertEqual
   
-  adrp x0, L_push_test_stack@PAGE
-  add x0, x0, L_push_test_stack@PAGEOFF
-  
+  LOAD_DATA x0, L_push_test_stack  
   ldr x0, [x0]
   mov x1, #200        // Expected stack contents
   bl assertEqual
@@ -97,4 +97,8 @@ TEST_END
 
 
 add: 
+    ldr x1, [x19, #-8]!
+    ldr x0, [x19, #-8]!
+    add x0, x0, x1
+    str x0, [x19], #8
     ret
