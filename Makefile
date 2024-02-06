@@ -30,7 +30,7 @@ cLikeTests.o: cLikeTests.s unix_functions.macros asUnit.macros
 cLikeTests.out: cLikeTests.o asUnit.o cLike.o
 
 clean:
-	rm -f *.o *.int *.out
+	rm -f *.o *.out
 
 tests: cLikeTests.out coreTests.out unitTestDemo.out
 	./cLikeTests.out ; ./coreTests.out ; ./unitTestDemo.out
