@@ -1,3 +1,7 @@
+.include "unix_functions.macros"
+
+.include "asUnit.macros"
+
 .global _start          // Provide program starting address to linker
 
 .extern nl

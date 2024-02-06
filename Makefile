@@ -11,19 +11,19 @@ LD=ld -macos_version_min 14.0.0 -lSystem -syslibroot `xcrun -sdk macosx --show-s
 %.out: %.o
 	$(LD) -o $@ $^
 
+asUnit.o: asUnit.s
+
+
 core.o: core.macros core.s
 
 coreTests.o: coreTests.s unix_functions.macros core.macros asUnit.macros
 
 coreTests.out: coreTests.o asUnit.o cLike.o core.o
 
-asUnit.o: asUnit.s
 
-unitTestDemo.int: unix_functions.macros asUnit.macros unitTestDemo.s
-	cat $^ >$@
+unitTestDemo.o: unitTestDemo.s unix_functions.macros asUnit.macros 
 
-unitTestDemo.out: asUnit.o cLike.o core.o unitTestDemo.o
-	$(LD) -o $@ $^
+unitTestDemo.out: unitTestDemo.o asUnit.o cLike.o core.o
 
 
 cLike.o: unix_functions.macros cLike.s
