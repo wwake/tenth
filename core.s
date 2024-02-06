@@ -40,15 +40,15 @@ table:
 
 _push:
     ldr x0, [x20], #8
-    str x0, [x19], #8
+    PUSH_DATA x0
     ret
     
 
 
 add: 
-    ldr x1, [x19, #-8]!
-    ldr x0, [x19, #-8]!
+    POP_DATA x1
+    POP_DATA x0
     add x0, x0, x1
-    str x0, [x19], #8
+    PUSH_DATA x0
     ret
     

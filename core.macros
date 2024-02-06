@@ -1,6 +1,3 @@
-.macro VSP
-x19
-.endm
 
 .macro VPC
 x20
@@ -9,4 +6,12 @@ x20
 .macro LOAD_DATA register, location
     adrp \register, \location@PAGE
     add \register, \register, \location@PAGEOFF
+.endm
+
+.macro PUSH_DATA register
+    str \register, [x19], #8
+.endm
+
+.macro POP_DATA register
+    ldr \register, [x19, #-8]!
 .endm
