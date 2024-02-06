@@ -38,4 +38,7 @@ cLikeTests.out: asUnit.o cLike.o cLikeTests.o
 
 clean:
 	rm -f *.o *.int *.out
-    
+
+tests: cLikeTests.out coreTests.out unitTestDemo.out
+	./cLikeTests.out ; ./coreTests.out ; ./unitTestDemo.out
+

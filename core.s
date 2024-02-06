@@ -1,5 +1,6 @@
 .global nl
 .global _push
+.global add
 
 .align 2
 
@@ -41,3 +42,13 @@ _push:
     ldr x0, [x20], #8
     str x0, [x19], #8
     ret
+    
+
+
+add: 
+    ldr x1, [x19, #-8]!
+    ldr x0, [x19, #-8]!
+    add x0, x0, x1
+    str x0, [x19], #8
+    ret
+    

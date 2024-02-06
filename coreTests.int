@@ -125,11 +125,3 @@ TEST_START add_b_plus_a_is_a
   
 TEST_END
 
-
-
-add: 
-    ldr x1, [x19, #-8]!
-    ldr x0, [x19, #-8]!
-    add x0, x0, x1
-    str x0, [x19], #8
-    ret
