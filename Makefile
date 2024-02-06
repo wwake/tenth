@@ -5,9 +5,6 @@ LD=ld -macos_version_min 14.0.0 -lSystem -syslibroot `xcrun -sdk macosx --show-s
 %o: %.s
 	as -o $@ $^
 
-%.o: %.int
-	as -o $@ $^
-
 %.out: %.o
 	$(LD) -o $@ $^
 
@@ -26,15 +23,11 @@ unitTestDemo.o: unitTestDemo.s unix_functions.macros asUnit.macros
 unitTestDemo.out: unitTestDemo.o asUnit.o cLike.o core.o
 
 
-cLike.o: unix_functions.macros cLike.s
-	cat $^ >cLike.int
-	as -o $@ cLike.int
+cLike.o: cLike.s unix_functions.macros
 
-cLikeTests.int: unix_functions.macros asUnit.macros cLikeTests.s
-	cat $^ >$@
+cLikeTests.o: cLikeTests.s unix_functions.macros asUnit.macros
 
-cLikeTests.out: asUnit.o cLike.o cLikeTests.o
-	$(LD) -o $@ $^
+cLikeTests.out: cLikeTests.o asUnit.o cLike.o
 
 clean:
 	rm -f *.o *.int *.out

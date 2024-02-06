@@ -1,3 +1,5 @@
+.include "unix_functions.macros"
+
 .align 2
 
 .global strlen
