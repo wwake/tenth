@@ -18,7 +18,7 @@ _start:
   
   
   TEST_START push_pushes_one_item
-    LOAD_DATA X19, L_push_test_stack
+    LOAD_ADDRESS X19, L_push_test_stack
     adr x20, L_data
 
     bl _push
@@ -30,12 +30,12 @@ _start:
 
     mov x0, x19         // Current VSP
     
-    LOAD_DATA x1, L_push_test_stack
+    LOAD_ADDRESS x1, L_push_test_stack
     add x1, x1, #8      // Expect original stack+8
     
     bl assertEqual
     
-    LOAD_DATA x0, L_push_test_stack
+    LOAD_ADDRESS x0, L_push_test_stack
     
     ldr x0, [x0]
     mov x1, #142        // Expected stack contents
@@ -62,7 +62,7 @@ L_VPC_Update: .asciz "VPC should be incremented"
 .p2align 2
 
 TEST_START add_b_plus_a_is_a
-  LOAD_DATA x19, L_push_test_stack
+  LOAD_ADDRESS x19, L_push_test_stack
 
   adr x20, L_data
 
@@ -72,11 +72,11 @@ TEST_START add_b_plus_a_is_a
   bl add
 
   mov x0, x19         // Current VSP
-  LOAD_DATA x1, L_push_test_stack
+  LOAD_ADDRESS x1, L_push_test_stack
   add x1, x1, #8      // Expect original stack+8
   bl assertEqual
   
-  LOAD_DATA x0, L_push_test_stack  
+  LOAD_ADDRESS x0, L_push_test_stack  
   ldr x0, [x0]
   mov x1, #200        // Expected stack contents
   bl assertEqual
@@ -99,6 +99,6 @@ add2:
 
 .text
 TEST_START secondary_runs_yielding_result_on_stack
-
+// Phase 1 - store addresses
 
 TEST_END

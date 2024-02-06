@@ -1,5 +1,5 @@
 
-.macro LOAD_DATA register, location
+.macro LOAD_ADDRESS register, location
     adrp \register, \location@PAGE
     add \register, \register, \location@PAGEOFF
 .endm
