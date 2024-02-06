@@ -2,19 +2,6 @@
 
 .p2align 2
 
-.macro VSP
-x19
-.endm
-
-.macro VPC
-x20
-.endm
-
-.macro LOAD_DATA register, location
-    adrp \register, \location@PAGE
-    add \register, \register, \location@PAGEOFF
-.endm
-
 _start:
   str lr, [sp, #-16]!
 

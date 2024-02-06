@@ -4,6 +4,18 @@
   mov     X16, #1     // Service code 1 = terminate
   svc     0           // Call service
 .endm
+.macro VSP
+x19
+.endm
+
+.macro VPC
+x20
+.endm
+
+.macro LOAD_DATA register, location
+    adrp \register, \location@PAGE
+    add \register, \register, \location@PAGEOFF
+.endm
 
 .macro TEST_START testname
 .align 2
@@ -32,19 +44,6 @@ L_TS_EXIT_\@:
 .global _start
 
 .p2align 2
-
-.macro VSP
-x19
-.endm
-
-.macro VPC
-x20
-.endm
-
-.macro LOAD_DATA register, location
-    adrp \register, \location@PAGE
-    add \register, \register, \location@PAGEOFF
-.endm
 
 _start:
   str lr, [sp, #-16]!
