@@ -1,3 +1,5 @@
+.include "core.macros"
+
 .global nl
 .global _push
 .global add

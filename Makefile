@@ -2,6 +2,9 @@ all: unitTestDemo.out cLikeTests.out coreTests.out
 
 LD=ld -macos_version_min 14.0.0 -lSystem -syslibroot `xcrun -sdk macosx --show-sdk-path` -e _start -arch arm64
 
+%o: %.s
+	as -o $@ $^
+
 %.o: %.int
 	as -o $@ $^
 
@@ -9,13 +12,10 @@ LD=ld -macos_version_min 14.0.0 -lSystem -syslibroot `xcrun -sdk macosx --show-s
 	$(LD) -o $@ $^
 
 core.o: core.macros core.s
-	cat $^ >core.int
-	as -o $@ core.int
 
-coreTests.int: unix_functions.macros core.macros asUnit.macros coreTests.s
-	cat $^ >$@
+coreTests.o: coreTests.s unix_functions.macros core.macros asUnit.macros
 
-coreTests.out: asUnit.o cLike.o core.o coreTests.o
+coreTests.out: coreTests.o asUnit.o cLike.o core.o
 
 asUnit.o: asUnit.s
 

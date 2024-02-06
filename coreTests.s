@@ -1,3 +1,7 @@
+.include "unix_functions.macros"
+.include "core.macros"
+.include "asUnit.macros"
+
 .global _start
 
 .p2align 2
@@ -26,14 +30,12 @@ _start:
 
     mov x0, x19         // Current VSP
     
-    adrp x1, L_push_test_stack@PAGE
-    add x1, x1, L_push_test_stack@PAGEOFF
+    LOAD_DATA x1, L_push_test_stack
     add x1, x1, #8      // Expect original stack+8
     
     bl assertEqual
     
-    adrp x0, L_push_test_stack@PAGE
-    add x0, x0, L_push_test_stack@PAGEOFF
+    LOAD_DATA x0, L_push_test_stack
     
     ldr x0, [x0]
     mov x1, #142        // Expected stack contents
@@ -60,7 +62,7 @@ L_VPC_Update: .asciz "VPC should be incremented"
 .p2align 2
 
 TEST_START add_b_plus_a_is_a
-  LOAD_DATA X19, L_push_test_stack
+  LOAD_DATA x19, L_push_test_stack
 
   adr x20, L_data
 
@@ -81,3 +83,22 @@ TEST_START add_b_plus_a_is_a
   
 TEST_END
 
+
+.data
+.asciz "Add2"    // Routine name
+.p2align 1
+.quad 0         // dictionary link
+add2:
+    .quad 0     // address of add2
+    .quad 0     // _push
+    .quad 1     // data: 1
+    .quad 0     // push
+    .quad 2     // data: 2
+    .quad 0     // add
+    .quad 0     // end2d
+
+.text
+TEST_START secondary_runs_yielding_result_on_stack
+
+
+TEST_END

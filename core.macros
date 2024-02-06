@@ -1,8 +1,4 @@
 
-.macro VPC
-x20
-.endm
-
 .macro LOAD_DATA register, location
     adrp \register, \location@PAGE
     add \register, \register, \location@PAGEOFF
