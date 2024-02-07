@@ -34,12 +34,24 @@ runInterpreter:
 	ldr lr, [sp], #16
 	ret
 
+// start2d: starting point for secondaries
+// Input: x20 is the starting point of the secondary list
+// Process:
+// Output:
+//
 start2d:
-	//add x20, x20, #8
-	ret
+	str lr, [sp, #-16]!
+	str x20, [sp, #8]
+
+	ldr x1, [x20]
+	blr x1
+	// eventually calls end2d
 
 end2d:
-  	ret
+	ldr x20, [sp, #8]
+	ldr lr, [sp], #16
+	ret
+
 
 .data
 .p2align 3
