@@ -3,6 +3,7 @@
 .include "asUnit.macros"
 
 .global _start
+
 .text
 .p2align 2
 
@@ -36,7 +37,7 @@ data_stack:
 .data
 .p2align 2
 L_empty_header:
-.quad 42 // "Test"    // Routine name
+.asciz "Test"    // Routine name
 .quad 0         // dictionary link
 L_empty:
     .quad 0     // address of start2d
@@ -66,7 +67,7 @@ TEST_END
 
 .data
 .asciz "Add2"    // Routine name
-.p2align 1
+.p2align 2
 .quad 0         // dictionary link
 add2:
     .quad 0     // address of start2d
