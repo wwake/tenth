@@ -32,7 +32,7 @@ cLikeTests.out: cLikeTests.o asUnit.o cLike.o
 
 interpreterTests.o: interpreterTests.s unix_functions.macros core.macros asUnit.macros
 
-interpreterTests.out: interpreterTests.o asUnit.o cLike.o
+interpreterTests.out: interpreterTests.o asUnit.o cLike.o core.o
 
 
 clean:

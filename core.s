@@ -44,7 +44,6 @@ _push:
 	ldr x0, [x20], #8
 	PUSH_DATA x0
 	ret
-	
 
 
 add: 

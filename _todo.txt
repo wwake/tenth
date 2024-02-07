@@ -1,8 +1,8 @@
-* Develop a do-nothing secondary to drive out the interpreter
 * Develop a 1+2 secondary
 * Develop the secondary interpreter
 
 TEN-24-07: 2024-02-07 - Interpreter Start
+* Develop a do-nothing secondary to drive out the interpreter
 
 
 TEN-24-06: 2024-02-06 - To Add and Beyond

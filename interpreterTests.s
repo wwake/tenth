@@ -11,6 +11,7 @@ _start:
 	str lr, [sp, #-16]!
 
 	bl interpret_empty_program
+	bl secondary_runs_yielding_result_on_stack
 
 	unix_exit
 	ldr lr, [sp], #16
@@ -35,6 +36,7 @@ runInterpreter:
 	ret
 
 // start2d: starting point for secondaries
+//    Note: this has no "ret"; it relies on end2d being at the end of the sec. list
 // Input: x20 is the starting point of the secondary list
 // Process:
 // Output:
@@ -43,9 +45,11 @@ start2d:
 	str lr, [sp, #-16]!
 	str x20, [sp, #8]
 
-	ldr x1, [x20]
+L_interpreter_loop:
+	ldr x1, [x20], #8
 	blr x1
-	// eventually calls end2d
+	b L_interpreter_loop
+
 
 end2d:
 	ldr x20, [sp, #8]
@@ -56,7 +60,7 @@ end2d:
 .data
 .p2align 3
 data_stack:
-	.fill 10000
+	.fill 20
 
 .data
 .p2align 2
@@ -91,14 +95,14 @@ TEST_START interpret_empty_program
 TEST_END
 
 .data
-.asciz "Add2"	// Routine name
+.ascii "Add2\0..."	// Routine name
 .p2align 2
 .quad 0		 // dictionary link
 add2:
 	.quad 0	 // address of start2d
 	.quad 0	 // _push
 	.quad 1	 // data: 1
-	.quad 0	 // push
+	.quad 0	 // _push
 	.quad 2	 // data: 2
 	.quad 0	 // add
 	.quad 0	 // end2d
@@ -108,11 +112,11 @@ add2:
 
 TEST_START secondary_runs_yielding_result_on_stack
 // Arrange - build our secondary
-//	LOAD_ADDRESS x0, add2
-//	LOAD_ADDRESS x1, start2d
-//	LOAD_ADDRESS x2, _push
-//	LOAD_ADDRESS x3, add
-//	LOAD_ADDRESS x4, end2d
+	LOAD_ADDRESS x0, add2
+	LOAD_ADDRESS x1, start2d
+	LOAD_ADDRESS x2, _push
+	LOAD_ADDRESS x3, add
+	LOAD_ADDRESS x4, end2d
 	
 	str x1, [x0], #8
 	str x2, [x0], #16
@@ -126,6 +130,9 @@ TEST_START secondary_runs_yielding_result_on_stack
 
 //  Assert: check that stack contains right answer
 	LOAD_ADDRESS x0, data_stack
-
+temp:
+	ldr x0, [x0]
+	mov x1, #3
+	bl assertEqual
 TEST_END
 
