@@ -52,16 +52,15 @@
 		91238D682B730A6000052895 = {
 			isa = PBXGroup;
 			children = (
-				91238D982B730B8200052895 /* asUnit */,
-				91238D972B730B7200052895 /* macros */,
-				91238D992B730B9500052895 /* code */,
-				91238D9A2B730C9F00052895 /* tests */,
 				91238D7B2B730AC100052895 /* _todo.txt */,
-				91238D7C2B730AD800052895 /* asUnit.txt */,
 				91238D8B2B730AD800052895 /* LICENSE */,
 				91238D7F2B730AD800052895 /* Makefile */,
 				91238D912B730AE600052895 /* Tenth.key */,
 				91238D862B730AD800052895 /* README.md */,
+				91238D982B730B8200052895 /* asUnit */,
+				91238D972B730B7200052895 /* macros */,
+				91238D992B730B9500052895 /* code */,
+				91238D9A2B730C9F00052895 /* tests */,
 				91238D722B730A6000052895 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -86,8 +85,9 @@
 		91238D982B730B8200052895 /* asUnit */ = {
 			isa = PBXGroup;
 			children = (
-				91238D892B730AD800052895 /* asUnit.s */,
+				91238D7C2B730AD800052895 /* asUnit.txt */,
 				91238D882B730AD800052895 /* asUnit.macros */,
+				91238D892B730AD800052895 /* asUnit.s */,
 			);
 			name = asUnit;
 			sourceTree = "<group>";
