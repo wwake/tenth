@@ -2,12 +2,12 @@
 .macro TEST_START testname
 .align 2
 \testname:
-  str lr, [sp, #-16]!
+	str lr, [sp, #-16]!
 
-  adr x0, L_TS_\testname
-  bl print
+	adr x0, L_TS_\testname
+	bl print
   
-  b L_TS_EXIT_\@
+	b L_TS_EXIT_\@
 
 L_TS_\testname:
 .asciz "* \testname - "
@@ -15,11 +15,11 @@ L_TS_\testname:
 .align 2
 
 L_TS_EXIT_\@:
-    nop
+	nop
 .endm
 
 
 .macro TEST_END
-  ldr lr, [sp], #16
-  ret
+	ldr lr, [sp], #16
+	ret
 .endm

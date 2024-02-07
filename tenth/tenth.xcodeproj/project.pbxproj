@@ -6,6 +6,13 @@
 	objectVersion = 56;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		91451FBF2B73E3C700D8C89A /* coreTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91451FBE2B73E3C700D8C89A /* coreTests.s */; };
+		91451FC02B73E3D400D8C89A /* cLikeTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91238D812B730AD800052895 /* cLikeTests.s */; };
+		91451FC22B73E3F000D8C89A /* interpreterTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91451FC12B73E3F000D8C89A /* interpreterTests.s */; };
+		91451FC42B73E40500D8C89A /* unitTestDemo.s in Sources */ = {isa = PBXBuildFile; fileRef = 91451FC32B73E40500D8C89A /* unitTestDemo.s */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		91238D6F2B730A6000052895 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -26,16 +33,16 @@
 		91238D812B730AD800052895 /* cLikeTests.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = cLikeTests.s; path = ../cLikeTests.s; sourceTree = "<group>"; };
 		91238D832B730AD800052895 /* core.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = core.s; path = ../core.s; sourceTree = "<group>"; };
 		91238D842B730AD800052895 /* core.macros */ = {isa = PBXFileReference; lastKnownFileType = text; name = core.macros; path = ../core.macros; sourceTree = "<group>"; };
-		91238D852B730AD800052895 /* interpreterTests.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = interpreterTests.s; sourceTree = "<group>"; };
 		91238D862B730AD800052895 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		91238D882B730AD800052895 /* asUnit.macros */ = {isa = PBXFileReference; lastKnownFileType = text; name = asUnit.macros; path = ../asUnit.macros; sourceTree = "<group>"; };
 		91238D892B730AD800052895 /* asUnit.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = asUnit.s; path = ../asUnit.s; sourceTree = "<group>"; };
 		91238D8A2B730AD800052895 /* cLike.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = cLike.s; path = ../cLike.s; sourceTree = "<group>"; };
 		91238D8B2B730AD800052895 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		91238D8D2B730AD800052895 /* coreTests.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = coreTests.s; sourceTree = "<group>"; };
 		91238D902B730AE600052895 /* unix_functions.macros */ = {isa = PBXFileReference; lastKnownFileType = text; name = unix_functions.macros; path = ../unix_functions.macros; sourceTree = "<group>"; };
 		91238D912B730AE600052895 /* Tenth.key */ = {isa = PBXFileReference; lastKnownFileType = file; name = Tenth.key; path = ../Tenth.key; sourceTree = "<group>"; };
-		91238D922B730AE600052895 /* unitTestDemo.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = unitTestDemo.s; sourceTree = "<group>"; };
+		91451FBE2B73E3C700D8C89A /* coreTests.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = coreTests.s; path = ../coreTests.s; sourceTree = "<group>"; };
+		91451FC12B73E3F000D8C89A /* interpreterTests.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = interpreterTests.s; path = ../interpreterTests.s; sourceTree = "<group>"; };
+		91451FC32B73E40500D8C89A /* unitTestDemo.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = unitTestDemo.s; path = ../unitTestDemo.s; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +67,7 @@
 				91238D982B730B8200052895 /* asUnit */,
 				91238D972B730B7200052895 /* macros */,
 				91238D992B730B9500052895 /* code */,
-				91238D9A2B730C9F00052895 /* tests */,
+				91451FBD2B73E36D00D8C89A /* tests */,
 				91238D722B730A6000052895 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -96,18 +103,18 @@
 			isa = PBXGroup;
 			children = (
 				91238D8A2B730AD800052895 /* cLike.s */,
-				91238D812B730AD800052895 /* cLikeTests.s */,
 				91238D832B730AD800052895 /* core.s */,
 			);
 			name = code;
 			sourceTree = "<group>";
 		};
-		91238D9A2B730C9F00052895 /* tests */ = {
+		91451FBD2B73E36D00D8C89A /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				91238D8D2B730AD800052895 /* coreTests.s */,
-				91238D852B730AD800052895 /* interpreterTests.s */,
-				91238D922B730AE600052895 /* unitTestDemo.s */,
+				91238D812B730AD800052895 /* cLikeTests.s */,
+				91451FBE2B73E3C700D8C89A /* coreTests.s */,
+				91451FC12B73E3F000D8C89A /* interpreterTests.s */,
+				91451FC32B73E40500D8C89A /* unitTestDemo.s */,
 			);
 			name = tests;
 			sourceTree = "<group>";
@@ -169,6 +176,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91451FC42B73E40500D8C89A /* unitTestDemo.s in Sources */,
+				91451FC02B73E3D400D8C89A /* cLikeTests.s in Sources */,
+				91451FBF2B73E3C700D8C89A /* coreTests.s in Sources */,
+				91451FC22B73E3F000D8C89A /* interpreterTests.s in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

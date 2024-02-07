@@ -1,13 +1,13 @@
 
 .macro LOAD_ADDRESS register, location
-    adrp \register, \location@PAGE
-    add \register, \register, \location@PAGEOFF
+	adrp \register, \location@PAGE
+	add \register, \register, \location@PAGEOFF
 .endm
 
 .macro PUSH_DATA register
-    str \register, [x19], #8
+	str \register, [x19], #8
 .endm
 
 .macro POP_DATA register
-    ldr \register, [x19, #-8]!
+	ldr \register, [x19, #-8]!
 .endm

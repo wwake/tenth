@@ -8,13 +8,13 @@
 .p2align 2
 
 _start:
-  str lr, [sp, #-16]!
+	str lr, [sp, #-16]!
 
-  bl interpret_empty_program
+	bl interpret_empty_program
 
-  unix_exit
-  ldr lr, [sp], #16
-  ret
+	unix_exit
+	ldr lr, [sp], #16
+	ret
 
 
 runInterpreter:
@@ -37,11 +37,11 @@ data_stack:
 .data
 .p2align 2
 L_empty_header:
-.asciz "Test"    // Routine name
-.quad 0         // dictionary link
+.asciz "Test"	// Routine name
+.quad 0		 // dictionary link
 L_empty:
-    .quad 0     // address of start2d
-    .quad 0     // end2d
+	.quad 0	 // address of start2d
+	.quad 0	 // end2d
 
 .text
 
@@ -66,17 +66,17 @@ TEST_START interpret_empty_program
 TEST_END
 
 .data
-.asciz "Add2"    // Routine name
+.asciz "Add2"	// Routine name
 .p2align 2
-.quad 0         // dictionary link
+.quad 0		 // dictionary link
 add2:
-    .quad 0     // address of start2d
-    .quad 0     // _push
-    .quad 1     // data: 1
-    .quad 0     // push
-    .quad 2     // data: 2
-    .quad 0     // add
-    .quad 0     // end2d
+	.quad 0	 // address of start2d
+	.quad 0	 // _push
+	.quad 1	 // data: 1
+	.quad 0	 // push
+	.quad 2	 // data: 2
+	.quad 0	 // add
+	.quad 0	 // end2d
 
 .text
 
