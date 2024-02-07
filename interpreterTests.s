@@ -17,14 +17,26 @@ _start:
 	ret
 
 
+// runInterpreter: startup method for the interpreter
+// Input: x0 - word address of the method to run
+// Output:
+//   x19 - the data stack (VSP)
+//   x20 - the position in the current block (VPC)
+//
 runInterpreter:
+	str lr, [sp, #-16]!
+
 	LOAD_ADDRESS x19, data_stack
 	add x20, x0, #8
-	br x0
-	
+	ldr x1, [x0]
+	blr x1
+
+	ldr lr, [sp], #16
+	ret
+
 start2d:
-	add x20, x20, #8
-  	ret
+	//add x20, x20, #8
+	ret
 
 end2d:
   	ret
@@ -37,9 +49,10 @@ data_stack:
 .data
 .p2align 2
 L_empty_header:
-.asciz "Test"	// Routine name
+.ascii "Test\0..."		// Routine name
+.p2align 2
 .quad 0		 // dictionary link
-L_empty:
+empty:
 	.quad 0	 // address of start2d
 	.quad 0	 // end2d
 
@@ -47,7 +60,7 @@ L_empty:
 
 TEST_START interpret_empty_program
 // Arrange: Populate table
-	LOAD_ADDRESS x0, L_empty
+	LOAD_ADDRESS x0, empty
 	LOAD_ADDRESS x1, start2d
 	LOAD_ADDRESS x2, end2d
 	
@@ -55,13 +68,13 @@ TEST_START interpret_empty_program
 	str x2, [x0]
 
 // Act:	
-	LOAD_ADDRESS x0, L_empty
+	LOAD_ADDRESS x0, empty
 	bl runInterpreter
 	
 // Assert:
 	mov x0, x20
-	LOAD_ADDRESS x1, L_empty
-	add x1, x1, #16
+	LOAD_ADDRESS x1, empty
+	add x1, x1, #8
 	bl assertEqual
 TEST_END
 

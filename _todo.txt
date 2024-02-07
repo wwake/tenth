@@ -1,9 +1,11 @@
-
-* Develop a do-nothing secondary
+* Develop a do-nothing secondary to drive out the interpreter
 * Develop a 1+2 secondary
 * Develop the secondary interpreter
 
-TEN-24-05: 2024-02-06 - To Add and Beyond
+TEN-24-07: 2024-02-07 - Interpreter Start
+
+
+TEN-24-06: 2024-02-06 - To Add and Beyond
 * Note: Stack pointer points to the next place to write
 * Develop add primary
 * Started building the interpreter (for secondaries & primaries)
@@ -16,7 +18,7 @@ TEN-24-04: 2024-02-01 - Primaries and Secondaries
 * Looked at a scheme for building primary and secondary code blocks
 * Tried to build a primary - ran into a major barrier that you can't put relocatable addresses of code into data statements (Mac assembler limitation).
 * Explored Mudshark666's idea of building a table of BL instructions, then digging the addresses out. Looks feasible. 
-* We worked out how BL works: has 24 bits of room for a PC-relative address offset. The target address is right-shifted twice (as addresses must be on word boundaries), then it's two high bytes are masked off. Bit 24 tells you whether it's a positive or negative offset.
+* We worked out how BL works: has 24 bits of room for a PC-relative address offset. The target address is right-shifted twice (as instruction addresses must be on 32-bit boundaries), then it's two high bytes are masked off. Bit 24 tells you whether it's a positive or negative offset.
 
 TEN-24-03: 2024-01-31 - Print
 * Use "make && ./unitTestDemo.out" to run more quickly 
