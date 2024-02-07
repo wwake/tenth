@@ -18,50 +18,6 @@ _start:
 	ret
 
 
-// runInterpreter: startup method for the interpreter
-// Input: x0 - word address of the method to run
-// Output:
-//   x19 - the data stack (VSP)
-//   x20 - the position in the current block (VPC)
-//
-runInterpreter:
-	str lr, [sp, #-16]!
-
-	LOAD_ADDRESS x19, data_stack
-	add x20, x0, #8
-	ldr x1, [x0]
-	blr x1
-
-	ldr lr, [sp], #16
-	ret
-
-// start2d: starting point for secondaries
-//    Note: this has no "ret"; it relies on end2d being at the end of the sec. list
-// Input: x20 is the starting point of the secondary list
-// Process:
-// Output:
-//
-start2d:
-	str lr, [sp, #-16]!
-	str x20, [sp, #8]
-
-L_interpreter_loop:
-	ldr x1, [x20], #8
-	blr x1
-	b L_interpreter_loop
-
-
-end2d:
-	ldr x20, [sp, #8]
-	ldr lr, [sp], #16
-	ret
-
-
-.data
-.p2align 3
-data_stack:
-	.fill 20
-
 .data
 .p2align 2
 L_empty_header:

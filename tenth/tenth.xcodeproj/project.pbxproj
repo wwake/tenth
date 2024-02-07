@@ -43,6 +43,7 @@
 		91451FBE2B73E3C700D8C89A /* coreTests.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = coreTests.s; path = ../coreTests.s; sourceTree = "<group>"; };
 		91451FC12B73E3F000D8C89A /* interpreterTests.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = interpreterTests.s; path = ../interpreterTests.s; sourceTree = "<group>"; };
 		91451FC32B73E40500D8C89A /* unitTestDemo.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = unitTestDemo.s; path = ../unitTestDemo.s; sourceTree = "<group>"; };
+		91B9F1322B742898005730DF /* interpreter.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = interpreter.s; path = ../interpreter.s; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +105,7 @@
 			children = (
 				91238D8A2B730AD800052895 /* cLike.s */,
 				91238D832B730AD800052895 /* core.s */,
+				91B9F1322B742898005730DF /* interpreter.s */,
 			);
 			name = core;
 			sourceTree = "<group>";

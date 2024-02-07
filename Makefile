@@ -20,19 +20,21 @@ coreTests.out: coreTests.o asUnit.o cLike.o core.o
 
 unitTestDemo.o: unitTestDemo.s unix_functions.macros asUnit.macros 
 
-unitTestDemo.out: unitTestDemo.o asUnit.o cLike.o core.o
+unitTestDemo.out: unitTestDemo.o cLike.o core.o asUnit.o
 
 
 cLike.o: cLike.s unix_functions.macros
 
 cLikeTests.o: cLikeTests.s unix_functions.macros asUnit.macros
 
-cLikeTests.out: cLikeTests.o asUnit.o cLike.o
+cLikeTests.out: cLikeTests.o cLike.o asUnit.o
 
 
-interpreterTests.o: interpreterTests.s unix_functions.macros core.macros asUnit.macros
+interpreter.o: interpreter.s unix_functions.macros core.macros
 
-interpreterTests.out: interpreterTests.o asUnit.o cLike.o core.o
+interpreterTests.o: interpreterTests.s interpreter.o unix_functions.macros core.macros asUnit.macros
+
+interpreterTests.out: interpreterTests.o interpreter.o asUnit.o cLike.o core.o
 
 
 clean:

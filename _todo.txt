@@ -1,9 +1,14 @@
-* Develop a 1+2 secondary
-* Develop the secondary interpreter
+
+* Print numeric
+* Support IF
+* Check that secondaries handle recursion
+* Change data stack to a bigger size
+* Should VSP point to the last element? instead of next free slot.
 
 TEN-24-07: 2024-02-07 - Interpreter Start
 * Develop a do-nothing secondary to drive out the interpreter
-
+* Develop a 1+2 secondary
+* Develop the secondary interpreter
 
 TEN-24-06: 2024-02-06 - To Add and Beyond
 * Note: Stack pointer points to the next place to write
