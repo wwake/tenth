@@ -1,4 +1,4 @@
-all: unitTestDemo.out cLikeTests.out coreTests.out
+all: tests
 
 LD=ld -macos_version_min 14.0.0 -lSystem -syslibroot `xcrun -sdk macosx --show-sdk-path` -e _start -arch arm64
 
@@ -29,9 +29,15 @@ cLikeTests.o: cLikeTests.s unix_functions.macros asUnit.macros
 
 cLikeTests.out: cLikeTests.o asUnit.o cLike.o
 
+
+interpreterTests.o: interpreterTests.s unix_functions.macros core.macros asUnit.macros
+
+interpreterTests.out: interpreterTests.o asUnit.o cLike.o
+
+
 clean:
 	rm -f *.o *.out
 
-tests: cLikeTests.out coreTests.out unitTestDemo.out
-	./cLikeTests.out ; ./coreTests.out ; ./unitTestDemo.out
+tests: cLikeTests.out coreTests.out unitTestDemo.out interpreterTests.out
+	./cLikeTests.out ; ./coreTests.out ; ./unitTestDemo.out ; ./interpreterTests.out
 
