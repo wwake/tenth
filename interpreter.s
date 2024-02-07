@@ -44,17 +44,17 @@ ret
 // Output:
 //
 start2d:
-str lr, [sp, #-16]!
-str x20, [sp, #8]
+	str lr, [sp, #-16]!
+	str x20, [sp, #8]
 
 L_interpreter_loop:
-ldr x1, [x20], #8
-blr x1
-b L_interpreter_loop
+	ldr x1, [x20], #8
+	blr x1
+	b L_interpreter_loop
 
 
 end2d:
-ldr x20, [sp, #8]
-ldr lr, [sp], #16
-ret
+	ldr x20, [sp, #8]
+	ldr lr, [sp], #16
+	ret
 
