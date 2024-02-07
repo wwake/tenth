@@ -55,7 +55,7 @@
 				91238D982B730B8200052895 /* asUnit */,
 				91238D972B730B7200052895 /* macros */,
 				91238D992B730B9500052895 /* code */,
-				91238D952B730B4E00052895 /* tests */,
+				91238D9A2B730C9F00052895 /* tests */,
 				91238D7B2B730AC100052895 /* _todo.txt */,
 				91238D7C2B730AD800052895 /* asUnit.txt */,
 				91238D8B2B730AD800052895 /* LICENSE */,
@@ -72,16 +72,6 @@
 				91238D712B730A6000052895 /* tenth */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		91238D952B730B4E00052895 /* tests */ = {
-			isa = PBXGroup;
-			children = (
-				91238D8D2B730AD800052895 /* coreTests.s */,
-				91238D852B730AD800052895 /* interpreterTests.s */,
-				91238D922B730AE600052895 /* unitTestDemo.s */,
-			);
-			path = tests;
 			sourceTree = "<group>";
 		};
 		91238D972B730B7200052895 /* macros */ = {
@@ -110,6 +100,16 @@
 				91238D832B730AD800052895 /* core.s */,
 			);
 			name = code;
+			sourceTree = "<group>";
+		};
+		91238D9A2B730C9F00052895 /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				91238D8D2B730AD800052895 /* coreTests.s */,
+				91238D852B730AD800052895 /* interpreterTests.s */,
+				91238D922B730AE600052895 /* unitTestDemo.s */,
+			);
+			name = tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
