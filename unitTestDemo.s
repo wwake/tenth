@@ -11,6 +11,8 @@
 _start:
 	str lr, [sp, #-16]!
 	
+	TEST_ALL "unitTestDemo"
+
 	bl print_number
 
 //	bl nl

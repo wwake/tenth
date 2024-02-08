@@ -9,6 +9,8 @@
 _start:
 	str lr, [sp, #-16]!
 
+	TEST_ALL "interpreterTests"
+
 	bl interpret_empty_program
 	bl secondary_runs_yielding_result_on_stack
 
