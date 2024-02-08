@@ -11,13 +11,15 @@
 _start:
 	str lr, [sp, #-16]!
 	
-	bl nl
-	
-	
-	adr x0, hello
-	bl print
+	bl print_number
 
-	bl testPrint
+//	bl nl
+
+//	adr x0, hello
+//	bl print
+
+//	bl testPrint
+//	bl print_number
 
    // bl test1
 	// bl test2
@@ -35,10 +37,15 @@ TEST_START testPrint
 	adr x0, hello
 	bl print
 	
+		// check that x28 is not overwritten
 	mov x0, x28
 	mov x1, #42
-	adr x2, L_TS_testPrint
 	bl assertEqual
+TEST_END
+
+TEST_START print_number
+	mov x0, #13
+	bl printnum
 TEST_END
 
 

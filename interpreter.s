@@ -47,10 +47,10 @@ start2d:
 	str lr, [sp, #-16]!
 	str x20, [sp, #8]
 
-L_interpreter_loop:
-	ldr x1, [x20], #8
-	blr x1
-	b L_interpreter_loop
+	L_interpreter_loop:
+		ldr x1, [x20], #8
+		blr x1
+		b L_interpreter_loop
 
 
 end2d:

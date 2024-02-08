@@ -3,7 +3,10 @@
 .align 2
 
 .global strlen
+.global streq
+
 .global print
+.global printnum
 
 // strlen
 // input: x0 is address of a 0-terminated string
@@ -24,6 +27,36 @@ loop:
 
 l_return:
 	ret
+
+// streq: compare strings
+// Input: x0 points to first null-terminate string
+// 			x1 points to second string
+// Output: x0 is 1 if equal, 0 otherwise
+//
+streq:
+	loop_streq:
+		ldrb w2, [x0], #1
+		ldrb w3, [x1], #1
+
+		cmp w2, #0
+		b.eq loop_exit_streq
+
+		cmp w3, #0
+		b.eq loop_exit_streq
+
+		cmp w2, w3
+		b.eq loop_streq
+
+	loop_exit_streq:
+		mov x0, #1
+		cmp w2, w3
+		b.eq l_exit_streq
+
+		mov x0, #0
+
+l_exit_streq:
+	ret
+
 
 // print
 // input: x0 is address of a 0-terminated string
@@ -51,4 +84,16 @@ print:
 
 	ldr x28, [sp, #8]
 	ldr lr, [sp], #16
+	ret
+
+
+// printnum: prints a number in x0 as decimal
+// Input: x0
+// Output: none
+printnum:
+
+	ret
+
+
+dec2str:
 	ret

@@ -1,4 +1,7 @@
 
+* Use LOAD_ADDRESS in cLikeTests
+* streq
+* dec2str
 * Print numeric
 * Support IF
 * Check that secondaries handle recursion
