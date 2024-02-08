@@ -18,6 +18,8 @@ _start:
 	bl streq_for_string_vs_itself
 
 	bl dec2str_converts_positive
+	bl dec2str_converts_zero
+	bl dec2str_converts_negative
 
 	unix_exit
 	ldr lr, [sp], #16
@@ -117,17 +119,44 @@ TEST_END
 
 
 .data
-L_string_number: .asciz "65535"
+L_string_zero: .asciz "0"
+L_string_positive: .asciz "65535"
+L_string_negative: .asciz "-65535"
 
 .text
 .p2align 2
+
+TEST_START dec2str_converts_zero
+	mov x0, #0
+	bl dec2str
+
+	LOAD_ADDRESS x1, L_string_zero
+	bl streq
+
+	mov x1, #1
+	bl assertEqual
+TEST_END
+
 
 TEST_START dec2str_converts_positive
 	mov x0, #65535
 	bl dec2str
 
-stop:
-	LOAD_ADDRESS x1, L_string_number
+	LOAD_ADDRESS x1, L_string_positive
+	bl streq
+
+	mov x1, #1
+	bl assertEqual
+TEST_END
+
+TEST_START dec2str_converts_negative
+	mov x0, #65535
+	neg x0, x0
+	bl dec2str
+
+	bl print
+
+	LOAD_ADDRESS x1, L_string_negative
 	bl streq
 
 	mov x1, #1

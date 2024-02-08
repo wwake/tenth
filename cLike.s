@@ -106,11 +106,28 @@ L_dec2str_out:
 //   Note: the returned string is only valid until the next call;
 //   move the string elsewhere if you want to retain it.
 // Input: x0 - value to convert
+// Process: 
+//		x0 - pointer to result (working right to left)
+// 		x1 - value remaining to convert
+//		x2 - value / 10
+// 		x3 - value % 10, converted to ASCII
+//		x4 - constant 10
+//		x5 - 1 if negative, 0 if >= 0
+//
 // Ouput: x0 - pointer to null-terminated string
 //
 dec2str:
-	mov x1, x0
 	mov x4, #10			// X4 = 10
+
+	mov x1, x0
+	
+	mov x5, #0
+	cmp x1, #0
+	b.pl L_no_sign
+		mov x5, #1
+		neg x1, x1
+
+  L_no_sign:
 
 	LOAD_ADDRESS x0, L_dec2str_out
 	add x0, x0, #31
@@ -127,4 +144,11 @@ dec2str:
 		cmp x1, #0
 	b.ne L_dec2str_loop
 
-ret
+	cmp x5, #1
+	b.ne L_dec2str_end
+		sub x0, x0, #1
+		mov w3, #0x2d		// '-'
+		strb w3, [x0]
+
+L_dec2str_end:
+	ret
