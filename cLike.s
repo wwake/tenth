@@ -1,4 +1,5 @@
 .include "unix_functions.macros"
+.include "core.macros"
 
 .align 2
 
@@ -7,6 +8,7 @@
 
 .global print
 .global printnum
+.global dec2str
 
 // strlen
 // input: x0 is address of a 0-terminated string
@@ -92,5 +94,37 @@ printnum:
 	ret
 
 
+.data
+L_dec2str_out:
+.fill 32
+
+.text
+.p2align 2
+
+// dec2str: return a pointer to a string containing the
+//   string value of a number
+//   Note: the returned string is only valid until the next call;
+//   move the string elsewhere if you want to retain it.
+// Input: x0 - value to convert
+// Ouput: x0 - pointer to null-terminated string
+//
 dec2str:
-	ret
+	mov x1, x0
+	mov x4, #10			// X4 = 10
+
+	LOAD_ADDRESS x0, L_dec2str_out
+	add x0, x0, #31
+	strb wzr, [x0]
+
+	L_dec2str_loop:
+		sdiv x2, x1, x4		// x2 = x1 / 10
+		mul x3, x2, x4		// x3 = x2 * 10
+		sub x3, x1, x3		// x3 = x1 - x3   ie x1 mod 10
+		add x3, x3, 0x30	// x3 = x3 + '0'
+		sub x0, x0, #1
+		strb w3, [x0]
+		mov x1, x2
+		cmp x1, #0
+	b.ne L_dec2str_loop
+
+ret
