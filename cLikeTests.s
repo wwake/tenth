@@ -16,6 +16,9 @@ _start:
 	bl streq_for_differing_nonempty_strings
 	bl streq_for_identical_strings
 	bl streq_for_string_vs_itself
+
+	bl dec2str_converts_positive
+
 	unix_exit
 	ldr lr, [sp], #16
 	ret
@@ -46,21 +49,6 @@ TEST_END
 
 L_data_hello:
 .asciz "Hello world!\n"
-
-.data
-L_dec2str_out:
-	.fill 32
-
-.text
-.p2align 2
-
-TEST_START dec2str_converts_positive
-	mov x0, #13
-	LOAD_ADDRESS x1, L_dec2str_out
-	//bl dec2str
-
-TEST_END
-
 
 .data
 L_string1_empty: .asciz ""
@@ -126,3 +114,62 @@ TEST_START streq_for_string_vs_itself
 	mov x1, #1
 	bl assertEqual
 TEST_END
+
+
+.data
+L_string_13: .asciz "13"
+
+.text
+.p2align 2
+
+TEST_START dec2str_converts_positive
+	mov x0, #13
+	bl dec2str
+
+stop:
+	LOAD_ADDRESS x1, L_string_13
+	bl streq
+
+	mov x1, #1
+	bl assertEqual
+TEST_END
+
+.data
+L_dec2str_out:
+.fill 32
+
+.text
+.p2align 2
+
+// dec2str: return a pointer to a string containing the
+//   string value of a number
+//   Note: the returned string is only valid until the next call;
+//   move the string elsewhere if you want to retain it.
+// Input: x0 - value to convert
+// Ouput: x0 - pointer to null-terminated string
+//
+dec2str:
+	mov x1, x0
+	mov x4, #10			// X4 = 10
+
+	LOAD_ADDRESS x0, L_dec2str_out
+	add x0, x0, #31
+	strb wzr, [x0]
+
+	sdiv x2, x1, x4		// x2 = x1 / 10
+	mul x3, x2, x4		// x3 = x2 * 10
+	sub x3, x1, x3		// x3 = x1 - x3   ie x1 mod 10
+	add x3, x3, 0x30	// x3 = x3 + '0'
+	sub x0, x0, #1
+	strb w3, [x0]
+	mov x1, x2
+
+	sdiv x2, x1, x4		// x2 = x1 / 10
+	mul x3, x2, x4		// x3 = x2 * 10
+	sub x3, x1, x3		// x3 = x1 - x3   ie x1 mod 10
+	add x3, x3, 0x30	// x3 = x3 + '0'
+	sub x0, x0, #1
+	strb w3, [x0]
+	mov x1, x2
+
+	ret
