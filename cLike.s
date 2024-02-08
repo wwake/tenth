@@ -38,14 +38,11 @@ streq:
 		ldrb w2, [x0], #1
 		ldrb w3, [x1], #1
 
-		cmp w2, #0
-		b.eq loop_exit_streq
-
-		cmp w3, #0
-		b.eq loop_exit_streq
-
 		cmp w2, w3
-		b.eq loop_streq
+		b.ne loop_exit_streq
+
+		cmp w2, #0
+		b.ne loop_streq
 
 	loop_exit_streq:
 		mov x0, #1
