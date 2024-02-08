@@ -1,5 +1,4 @@
 .include "unix_functions.macros"
-.include "core.macros"
 .include "asUnit.macros"
 
 .global _start
@@ -9,6 +8,8 @@
 
 _start:
 	str lr, [sp, #-16]!
+
+	TEST_ALL "cLikeTests"
 
 	bl empty_string_length_0
 	bl knows_length_for_nonempty_string

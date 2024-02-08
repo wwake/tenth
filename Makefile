@@ -18,14 +18,14 @@ coreTests.o: coreTests.s unix_functions.macros core.macros asUnit.macros
 coreTests.out: coreTests.o asUnit.o cLike.o core.o
 
 
-unitTestDemo.o: unitTestDemo.s unix_functions.macros asUnit.macros 
+unitTestDemo.o: unitTestDemo.s unix_functions.macros asUnit.macros core.macros
 
 unitTestDemo.out: unitTestDemo.o cLike.o core.o asUnit.o
 
 
 cLike.o: cLike.s unix_functions.macros
 
-cLikeTests.o: cLikeTests.s unix_functions.macros asUnit.macros
+cLikeTests.o: cLikeTests.s unix_functions.macros asUnit.macros core.macros
 
 cLikeTests.out: cLikeTests.o cLike.o asUnit.o
 

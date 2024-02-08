@@ -1,5 +1,4 @@
 .include "unix_functions.macros"
-.include "core.macros"
 .include "asUnit.macros"
 
 .global _start

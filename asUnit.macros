@@ -1,3 +1,15 @@
+.include "core.macros"
+
+.macro TEST_ALL filename
+.data
+
+L_test_all_name: .asciz "\n\filename\n"
+
+.text
+.p2align 2
+	LOAD_ADDRESS x0, L_test_all_name
+	bl print
+.endm
 
 .macro TEST_START testname
 .align 2
