@@ -4,6 +4,9 @@
 
 .global _start
 
+.text
+.p2align 2
+
 _start:
 	str lr, [sp, #-16]!
 
@@ -153,8 +156,6 @@ TEST_START dec2str_converts_negative
 	mov x0, #65535
 	neg x0, x0
 	bl dec2str
-
-	bl print
 
 	LOAD_ADDRESS x1, L_string_negative
 	bl streq
