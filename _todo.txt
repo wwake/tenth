@@ -2,6 +2,7 @@
 * Work out scheme for dependencies on macros - is core.macros needed everywhere?
 * Print numeric
 * Support IF
+* Get one more level of indirection in interpreter
 * Check that secondaries handle recursion
 * Change data stack to a bigger size
 * Should VSP point to the last element? instead of next free slot.
