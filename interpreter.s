@@ -27,14 +27,14 @@ data_stack:
 //   x20 - the position in the current block (VPC)
 //
 runInterpreter:
-str lr, [sp, #-16]!
+	str lr, [sp, #-16]!
 
-LOAD_ADDRESS x19, data_stack
-add x20, x0, #8
-ldr x1, [x0]
-blr x1
+	LOAD_ADDRESS x19, data_stack
+	add x20, x0, #8
+	ldr x1, [x0]
+	blr x1
 
-ldr lr, [sp], #16
+	ldr lr, [sp], #16
 ret
 
 // start2d: starting point for secondaries
@@ -44,17 +44,17 @@ ret
 // Output:
 //
 start2d:
-	str lr, [sp, #-16]!
-	str x20, [sp, #8]
+	str lr, [sp, #-16]!		// push LR and...
+	str x20, [sp, #8]		// VPC to system stack
 
 	L_interpreter_loop:
-		ldr x1, [x20], #8
-		blr x1
-		b L_interpreter_loop
+		ldr x1, [x20], #8	 // Load method address, increment VPC
+		blr x1				 // Call method
+		b L_interpreter_loop // Repeat
 
 
 end2d:
-	ldr x20, [sp, #8]
-	ldr lr, [sp], #16
-	ret
+	ldr x20, [sp, #8]		// Restore VPC and...
+	ldr lr, [sp], #16		// LR from system stack
+	ret						// Return
 
