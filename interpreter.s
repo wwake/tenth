@@ -30,12 +30,14 @@ runInterpreter:
 	str lr, [sp, #-16]!
 
 	LOAD_ADDRESS x19, data_stack
-	add x20, x0, #8
-	ldr x1, [x0]
-	blr x1
+	//add x20, x0, #8
+	//ldr x1, [x0]
+	//blr x1
+	mov x20, x0
+	bl start2d
 
 	ldr lr, [sp], #16
-ret
+	ret
 
 // start2d: starting point for secondaries
 //    Note: this has no "ret"; it relies on end2d being at the end of the sec. list
@@ -49,6 +51,7 @@ start2d:
 
 	L_interpreter_loop:
 		ldr x1, [x20], #8	 // Load method address, increment VPC
+		ldr x1, [x1]
 		blr x1				 // Call method
 		b L_interpreter_loop // Repeat
 

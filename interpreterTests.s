@@ -24,31 +24,41 @@ _start:
 .p2align 2
 L_empty_header:
 .ascii "Test\0..."		// Routine name
-.p2align 2
+.p2align 3
 .quad 0		 // dictionary link
-empty:
-	.quad 0	 // address of start2d
-	.quad 0	 // end2d
+
+L_pseudo_header:
+	.quad 0
+	.quad 0
+
+L_empty:
+	.quad 0	 // word address of start2d
+	.quad 0	 // word address of end2d
 
 .text
 
 TEST_START interpret_empty_program
 // Arrange: Populate table
-	LOAD_ADDRESS x0, empty
+	LOAD_ADDRESS x0, L_pseudo_header
 	LOAD_ADDRESS x1, start2d
 	LOAD_ADDRESS x2, end2d
 	
 	str x1, [x0], #8
 	str x2, [x0]
 
-// Act:	
-	LOAD_ADDRESS x0, empty
+	LOAD_ADDRESS x0, L_pseudo_header
+	LOAD_ADDRESS x1, L_empty
+	str x0, [x1], #8
+	add x0, x0, #8
+	str x0, [x1]
+
+// Act:
+	LOAD_ADDRESS x0, L_empty
 	bl runInterpreter
 	
 // Assert:
 	mov x0, x20
-	LOAD_ADDRESS x1, empty
-	add x1, x1, #8
+	LOAD_ADDRESS x1, L_empty
 	bl assertEqual
 TEST_END
 

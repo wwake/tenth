@@ -1,13 +1,14 @@
-* Print numeric
 * Get one more level of indirection in interpreter
 * Support IF
 * Check that secondaries handle recursion
 * Change data stack to a bigger size
 * Should VSP point to the last element? instead of next free slot.
 * Test runInterpreter on a primary
+* Fix dec2str on most negative 64-bit number (-9223372036854775808)
 
 TEN-24-09: 2024-02-12 - Printnum
 * Renamed core.macros to assembler.macros; every .s file requires this first
+* Print numeric - printnum() prints the number in x0
 
 TEN-24-08: 2024-02-08 - Streq
 * Use LOAD_ADDRESS in cLikeTests

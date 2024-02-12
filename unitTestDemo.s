@@ -46,7 +46,9 @@ TEST_START testPrint
 TEST_END
 
 TEST_START print_number
-	mov x0, #-65535
+	mov x0, #-9223372036854775807
+//	neg x0, x0
+//	sub x0, x0, #1
 	bl printnum
 TEST_END
 
