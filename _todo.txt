@@ -1,4 +1,3 @@
-* Work out scheme for dependencies on macros - is core.macros needed everywhere?
 * Print numeric
 * Get one more level of indirection in interpreter
 * Support IF
@@ -8,7 +7,7 @@
 * Test runInterpreter on a primary
 
 TEN-24-09: 2024-02-12 - Printnum
-
+* Renamed core.macros to assembler.macros; every .s file requires this first
 
 TEN-24-08: 2024-02-08 - Streq
 * Use LOAD_ADDRESS in cLikeTests

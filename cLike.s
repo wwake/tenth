@@ -90,7 +90,12 @@ print:
 // Input: x0
 // Output: none
 printnum:
+	str lr, [sp, #-16]!
 
+	bl dec2str
+	bl print
+
+	ldr lr, [sp], #16
 	ret
 
 
@@ -103,10 +108,12 @@ L_dec2str_out:
 
 // dec2str: return a pointer to a string containing the
 //   string value of a number
-//   Note: the returned string is only valid until the next call;
+
+//   WARNING: the returned string is only valid until the next call;
 //   move the string elsewhere if you want to retain it.
+
 // Input: x0 - value to convert
-// Process: 
+// Process:
 //		x0 - pointer to result (working right to left)
 // 		x1 - value remaining to convert
 //		x2 - value / 10
