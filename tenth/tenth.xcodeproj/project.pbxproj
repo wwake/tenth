@@ -32,7 +32,7 @@
 		91238D7F2B730AD800052895 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; name = Makefile; path = ../Makefile; sourceTree = "<group>"; };
 		91238D812B730AD800052895 /* cLikeTests.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = cLikeTests.s; path = ../cLikeTests.s; sourceTree = "<group>"; };
 		91238D832B730AD800052895 /* core.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = core.s; path = ../core.s; sourceTree = "<group>"; };
-		91238D842B730AD800052895 /* core.macros */ = {isa = PBXFileReference; lastKnownFileType = text; name = core.macros; path = ../core.macros; sourceTree = "<group>"; };
+		91238D842B730AD800052895 /* assembler.macros */ = {isa = PBXFileReference; lastKnownFileType = text; name = assembler.macros; path = ../assembler.macros; sourceTree = "<group>"; };
 		91238D862B730AD800052895 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		91238D882B730AD800052895 /* asUnit.macros */ = {isa = PBXFileReference; lastKnownFileType = text; name = asUnit.macros; path = ../asUnit.macros; sourceTree = "<group>"; };
 		91238D892B730AD800052895 /* asUnit.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = asUnit.s; path = ../asUnit.s; sourceTree = "<group>"; };
@@ -84,7 +84,7 @@
 		91238D972B730B7200052895 /* macros */ = {
 			isa = PBXGroup;
 			children = (
-				91238D842B730AD800052895 /* core.macros */,
+				91238D842B730AD800052895 /* assembler.macros */,
 				91238D902B730AE600052895 /* unix_functions.macros */,
 			);
 			name = macros;

@@ -11,28 +11,28 @@ LD=ld -macos_version_min 14.0.0 -lSystem -syslibroot `xcrun -sdk macosx --show-s
 asUnit.o: asUnit.s
 
 
-core.o: core.macros core.s
+core.o: assembler.macros core.s
 
-coreTests.o: coreTests.s unix_functions.macros core.macros asUnit.macros
+coreTests.o: coreTests.s unix_functions.macros assembler.macros asUnit.macros
 
 coreTests.out: coreTests.o asUnit.o cLike.o core.o
 
 
-unitTestDemo.o: unitTestDemo.s unix_functions.macros asUnit.macros core.macros
+unitTestDemo.o: unitTestDemo.s unix_functions.macros asUnit.macros assembler.macros
 
 unitTestDemo.out: unitTestDemo.o cLike.o core.o asUnit.o
 
 
 cLike.o: cLike.s unix_functions.macros
 
-cLikeTests.o: cLikeTests.s unix_functions.macros asUnit.macros core.macros
+cLikeTests.o: cLikeTests.s unix_functions.macros asUnit.macros assembler.macros
 
 cLikeTests.out: cLikeTests.o cLike.o asUnit.o
 
 
-interpreter.o: interpreter.s unix_functions.macros core.macros
+interpreter.o: interpreter.s unix_functions.macros assembler.macros
 
-interpreterTests.o: interpreterTests.s interpreter.o unix_functions.macros core.macros asUnit.macros
+interpreterTests.o: interpreterTests.s interpreter.o unix_functions.macros assembler.macros asUnit.macros
 
 interpreterTests.out: interpreterTests.o interpreter.o asUnit.o cLike.o core.o
 

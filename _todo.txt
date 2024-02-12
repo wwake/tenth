@@ -1,12 +1,13 @@
-
 * Work out scheme for dependencies on macros - is core.macros needed everywhere?
 * Print numeric
-* Support IF
 * Get one more level of indirection in interpreter
+* Support IF
 * Check that secondaries handle recursion
 * Change data stack to a bigger size
 * Should VSP point to the last element? instead of next free slot.
 * Test runInterpreter on a primary
+
+TEN-24-09: 2024-02-12 - Printnum
 
 
 TEN-24-08: 2024-02-08 - Streq

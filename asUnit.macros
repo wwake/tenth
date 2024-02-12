@@ -1,4 +1,3 @@
-.include "core.macros"
 
 .macro TEST_ALL filename
 .data

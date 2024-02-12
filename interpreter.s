@@ -1,5 +1,5 @@
+.include "assembler.macros"
 .include "unix_functions.macros"
-.include "core.macros"
 
 .global data_stack
 
