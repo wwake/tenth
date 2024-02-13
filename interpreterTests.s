@@ -1,6 +1,7 @@
 .include "assembler.macros"
 .include "unix_functions.macros"
 .include "asUnit.macros"
+.include "coreTests.macros"
 
 .global _start
 

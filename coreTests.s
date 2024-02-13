@@ -1,61 +1,9 @@
 .include "assembler.macros"
 .include "unix_functions.macros"
 .include "asUnit.macros"
+.include "coreTests.macros"
 
 .global _start
-
-// DICT_START - start writing a dictionary block
-// uses x0, leaves it pointing to next entry to write
-.macro DICT_START dict_label
-	LOAD_ADDRESS x0, \dict_label
-.endm
-
-// DICT_ADD - adds the next dictionary entry
-// Uses x1 as a temp
-// Leaves x0 pointing to next entry to write
-.macro DICT_ADD entry
-	LOAD_ADDRESS x1, \entry
-	str x1, [x0], #8
-.endm
-
-
-// SECONDARY_START - sets up initial values
-//		x0 points to secondary but will be updated
-//		x3 points to secondary, won't change
-// 		x1 points to dictionary, won't change
-.macro SECONDARY_START secondary, dictionary
-	LOAD_ADDRESS x0, \secondary
-	LOAD_ADDRESS x3, \secondary
-	LOAD_ADDRESS x1, \dictionary
-.endm
-
-// SECONDARY_ADD - stores dictionary address at x0; updates x0
-// Uses x0-x2
-.macro SECONDARY_ADD dictionaryIndex
-	add x2, x1, #8*\dictionaryIndex
-	str x2, [x0], #8
-.endm
-
-// SECONDARY_SKIP - skips over one secondary cell
-// Uses x0
-.macro SECONDARY_SKIP
-	add x0, x0, #8
-.endm
-
-// SECONDARY_TARGET - stores address of a secondary cell
-// Uses
-.macro SECONDARY_TARGET cellNumber
-	add x2, x3, #8*\cellNumber
-	str x2, [x0], #8
-
-.endm
-
-// SECONDARY_DATA - stores value in the next secondary cell
-// Uses x0 and x2
-.macro SECONDARY_DATA value
-	mov x2, \value
-	str x2, [x0], #8
-.endm
 
 
 .p2align 2
