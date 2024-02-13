@@ -4,6 +4,40 @@
 
 .global _start
 
+// DICT_START - start writing a dictionary block
+// uses x0, leaves it pointing to next entry to write
+.macro DICT_START dict_label
+	LOAD_ADDRESS x0, \dict_label
+.endm
+
+// DICT_ADD - adds the next dictionary entry
+// Uses x1 as a temp
+// Leaves x0 pointing to next entry to write
+.macro DICT_ADD entry
+	LOAD_ADDRESS x1, \entry
+	str x1, [x0], #8
+.endm
+
+
+// SECONDARY_START - sets up x0 and x1 to point to initial secondary & dictionary
+.macro SECONDARY_START secondary, dictionary
+LOAD_ADDRESS x0, \secondary
+LOAD_ADDRESS x1, \dictionary
+.endm
+
+// SECONDARY_ADD - stores dictionary address at x0; updates x0
+// Uses x0-x2
+.macro SECONDARY_ADD dictionaryIndex
+add x2, x1, #8*\dictionaryIndex
+str x2, [x0], #8
+.endm
+
+// SECONDARY_SKIP - skips over one secondary cell
+// Uses x0
+.macro SECONDARY_SKIP
+	ADD x0, x0, #8
+.endm
+
 .p2align 2
 
 _start:
@@ -109,28 +143,22 @@ L_if_true1:
 
 .text
 
+
 TEST_START if_zero_does_not_jump_for_non_zero_value
 // Arrange
-	LOAD_ADDRESS x0, L_dict_if_true1
-	LOAD_ADDRESS x1, start2d
-	LOAD_ADDRESS x2, _if_true
-	LOAD_ADDRESS x3, _push
-	LOAD_ADDRESS x4, end2d
+	DICT_START L_dict_if_true1
+	DICT_ADD start2d
+	DICT_ADD _if_true
+	DICT_ADD _push
+	DICT_ADD end2d
 
-	str x1, [x0], #8
-	str x2, [x0], #8
-	str x3, [x0], #8
-	str x4, [x0]
-
-	LOAD_ADDRESS x0, L_if_true1
-	LOAD_ADDRESS x1, L_dict_if_true1
-	str x1, [x0], #8
-	add x1, x1, #8
-	str x1, [x0], #16
-	add x1, x1, #8
-	str x1, [x0], #16
-	add x1, x1, #8
-	str x1, [x0]
+	SECONDARY_START L_if_true1, L_dict_if_true1
+	SECONDARY_ADD 0
+	SECONDARY_ADD 1
+	SECONDARY_SKIP
+	SECONDARY_ADD 2
+	SECONDARY_SKIP
+	SECONDARY_ADD 3
 
 	LOAD_ADDRESS x0, L_if_true1
 	add x0, x0, #16
@@ -152,29 +180,21 @@ TEST_START if_zero_does_not_jump_for_non_zero_value
 	bl assertEqual
 TEST_END
 
-
 TEST_START if_zero_jumps_for_zero_value
 // Arrange
-	LOAD_ADDRESS x0, L_dict_if_true1
-	LOAD_ADDRESS x1, start2d
-	LOAD_ADDRESS x2, _if_true
-	LOAD_ADDRESS x3, _push
-	LOAD_ADDRESS x4, end2d
+	DICT_START L_dict_if_true1
+	DICT_ADD start2d
+	DICT_ADD _if_true
+	DICT_ADD _push
+	DICT_ADD end2d
 
-	str x1, [x0], #8
-	str x2, [x0], #8
-	str x3, [x0], #8
-	str x4, [x0]
-
-	LOAD_ADDRESS x0, L_if_true1
-	LOAD_ADDRESS x1, L_dict_if_true1
-	str x1, [x0], #8
-	add x1, x1, #8
-	str x1, [x0], #16
-	add x1, x1, #8
-	str x1, [x0], #16
-	add x1, x1, #8
-	str x1, [x0]
+	SECONDARY_START L_if_true1, L_dict_if_true1
+	SECONDARY_ADD 0
+	SECONDARY_ADD 1
+	SECONDARY_SKIP
+	SECONDARY_ADD 2
+	SECONDARY_SKIP
+	SECONDARY_ADD 3
 
 	LOAD_ADDRESS x0, L_if_true1
 	add x0, x0, #16
