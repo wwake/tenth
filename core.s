@@ -3,10 +3,10 @@
 .global nl
 .global _push
 .global add
+.global _if_zero
 
 .align 2
 
-// PRIMARY
 .ascii "nl\0....."  // Name - 16 bytes
 .align 4
 .quad 0xdeadbeef
@@ -53,3 +53,11 @@ add:
 	PUSH_DATA x0
 	ret
 	
+_if_zero:
+	POP_DATA x0
+	//CMP x0, xzr
+	//bne L_skip_if
+	add x20, x20, #8
+
+L_skip_if:
+	ret

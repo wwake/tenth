@@ -66,6 +66,13 @@ TEST_END
 .ascii "Add2\0..."	// Routine name
 .p2align 2
 .quad 0		 // dictionary link
+
+L_add2_dictionary:
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+
 add2:
 	.quad 0	 // address of start2d
 	.quad 0	 // _push
@@ -80,17 +87,27 @@ add2:
 
 TEST_START secondary_runs_yielding_result_on_stack
 // Arrange - build our secondary
-	LOAD_ADDRESS x0, add2
+	LOAD_ADDRESS x0, L_add2_dictionary
 	LOAD_ADDRESS x1, start2d
 	LOAD_ADDRESS x2, _push
 	LOAD_ADDRESS x3, add
 	LOAD_ADDRESS x4, end2d
-	
+
 	str x1, [x0], #8
-	str x2, [x0], #16
-	str x2, [x0], #16
+	str x2, [x0], #8
 	str x3, [x0], #8
 	str x4, [x0]
+
+	LOAD_ADDRESS x0, add2
+	LOAD_ADDRESS x1, L_add2_dictionary
+	str x1, [x0], #8
+	add x1, x1, #8
+	str x1, [x0], #16
+	str x1, [x0], #16
+	add x1, x1, #8
+	str x1, [x0], #8
+	add x1, x1, #8
+	str x1, [x0]
 
 // Act - pass the secondary to the interpreter
 	LOAD_ADDRESS x0, add2
@@ -98,7 +115,6 @@ TEST_START secondary_runs_yielding_result_on_stack
 
 //  Assert: check that stack contains right answer
 	LOAD_ADDRESS x0, data_stack
-temp:
 	ldr x0, [x0]
 	mov x1, #3
 	bl assertEqual

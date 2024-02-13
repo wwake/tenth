@@ -15,7 +15,7 @@ core.o: assembler.macros core.s
 
 coreTests.o: coreTests.s unix_functions.macros assembler.macros asUnit.macros
 
-coreTests.out: coreTests.o asUnit.o cLike.o core.o
+coreTests.out: coreTests.o asUnit.o cLike.o core.o interpreter.o
 
 
 unitTestDemo.o: unitTestDemo.s unix_functions.macros asUnit.macros assembler.macros
