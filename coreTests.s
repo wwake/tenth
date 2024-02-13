@@ -19,10 +19,14 @@
 .endm
 
 
-// SECONDARY_START - sets up x0 and x1 to point to initial secondary & dictionary
+// SECONDARY_START - sets up initial values
+//		x0 points to secondary but will be updated
+//		x3 points to secondary, won't change
+// 		x1 points to dictionary, won't change
 .macro SECONDARY_START secondary, dictionary
-LOAD_ADDRESS x0, \secondary
-LOAD_ADDRESS x1, \dictionary
+	LOAD_ADDRESS x0, \secondary
+	LOAD_ADDRESS x3, \secondary
+	LOAD_ADDRESS x1, \dictionary
 .endm
 
 // SECONDARY_ADD - stores dictionary address at x0; updates x0
@@ -38,6 +42,13 @@ LOAD_ADDRESS x1, \dictionary
 	add x0, x0, #8
 .endm
 
+// SECONDARY_TARGET - stores address of a secondary cell
+// Uses
+.macro SECONDARY_TARGET cellNumber
+	add x2, x3, #8*\cellNumber
+	str x2, [x0], #8
+
+.endm
 
 // SECONDARY_DATA - stores value in the next secondary cell
 // Uses x0 and x2
@@ -149,12 +160,16 @@ L_test_dictionary:
 	.quad 0
 
 L_test_secondary:
-	.quad 0	 	// start2d
-	.quad 0	 	// _if_true
-	.quad -1	// data: 1 or 0
-	.quad 0	 	// push
-	.quad 42	//  data
-	.quad 0	 // end2d
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
 
 .text
 
@@ -170,15 +185,10 @@ TEST_START if_zero_does_not_jump_for_non_zero_value
 	SECONDARY_START L_test_secondary, L_test_dictionary
 	SECONDARY_ADD 0
 	SECONDARY_ADD 1
-	SECONDARY_SKIP
+	SECONDARY_TARGET 5
 	SECONDARY_ADD 2
 	SECONDARY_DATA #42
 	SECONDARY_ADD 3
-
-	LOAD_ADDRESS x0, L_test_secondary
-	add x0, x0, #16
-	add x1, x0, #24
-	str x1, [x0]
 
 // Act
 	LOAD_ADDRESS x19, data_stack
@@ -206,15 +216,10 @@ TEST_START if_zero_jumps_for_zero_value
 	SECONDARY_START L_test_secondary, L_test_dictionary
 	SECONDARY_ADD 0
 	SECONDARY_ADD 1
-	SECONDARY_SKIP
+	SECONDARY_TARGET 5
 	SECONDARY_ADD 2
-	SECONDARY_SKIP
+	SECONDARY_DATA #42
 	SECONDARY_ADD 3
-
-	LOAD_ADDRESS x0, L_test_secondary
-	add x0, x0, #16
-	add x1, x0, #24
-	str x1, [x0]
 
 // Act
 	LOAD_ADDRESS x19, data_stack
@@ -242,15 +247,10 @@ TEST_START jump_skips_over_code
 	SECONDARY_START L_test_secondary, L_test_dictionary
 	SECONDARY_ADD 0
 	SECONDARY_ADD 1
-	SECONDARY_SKIP
+	SECONDARY_TARGET 5
 	SECONDARY_ADD 2
 	SECONDARY_DATA #17
 	SECONDARY_ADD 3
-
-	LOAD_ADDRESS x0, L_test_secondary
-	add x0, x0, #16
-	add x1, x0, #24
-	str x1, [x0]
 
 	// Act
 	LOAD_ADDRESS x19, data_stack
