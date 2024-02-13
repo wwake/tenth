@@ -28,15 +28,24 @@ LOAD_ADDRESS x1, \dictionary
 // SECONDARY_ADD - stores dictionary address at x0; updates x0
 // Uses x0-x2
 .macro SECONDARY_ADD dictionaryIndex
-add x2, x1, #8*\dictionaryIndex
-str x2, [x0], #8
+	add x2, x1, #8*\dictionaryIndex
+	str x2, [x0], #8
 .endm
 
 // SECONDARY_SKIP - skips over one secondary cell
 // Uses x0
 .macro SECONDARY_SKIP
-	ADD x0, x0, #8
+	add x0, x0, #8
 .endm
+
+
+// SECONDARY_DATA - stores value in the next secondary cell
+// Uses x0 and x2
+.macro SECONDARY_DATA value
+	mov x2, \value
+	str x2, [x0], #8
+.endm
+
 
 .p2align 2
 
@@ -51,6 +60,8 @@ _start:
 
 	bl if_zero_does_not_jump_for_non_zero_value
 	bl if_zero_jumps_for_zero_value
+
+	bl jump_skips_over_code
 
 	unix_exit
 	ldr lr, [sp], #16
@@ -127,13 +138,17 @@ TEST_END
 .data
 .p2align 3
 
-L_dict_if_true1:
-	.quad 0 	// start2d
-	.quad 0 	// _if_true
-	.quad 0 	// push
-	.quad 0 	// end2d
+L_test_dictionary:
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
 
-L_if_true1:
+L_test_secondary:
 	.quad 0	 	// start2d
 	.quad 0	 	// _if_true
 	.quad -1	// data: 1 or 0
@@ -146,21 +161,21 @@ L_if_true1:
 
 TEST_START if_zero_does_not_jump_for_non_zero_value
 // Arrange
-	DICT_START L_dict_if_true1
+	DICT_START L_test_dictionary
 	DICT_ADD start2d
 	DICT_ADD _if_true
 	DICT_ADD _push
 	DICT_ADD end2d
 
-	SECONDARY_START L_if_true1, L_dict_if_true1
+	SECONDARY_START L_test_secondary, L_test_dictionary
 	SECONDARY_ADD 0
 	SECONDARY_ADD 1
 	SECONDARY_SKIP
 	SECONDARY_ADD 2
-	SECONDARY_SKIP
+	SECONDARY_DATA #42
 	SECONDARY_ADD 3
 
-	LOAD_ADDRESS x0, L_if_true1
+	LOAD_ADDRESS x0, L_test_secondary
 	add x0, x0, #16
 	add x1, x0, #24
 	str x1, [x0]
@@ -169,7 +184,7 @@ TEST_START if_zero_does_not_jump_for_non_zero_value
 	LOAD_ADDRESS x19, data_stack
 	mov x1, #1						// Data is 1 - should not skip
 	str x1, [x19], #8
-	LOAD_ADDRESS x20, L_if_true1
+	LOAD_ADDRESS x20, L_test_secondary
 	add x20, x20, #8
 	bl start2d
 
@@ -182,13 +197,13 @@ TEST_END
 
 TEST_START if_zero_jumps_for_zero_value
 // Arrange
-	DICT_START L_dict_if_true1
+	DICT_START L_test_dictionary
 	DICT_ADD start2d
 	DICT_ADD _if_true
 	DICT_ADD _push
 	DICT_ADD end2d
 
-	SECONDARY_START L_if_true1, L_dict_if_true1
+	SECONDARY_START L_test_secondary, L_test_dictionary
 	SECONDARY_ADD 0
 	SECONDARY_ADD 1
 	SECONDARY_SKIP
@@ -196,7 +211,7 @@ TEST_START if_zero_jumps_for_zero_value
 	SECONDARY_SKIP
 	SECONDARY_ADD 3
 
-	LOAD_ADDRESS x0, L_if_true1
+	LOAD_ADDRESS x0, L_test_secondary
 	add x0, x0, #16
 	add x1, x0, #24
 	str x1, [x0]
@@ -205,7 +220,41 @@ TEST_START if_zero_jumps_for_zero_value
 	LOAD_ADDRESS x19, data_stack
 	mov x1, #0					// Data is 0 - should skip
 	str x1, [x19], #8
-	LOAD_ADDRESS x20, L_if_true1
+	LOAD_ADDRESS x20, L_test_secondary
+	add x20, x20, #8
+	bl start2d
+
+// Assert
+	mov x0, x19
+	LOAD_ADDRESS x1, data_stack
+	bl assertEqual			// check that VSP is back to original place
+TEST_END
+
+
+TEST_START jump_skips_over_code
+// Arrange
+	DICT_START L_test_dictionary
+	DICT_ADD start2d
+	DICT_ADD _jump
+	DICT_ADD _push
+	DICT_ADD end2d
+
+	SECONDARY_START L_test_secondary, L_test_dictionary
+	SECONDARY_ADD 0
+	SECONDARY_ADD 1
+	SECONDARY_SKIP
+	SECONDARY_ADD 2
+	SECONDARY_DATA #17
+	SECONDARY_ADD 3
+
+	LOAD_ADDRESS x0, L_test_secondary
+	add x0, x0, #16
+	add x1, x0, #24
+	str x1, [x0]
+
+	// Act
+	LOAD_ADDRESS x19, data_stack
+	LOAD_ADDRESS x20, L_test_secondary
 	add x20, x20, #8
 	bl start2d
 

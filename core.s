@@ -4,6 +4,7 @@
 .global _push
 .global add
 .global _if_true
+.global _jump
 
 .align 2
 
@@ -62,4 +63,9 @@ _if_true:
 L_skip_if:
 		ldr x20, [x20]
 L_end_if_true:
+	ret
+
+
+_jump:
+	ldr x20, [x20]
 	ret
