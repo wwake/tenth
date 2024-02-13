@@ -1,5 +1,7 @@
-* Check that secondaries can call secondaries
+
+* Check that secondaries can call secondaries - see TBD in interpreterTests.s
 * Check that secondaries handle recursion
+* Update tests to use the DICT and SECONDARY macros
 * Change data stack to a bigger size
 * Should VSP point to the last element? instead of next free slot.
 * Test runInterpreter on a primary

@@ -121,3 +121,50 @@ TEST_START secondary_runs_yielding_result_on_stack
 	bl assertEqual
 TEST_END
 
+.data
+.p2align 3
+
+L_test_dictionary:
+	.fill 10
+
+L_secondary1:
+	.fill 10
+
+L_secondary2:
+	.fill 10
+
+
+.text
+.p2align 3
+TEST_START secondary_calls_another secondary
+// Arrange - build dictionary and two secondaries
+
+	DICT_START L_test_dictionary
+	DICT_ADD start2d
+	DICT_ADD _push
+	DICT_ADD L_secondary2
+	DICT_ADD end2d
+
+	SECONDARY_START L_secondary1, L_test_dictionary
+	SECONDARY_ADD 0
+	SECONDARY_ADD 2
+	SECONDARY_ADD 3
+
+	SECONDARY_START L_secondary2, L_test_dictionary
+	SECONDARY_ADD 0
+	SECONDARY_ADD 1
+	SECONDARY_DATA #5
+	SECONDARY_ADD 3
+
+// Act - pass the secondary to the interpreter
+// TBD
+LOAD_ADDRESS x0, add2
+bl runInterpreter
+
+//  Assert: check that stack contains right answer
+LOAD_ADDRESS x0, data_stack
+ldr x0, [x0]
+mov x1, #3
+bl assertEqual
+TEST_END
+
