@@ -3,7 +3,7 @@
 .global nl
 .global _push
 .global add
-.global _if_zero
+.global _if_true
 
 .align 2
 
@@ -53,11 +53,13 @@ add:
 	PUSH_DATA x0
 	ret
 	
-_if_zero:
+_if_true:
 	POP_DATA x0
-	//CMP x0, xzr
-	//bne L_skip_if
-	add x20, x20, #8
-
+	CMP x0, #0
+	b.eq L_skip_if
+		add x20, x20, #8
+	b L_end_if_true
 L_skip_if:
+		ldr x20, [x20]
+L_end_if_true:
 	ret

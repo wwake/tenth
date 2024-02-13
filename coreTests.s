@@ -12,8 +12,12 @@ _start:
 	TEST_ALL "coreTests"
 
 	bl push_pushes_one_item
+
 	bl add_b_plus_a_is_a
+
 	bl if_zero_does_not_jump_for_non_zero_value
+	bl if_zero_jumps_for_zero_value
+
 	unix_exit
 	ldr lr, [sp], #16
 	ret
@@ -89,16 +93,16 @@ TEST_END
 .data
 .p2align 3
 
-L_dict_if_zero1:
+L_dict_if_true1:
 	.quad 0 	// start2d
-	.quad 0 	// _if_zero
+	.quad 0 	// _if_true
 	.quad 0 	// push
 	.quad 0 	// end2d
 
-L_if_zero1:
+L_if_true1:
 	.quad 0	 	// start2d
-	.quad 0	 	// _if_zero
-	.quad -1	// data: 1
+	.quad 0	 	// _if_true
+	.quad -1	// data: 1 or 0
 	.quad 0	 	// push
 	.quad 42	//  data
 	.quad 0	 // end2d
@@ -107,9 +111,9 @@ L_if_zero1:
 
 TEST_START if_zero_does_not_jump_for_non_zero_value
 // Arrange
-	LOAD_ADDRESS x0, L_dict_if_zero1
+	LOAD_ADDRESS x0, L_dict_if_true1
 	LOAD_ADDRESS x1, start2d
-	LOAD_ADDRESS x2, _if_zero
+	LOAD_ADDRESS x2, _if_true
 	LOAD_ADDRESS x3, _push
 	LOAD_ADDRESS x4, end2d
 
@@ -118,8 +122,8 @@ TEST_START if_zero_does_not_jump_for_non_zero_value
 	str x3, [x0], #8
 	str x4, [x0]
 
-	LOAD_ADDRESS x0, L_if_zero1
-	LOAD_ADDRESS x1, L_dict_if_zero1
+	LOAD_ADDRESS x0, L_if_true1
+	LOAD_ADDRESS x1, L_dict_if_true1
 	str x1, [x0], #8
 	add x1, x1, #8
 	str x1, [x0], #16
@@ -128,16 +132,16 @@ TEST_START if_zero_does_not_jump_for_non_zero_value
 	add x1, x1, #8
 	str x1, [x0]
 
-	LOAD_ADDRESS x0, L_if_zero1
+	LOAD_ADDRESS x0, L_if_true1
 	add x0, x0, #16
 	add x1, x0, #24
 	str x1, [x0]
 
 // Act
 	LOAD_ADDRESS x19, data_stack
-	mov x1, #1
+	mov x1, #1						// Data is 1 - should not skip
 	str x1, [x19], #8
-	LOAD_ADDRESS x20, L_if_zero1
+	LOAD_ADDRESS x20, L_if_true1
 	add x20, x20, #8
 	bl start2d
 
@@ -146,4 +150,47 @@ TEST_START if_zero_does_not_jump_for_non_zero_value
 	ldr x0, [x0]
 	mov x1, #42
 	bl assertEqual
+TEST_END
+
+
+TEST_START if_zero_jumps_for_zero_value
+// Arrange
+	LOAD_ADDRESS x0, L_dict_if_true1
+	LOAD_ADDRESS x1, start2d
+	LOAD_ADDRESS x2, _if_true
+	LOAD_ADDRESS x3, _push
+	LOAD_ADDRESS x4, end2d
+
+	str x1, [x0], #8
+	str x2, [x0], #8
+	str x3, [x0], #8
+	str x4, [x0]
+
+	LOAD_ADDRESS x0, L_if_true1
+	LOAD_ADDRESS x1, L_dict_if_true1
+	str x1, [x0], #8
+	add x1, x1, #8
+	str x1, [x0], #16
+	add x1, x1, #8
+	str x1, [x0], #16
+	add x1, x1, #8
+	str x1, [x0]
+
+	LOAD_ADDRESS x0, L_if_true1
+	add x0, x0, #16
+	add x1, x0, #24
+	str x1, [x0]
+
+// Act
+	LOAD_ADDRESS x19, data_stack
+	mov x1, #0					// Data is 0 - should skip
+	str x1, [x19], #8
+	LOAD_ADDRESS x20, L_if_true1
+	add x20, x20, #8
+	bl start2d
+
+// Assert
+	mov x0, x19
+	LOAD_ADDRESS x1, data_stack
+	bl assertEqual			// check that VSP is back to original place
 TEST_END
