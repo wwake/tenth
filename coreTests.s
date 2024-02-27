@@ -17,8 +17,8 @@ _start:
 
 	bl add_b_plus_a_is_a
 
-	//bl if_zero_does_not_jump_for_non_zero_value
-	//bl if_zero_jumps_for_zero_value
+	bl if_zero_does_not_jump_for_non_zero_value
+	bl if_zero_jumps_for_zero_value
 
 	bl jump_skips_over_code
 
@@ -125,55 +125,75 @@ L_blocks:
 	_push_header: .quad 0
 	end2d_header: .quad 0
 	_jump_header: .quad 0
+	_if_true_header: .quad 0
 .text
 
 
 TEST_START if_zero_does_not_jump_for_non_zero_value
 // Arrange
-	DICT_START L_test_dictionary
-	DICT_ADD start2d
-	DICT_ADD _if_true
-	DICT_ADD _push
-	DICT_ADD end2d
+	LOAD_ADDRESS x0, _if_true
+	LOAD_ADDRESS x1, _if_true_header
+	str x0, [x1]
 
-//	SECONDARY_START L_test_secondary, L_test_dictionary
-	SECONDARY_ADD 0
+	LOAD_ADDRESS x0, _push
+	LOAD_ADDRESS x1, _push_header
+	str x0, [x1]
+
+	LOAD_ADDRESS x0, end2d
+	LOAD_ADDRESS x1, end2d_header
+	str x0, [x1]
+
+	DICT_START L_test_dictionary
+	DICT_ADD _if_true_header	// 0
+	DICT_ADD _push_header		// 1
+	DICT_ADD end2d_header		// 2
+
+	SECONDARY_START L_test_secondary, L_test_dictionary, start2d
 	SECONDARY_ADD 1
-	SECONDARY_TARGET 5
-	SECONDARY_ADD 2
+	SECONDARY_DATA #7
+	SECONDARY_ADD 0
+	SECONDARY_TARGET 7
+	SECONDARY_ADD 1
 	SECONDARY_DATA #42
-	SECONDARY_ADD 3
+	SECONDARY_ADD 2
 
 // Act
-	LOAD_ADDRESS x19, data_stack
-	mov x1, #1						// Data is 1 - should not skip
-	str x1, [x19], #8
-	LOAD_ADDRESS x20, L_test_secondary
-	add x20, x20, #8
-	bl start2d
+	LOAD_ADDRESS x0, L_test_secondary
+	bl runInterpreter
 
 // Assert
-	LOAD_ADDRESS x0, data_stack
-	ldr x0, [x0]
+	DATA_TOP x0
 	mov x1, #42
 	bl assertEqual
 TEST_END
 
 TEST_START if_zero_jumps_for_zero_value
-// Arrange
+	// Arrange
+	LOAD_ADDRESS x0, _if_true
+	LOAD_ADDRESS x1, _if_true_header
+	str x0, [x1]
+
+	LOAD_ADDRESS x0, _push
+	LOAD_ADDRESS x1, _push_header
+	str x0, [x1]
+
+	LOAD_ADDRESS x0, end2d
+	LOAD_ADDRESS x1, end2d_header
+	str x0, [x1]
+
 	DICT_START L_test_dictionary
-	DICT_ADD start2d
-	DICT_ADD _if_true
-	DICT_ADD _push
-	DICT_ADD end2d
+	DICT_ADD _if_true_header
+	DICT_ADD _push_header
+	DICT_ADD end2d_header
 
 	SECONDARY_START L_test_secondary, L_test_dictionary, start2d
-	SECONDARY_ADD 0
 	SECONDARY_ADD 1
-	SECONDARY_TARGET 5
-	SECONDARY_ADD 2
+	SECONDARY_DATA #0
+	SECONDARY_ADD 0
+	SECONDARY_TARGET 7
+	SECONDARY_ADD 1
 	SECONDARY_DATA #42
-	SECONDARY_ADD 3
+	SECONDARY_ADD 2
 
 // Act
 	LOAD_ADDRESS x0, L_test_secondary
@@ -188,7 +208,6 @@ TEST_END
 
 TEST_START jump_skips_over_code
 // Arrange
-
 	LOAD_ADDRESS x0, _jump
 	LOAD_ADDRESS x1, _jump_header
 	str x0, [x1]
@@ -212,8 +231,6 @@ TEST_START jump_skips_over_code
 	SECONDARY_ADD 1
 	SECONDARY_DATA #17
 	SECONDARY_ADD 2
-
-breakme:
 
 	// Act
 	LOAD_ADDRESS x0, L_test_secondary

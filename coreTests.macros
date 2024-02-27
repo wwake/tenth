@@ -50,7 +50,7 @@
 .endm
 
 // SECONDARY_SKIP - skips over one secondary cell
-// Uses x0
+// Uses: x0 = address in the new secondary
 .macro SECONDARY_SKIP
 	add x0, x0, #8
 .endm
