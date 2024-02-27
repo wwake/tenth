@@ -19,9 +19,9 @@
 // SECONDARY_START - sets up initial values
 // Parameters: "secondary" is the secondary to write; "dictionary" the dictionary to work from
 //		x0 points to secondary but will be updated
-//		x3 points to secondary, won't change
 // 		x1 points to dictionary, won't change
 //      x2 is a temp
+//		x3 points to secondary, won't change
 //
 .macro SECONDARY_START secondary, dictionary, start2dLabel
 	LOAD_ADDRESS x0, \secondary

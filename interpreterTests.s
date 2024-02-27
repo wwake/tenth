@@ -125,16 +125,12 @@ TEST_END
 .data
 .p2align 8
 
-debugdata:
-DD1:
 L_test_dictionary:
 	.fill 10, 8, 2
 
-SS1:
 L_secondary1:
 	.fill 10, 8, 3
 
-SS2:
 L_secondary2:
 	.fill 10, 8, 5
 
@@ -164,7 +160,6 @@ TEST_START secondary_calls_another_secondary
 	DICT_ADD _push_header	// 0
 	DICT_ADD end2d_header	// 1
 
-mybreak:
 	SECONDARY_START L_secondary1, L_test_dictionary, start2d
 	SECONDARY_ADDRESS L_secondary2
 	SECONDARY_ADD 1
