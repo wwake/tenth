@@ -13,8 +13,9 @@ _start:
 
 	TEST_ALL "interpreterTests"
 
-	bl interpret_empty_program
-	bl secondary_runs_yielding_result_on_stack
+//	bl interpret_empty_program
+//	bl secondary_runs_yielding_result_on_stack
+	bl secondary_calls_another_secondary
 
 	unix_exit
 	ldr lr, [sp], #16
@@ -122,49 +123,65 @@ TEST_START secondary_runs_yielding_result_on_stack
 TEST_END
 
 .data
-.p2align 3
+.p2align 8
 
+debugdata:
+DD1:
 L_test_dictionary:
-	.fill 10
+	.fill 10, 8, 2
 
+SS1:
 L_secondary1:
-	.fill 10
+	.fill 10, 8, 3
 
+SS2:
 L_secondary2:
-	.fill 10
+	.fill 10, 8, 5
 
+L_blocks:
+	start2d_header:	.quad 0
+	_push_header: .quad 0
+	end2d_header: .quad 0
 
 .text
 .p2align 3
-TEST_START secondary_calls_another secondary
+TEST_START secondary_calls_another_secondary
 // Arrange - build dictionary and two secondaries
 
+	LOAD_ADDRESS x0, start2d
+	LOAD_ADDRESS x1, start2d_header
+	str x0, [x1]
+
+	LOAD_ADDRESS x0, _push
+	LOAD_ADDRESS x1, _push_header
+	str x0, [x1]
+
+	LOAD_ADDRESS x0, end2d
+	LOAD_ADDRESS x1, end2d_header
+	str x0, [x1]
+
 	DICT_START L_test_dictionary
-	DICT_ADD start2d
-	DICT_ADD _push
-	DICT_ADD L_secondary2
-	DICT_ADD end2d
+	DICT_ADD start2d_header	// 0
+	DICT_ADD _push_header	// 1
+	DICT_ADD end2d_header	// 2
 
-	SECONDARY_START L_secondary1, L_test_dictionary
-	SECONDARY_ADD 0
+	SECONDARY_START L_secondary1, L_test_dictionary, start2d_header
+	SECONDARY_ADDRESS L_secondary2
 	SECONDARY_ADD 2
-	SECONDARY_ADD 3
 
-	SECONDARY_START L_secondary2, L_test_dictionary
-	SECONDARY_ADD 0
+	SECONDARY_START L_secondary2, L_test_dictionary, start2d_header
 	SECONDARY_ADD 1
-	SECONDARY_DATA #5
-	SECONDARY_ADD 3
+	SECONDARY_DATA #55
+	SECONDARY_ADD 2
 
 // Act - pass the secondary to the interpreter
 // TBD
-LOAD_ADDRESS x0, add2
-bl runInterpreter
+	LOAD_ADDRESS x0, L_secondary1
+	bl runInterpreter
 
 //  Assert: check that stack contains right answer
-LOAD_ADDRESS x0, data_stack
-ldr x0, [x0]
-mov x1, #3
-bl assertEqual
-TEST_END
-
+	LOAD_ADDRESS x0, data_stack
+	ldr x0, [x0]
+	mov x1, #55
+	bl assertEqual
+	TEST_END

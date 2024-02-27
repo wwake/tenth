@@ -49,9 +49,11 @@ start2d:
 	str lr, [sp, #-16]!		// push LR and...
 	str x20, [sp, #8]		// VPC to system stack
 
+	add x20, x0, #8			// start VPC just past start2d call
+
 	L_interpreter_loop:
-		ldr x1, [x20], #8	 // Load method address, increment VPC
-		ldr x1, [x1]
+		ldr x0, [x20], #8	 // Load method address, increment VPC
+		ldr x1, [x0]
 		blr x1				 // Call method
 		b L_interpreter_loop // Repeat
 

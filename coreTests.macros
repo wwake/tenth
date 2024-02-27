@@ -11,6 +11,7 @@
 // Leaves x0 pointing to next entry to write
 .macro DICT_ADD entry
 	LOAD_ADDRESS x1, \entry
+	ldr x1, [x1]
 	str x1, [x0], #8
 .endm
 
@@ -20,17 +21,32 @@
 //		x0 points to secondary but will be updated
 //		x3 points to secondary, won't change
 // 		x1 points to dictionary, won't change
-.macro SECONDARY_START secondary, dictionary
+//      x2 is a temp
+//
+.macro SECONDARY_START secondary, dictionary, start2dAddress
 	LOAD_ADDRESS x0, \secondary
+
+	LOAD_ADDRESS x2, \start2dAddress
+	ldr x2, [x2]
+	str x2, [x0], #8
+
 	LOAD_ADDRESS x3, \secondary
 	LOAD_ADDRESS x1, \dictionary
 .endm
 
 // SECONDARY_ADD - stores dictionary address at x0; updates x0
 // Parameter: "dictionaryIndex" - index in dictionary, number with no "#"
-// Uses x0-x2
+// Uses x2 as temp; reads x1; increments x0
 .macro SECONDARY_ADD dictionaryIndex
 	add x2, x1, #8*\dictionaryIndex
+	str x2, [x0], #8
+.endm
+
+// SECONDARY_ADDRESS - stores address at x0
+// Parameter: "secondaryLabel" - label of the secondary
+// Uses x2; updates x0
+.macro SECONDARY_ADDRESS secondaryLabel
+	LOAD_ADDRESS x2, \secondaryLabel
 	str x2, [x0], #8
 .endm
 

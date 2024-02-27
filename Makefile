@@ -13,12 +13,12 @@ asUnit.o: asUnit.s
 
 core.o: assembler.macros core.s
 
-coreTests.o: coreTests.s unix_functions.macros assembler.macros asUnit.macros
+coreTests.o: coreTests.s unix_functions.macros assembler.macros asUnit.macros coreTests.macros
 
 coreTests.out: coreTests.o asUnit.o cLike.o core.o interpreter.o
 
 
-unitTestDemo.o: unitTestDemo.s unix_functions.macros asUnit.macros assembler.macros
+unitTestDemo.o: unitTestDemo.s unix_functions.macros asUnit.macros assembler.macros coreTests.macros
 
 unitTestDemo.out: unitTestDemo.o cLike.o core.o asUnit.o
 
@@ -32,7 +32,7 @@ cLikeTests.out: cLikeTests.o cLike.o asUnit.o
 
 interpreter.o: interpreter.s unix_functions.macros assembler.macros
 
-interpreterTests.o: interpreterTests.s interpreter.o unix_functions.macros assembler.macros asUnit.macros
+interpreterTests.o: interpreterTests.s interpreter.o unix_functions.macros assembler.macros asUnit.macros coreTests.macros
 
 interpreterTests.out: interpreterTests.o interpreter.o asUnit.o cLike.o core.o
 

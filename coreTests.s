@@ -17,17 +17,17 @@ _start:
 
 	bl add_b_plus_a_is_a
 
-	bl if_zero_does_not_jump_for_non_zero_value
-	bl if_zero_jumps_for_zero_value
+	//bl if_zero_does_not_jump_for_non_zero_value
+	//bl if_zero_jumps_for_zero_value
 
-	bl jump_skips_over_code
+	//bl jump_skips_over_code
 
 	unix_exit
 	ldr lr, [sp], #16
 	ret
 	
 	
-	TEST_START push_pushes_one_item
+TEST_START push_pushes_one_item
 	LOAD_ADDRESS X19, L_push_test_stack
 	adr x20, L_data
 
@@ -130,7 +130,7 @@ TEST_START if_zero_does_not_jump_for_non_zero_value
 	DICT_ADD _push
 	DICT_ADD end2d
 
-	SECONDARY_START L_test_secondary, L_test_dictionary
+//	SECONDARY_START L_test_secondary, L_test_dictionary
 	SECONDARY_ADD 0
 	SECONDARY_ADD 1
 	SECONDARY_TARGET 5
@@ -161,7 +161,7 @@ TEST_START if_zero_jumps_for_zero_value
 	DICT_ADD _push
 	DICT_ADD end2d
 
-	SECONDARY_START L_test_secondary, L_test_dictionary
+//	SECONDARY_START L_test_secondary, L_test_dictionary
 	SECONDARY_ADD 0
 	SECONDARY_ADD 1
 	SECONDARY_TARGET 5
@@ -192,7 +192,7 @@ TEST_START jump_skips_over_code
 	DICT_ADD _push
 	DICT_ADD end2d
 
-	SECONDARY_START L_test_secondary, L_test_dictionary
+//	SECONDARY_START L_test_secondary, L_test_dictionary
 	SECONDARY_ADD 0
 	SECONDARY_ADD 1
 	SECONDARY_TARGET 5

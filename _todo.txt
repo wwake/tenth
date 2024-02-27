@@ -1,4 +1,7 @@
 
+* It appears primaries and secondaries want different amounts of indirection; we tried adding another indirection cell for primaries, but it didn't work.
+* Could pick up debugging there next time.
+
 * Check that secondaries can call secondaries - see TBD in interpreterTests.s
 * Check that secondaries handle recursion
 * Update tests to use the DICT and SECONDARY macros
@@ -7,6 +10,18 @@
 * Test runInterpreter on a primary
 * Fix dec2str on most negative 64-bit number (-9223372036854775808)
 * Use ldp x0, x1, [SP, #16]! or stp x0, x1, [SP, #-16]! - to load two registers to consecutive stack locations
+
+TEN-24-13: 2024-02-27 - Proper Secondary Headers
+
+TEN-24-12: 2024-02-26 - Secondaries Calling Secondaries
+* Lots of debugging, trying to straighten out the levels of indirection
+* Working theory - secondary needs first word to store address of start2d, not its dictionary entry. Other words need to point to the dictionary entry.
+
+TEN-24-11: 2024-02-14 - Recursion
+* Attempted to have a secondary call a secondary. It's clear that the inner one didn't change x20 so it was not executing the inner steps.
+* We tried changing how start2d finds the initial cell, trying to skip over the start2d reference itself, but that wasn't enough.
+* It appears primaries and secondaries want different amounts of indirection; we tried adding another indirection cell for primaries, but it didn't work. (crashes)
+* Could pick up debugging there next time.
 
 TEN-24-10: 2024-02-13 - if_zero
 * Support IF - via _if_true

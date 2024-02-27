@@ -85,7 +85,6 @@ print:
 	ldr lr, [sp], #16
 	ret
 
-
 // printnum: prints a number in x0 as decimal
 // Input: x0
 // Output: none
@@ -98,10 +97,10 @@ printnum:
 	ldr lr, [sp], #16
 	ret
 
-
 .data
 L_dec2str_out:
 .fill 32
+
 
 .text
 .p2align 2
