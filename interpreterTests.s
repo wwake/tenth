@@ -174,13 +174,12 @@ TEST_START secondary_calls_another_secondary
 	SECONDARY_ADD 1
 
 // Act - pass the secondary to the interpreter
-// TBD
 	LOAD_ADDRESS x0, L_secondary1
 	bl runInterpreter
 
 //  Assert: check that stack contains right answer
-	LOAD_ADDRESS x0, data_stack
-	ldr x0, [x0]
+	POP_DATA x0
 	mov x1, #55
 	bl assertEqual
-	TEST_END
+
+TEST_END
