@@ -161,18 +161,17 @@ TEST_START secondary_calls_another_secondary
 	str x0, [x1]
 
 	DICT_START L_test_dictionary
-	DICT_ADD start2d_header	// 0
-	DICT_ADD _push_header	// 1
-	DICT_ADD end2d_header	// 2
+	DICT_ADD _push_header	// 0
+	DICT_ADD end2d_header	// 1
 
 	SECONDARY_START L_secondary1, L_test_dictionary, start2d_header
 	SECONDARY_ADDRESS L_secondary2
-	SECONDARY_ADD 2
+	SECONDARY_ADD 1
 
 	SECONDARY_START L_secondary2, L_test_dictionary, start2d_header
-	SECONDARY_ADD 1
+	SECONDARY_ADD 0
 	SECONDARY_DATA #55
-	SECONDARY_ADD 2
+	SECONDARY_ADD 1
 
 // Act - pass the secondary to the interpreter
 // TBD
