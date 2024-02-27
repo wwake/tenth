@@ -11,3 +11,7 @@
 .macro POP_DATA register
 	ldr \register, [x19, #-8]!
 .endm
+
+.macro DATA_TOP register
+	ldr \register, [x19, #-8]
+.endm

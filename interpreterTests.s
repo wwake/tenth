@@ -178,7 +178,7 @@ TEST_START secondary_calls_another_secondary
 	bl runInterpreter
 
 //  Assert: check that stack contains right answer
-	POP_DATA x0
+	DATA_TOP x0
 	mov x1, #55
 	bl assertEqual
 
