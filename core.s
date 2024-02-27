@@ -43,19 +43,19 @@ table:
 
 _push:
 	ldr x0, [x20], #8
-	PUSH_DATA x0
+	DATA_PUSH x0
 	ret
 
 
 add: 
-	POP_DATA x1
-	POP_DATA x0
+	DATA_POP x1
+	DATA_POP x0
 	add x0, x0, x1
-	PUSH_DATA x0
+	DATA_PUSH x0
 	ret
 	
 _if_true:
-	POP_DATA x0
+	DATA_POP x0
 	CMP x0, #0
 	b.eq L_skip_if
 		add x20, x20, #8

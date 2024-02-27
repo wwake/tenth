@@ -4,11 +4,11 @@
 	add \register, \register, \location@PAGEOFF
 .endm
 
-.macro PUSH_DATA register
+.macro DATA_PUSH register
 	str \register, [x19], #8
 .endm
 
-.macro POP_DATA register
+.macro DATA_POP register
 	ldr \register, [x19, #-8]!
 .endm
 
