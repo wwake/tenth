@@ -14,7 +14,7 @@ _start:
 	TEST_ALL "interpreterTests"
 
 	bl interpret_empty_program
-//	bl secondary_runs_yielding_result_on_stack
+	bl secondary_runs_yielding_result_on_stack
 	bl secondary_calls_another_secondary
 
 	unix_exit
