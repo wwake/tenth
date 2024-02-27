@@ -86,7 +86,6 @@ add2:
 
 .text
 
-
 TEST_START secondary_runs_yielding_result_on_stack
 // Arrange - build our secondary
 	LOAD_ADDRESS x0, L_add2_dictionary
