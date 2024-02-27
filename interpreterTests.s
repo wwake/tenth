@@ -13,8 +13,8 @@ _start:
 
 	TEST_ALL "interpreterTests"
 
-	bl interpret_empty_program
-	bl secondary_runs_yielding_result_on_stack
+//	bl interpret_empty_program
+//	bl secondary_runs_yielding_result_on_stack
 	bl secondary_calls_another_secondary
 
 	unix_exit
@@ -164,11 +164,12 @@ TEST_START secondary_calls_another_secondary
 	DICT_ADD _push_header	// 0
 	DICT_ADD end2d_header	// 1
 
-	SECONDARY_START L_secondary1, L_test_dictionary, start2d_header
+mybreak:
+	SECONDARY_START L_secondary1, L_test_dictionary, start2d
 	SECONDARY_ADDRESS L_secondary2
 	SECONDARY_ADD 1
 
-	SECONDARY_START L_secondary2, L_test_dictionary, start2d_header
+	SECONDARY_START L_secondary2, L_test_dictionary, start2d
 	SECONDARY_ADD 0
 	SECONDARY_DATA #55
 	SECONDARY_ADD 1

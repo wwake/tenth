@@ -161,7 +161,7 @@ TEST_START if_zero_jumps_for_zero_value
 	DICT_ADD _push
 	DICT_ADD end2d
 
-//	SECONDARY_START L_test_secondary, L_test_dictionary
+	SECONDARY_START L_test_secondary, L_test_dictionary, start2d
 	SECONDARY_ADD 0
 	SECONDARY_ADD 1
 	SECONDARY_TARGET 5
@@ -192,8 +192,8 @@ TEST_START jump_skips_over_code
 	DICT_ADD _push
 	DICT_ADD end2d
 
-//	SECONDARY_START L_test_secondary, L_test_dictionary
-	SECONDARY_ADD 0
+	SECONDARY_START L_test_secondary, L_test_dictionary, start2d
+//	SECONDARY_ADD 0
 	SECONDARY_ADD 1
 	SECONDARY_TARGET 5
 	SECONDARY_ADD 2

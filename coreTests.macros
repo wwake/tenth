@@ -23,11 +23,10 @@
 // 		x1 points to dictionary, won't change
 //      x2 is a temp
 //
-.macro SECONDARY_START secondary, dictionary, start2dAddress
+.macro SECONDARY_START secondary, dictionary, start2dLabel
 	LOAD_ADDRESS x0, \secondary
 
-	LOAD_ADDRESS x2, \start2dAddress
-	ldr x2, [x2]
+	LOAD_ADDRESS x2, \start2dLabel
 	str x2, [x0], #8
 
 	LOAD_ADDRESS x3, \secondary
