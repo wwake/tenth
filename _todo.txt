@@ -1,8 +1,5 @@
 
-* It appears primaries and secondaries want different amounts of indirection; we tried adding another indirection cell for primaries, but it didn't work.
-* Could pick up debugging there next time.
-
-* Check that secondaries can call secondaries - see TBD in interpreterTests.s
+* Refactor dictionary macros
 * Check that secondaries handle recursion
 * Update tests to use the DICT and SECONDARY macros
 * Change data stack to a bigger size
@@ -12,6 +9,8 @@
 * Use ldp x0, x1, [SP, #16]! or stp x0, x1, [SP, #-16]! - to load two registers to consecutive stack locations
 
 TEN-24-13: 2024-02-27 - Proper Secondary Headers
+* Got secondaries calling secondaries to work
+* Restore and fixed the 'if' tests
 
 TEN-24-12: 2024-02-26 - Secondaries Calling Secondaries
 * Lots of debugging, trying to straighten out the levels of indirection

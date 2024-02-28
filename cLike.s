@@ -60,11 +60,11 @@ l_exit_streq:
 // print
 // input: x0 is address of a 0-terminated string
 // process:
-//   x28 - holds address while strlen called
 //   x0 - holds port # for stdout
 //   x1 - holds address of string to write
 //   x2 - holds length of string
 //   x16 - holds service #
+//   x28 - holds input address while strlen called
 // output: none
 //
 print:
@@ -85,8 +85,8 @@ print:
 	ldr lr, [sp], #16
 	ret
 
-// printnum: prints a number in x0 as decimal
-// Input: x0
+// printnum: prints a number as decimal
+// Input: x0 - number to print
 // Output: none
 printnum:
 	str lr, [sp, #-16]!
@@ -123,7 +123,7 @@ L_dec2str_out:
 // Ouput: x0 - pointer to null-terminated string
 //
 dec2str:
-	mov x4, #10			// X4 = 10
+	mov x4, #10
 
 	mov x1, x0
 	
