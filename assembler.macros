@@ -13,8 +13,8 @@
 .endm
 
 .macro DATA_POP_AB register1, register2
-	ldr \register1, [x19, #-8]!
-	ldr \register2, [x19, #-8]!
+	DATA_POP \register1
+	DATA_POP \register2
 .endm
 
 .macro DATA_TOP register
