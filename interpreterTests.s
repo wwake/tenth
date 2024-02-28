@@ -152,8 +152,8 @@ TEST_START secondary_calls_another_secondary
 	str x0, [x1]
 
 	DICT_START L_test_dictionary
-	DICT_ADD2 _push	// 0
-	DICT_ADD2 end2d	// 1
+	DICT_ADD _push	// 0
+	DICT_ADD end2d	// 1
 
 	SECONDARY_START L_secondary1, L_test_dictionary, start2d
 	SECONDARY_ADDRESS L_secondary2

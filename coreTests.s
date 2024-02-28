@@ -144,9 +144,9 @@ TEST_START if_zero_does_not_jump_for_non_zero_value
 	str x0, [x1]
 
 	DICT_START L_test_dictionary
-	DICT_ADD2 _if_true	// 0
-	DICT_ADD2 _push		// 1
-	DICT_ADD2 end2d		// 2
+	DICT_ADD _if_true	// 0
+	DICT_ADD _push		// 1
+	DICT_ADD end2d		// 2
 
 	SECONDARY_START L_test_secondary, L_test_dictionary, start2d
 	SECONDARY_ADD 1
@@ -182,9 +182,9 @@ TEST_START if_zero_jumps_for_zero_value
 	str x0, [x1]
 
 	DICT_START L_test_dictionary
-	DICT_ADD2 _if_true
-	DICT_ADD2 _push
-	DICT_ADD2 end2d
+	DICT_ADD _if_true
+	DICT_ADD _push
+	DICT_ADD end2d
 
 	SECONDARY_START L_test_secondary, L_test_dictionary, start2d
 	SECONDARY_ADD 1
@@ -221,9 +221,9 @@ TEST_START jump_skips_over_code
 	str x0, [x1]
 
 	DICT_START L_test_dictionary
-	DICT_ADD2 _jump  //0
-	DICT_ADD2 _push  //1
-	DICT_ADD2 end2d  //2
+	DICT_ADD _jump  //0
+	DICT_ADD _push  //1
+	DICT_ADD end2d  //2
 
 	SECONDARY_START L_test_secondary, L_test_dictionary, start2d
 	SECONDARY_ADD 0

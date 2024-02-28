@@ -11,12 +11,6 @@
 // Leaves x0 pointing to next entry to write
 .macro DICT_ADD entry
 	LOAD_ADDRESS x1, \entry
-	ldr x1, [x1]
-	str x1, [x0], #8
-.endm
-
-.macro DICT_ADD2 entry
-	LOAD_ADDRESS x1, \entry
 	str x1, [x0], #8
 .endm
 
