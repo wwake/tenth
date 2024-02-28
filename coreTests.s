@@ -124,7 +124,7 @@ TEST_START sub_b_minus_a_is_difference
 	adr x20, L_data
 	bl _push
 
-	adr x20, L_data + #8
+	adr x20, L_data + 8
 	bl _push
 
 	// Act:
