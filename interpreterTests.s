@@ -16,6 +16,7 @@ _start:
 	bl interpret_empty_program
 	bl secondary_runs_yielding_result_on_stack
 	bl secondary_calls_another_secondary
+	bl recursive_factorial
 
 	unix_exit
 	ldr lr, [sp], #16
@@ -160,4 +161,65 @@ TEST_START secondary_calls_another_secondary
 	mov x1, #55
 	bl assertEqual
 
+TEST_END
+
+
+.data
+.p2align 8
+
+L_factorial:
+.fill 16, 8, 2
+
+.text
+
+// FACTORIAL   // S → A
+//
+// DUP       // S → A A
+// 1         // S → 1 A A
+// NEQ       // S → bool A
+// IF        // S → A
+//   DUP       // S → A A
+//   1         // S → 1 A A
+//   SUB       // S → (A-1) A
+//   FACTORIAL // S → (A-1)! A
+//   MUL       // S → A*(A-1)!
+// END       // S → A!
+TEST_START recursive_factorial
+	// Arrange:
+	DICT_START L_test_dictionary
+	DICT_ADD end2d	// 0
+	DICT_ADD dup	// 1
+	DICT_ADD _push	// 2
+	DICT_ADD neq	// 3
+	DICT_ADD _jump_if_false	// 4
+	DICT_ADD sub	// 5
+	DICT_ADD mul	// 6
+
+	SECONDARY_START L_factorial, L_test_dictionary, start2d
+	SECONDARY_ADD 1		// DUP
+	SECONDARY_ADD 2		// _push
+	SECONDARY_DATA 1	// literal 1
+	SECONDARY_ADD 3		// NEQ
+	SECONDARY_ADD 4		// _jump_if_false
+	SECONDARY_TARGET 13	// address to jump to
+	SECONDARY_ADD 1		// DUP
+	SECONDARY_ADD 2		// _push
+	SECONDARY_DATA 1	// literal 1
+	SECONDARY_ADD 5		// SUB
+	SECONDARY_ADDRESS L_factorial	// FACTORIAL
+	SECONDARY_ADD 6		// MUL
+	SECONDARY_ADD 0		// end2d
+
+	// Act:
+	mov x0, #6
+	DATA_PUSH x0
+
+	LOAD_ADDRESS x0, L_factorial
+	mov x20, x0
+	bl start2d
+
+	// Assert
+	DATA_POP x0
+	mov x1, #720
+	bl assertEqual
 TEST_END
