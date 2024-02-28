@@ -7,6 +7,7 @@
 
 .global add
 .global sub
+.global mul
 
 .global _jump
 .global _jump_if_false
@@ -86,6 +87,16 @@ sub:
 	sub x0, x0, x1
 	DATA_PUSH x0
 ret
+
+// mul - replace top a,b with b*a
+// Input: Data stack with two values on top
+// Process: x0, x1 - temp
+// Output: Data stack has popped two values and pushed their product
+mul:
+	DATA_POP_AB x1, x0
+	sub x0, x0, x1
+	DATA_PUSH x0
+	ret
 
 // _jump_if_false: evaluate top of stack, branch around code if false
 // Input:
