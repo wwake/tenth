@@ -39,15 +39,6 @@ L_nl_character:
 .p2align 2
 
 
-table:		// TBD - probably garbage
-	bl nl
-	bl nl
-	bl print
-	bl _start
-.quad 0
-
-.p2align 2
-
 // _push - push the following word on the stack
 // Input: x20 - VPC pointing to data vaue (in secondary)
 // Process:
