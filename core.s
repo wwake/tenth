@@ -68,8 +68,7 @@ dup:
 // Process: x0 - temp
 // Output: Data stack has two values replaced by sum
 add:
-	DATA_POP x1
-	DATA_POP x0
+	DATA_POP_AB x1, x0
 	add x0, x0, x1
 	DATA_PUSH x0
 	ret
