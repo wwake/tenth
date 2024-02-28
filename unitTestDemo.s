@@ -5,6 +5,8 @@
 .global _start		// Provide program starting address to linker
 
 .extern nl
+.text
+
 
 .align 2
 
