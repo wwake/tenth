@@ -2,6 +2,7 @@
 
 .global nl
 .global _push
+.global dup
 .global add
 .global _jump
 .global _jump_if_false
@@ -58,6 +59,8 @@ _push:
 //   x19 increased
 //
 dup:
+	DATA_TOP x0
+	DATA_PUSH x0
 	ret
 
 // add - replace top two values with their sum

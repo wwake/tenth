@@ -33,9 +33,8 @@ _start:
 .p2align 2
 L_push_test_stack: .quad 0, 99, 0, 0
 
-L_data: .quad 142, 58
-
 .text
+L_data: .quad 142, 58
 
 TEST_START push_pushes_one_item
 	LOAD_ADDRESS X19, L_push_test_stack
