@@ -17,6 +17,7 @@ _start:
 	bl dup_duplicates_top_item
 
 	bl add_b_plus_a_is_a
+	bl sub_b_minus_a_is_difference
 
 	bl if_zero_does_not_jump_for_non_zero_value
 	bl if_zero_jumps_for_zero_value
@@ -117,6 +118,23 @@ TEST_START add_b_plus_a_is_a
 
 TEST_END
 
+TEST_START sub_b_minus_a_is_difference
+	// Arrange:
+	LOAD_ADDRESS x19, L_push_test_stack
+	adr x20, L_data
+	bl _push
+
+	adr x20, L_data + #8
+	bl _push
+
+	// Act:
+	bl sub
+
+	// Assert:
+	DATA_POP x0
+	mov x1, #84
+	bl assertEqual
+TEST_END
 
 .data
 .p2align 8

@@ -1,9 +1,13 @@
 .include "assembler.macros"
 
 .global nl
+
 .global _push
 .global dup
+
 .global add
+.global sub
+
 .global _jump
 .global _jump_if_false
 
@@ -63,15 +67,25 @@ dup:
 	DATA_PUSH x0
 	ret
 
-// add - replace top two values with their sum
+// add - replace top two a,b with b+a
 // Input: Data stack with two values on top
-// Process: x0 - temp
+// Process: x0, x1 - temp
 // Output: Data stack has two values replaced by sum
 add:
 	DATA_POP_AB x1, x0
 	add x0, x0, x1
 	DATA_PUSH x0
 	ret
+
+// sub - replace top a,b with b-a
+// Input: Data stack with two values on top
+// Process: x0, x1 - temp
+// Output: Data stack has two values replaced by difference
+sub:
+	DATA_POP_AB x1, x0
+	add x0, x0, x1
+	DATA_PUSH x0
+ret
 
 // _jump_if_false: evaluate top of stack, branch around code if false
 // Input:

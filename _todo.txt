@@ -1,4 +1,4 @@
-* Implement primitives: DUP, NE, SUB, MUL
+* Implement primitives: SUB, MUL, NE
 * Check that secondaries handle recursion
 * Update tests to use the DICT and SECONDARY macros
 * Change data stack to a bigger size
@@ -10,7 +10,7 @@
 TEN-24-14: 2024-02-28 - Refactor Dictionary Macros
 * Simplify dictionary macros
 * Rename _if_true to _jump_if_false
-
+* Implement primitives: DUP
 
 TEN-24-13: 2024-02-27 - Proper Secondary Headers
 * Got secondaries calling secondaries to work
