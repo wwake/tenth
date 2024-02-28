@@ -13,13 +13,20 @@ _start:
 
 	TEST_ALL "coreTests"
 
+	// Stack
 	bl push_pushes_one_item
 	bl dup_duplicates_top_item
 
+	// Arithmetic
 	bl add_b_plus_a_is_a
 	bl sub_b_minus_a_is_difference
 	bl mul_b_by_a_is_product
 
+	// Logical
+	bl neq_true_if_values_differ
+	bl neq_false_if_values_the_same
+
+	// Conditional
 	bl if_zero_does_not_jump_for_non_zero_value
 	bl if_zero_jumps_for_zero_value
 
@@ -152,6 +159,42 @@ TEST_START mul_b_by_a_is_product
 	// Assert:
 	DATA_POP x0
 	mov x1, #8236
+	bl assertEqual
+TEST_END
+
+TEST_START neq_true_if_values_differ
+	// Arrange:
+	LOAD_ADDRESS x19, L_push_test_stack
+	adr x20, L_data
+	bl _push
+
+	adr x20, L_data + 8
+	bl _push
+
+	// Act:
+	bl neq
+
+	// Assert:
+	DATA_POP x0
+	mov x1, #1
+	bl assertEqual
+TEST_END
+
+TEST_START neq_false_if_values_the_same
+	// Arrange:
+	LOAD_ADDRESS x19, L_push_test_stack
+	adr x20, L_data
+	bl _push
+
+	adr x20, L_data
+	bl _push
+
+	// Act:
+	bl neq
+
+	// Assert:
+	DATA_POP x0
+	mov x1, #0
 	bl assertEqual
 TEST_END
 

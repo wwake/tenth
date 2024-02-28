@@ -9,6 +9,8 @@
 .global sub
 .global mul
 
+.global neq
+
 .global _jump
 .global _jump_if_false
 
@@ -97,6 +99,23 @@ mul:
 	mul x0, x0, x1
 	DATA_PUSH x0
 	ret
+
+
+// neq - pop a, b and push replace top a,b with b-a
+// Input: Data stack with two values on top
+// Process: x0, x1 - temp
+// Output: Data stack has popped two values and pushed 1 if equal else 0
+neq:
+	DATA_POP_AB x1, x0
+
+	mov x2, #1
+	cmp x0, x1
+	b.ne L_neq_push
+		mov x2, #0
+L_neq_push:
+	DATA_PUSH x2
+ret
+
 
 // _jump_if_false: evaluate top of stack, branch around code if false
 // Input:
