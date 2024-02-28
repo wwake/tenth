@@ -3,8 +3,8 @@
 .global nl
 .global _push
 .global add
-.global _if_true
 .global _jump
+.global _jump_if_false
 
 .align 2
 
@@ -62,25 +62,25 @@ add:
 	DATA_PUSH x0
 	ret
 
-// _if_true: evaluate top of stack, branch around code if false
+// _jump_if_false: evaluate top of stack, branch around code if false
 // Input:
 //   data value on top of stack
-//   x20 points to address value (in secondary) following _if_true word
+//   x20 points to address value (in secondary) following _jump_if_false word
 // Process:
 //   x0 - temp
 // Output:
 //   Original data value is popped
 //   x20 - VPC, updated to either move past address value or jump to where it says
 //
-_if_true:
+_jump_if_false:
 	DATA_POP x0
 	CMP x0, #0
 	b.eq L_skip_if
-		add x20, x20, #8
-	b L_end_if_true
+		add x20, x20, #8	// skip past the address
+	b L_end_jump_if_false
 L_skip_if:
-		ldr x20, [x20]
-L_end_if_true:
+		ldr x20, [x20]		// transfer to the address
+L_end_jump_if_false:
 	ret
 
 // _jump: jump to target value
