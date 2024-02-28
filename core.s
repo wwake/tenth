@@ -51,6 +51,15 @@ _push:
 	DATA_PUSH x0
 	ret
 
+// dup - duplicate the item on top of the data stack
+// Input: x19, VSP points to top of stack
+// Output:
+//   stack has top element duplicated
+//   x19 increased
+//
+dup:
+	ret
+
 // add - replace top two values with their sum
 // Input: Data stack with two values on top
 // Process: x0 - temp

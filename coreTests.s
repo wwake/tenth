@@ -14,6 +14,7 @@ _start:
 	TEST_ALL "coreTests"
 
 	bl push_pushes_one_item
+	bl dup_duplicates_top_item
 
 	bl add_b_plus_a_is_a
 
@@ -26,7 +27,16 @@ _start:
 	ldr lr, [sp], #16
 	ret
 	
-	
+
+.data
+
+.p2align 2
+L_push_test_stack: .quad 0, 99, 0, 0
+
+L_data: .quad 142, 58
+
+.text
+
 TEST_START push_pushes_one_item
 	LOAD_ADDRESS X19, L_push_test_stack
 	adr x20, L_data
@@ -54,14 +64,29 @@ TEST_START push_pushes_one_item
 TEST_END
 
 
-L_data: .quad 142, 58
+TEST_START dup_duplicates_top_item
+	// Arrange:
+	LOAD_ADDRESS x19, L_push_test_stack
+
+	adr x20, L_data
+	bl _push
+
+	// Act:
+	bl dup
+
+	// Assert:
+	DATA_POP_AB x0, x1
+	mov x28, x0
+	bl assertEqual
+
+	mov x0, x28
+	mov x1, #142
+	bl assertEqual
+
+TEST_END
+
 
 .data
-
-.p2align 2
-L_push_test_stack: .quad 0, 99, 0, 0
- 
-	
 L_VSP_Update: .asciz "VSP should be incremented"
 L_stack_update: .asciz "Stack should have data"
 L_VPC_Update: .asciz "VPC should be incremented"

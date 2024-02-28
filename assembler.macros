@@ -12,6 +12,11 @@
 	ldr \register, [x19, #-8]!
 .endm
 
+.macro DATA_POP_AB register1, register2
+	ldr \register1, [x19, #-8]!
+	ldr \register2, [x19, #-8]!
+.endm
+
 .macro DATA_TOP register
 	ldr \register, [x19, #-8]
 .endm
