@@ -1,4 +1,3 @@
-
 * Refactor dictionary macros
 * Check that secondaries handle recursion
 * Update tests to use the DICT and SECONDARY macros
@@ -7,6 +6,9 @@
 * Test runInterpreter on a primary
 * Fix dec2str on most negative 64-bit number (-9223372036854775808)
 * Use ldp x0, x1, [SP, #16]! or stp x0, x1, [SP, #-16]! - to load two registers to consecutive stack locations
+
+TEN-24-14: 2024-02-28 - Refactor Dictionary Macros
+
 
 TEN-24-13: 2024-02-27 - Proper Secondary Headers
 * Got secondaries calling secondaries to work

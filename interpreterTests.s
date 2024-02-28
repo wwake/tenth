@@ -143,21 +143,17 @@ L_blocks:
 TEST_START secondary_calls_another_secondary
 // Arrange - build dictionary and two secondaries
 
-	LOAD_ADDRESS x0, start2d
-	LOAD_ADDRESS x1, start2d_header
-	str x0, [x1]
-
-	LOAD_ADDRESS x0, _push
-	LOAD_ADDRESS x1, _push_header
-	str x0, [x1]
+	LOAD_ADDRESS x4, start2d
+	LOAD_ADDRESS x3, start2d_header
+	str x4, [x3]
 
 	LOAD_ADDRESS x0, end2d
 	LOAD_ADDRESS x1, end2d_header
 	str x0, [x1]
 
 	DICT_START L_test_dictionary
-	DICT_ADD _push_header	// 0
-	DICT_ADD end2d_header	// 1
+	DICT_ADD2 _push	// 0
+	DICT_ADD2 end2d	// 1
 
 	SECONDARY_START L_secondary1, L_test_dictionary, start2d
 	SECONDARY_ADDRESS L_secondary2
