@@ -120,29 +120,11 @@ L_test_secondary:
 	.quad 0
 	.quad 0
 
-L_blocks:
-	start2d_header:	.quad 0
-	_push_header: .quad 0
-	end2d_header: .quad 0
-	_jump_header: .quad 0
-	_if_true_header: .quad 0
 .text
 
 
 TEST_START if_zero_does_not_jump_for_non_zero_value
 // Arrange
-	LOAD_ADDRESS x0, _if_true
-	LOAD_ADDRESS x1, _if_true_header
-	str x0, [x1]
-
-	LOAD_ADDRESS x0, _push
-	LOAD_ADDRESS x1, _push_header
-	str x0, [x1]
-
-	LOAD_ADDRESS x0, end2d
-	LOAD_ADDRESS x1, end2d_header
-	str x0, [x1]
-
 	DICT_START L_test_dictionary
 	DICT_ADD _if_true	// 0
 	DICT_ADD _push		// 1
@@ -169,18 +151,6 @@ TEST_END
 
 TEST_START if_zero_jumps_for_zero_value
 	// Arrange
-	LOAD_ADDRESS x0, _if_true
-	LOAD_ADDRESS x1, _if_true_header
-	str x0, [x1]
-
-	LOAD_ADDRESS x0, _push
-	LOAD_ADDRESS x1, _push_header
-	str x0, [x1]
-
-	LOAD_ADDRESS x0, end2d
-	LOAD_ADDRESS x1, end2d_header
-	str x0, [x1]
-
 	DICT_START L_test_dictionary
 	DICT_ADD _if_true
 	DICT_ADD _push
@@ -208,18 +178,6 @@ TEST_END
 
 TEST_START jump_skips_over_code
 // Arrange
-	LOAD_ADDRESS x0, _jump
-	LOAD_ADDRESS x1, _jump_header
-	str x0, [x1]
-
-	LOAD_ADDRESS x0, _push
-	LOAD_ADDRESS x1, _push_header
-	str x0, [x1]
-
-	LOAD_ADDRESS x0, end2d
-	LOAD_ADDRESS x1, end2d_header
-	str x0, [x1]
-
 	DICT_START L_test_dictionary
 	DICT_ADD _jump  //0
 	DICT_ADD _push  //1

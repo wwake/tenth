@@ -133,23 +133,10 @@ L_secondary1:
 L_secondary2:
 	.fill 10, 8, 5
 
-L_blocks:
-	start2d_header:	.quad 0
-	_push_header: .quad 0
-	end2d_header: .quad 0
-
 .text
 .p2align 3
 TEST_START secondary_calls_another_secondary
 // Arrange - build dictionary and two secondaries
-
-	LOAD_ADDRESS x4, start2d
-	LOAD_ADDRESS x3, start2d_header
-	str x4, [x3]
-
-	LOAD_ADDRESS x0, end2d
-	LOAD_ADDRESS x1, end2d_header
-	str x0, [x1]
 
 	DICT_START L_test_dictionary
 	DICT_ADD _push	// 0
