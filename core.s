@@ -94,7 +94,7 @@ ret
 // Output: Data stack has popped two values and pushed their product
 mul:
 	DATA_POP_AB x1, x0
-	sub x0, x0, x1
+	mul x0, x0, x1
 	DATA_PUSH x0
 	ret
 
