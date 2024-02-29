@@ -107,13 +107,9 @@ mul:
 // Output: Data stack has popped two values and pushed 1 if equal else 0
 neq:
 	DATA_POP_AB x1, x0
-
-	mov x2, #1
 	cmp x0, x1
-	b.ne L_neq_push
-		mov x2, #0
-L_neq_push:
-	DATA_PUSH x2
+	cset x0, ne
+	DATA_PUSH x0
 ret
 
 
