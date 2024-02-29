@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		912FE2702B9111330065D33E /* setupTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 912FE26F2B9111330065D33E /* setupTests.s */; };
 		91451FBF2B73E3C700D8C89A /* coreTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91451FBE2B73E3C700D8C89A /* coreTests.s */; };
 		91451FC02B73E3D400D8C89A /* cLikeTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91238D812B730AD800052895 /* cLikeTests.s */; };
 		91451FC22B73E3F000D8C89A /* interpreterTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91451FC12B73E3F000D8C89A /* interpreterTests.s */; };
@@ -41,6 +42,7 @@
 		91238D8B2B730AD800052895 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		91238D902B730AE600052895 /* unix_functions.macros */ = {isa = PBXFileReference; lastKnownFileType = text; name = unix_functions.macros; path = ../unix_functions.macros; sourceTree = "<group>"; };
 		91238D912B730AE600052895 /* Tenth.key */ = {isa = PBXFileReference; lastKnownFileType = file; name = Tenth.key; path = ../Tenth.key; sourceTree = "<group>"; };
+		912FE26F2B9111330065D33E /* setupTests.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = setupTests.s; path = ../setupTests.s; sourceTree = "<group>"; };
 		91451FBE2B73E3C700D8C89A /* coreTests.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = coreTests.s; path = ../coreTests.s; sourceTree = "<group>"; };
 		91451FC12B73E3F000D8C89A /* interpreterTests.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = interpreterTests.s; path = ../interpreterTests.s; sourceTree = "<group>"; };
 		91451FC32B73E40500D8C89A /* unitTestDemo.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = unitTestDemo.s; path = ../unitTestDemo.s; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				91238D812B730AD800052895 /* cLikeTests.s */,
+				912FE26F2B9111330065D33E /* setupTests.s */,
 				91451FBE2B73E3C700D8C89A /* coreTests.s */,
 				91451FC12B73E3F000D8C89A /* interpreterTests.s */,
 				91451FC32B73E40500D8C89A /* unitTestDemo.s */,
@@ -184,6 +187,7 @@
 				91451FC42B73E40500D8C89A /* unitTestDemo.s in Sources */,
 				91451FC02B73E3D400D8C89A /* cLikeTests.s in Sources */,
 				91451FBF2B73E3C700D8C89A /* coreTests.s in Sources */,
+				912FE2702B9111330065D33E /* setupTests.s in Sources */,
 				916C5CB82B7C155E00EA6FE5 /* coreTests.macros in Sources */,
 				91451FC22B73E3F000D8C89A /* interpreterTests.s in Sources */,
 			);

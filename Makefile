@@ -36,10 +36,13 @@ interpreterTests.o: interpreterTests.s interpreter.o unix_functions.macros assem
 
 interpreterTests.out: interpreterTests.o interpreter.o asUnit.o cLike.o core.o
 
+setupTests.o: setupTests.s unix_functions.macros assembler.macros asUnit.macros
+
+setupTests.out: setupTests.o asUnit.o interpreter.o core.o cLike.o
 
 clean:
 	rm -f *.o *.out
 
-tests: cLikeTests.out coreTests.out unitTestDemo.out interpreterTests.out
-	./cLikeTests.out ; ./coreTests.out ; ./unitTestDemo.out ; ./interpreterTests.out
+tests: cLikeTests.out coreTests.out unitTestDemo.out interpreterTests.out setupTests.out
+	./cLikeTests.out ; ./coreTests.out ; ./unitTestDemo.out ; ./interpreterTests.out; ./setupTests.out
 
