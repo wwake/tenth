@@ -187,7 +187,7 @@ L_factorial:
 TEST_START recursive_factorial
 	// Arrange:
 	DICT_START L_test_dictionary
-	DICT_ADD end2d, "_end2d\0.12345678"	// 0
+	DICT_ADD end2d	// 0
 	DICT_ADD dup	// 1
 	DICT_ADD _push	// 2
 	DICT_ADD neq	// 3

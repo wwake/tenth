@@ -9,7 +9,7 @@
 // Parameters: "entry" is the label going into the dictionary
 // Uses x1 as a temp
 // Leaves x0 pointing to next entry to write
-.macro DICT_ADD entry, name="\0...+-*/12345678"
+.macro DICT_ADD entry
 	LOAD_ADDRESS x1, \entry
 	str x1, [x0], #8
 .endm
