@@ -30,7 +30,7 @@ systemDictionary:
 	.fill 300, 8, 0
 .text
 
-// DICT_ENTRY name, codeAddress
+// DICT_HEADER name, codeAddress
 // Input:
 //   name of the entry "in quotes"
 //   codeAddress of code in entry
@@ -42,18 +42,18 @@ systemDictionary:
 //   x0 as a temp
 //   x21 is increased for new entry
 //
-.macro DICT_ENTRY name, codeAddress
+.macro DICT_HEADER name, codeAddress
 	str x21, [x21, #24]
 	add x21, x21, #24
 
-	LOAD_ADDRESS x0, L_dict_entry_\@
+	LOAD_ADDRESS x0, L_DICT_HEADER_\@
 	str x0, [x21, #8]
 
 	LOAD_ADDRESS x0, \codeAddress
 	str x0, [x21, #16]
 
 	.data
-L_dict_entry_\@: .asciz "\name"
+L_DICT_HEADER_\@: .asciz "\name"
 	.text
 .endm
 
@@ -90,7 +90,7 @@ TEST_START adding_to_dictionary_adds_item
 	bl dict_init
 
 	// Act:
-	DICT_ENTRY "nl", nl
+	DICT_HEADER "nl", nl
 
 	// Assert:
 	mov x0, x21
