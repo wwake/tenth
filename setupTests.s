@@ -31,16 +31,17 @@ systemDictionary:
 .text
 
 .macro DICT_ENTRY name, codeAddress
+	mov x0, x21
+	add x21, x21, #24
 
-	str x21, [x21, #24]
+	str x0, [x21]
 
 	LOAD_ADDRESS x0, L_dict_entry_\@
-	str x0, [x21, #(24+8)]
+	str x0, [x21, #8]
 
 	LOAD_ADDRESS x0, \codeAddress
-	str x0, [x21, #(24+16)]
+	str x0, [x21, #16]
 
-	add x21, x21, #24
 
 	.data
 L_dict_entry_\@: .asciz "\name"
