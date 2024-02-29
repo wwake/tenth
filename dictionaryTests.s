@@ -1,6 +1,7 @@
 .include "assembler.macros"
 .include "unix_functions.macros"
 .include "asUnit.macros"
+.include "dictionary.macros"
 
 .global _start
 
@@ -10,7 +11,7 @@
 _start:
 	str lr, [sp, #-16]!
 
-	TEST_ALL "setupTests"
+	TEST_ALL "dictionaryTests"
 
 	bl empty_dictionary_has_zeros
 	bl adding_to_dictionary_adds_item
@@ -18,52 +19,6 @@ _start:
 	unix_exit
 	ldr lr, [sp], #16
 ret
-
-.data
-.p2align 3
-
-systemDictionary:
-	.quad 0
-	.quad 0
-	.quad 0
-
-	.fill 300, 8, 0
-.text
-
-// DICT_HEADER name, codeAddress
-// Input:
-//   name of the entry "in quotes"
-//   codeAddress of code in entry
-//   x21 [DP = dictionary pointer] points to newest dictionary entry
-// Process:
-//   Store 3 words in next entry: link to previous dictionary entry, pointer to name string, and pointer to code
-//   Increment x21 by 3 words
-// Uses:
-//   x0 as a temp
-//   x21 is increased for new entry
-//
-.macro DICT_HEADER name, codeAddress
-	str x21, [x21, #24]
-	add x21, x21, #24
-
-	LOAD_ADDRESS x0, L_DICT_HEADER_\@
-	str x0, [x21, #8]
-
-	LOAD_ADDRESS x0, \codeAddress
-	str x0, [x21, #16]
-
-	.data
-L_DICT_HEADER_\@: .asciz "\name"
-	.text
-.endm
-
-dict_init:
-
-	LOAD_ADDRESS x21, systemDictionary
-	ret
-
-
-.text
 
 TEST_START empty_dictionary_has_zeros
 	// Act:

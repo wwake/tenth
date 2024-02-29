@@ -36,9 +36,11 @@ interpreterTests.o: interpreterTests.s interpreter.o unix_functions.macros assem
 
 interpreterTests.out: interpreterTests.o interpreter.o asUnit.o cLike.o core.o
 
-dictionaryTests.o: dictionaryTests.s unix_functions.macros assembler.macros asUnit.macros
+dictionary.o: dictionary.s dictionary.macros unix_functions.macros assembler.macros
 
-dictionaryTests.out: dictionaryTests.o asUnit.o interpreter.o core.o cLike.o
+dictionaryTests.o: dictionaryTests.s unix_functions.macros assembler.macros asUnit.macros dictionary.o
+
+dictionaryTests.out: dictionaryTests.o dictionary.o asUnit.o interpreter.o core.o cLike.o
 
 clean:
 	rm -f *.o *.out
