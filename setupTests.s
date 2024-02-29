@@ -13,6 +13,7 @@ _start:
 	TEST_ALL "setupTests"
 
 	bl empty_dictionary_has_zeros
+	bl adding_to_dictionary_adds_item
 
 	unix_exit
 	ldr lr, [sp], #16
@@ -26,7 +27,26 @@ systemDictionary:
 	.quad 0
 	.quad 0
 
+	.fill 300, 8, 0
 .text
+
+.macro DICT_ENTRY name, codeAddress
+
+	str x21, [x21, #24]
+
+	LOAD_ADDRESS x0, L_dict_entry_\@
+	str x0, [x21, #(24+8)]
+
+	LOAD_ADDRESS x0, \codeAddress
+	str x0, [x21, #(24+16)]
+
+	add x21, x21, #24
+
+	.data
+L_dict_entry_\@: .asciz "\name"
+	.text
+.endm
+
 dict_init:
 
 	LOAD_ADDRESS x21, systemDictionary
@@ -36,8 +56,6 @@ dict_init:
 .text
 
 TEST_START empty_dictionary_has_zeros
-	// Arrange:
-
 	// Act:
 	bl dict_init
 
@@ -51,3 +69,36 @@ TEST_START empty_dictionary_has_zeros
 	bl assertEqual
 TEST_END
 
+
+.data
+.p2align 3
+L_nl_string: .asciz "nl"
+
+.text
+TEST_START adding_to_dictionary_adds_item
+	// Arrange:
+	bl dict_init
+
+	// Act:
+	DICT_ENTRY "nl", nl
+
+	// Assert:
+	mov x0, x21
+	LOAD_ADDRESS x1, systemDictionary
+	add x1, x1, #24
+	bl assertEqual
+
+	ldr x0, [x21]
+	LOAD_ADDRESS x1, systemDictionary
+	bl assertEqual
+
+	ldr x0, [x21, #8]
+	LOAD_ADDRESS x1, L_nl_string
+	bl streq
+	mov x1, #1
+	bl assertEqual
+
+	ldr x0, [x21, #16]
+	LOAD_ADDRESS x1, nl
+	bl assertEqual
+TEST_END

@@ -33,7 +33,7 @@
 // Output:
 //   value is printed
 nl:
-	str   lr, [sp, #-16]!
+	str lr, [sp, #-16]!
 	
 	adr x0, L_nl_character
 	bl print
