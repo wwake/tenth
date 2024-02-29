@@ -30,18 +30,27 @@ systemDictionary:
 	.fill 300, 8, 0
 .text
 
+// DICT_ENTRY name, codeAddress
+// Input:
+//   name of the entry "in quotes"
+//   codeAddress of code in entry
+//   x21 [DP = dictionary pointer] points to newest dictionary entry
+// Process:
+//   Store 3 words in next entry: link to previous dictionary entry, pointer to name string, and pointer to code
+//   Increment x21 by 3 words
+// Uses:
+//   x0 as a temp
+//   x21 is increased for new entry
+//
 .macro DICT_ENTRY name, codeAddress
-	mov x0, x21
+	str x21, [x21, #24]
 	add x21, x21, #24
-
-	str x0, [x21]
 
 	LOAD_ADDRESS x0, L_dict_entry_\@
 	str x0, [x21, #8]
 
 	LOAD_ADDRESS x0, \codeAddress
 	str x0, [x21, #16]
-
 
 	.data
 L_dict_entry_\@: .asciz "\name"
