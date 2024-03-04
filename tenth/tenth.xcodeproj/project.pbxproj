@@ -14,6 +14,7 @@
 		91451FC22B73E3F000D8C89A /* interpreterTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91451FC12B73E3F000D8C89A /* interpreterTests.s */; };
 		91451FC42B73E40500D8C89A /* unitTestDemo.s in Sources */ = {isa = PBXBuildFile; fileRef = 91451FC32B73E40500D8C89A /* unitTestDemo.s */; };
 		916C5CB82B7C155E00EA6FE5 /* coreTests.macros in Sources */ = {isa = PBXBuildFile; fileRef = 916C5CB72B7C155E00EA6FE5 /* coreTests.macros */; };
+		91908DBE2B966ABC008CC466 /* replTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91908DBD2B966ABC008CC466 /* replTests.s */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -50,6 +51,7 @@
 		91451FC12B73E3F000D8C89A /* interpreterTests.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = interpreterTests.s; path = ../interpreterTests.s; sourceTree = "<group>"; };
 		91451FC32B73E40500D8C89A /* unitTestDemo.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = unitTestDemo.s; path = ../unitTestDemo.s; sourceTree = "<group>"; };
 		916C5CB72B7C155E00EA6FE5 /* coreTests.macros */ = {isa = PBXFileReference; lastKnownFileType = text; name = coreTests.macros; path = ../coreTests.macros; sourceTree = "<group>"; };
+		91908DBD2B966ABC008CC466 /* replTests.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = replTests.s; path = ../replTests.s; sourceTree = "<group>"; };
 		91B9F1322B742898005730DF /* interpreter.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = interpreter.s; path = ../interpreter.s; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -136,6 +138,7 @@
 				91451FC12B73E3F000D8C89A /* interpreterTests.s */,
 				91451FC32B73E40500D8C89A /* unitTestDemo.s */,
 				916C5CB72B7C155E00EA6FE5 /* coreTests.macros */,
+				91908DBD2B966ABC008CC466 /* replTests.s */,
 			);
 			name = tests;
 			sourceTree = "<group>";
@@ -199,6 +202,7 @@
 			files = (
 				91451FC42B73E40500D8C89A /* unitTestDemo.s in Sources */,
 				91451FC02B73E3D400D8C89A /* cLikeTests.s in Sources */,
+				91908DBE2B966ABC008CC466 /* replTests.s in Sources */,
 				912FE2722B9121400065D33E /* dictionary.s in Sources */,
 				91451FBF2B73E3C700D8C89A /* coreTests.s in Sources */,
 				912FE2702B9111330065D33E /* dictionaryTests.s in Sources */,

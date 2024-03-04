@@ -45,9 +45,13 @@ dictionaryTests.o: dictionaryTests.s dictionary.o $(MACROS) $(TEST_MACROS)
 
 dictionaryTests.out: dictionaryTests.o dictionary.o asUnit.o interpreter.o core.o cLike.o
 
+replTests.o: replTests.s $(MACROS) $(TEST_MACROS)
+
+replTests.out: replTests.o dictionary.o asUnit.o interpreter.o core.o cLike.o
+
 clean:
 	rm -f *.o *.out
 
-tests: cLikeTests.out coreTests.out unitTestDemo.out interpreterTests.out dictionaryTests.out
-	./cLikeTests.out ; ./coreTests.out ; ./unitTestDemo.out ; ./interpreterTests.out; ./dictionaryTests.out
+tests: cLikeTests.out coreTests.out unitTestDemo.out interpreterTests.out dictionaryTests.out replTests.out
+	./cLikeTests.out ; ./coreTests.out ; ./unitTestDemo.out ; ./interpreterTests.out; ./dictionaryTests.out; ./replTests.out
 
