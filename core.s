@@ -101,7 +101,7 @@ mul:
 	ret
 
 
-// neq - pop a, b and push replace top a,b with b-a
+// neq - pop a, b and push replace top a,b with boolean
 // Input: Data stack with two values on top
 // Process: x0, x1 - temp
 // Output: Data stack has popped two values and pushed 1 if equal else 0

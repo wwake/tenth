@@ -54,8 +54,8 @@ start2d:
 	add x20, x0, #8			// start VPC just past start2d call
 
 	L_interpreter_loop:
-		ldr x0, [x20], #8	 // Load method address, increment VPC
-		ldr x1, [x0]
+		ldr x0, [x20], #8	 // Load word address, increment VPC
+		ldr x1, [x0]		// Load address of code
 		blr x1				 // Call method
 		b L_interpreter_loop // Repeat
 
