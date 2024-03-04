@@ -1,13 +1,13 @@
-
-* Test dictionary search
-
+* Write x0 and x1 in the assertion message
 * Update tests to use the DICT and SECONDARY macros
 * Change data stack to a bigger size
 * Should VSP point to the last element? instead of next free slot.
-* Test runInterpreter on a primary
 * Fix dec2str on most negative 64-bit number (-9223372036854775808) [?]
 * Note that our arithmetic operations don't check for overflow
 * Should runInterpreter take the data stack as given? [Helps REPL]
+
+TEN-24-16: 2024-03-04 - Dictionary
+* Make dictionary search work
 
 TEN-24-15: 2024-02-29 - Build System Dictionary
 * Use ldp x0, x1, [SP, #16]! or stp x0, x1, [SP, #-16]! - to load two registers to consecutive stack locations - Didn't work, even with post-decrement
