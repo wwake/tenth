@@ -19,6 +19,7 @@ _start:
 
 	bl eval_of_just_push42_leaves_42_on_stack
 	bl eval_of_empty_string_just_stops
+	bl eval_of_three_words_puts_84_on_stack
 
 	unix_exit
 	ldr lr, [sp], #16
@@ -140,7 +141,7 @@ TEST_START eval_of_three_words_puts_84_on_stack
 	// Assert
 	LOAD_ADDRESS x0, L_eval_test_stack
 	ldr x0, [x0]
-	mov x1, #42
+	mov x1, #84
 	bl assertEqual
 
 	mov x0, x19
