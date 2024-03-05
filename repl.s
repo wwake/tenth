@@ -10,7 +10,7 @@
 // x0 - points to a string with spaces in it
 // Output:
 //   The string has all spaces replaced with \0,
-//   and an extra \0 if the string wasn't empty
+//   and adds an extra \0 at the end
 tokenize:
 
 L_tokenize_loop:
