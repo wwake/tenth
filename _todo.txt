@@ -1,4 +1,4 @@
-  * Read a string and replace spaces with \0 and append a \0
+  * Replace spaces with \0 and append a \0
   * Read a string from the terminal
   * Read a string from a file
   * Set up "real" system dictionary

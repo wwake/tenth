@@ -17,6 +17,8 @@ _start:
 
 	TEST_ALL "replTests"
 
+	bl replace_spaces_in_empty_string
+
 	bl eval_of_empty_string_just_stops
 	bl eval_of_just_push42_leaves_42_on_stack
 	bl eval_of_three_words_puts_84_on_stack
@@ -127,4 +129,30 @@ TEST_START eval_of_three_words_puts_84_on_stack
 	add x1, x1, #8
 	bl assertEqual
 
+TEST_END
+
+
+.data
+L_empty_string: .ascii "\0X"
+
+.text
+.align 2
+
+TEST_START replace_spaces_in_empty_string
+	// Arrange
+	LOAD_ADDRESS x0, L_empty_string
+
+	// Act
+	bl tokenize
+
+	// Assert
+	LOAD_ADDRESS x0, L_empty_string
+	ldrb w0, [x0]
+	mov x1, #0
+	bl assertEqual
+
+	LOAD_ADDRESS x0, L_empty_string
+	ldrb w0, [x0, #1]
+	mov x1, #0
+	bl assertEqual
 TEST_END

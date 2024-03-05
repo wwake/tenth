@@ -1,9 +1,14 @@
 
+.global tokenize
 .global eval
 
 .text
 
 .align 2
+
+// tokenize - split line into multiple strings
+tokenize:
+	ret
 
 // eval - evaluate a line of input
 // Inputs:
