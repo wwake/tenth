@@ -7,7 +7,28 @@
 .align 2
 
 // tokenize - split line into multiple strings
+// x0 - points to a string with spaces in it
+// Output:
+//   The string has all spaces replaced with \0,
+//   and an extra \0 if the string wasn't empty
 tokenize:
+
+L_tokenize_loop:
+	ldrb w1, [x0]
+	cmp w1, #0
+	b.eq L_tokenize_exit
+
+	cmp w1, #32	// compare to space
+	b.ne L_tokenize_move_to_next
+		strb wzr, [x0]
+
+L_tokenize_move_to_next:
+	add x0, x0, #1
+	b L_tokenize_loop
+
+L_tokenize_exit:	// put extra zero after last word
+	add x0, x0, 1
+	strb wzr, [x0]
 	ret
 
 // eval - evaluate a line of input

@@ -17,7 +17,8 @@ _start:
 
 	TEST_ALL "replTests"
 
-	bl replace_spaces_in_empty_string
+	bl tokenize_does_nothing_with_empty_string
+	bl tokenize_replaces_spaces_and_appends_0
 
 	bl eval_of_empty_string_just_stops
 	bl eval_of_just_push42_leaves_42_on_stack
@@ -133,26 +134,76 @@ TEST_END
 
 
 .data
-L_empty_string: .ascii "\0X"
+L_empty_input: .ascii "\0A"
 
 .text
 .align 2
 
-TEST_START replace_spaces_in_empty_string
+TEST_START tokenize_does_nothing_with_empty_string
 	// Arrange
-	LOAD_ADDRESS x0, L_empty_string
+	LOAD_ADDRESS x0, L_empty_input
 
 	// Act
 	bl tokenize
 
 	// Assert
-	LOAD_ADDRESS x0, L_empty_string
+	LOAD_ADDRESS x0, L_empty_input
 	ldrb w0, [x0]
 	mov x1, #0
 	bl assertEqual
 
-	LOAD_ADDRESS x0, L_empty_string
-	ldrb w0, [x0, #1]
+	LOAD_ADDRESS x0, L_empty_input
+	add x0, x0, #1
+	ldrb w0, [x0]
 	mov x1, #0
 	bl assertEqual
 TEST_END
+
+.data
+L_nonempty_input: .ascii "a b cc\0ABC\0"
+
+L_expect_a: .asciz "a"
+L_expect_b: .asciz "b"
+L_expect_cc: .asciz "cc"
+L_expect_empty: .asciz ""
+.text
+.align 2
+
+
+TEST_START tokenize_replaces_spaces_and_appends_0
+	// Arrange
+	LOAD_ADDRESS x0, L_nonempty_input
+
+	// Act
+	bl tokenize
+
+	// Assert
+	LOAD_ADDRESS x0, L_nonempty_input
+	LOAD_ADDRESS x1, L_expect_a
+	bl streq
+	mov x1, #1
+	bl assertEqual
+
+	LOAD_ADDRESS x0, L_nonempty_input
+	add x0, x0, #2
+	LOAD_ADDRESS x1, L_expect_b
+	bl streq
+	mov x1, #1
+	bl assertEqual
+
+	LOAD_ADDRESS x0, L_nonempty_input
+	add x0, x0, #4
+	LOAD_ADDRESS x1, L_expect_cc
+	bl streq
+	mov x1, #1
+	bl assertEqual
+
+	LOAD_ADDRESS x0, L_nonempty_input
+	add x0, x0, #7
+	bl strlen
+	mov x1, #0
+	bl assertEqual
+TEST_END
+
+
+
