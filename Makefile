@@ -45,9 +45,11 @@ dictionaryTests.o: dictionaryTests.s dictionary.o $(MACROS) $(TEST_MACROS)
 
 dictionaryTests.out: dictionaryTests.o dictionary.o asUnit.o interpreter.o core.o cLike.o
 
+repl.o: repl.s
+
 replTests.o: replTests.s $(MACROS) $(TEST_MACROS)
 
-replTests.out: replTests.o dictionary.o asUnit.o interpreter.o core.o cLike.o
+replTests.out: replTests.o repl.o dictionary.o asUnit.o interpreter.o core.o cLike.o
 
 clean:
 	rm -f *.o *.out

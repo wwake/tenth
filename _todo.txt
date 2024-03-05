@@ -1,12 +1,24 @@
-  * Eval for multi-word direct execution input
-  * Compile...
+  * Read a string and replace spaces with \0 and append a \0
+  * Read a string from the terminal
+  * Read a string from a file
+  * Set up "real" system dictionary
+  * Develop a way to write secondaries to dictionary
+  * Develop a way to recognize immediate words and enter/exit compile mode
+  * Develop ": wordToDefine body ;"
+  DUP 1 SUB
+  : SUB1 DUP 1 SUB ;
 REPL
+
 * Update tests to use the DICT and SECONDARY macros
 * Change data stack to a bigger size
 * Should VSP point to the last element? instead of next free slot.
 * Fix dec2str on most negative 64-bit number (-9223372036854775808) [?]
 * Note that our arithmetic operations don't check for overflow
 * Should runInterpreter take the data stack as given? [Helps REPL]
+
+TEN-24-17: 2024-03-05 - Eval
+REPL
+  * Eval for multi-word direct execution input
 
 TEN-24-16: 2024-03-04 - Dictionary
 Dictionary
