@@ -17,8 +17,8 @@ _start:
 
 	TEST_ALL "replTests"
 
-	bl eval_of_just_push42_leaves_42_on_stack
 	bl eval_of_empty_string_just_stops
+	bl eval_of_just_push42_leaves_42_on_stack
 	bl eval_of_three_words_puts_84_on_stack
 
 	unix_exit
@@ -50,7 +50,8 @@ ret
 
 // eval - evaluate a line of input
 // Inputs:
-//   x0 - input, words separated by a space
+//   x0 - input, words separated by \0 bytes
+//   x10 - points to current word
 //
 eval:
 	str lr, [sp, #-16]!
@@ -58,6 +59,7 @@ eval:
 
 	mov x10, x0
 
+L_eval_while_nonempty:
 	ldrb w0, [x0]
 	cmp w0, #0
 	b.eq L_end_eval
@@ -66,6 +68,14 @@ eval:
 	bl dict_search
 	ldr x0, [x0]
 	blr x0
+
+	mov x0, x10
+	bl strlen
+
+	add x10, x10, x0
+	add x10, x10, #1
+	mov x0, x10
+	b L_eval_while_nonempty
 
 L_end_eval:
 	ldr x10, [sp, #8]
@@ -122,9 +132,11 @@ L_input_three_words:
 .asciz "push42"
 .asciz "push42"
 .asciz "add"
+.asciz ""
 .fill 10
 
-
+.text
+.align 2
 TEST_START eval_of_three_words_puts_84_on_stack
 	// Arrange
 	bl dict_init
