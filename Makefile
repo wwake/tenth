@@ -54,6 +54,8 @@ replTests.out: replTests.o repl.o dictionary.o asUnit.o interpreter.o core.o cLi
 clean:
 	rm -f *.o *.out
 
-tests: cLikeTests.out coreTests.out unitTestDemo.out interpreterTests.out dictionaryTests.out replTests.out
-	./cLikeTests.out ; ./coreTests.out ; ./unitTestDemo.out ; ./interpreterTests.out; ./dictionaryTests.out; ./replTests.out
+tests: cLikeTests.out coreTests.out interpreterTests.out dictionaryTests.out replTests.out
+	./cLikeTests.out ; ./coreTests.out ; ./interpreterTests.out; ./dictionaryTests.out; ./replTests.out
 
+playground: unitTestDemo.out
+	./unitTestDemo.out

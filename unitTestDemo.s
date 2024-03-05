@@ -5,17 +5,39 @@
 .global _start		// Provide program starting address to linker
 
 .extern nl
+
+
+.data
+L_input_buffer:
+  .fill 100, 8, 0
+
 .text
 
 
 .align 2
 
+// 3	AUE_NULL	ALL	{ user_ssize_t read(int fd, user_addr_t cbuf, user_size_t nbyte); }
+
 _start:
 	str lr, [sp, #-16]!
 	
+	unix_read #0, L_input_buffer, #99
+
+	bl printnum
+
+	LOAD_ADDRESS x0, L_input_buffer
+	bl print
+
+	unix_read #0, L_input_buffer, #99
+
+	bl printnum
+
+	LOAD_ADDRESS x0, L_input_buffer
+	bl print
+
 	TEST_ALL "unitTestDemo"
 
-	bl print_number
+//	bl print_number
 
 //	bl nl
 
