@@ -58,9 +58,7 @@ eval:
 		b.eq L_end_eval
 
 		mov x0, x10
-		bl dict_search
-		ldr x0, [x0]
-		blr x0
+		bl eval1
 
 		mov x0, x10
 		bl strlen
@@ -75,6 +73,16 @@ eval:
 	ldr lr, [sp], #16
 ret
 
+
+eval1:
+	str lr, [sp, #-16]!
+
+	bl dict_search
+	ldr x0, [x0]
+	blr x0
+
+	ldr lr, [sp], #16
+	ret
 
 .data
 L_prompt:

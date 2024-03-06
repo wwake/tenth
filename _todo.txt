@@ -1,5 +1,3 @@
-
-  * Set up "real" system dictionary
   * Report syntax error
   * Test push1
   * Should we reorg eval to not loop?
@@ -18,7 +16,9 @@ REPL
 * Should runInterpreter take the data stack as given? [Helps REPL]
 
 TEN-24-18: 2024-03-06 - REPL
-* Write a REPL loop
+REPL
+  * Write a REPL loop
+  * Set up "real" system dictionary
 
 TEN-24-17: 2024-03-05 - Eval
 REPL
