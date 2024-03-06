@@ -1,8 +1,13 @@
 .include "assembler.macros"
 
+.global data_stack
+.global data_stack_init
+
 .global nl
 
 .global _push
+.global push1
+
 .global dup
 
 .global add
@@ -14,17 +19,27 @@
 .global _jump
 .global _jump_if_false
 
+.equ DATA_STACK_SIZE, 1000
+
+.data
 .align 2
 
-.ascii "nl\0....."  // Name - 16 bytes
-.align 4
-.quad 0xdeadbeef
+// data_stack: Run-time data stack, pointed to by X19 (VSP)
+// VSP points to the next place to write
+data_stack:
+	.fill DATA_STACK_SIZE, 8, 0
 
-.quad 0			 // Link to previous entry
-.quad .+8		 // Offset to code
+// --------------------------
 
-.p2align 2
-// code
+
+.text
+.align 2
+
+// data_stack_init - setup stack and VSP
+//
+data_stack_init:
+	LOAD_ADDRESS x19, data_stack
+	ret
 
 // nl - print a newline
 // Input: none
@@ -58,6 +73,13 @@ _push:
 	ldr x0, [x20], #8
 	DATA_PUSH x0
 	ret
+
+
+push1:
+	mov x0, #1
+	DATA_PUSH x0
+	ret
+
 
 // dup - duplicate the item on top of the data stack
 // Input: x19, VSP points to top of stack

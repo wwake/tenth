@@ -18,6 +18,7 @@ _start:
 	TEST_ALL "replTests"
 
 	bl tokenize_does_nothing_with_empty_string
+	bl tokenize_replaces_newline_with_0
 	bl tokenize_replaces_spaces_and_appends_0
 
 	bl eval_of_empty_string_just_stops
@@ -154,6 +155,42 @@ TEST_START tokenize_does_nothing_with_empty_string
 
 	LOAD_ADDRESS x0, L_empty_input
 	add x0, x0, #1
+	ldrb w0, [x0]
+	mov x1, #0
+	bl assertEqual
+TEST_END
+
+.data
+L_nl_input: .asciz "x\ny\n\0"
+L_expect_x: .asciz "x"
+L_expect_y: .asciz "y"
+
+.text
+.align 2
+
+TEST_START tokenize_replaces_newline_with_0
+	// Arrange
+	LOAD_ADDRESS x0, L_nl_input
+
+	// Act
+	bl tokenize
+
+	// Assert
+	LOAD_ADDRESS x0, L_nl_input
+	LOAD_ADDRESS x1, L_expect_x
+	bl streq
+	mov x1, #1
+	bl assertEqual
+
+	LOAD_ADDRESS x0, L_nl_input
+	add x0, x0, 2
+	LOAD_ADDRESS x1, L_expect_y
+	bl streq
+	mov x1, #1
+	bl assertEqual
+
+	LOAD_ADDRESS x0, L_nl_input
+	add x0, x0, #4
 	ldrb w0, [x0]
 	mov x1, #0
 	bl assertEqual

@@ -1,10 +1,12 @@
-  * Read a string from a file
+
   * Set up "real" system dictionary
+  * Report syntax error
+  * Test push1
+  * Read a string from a file
+  * Handle failed dictionary lookup in eval
   * Develop a way to write secondaries to dictionary
   * Develop a way to recognize immediate words and enter/exit compile mode
   * Develop ": wordToDefine body ;"
-  DUP 1 SUB
-  : SUB1 DUP 1 SUB ;
 REPL
 
 * Update tests to use the DICT and SECONDARY macros
@@ -13,6 +15,9 @@ REPL
 * Fix dec2str on most negative 64-bit number (-9223372036854775808) [?]
 * Note that our arithmetic operations don't check for overflow
 * Should runInterpreter take the data stack as given? [Helps REPL]
+
+TEN-24-18: 2024-03-06 - REPL
+
 
 TEN-24-17: 2024-03-05 - Eval
 REPL

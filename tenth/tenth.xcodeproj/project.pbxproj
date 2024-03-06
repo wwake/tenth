@@ -16,6 +16,7 @@
 		916C5CB82B7C155E00EA6FE5 /* coreTests.macros in Sources */ = {isa = PBXBuildFile; fileRef = 916C5CB72B7C155E00EA6FE5 /* coreTests.macros */; };
 		91908DBE2B966ABC008CC466 /* replTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91908DBD2B966ABC008CC466 /* replTests.s */; };
 		91908DC12B97B19E008CC466 /* repl.s in Sources */ = {isa = PBXBuildFile; fileRef = 91908DC02B97B19E008CC466 /* repl.s */; };
+		91D342EB2B98F8A4001B1D00 /* main.s in Sources */ = {isa = PBXBuildFile; fileRef = 91D342EA2B98F8A4001B1D00 /* main.s */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -55,6 +56,7 @@
 		91908DBD2B966ABC008CC466 /* replTests.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = replTests.s; path = ../replTests.s; sourceTree = "<group>"; };
 		91908DC02B97B19E008CC466 /* repl.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = repl.s; path = ../repl.s; sourceTree = "<group>"; };
 		91B9F1322B742898005730DF /* interpreter.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = interpreter.s; path = ../interpreter.s; sourceTree = "<group>"; };
+		91D342EA2B98F8A4001B1D00 /* main.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = main.s; path = ../main.s; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				91908DC02B97B19E008CC466 /* repl.s */,
+				91D342EA2B98F8A4001B1D00 /* main.s */,
 			);
 			name = repl;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91D342EB2B98F8A4001B1D00 /* main.s in Sources */,
 				91451FC42B73E40500D8C89A /* unitTestDemo.s in Sources */,
 				91451FC02B73E3D400D8C89A /* cLikeTests.s in Sources */,
 				91908DC12B97B19E008CC466 /* repl.s in Sources */,

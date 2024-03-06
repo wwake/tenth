@@ -7,15 +7,6 @@
 .global start2d
 .global end2d
 
-.data
-.p2align 3
-
-// data_stack: Run-time data stack, pointed to by X19 (VSP)
-// VSP points to the next place to write
-data_stack:
-.fill 20
-
-// --------------------------
 
 .text
 .p2align 2

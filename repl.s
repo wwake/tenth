@@ -1,15 +1,20 @@
+.include "assembler.macros"
+.include "unix_functions.macros"
+.include "dictionary.macros"
 
 .global tokenize
 .global eval
+.global repl
 
+.equ INPUT_BUFFER_SIZE, 250
 .text
 
 .align 2
 
 // tokenize - split line into multiple strings
-// x0 - points to a string with spaces in it
+//   x0 - points to a string with spaces in it
 // Output:
-//   The string has all spaces replaced with \0,
+//   The string has all spaces or newlines replaced with \0,
 //   and adds an extra \0 at the end
 tokenize:
 
@@ -18,7 +23,12 @@ L_tokenize_loop:
 	cmp w1, #0
 	b.eq L_tokenize_exit
 
-	cmp w1, #32	// compare to space
+	cmp w1, #32		// compare to space
+	b.ne L_replace_newline
+		strb wzr, [x0]
+
+L_replace_newline:
+	cmp w1, #10		// compare to newline
 	b.ne L_tokenize_move_to_next
 		strb wzr, [x0]
 
@@ -64,3 +74,45 @@ eval:
 	ldr x10, [sp, #8]
 	ldr lr, [sp], #16
 ret
+
+
+.data
+L_prompt:
+	.asciz "10> "
+
+L_input_buffer:
+	.align 2
+	.fill 250, 8, 0
+	.byte 0
+
+.text
+.align 2
+
+// repl
+//
+repl:
+	str lr, [sp, #-16]!
+	str x10, [sp, #8]
+
+	L_repl_loop:
+	// prompt
+		LOAD_ADDRESS x0, L_prompt
+		bl print
+
+	// read
+	unix_read #0, L_input_buffer, INPUT_BUFFER_SIZE
+	
+	LOAD_ADDRESS x0, L_input_buffer
+	bl tokenize
+
+	// eval + print
+	LOAD_ADDRESS x0, L_input_buffer
+	bl eval
+
+	// loop
+	b L_repl_loop
+
+	ldr x10, [sp, #8]
+	ldr lr, [sp], #16
+
+	ret
