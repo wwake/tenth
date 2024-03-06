@@ -2,11 +2,12 @@
   * Set up "real" system dictionary
   * Report syntax error
   * Test push1
-  * Read a string from a file
+  * Should we reorg eval to not loop?
   * Handle failed dictionary lookup in eval
   * Develop a way to write secondaries to dictionary
   * Develop a way to recognize immediate words and enter/exit compile mode
   * Develop ": wordToDefine body ;"
+  * Read a string from a file
 REPL
 
 * Update tests to use the DICT and SECONDARY macros
@@ -17,7 +18,7 @@ REPL
 * Should runInterpreter take the data stack as given? [Helps REPL]
 
 TEN-24-18: 2024-03-06 - REPL
-
+* Write a REPL loop
 
 TEN-24-17: 2024-03-05 - Eval
 REPL
