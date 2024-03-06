@@ -85,6 +85,11 @@ L_input_buffer:
 	.fill 250, 8, 0
 	.byte 0
 
+L_data_top_prefix:
+	.asciz ">>>> Top of stack: "
+L_data_top_suffix:
+	.asciz "\n"
+
 .text
 .align 2
 
@@ -108,6 +113,15 @@ repl:
 	// eval + print
 	LOAD_ADDRESS x0, L_input_buffer
 	bl eval
+
+	LOAD_ADDRESS x0, L_data_top_prefix
+	bl print
+
+	DATA_TOP x0
+	bl printnum
+
+	LOAD_ADDRESS x0, L_data_top_suffix
+	bl print
 
 	// loop
 	b L_repl_loop

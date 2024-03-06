@@ -16,7 +16,7 @@ _start:
 
 	// Initialize dictionary
 	bl dict_init
-	DICT_HEADER "1\n", push1
+	DICT_HEADER "1", push1
 	DICT_HEADER "add", add
 	DICT_HEADER "dup", dup
 	DICT_HEADER "nl", nl
