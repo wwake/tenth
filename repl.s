@@ -4,7 +4,9 @@
 
 .global tokenize
 .global eval
+.global eval1
 .global repl
+.global wordNotFoundError
 
 .equ INPUT_BUFFER_SIZE, 250
 .text
@@ -73,11 +75,24 @@ eval:
 	ldr lr, [sp], #16
 ret
 
-
+// eval1 - evaluates one instruction
+// Input:
+//   x0 - word to execute
+//   x10 - current word from input
+// Assumes - first dictionary entry is the syntax error routine (uses x10)
+// Output:
+//   side effect from execution
+//
 eval1:
 	str lr, [sp, #-16]!
 
 	bl dict_search
+	cmp x0, #0
+	b.ne L_call_found_routine
+		LOAD_ADDRESS x0, systemDictionary
+		add x0, x0, #40		// skip all-0 header, get first word address
+
+L_call_found_routine:
 	ldr x0, [x0]
 	blr x0
 
@@ -137,4 +152,32 @@ repl:
 	ldr x10, [sp, #8]
 	ldr lr, [sp], #16
 
+	ret
+
+
+wordNotFoundMessage:
+	.asciz "Word not found: "
+
+wordNotFoundSuffix:
+	.asciz "\n"
+
+.align 2
+// wordNotFoundError - prints error message and word that wasn't found
+// Input: x10 - points to string, the not-found word
+// Output:
+//   Prints error message
+//
+wordNotFoundError:
+	str lr, [sp, #-16]!
+
+	LOAD_ADDRESS x0, wordNotFoundMessage
+	bl print
+
+	mov x0, x10
+	bl print
+
+	LOAD_ADDRESS x0, wordNotFoundSuffix
+	bl print
+
+	ldr lr, [sp], #16
 	ret

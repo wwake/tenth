@@ -31,6 +31,7 @@ L_load_system_dictionary:
 	str lr, [sp, #-16]!
 
 	bl dict_init
+	DICT_HEADER "_wordNotFoundError", wordNotFoundError
 	DICT_HEADER "1", push1
 	DICT_HEADER "add", add
 	DICT_HEADER "dup", dup

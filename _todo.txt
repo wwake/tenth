@@ -1,7 +1,9 @@
+  * Check that x10 is right going into eval1
   * Report syntax error
-  * Test push1
-  * Should we reorg eval to not loop?
   * Handle failed dictionary lookup in eval
+  * Test push1
+  * Pull eval over to repl vvvvvvvv
+  * Should we reorg eval to not loop?
   * Develop a way to write secondaries to dictionary
   * Develop a way to recognize immediate words and enter/exit compile mode
   * Develop ": wordToDefine body ;"
@@ -15,9 +17,13 @@ REPL
 * Note that our arithmetic operations don't check for overflow
 * Should runInterpreter take the data stack as given? [Helps REPL]
 
+TEN-24-19: 2024-03-07 - Detecting Incorrect Words
+
+
 TEN-24-18: 2024-03-06 - REPL
 REPL
   * Write a REPL loop
+  * We checked 1+1=2 and 2*3=6
   * Set up "real" system dictionary
 
 TEN-24-17: 2024-03-05 - Eval
