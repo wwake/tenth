@@ -47,16 +47,26 @@ L_tokenize_exit:	// put extra zero after last word
 	ret
 
 
+input_init:
+	// load x10
+
 // readWord - input and then tokenize
 readWord:
 	str lr, [sp, #-16]!
 
-	unix_read #0, L_input_buffer, INPUT_BUFFER_SIZE
+//	ldr x0, [x10]
+	mov x0, #0
+	cmp x0, #0
+	b.ne L_skip_read
+		unix_read #0, L_input_buffer, INPUT_BUFFER_SIZE
 
-	LOAD_ADDRESS x0, L_input_buffer
-	bl tokenize
+		LOAD_ADDRESS x0, L_input_buffer
+		bl tokenize
 
+L_skip_read:
 	LOAD_ADDRESS x0, L_input_buffer
+
+	mov x10, x0
 
 	ldr lr, [sp], #16
 	ret

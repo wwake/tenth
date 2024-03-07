@@ -73,6 +73,7 @@ TEST_START eval_of_just_push42_leaves_42_on_stack
 	LOAD_ADDRESS x19, L_eval_test_stack
 
 	LOAD_ADDRESS x0, L_input_buffer
+	LOAD_ADDRESS x10, L_input_buffer
 
 	// Act
 	bl eval
@@ -112,6 +113,7 @@ TEST_START eval_of_three_words_puts_84_on_stack
 	LOAD_ADDRESS x19, L_eval_test_stack
 
 	LOAD_ADDRESS x0, L_input_three_words
+	LOAD_ADDRESS x10, L_input_three_words
 
 	// Act
 	bl eval

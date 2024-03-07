@@ -14,9 +14,6 @@
 //
 eval:
 	str lr, [sp, #-16]!
-	str x10, [sp, #8]
-
-	mov x10, x0
 
 	L_eval_while_nonempty:
 		ldrb w0, [x0]
@@ -34,8 +31,7 @@ eval:
 		mov x0, x10
 	b L_eval_while_nonempty
 
-	L_end_eval:
-	ldr x10, [sp, #8]
+L_end_eval:
 	ldr lr, [sp], #16
 ret
 
