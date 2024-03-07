@@ -1,7 +1,3 @@
-  * Check that x10 is right going into eval1
-  * Report syntax error
-  * Handle failed dictionary lookup in eval
-  * Test push1
   * Pull eval over to repl vvvvvvvv
   * Should we reorg eval to not loop?
   * Develop a way to write secondaries to dictionary
@@ -18,6 +14,7 @@ REPL
 * Should runInterpreter take the data stack as given? [Helps REPL]
 
 TEN-24-19: 2024-03-07 - Detecting Incorrect Words
+  * Make failed dictionary lookup report syntax error
 
 
 TEN-24-18: 2024-03-06 - REPL

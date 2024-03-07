@@ -116,6 +116,17 @@ L_data_top_suffix:
 .text
 .align 2
 
+readWord:
+	str lr, [sp, #-16]!
+
+	unix_read #0, L_input_buffer, INPUT_BUFFER_SIZE
+
+	LOAD_ADDRESS x0, L_input_buffer
+	bl tokenize
+
+	ldr lr, [sp], #16
+	ret
+
 // repl
 //
 repl:
@@ -128,15 +139,13 @@ repl:
 		bl print
 
 	// read
-	unix_read #0, L_input_buffer, INPUT_BUFFER_SIZE
-	
-	LOAD_ADDRESS x0, L_input_buffer
-	bl tokenize
+	bl readWord
 
-	// eval + print
+	// eval
 	LOAD_ADDRESS x0, L_input_buffer
 	bl eval
 
+	// print
 	LOAD_ADDRESS x0, L_data_top_prefix
 	bl print
 
