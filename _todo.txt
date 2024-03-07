@@ -1,5 +1,5 @@
-  * Pull eval over to repl vvvvvvvv
-  * Should we reorg eval to not loop?
+
+  * Make eval not loop; leave that to readWord
   * Develop a way to write secondaries to dictionary
   * Develop a way to recognize immediate words and enter/exit compile mode
   * Develop ": wordToDefine body ;"
@@ -11,17 +11,17 @@ REPL
 * Should VSP point to the last element? instead of next free slot.
 * Fix dec2str on most negative 64-bit number (-9223372036854775808) [?]
 * Note that our arithmetic operations don't check for overflow
-* Should runInterpreter take the data stack as given? [Helps REPL]
 
 TEN-24-19: 2024-03-07 - Detecting Incorrect Words
   * Make failed dictionary lookup report syntax error
-
+  * Allow only one word per line [remove this restriction later]u
 
 TEN-24-18: 2024-03-06 - REPL
 REPL
   * Write a REPL loop
   * We checked 1+1=2 and 2*3=6
   * Set up "real" system dictionary
+  * Should runInterpreter take the data stack as given? [Helps REPL] Yes
 
 TEN-24-17: 2024-03-05 - Eval
 REPL
