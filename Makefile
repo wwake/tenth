@@ -35,6 +35,9 @@ dictionaryTests.o: dictionaryTests.s dictionary.o $(MACROS) $(TEST_MACROS)
 dictionaryTests.out: dictionaryTests.o dictionary.o asUnit.o interpreter.o core.o cLike.o
 
 
+input.o: input.s $(MACROS)
+
+
 interpreter.o: interpreter.s unix_functions.macros assembler.macros
 
 interpreterTests.o: interpreterTests.s interpreter.o $(MACROS) $(TEST_MACROS)
@@ -49,9 +52,9 @@ repl.o: repl.s
 
 replTests.o: replTests.s $(MACROS) $(TEST_MACROS)
 
-replTests.out: replTests.o repl.o dictionary.o asUnit.o interpreter.o core.o cLike.o
+replTests.out: replTests.o repl.o asUnit.o cLike.o core.o dictionary.o input.o interpreter.o
 
-repl.out: repl.o main.o core.o cLike.o interpreter.o dictionary.o
+repl.out: repl.o core.o cLike.o dictionary.o input.o interpreter.o main.o
 
 
 unitTestDemo.o: unitTestDemo.s $(MACROS) $(TEST_MACROS)

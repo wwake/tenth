@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		912FE2702B9111330065D33E /* dictionaryTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 912FE26F2B9111330065D33E /* dictionaryTests.s */; };
 		912FE2722B9121400065D33E /* dictionary.s in Sources */ = {isa = PBXBuildFile; fileRef = 912FE2712B9121400065D33E /* dictionary.s */; };
+		913B91FA2B9A57AB00943E4E /* input.s in Sources */ = {isa = PBXBuildFile; fileRef = 913B91F92B9A57AB00943E4E /* input.s */; };
 		91451FBF2B73E3C700D8C89A /* coreTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91451FBE2B73E3C700D8C89A /* coreTests.s */; };
 		91451FC02B73E3D400D8C89A /* cLikeTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91238D812B730AD800052895 /* cLikeTests.s */; };
 		91451FC22B73E3F000D8C89A /* interpreterTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91451FC12B73E3F000D8C89A /* interpreterTests.s */; };
@@ -49,6 +50,7 @@
 		912FE26F2B9111330065D33E /* dictionaryTests.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = dictionaryTests.s; path = ../dictionaryTests.s; sourceTree = "<group>"; };
 		912FE2712B9121400065D33E /* dictionary.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = dictionary.s; path = ../dictionary.s; sourceTree = "<group>"; };
 		912FE2752B9122B00065D33E /* dictionary.macros */ = {isa = PBXFileReference; lastKnownFileType = text; name = dictionary.macros; path = ../dictionary.macros; sourceTree = "<group>"; };
+		913B91F92B9A57AB00943E4E /* input.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = input.s; path = ../input.s; sourceTree = "<group>"; };
 		91451FBE2B73E3C700D8C89A /* coreTests.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = coreTests.s; path = ../coreTests.s; sourceTree = "<group>"; };
 		91451FC12B73E3F000D8C89A /* interpreterTests.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = interpreterTests.s; path = ../interpreterTests.s; sourceTree = "<group>"; };
 		91451FC32B73E40500D8C89A /* unitTestDemo.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = unitTestDemo.s; path = ../unitTestDemo.s; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 			children = (
 				91908DC02B97B19E008CC466 /* repl.s */,
 				91D342EA2B98F8A4001B1D00 /* main.s */,
+				913B91F92B9A57AB00943E4E /* input.s */,
 			);
 			name = repl;
 			sourceTree = "<group>";
@@ -215,6 +218,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				91D342EB2B98F8A4001B1D00 /* main.s in Sources */,
+				913B91FA2B9A57AB00943E4E /* input.s in Sources */,
 				91451FC42B73E40500D8C89A /* unitTestDemo.s in Sources */,
 				91451FC02B73E3D400D8C89A /* cLikeTests.s in Sources */,
 				91908DC12B97B19E008CC466 /* repl.s in Sources */,

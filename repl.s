@@ -8,7 +8,6 @@
 .global repl
 .global wordNotFoundError
 
-.equ INPUT_BUFFER_SIZE, 250
 .text
 
 .align 2
@@ -116,16 +115,6 @@ L_data_top_suffix:
 .text
 .align 2
 
-readWord:
-	str lr, [sp, #-16]!
-
-	unix_read #0, L_input_buffer, INPUT_BUFFER_SIZE
-
-	LOAD_ADDRESS x0, L_input_buffer
-	bl tokenize
-
-	ldr lr, [sp], #16
-	ret
 
 // repl
 //
@@ -142,7 +131,6 @@ repl:
 	bl readWord
 
 	// eval
-	LOAD_ADDRESS x0, L_input_buffer
 	bl eval
 
 	// print
