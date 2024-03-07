@@ -92,7 +92,7 @@ repl:
 	bl readWord
 
 	// eval
-	bl eval
+	bl eval1
 
 	// print
 	LOAD_ADDRESS x0, L_data_top_prefix
