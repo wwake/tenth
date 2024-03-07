@@ -37,6 +37,10 @@ dictionaryTests.out: dictionaryTests.o dictionary.o asUnit.o interpreter.o core.
 
 input.o: input.s $(MACROS)
 
+inputTests.o: inputTests.s $(MACROS) $(TEST_MACROS)
+
+inputTests.out: inputTests.o asUnit.o cLike.o input.o
+
 
 interpreter.o: interpreter.s unix_functions.macros assembler.macros
 
@@ -69,8 +73,8 @@ clean:
 repl: repl.out
 	./repl.out
 
-tests: cLikeTests.out coreTests.out interpreterTests.out dictionaryTests.out replTests.out
-	./cLikeTests.out ; ./coreTests.out ; ./interpreterTests.out; ./dictionaryTests.out; ./replTests.out
+tests: cLikeTests.out coreTests.out dictionaryTests.out inputTests.out interpreterTests.out replTests.out
+	./cLikeTests.out ; ./coreTests.out ; ./dictionaryTests.out; ./inputTests.out; ./interpreterTests.out; ./replTests.out
 
 playground: unitTestDemo.out
 	./unitTestDemo.out
