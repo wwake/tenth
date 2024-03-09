@@ -47,14 +47,14 @@ eval1:
 	str lr, [sp, #-16]!
 
 	bl dict_search
-	cmp x0, #0
+	cmp x0, #0		// Call
 	b.ne L_call_found_routine
 		LOAD_ADDRESS x0, systemDictionary
-		add x0, x0, #40		// skip all-0 header, get first word address
+		add x0, x0, #40		// x0 <- ptr to error-handling
 
 L_call_found_routine:
-	ldr x0, [x0]
-	blr x0
+	ldr x0, [x0]			// load ptr to code
+	blr x0					// call code
 
 	ldr lr, [sp], #16
 	ret
@@ -83,7 +83,7 @@ repl:
 	str lr, [sp, #-16]!
 	str x10, [sp, #8]
 
-	L_repl_loop:
+L_repl_loop:
 	// prompt
 		LOAD_ADDRESS x0, L_prompt
 		bl print

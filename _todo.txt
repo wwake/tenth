@@ -9,12 +9,12 @@ REPL
 * Update tests to use the DICT and SECONDARY macros
 * Change data stack to a bigger size
 * Should VSP point to the last element? instead of next free slot.
-* Fix dec2str on most negative 64-bit number (-9223372036854775808) [?]
 * Note that our arithmetic operations don't check for overflow
+* Fix dec2str on most negative 64-bit number (-9223372036854775808) [?]
 
 TEN-24-19: 2024-03-07 - Detecting Incorrect Words
   * Make failed dictionary lookup report syntax error
-  * Allow only one word per line [remove this restriction later]u
+  * Allow only one word per line [remove this restriction later
 
 TEN-24-18: 2024-03-06 - REPL
 REPL

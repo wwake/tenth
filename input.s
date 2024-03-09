@@ -38,10 +38,10 @@ L_replace_newline:
 		strb wzr, [x0]
 
 L_tokenize_move_to_next:
-	add x0, x0, #1
+	add x0, x0, #1	// skip forward 1 char.
 	b L_tokenize_loop
 
-L_tokenize_exit:	// put extra zero after last word
+L_tokenize_exit:	// put extra zero at end
 	add x0, x0, 1
 	strb wzr, [x0]
 	ret
