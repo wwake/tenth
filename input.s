@@ -56,24 +56,33 @@ inputInit:
 // readWord - input and then tokenize
 // Inputs:
 //   x4 - address of the routine to call to read a line
+// Output:
+//   x0 - ptr to next word (0-terminated string)
+//   x22 - updated
 //
 readWord:
 	str lr, [sp, #-16]!
 
-	//ldrb w0, [x22]
-	mov w0, #0
+	ldrb w0, [x22]
 	cmp w0, #0
 	b.ne L_skip_read
 		mov x0, #0
 		LOAD_ADDRESS x1, L_input_buffer
 		mov x2, INPUT_BUFFER_SIZE
-		blr x4
+		blr x4		// read line
 
 		LOAD_ADDRESS x0, L_input_buffer
 		bl tokenize
 
 		LOAD_ADDRESS x22, L_input_buffer
 		mov x0, x22
+
+		bl strlen
+		LOAD_ADDRESS x22, L_input_buffer
+		add x22, x22, x0
+		add x22, x22, #1
+
+		LOAD_ADDRESS x0, L_input_buffer
 
 L_skip_read:
 	ldr lr, [sp], #16
