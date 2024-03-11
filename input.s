@@ -10,7 +10,7 @@
 
 .data
 
-L_input_buffer:
+inputBuffer:
 .align 2
    .fill 250, 8, 0
    .byte 0
@@ -50,7 +50,7 @@ L_tokenize_exit:	// put extra zero at end
 
 
 inputInit:
-	LOAD_ADDRESS x22, L_input_buffer
+	LOAD_ADDRESS x22, inputBuffer
 	ret
 
 // readWord - input and then tokenize
@@ -67,22 +67,22 @@ readWord:
 	cmp w0, #0
 	b.ne L_skip_read
 		mov x0, #0
-		LOAD_ADDRESS x1, L_input_buffer
+		LOAD_ADDRESS x1, inputBuffer
 		mov x2, INPUT_BUFFER_SIZE
 		blr x4		// read line
 
-		LOAD_ADDRESS x0, L_input_buffer
+		LOAD_ADDRESS x0, inputBuffer
 		bl tokenize
 
-		LOAD_ADDRESS x22, L_input_buffer
+		LOAD_ADDRESS x22, inputBuffer
 		mov x0, x22
 
 		bl strlen
-		LOAD_ADDRESS x22, L_input_buffer
+		LOAD_ADDRESS x22, inputBuffer
 		add x22, x22, x0
 		add x22, x22, #1
 
-		LOAD_ADDRESS x0, L_input_buffer
+		LOAD_ADDRESS x0, inputBuffer
 
 L_skip_read:
 	ldr lr, [sp], #16

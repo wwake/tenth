@@ -18,6 +18,8 @@ _start:
 	bl tokenize_replaces_newline_with_0
 	bl tokenize_replaces_spaces_and_appends_0
 
+	bl read_with_word_at_start
+
 	unix_exit
 	ldr lr, [sp], #16
 	ret
@@ -131,10 +133,37 @@ TEST_START tokenize_replaces_spaces_and_appends_0
 	bl assertEqual
 TEST_END
 
-TEST_START read_with_word_at_start
-	// define stub readLine
-	// call readword
-	// verify first word found
 
+.align 2
+L_read_source1:
+	.asciz "dup"
+
+.align 2
+
+// L_stub_readLine - simulate line read
+// Input:
+//   x0 = fd
+//   x1 = input buffer
+//   x2 = max char's to read
+//
+stub_readLine:
+	str lr, [sp, #-16]!
+
+	LOAD_ADDRESS x0, L_read_source1
+	bl strcpyz
+
+	ldr lr, [sp], #16
+	ret
+
+TEST_START read_with_word_at_start
+	bl inputInit
+
+	LOAD_ADDRESS x4, stub_readLine
+	bl readWord
+
+	LOAD_ADDRESS x1, L_read_source1
+	bl streq
+	mov x1, #1
+	bl assertEqual
 TEST_END
 
