@@ -9,7 +9,7 @@
 
 _start:
 	str lr, [sp, #-16]!
-	str x10, [sp, #8]
+	str x22, [sp, #8]
 
 	bl data_stack_init
 
@@ -21,7 +21,7 @@ _start:
 	// Run
 	bl repl
 
-	ldr x10, [sp, #8]
+	ldr x22, [sp, #8]
 	ldr lr, [sp], #16
 
 	ret

@@ -10,7 +10,7 @@
 // eval - evaluate a line of input
 // Inputs:
 //   x0 - input, words separated by \0 bytes
-//   x10 - points to current word
+//   x22 - points to current word
 //
 eval:
 	str lr, [sp, #-16]!
@@ -20,15 +20,15 @@ eval:
 		cmp w0, #0
 		b.eq L_end_eval
 
-		mov x0, x10
+		mov x0, x22
 		bl eval1
 
-		mov x0, x10
+		mov x0, x22
 		bl strlen
 
-		add x10, x10, x0
-		add x10, x10, #1
-		mov x0, x10
+		add x22, x22, x0
+		add x22, x22, #1
+		mov x0, x22
 	b L_eval_while_nonempty
 
 L_end_eval:
@@ -38,8 +38,8 @@ ret
 // eval1 - evaluates one instruction
 // Input:
 //   x0 - word to execute
-//   x10 - current word from input
-// Assumes - first dictionary entry is the syntax error routine (uses x10)
+//   x22 - current word from input
+// Assumes - first dictionary entry is the syntax error routine (uses x22)
 // Output:
 //   side effect from execution
 //
@@ -81,7 +81,7 @@ L_data_top_suffix:
 //
 repl:
 	str lr, [sp, #-16]!
-	str x10, [sp, #8]
+	str x22, [sp, #8]
 
 L_repl_loop:
 	// prompt
@@ -107,7 +107,7 @@ L_repl_loop:
 	// loop
 	b L_repl_loop
 
-	ldr x10, [sp, #8]
+	ldr x22, [sp, #8]
 	ldr lr, [sp], #16
 
 	ret
@@ -121,7 +121,7 @@ wordNotFoundSuffix:
 
 .align 2
 // wordNotFoundError - prints error message and word that wasn't found
-// Input: x10 - points to string, the not-found word
+// Input: x22 - points to string, the not-found word
 // Output:
 //   Prints error message
 //
@@ -131,7 +131,7 @@ wordNotFoundError:
 	LOAD_ADDRESS x0, wordNotFoundMessage
 	bl print
 
-	mov x0, x10
+	mov x0, x22
 	bl print
 
 	LOAD_ADDRESS x0, wordNotFoundSuffix

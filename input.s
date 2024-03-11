@@ -48,14 +48,14 @@ L_tokenize_exit:	// put extra zero at end
 
 
 input_init:
-	LOAD_ADDRESS x10, L_input_buffer
+	LOAD_ADDRESS x22, L_input_buffer
 
 
 // readWord - input and then tokenize
 readWord:
 	str lr, [sp, #-16]!
 
-//	ldr x0, [x10]
+//	ldr x0, [x22]
 	mov x0, #0
 	cmp x0, #0
 	b.ne L_skip_read
@@ -64,8 +64,8 @@ readWord:
 		LOAD_ADDRESS x0, L_input_buffer
 		bl tokenize
 
-		LOAD_ADDRESS x10, L_input_buffer
-		mov x0, x10
+		LOAD_ADDRESS x22, L_input_buffer
+		mov x0, x22
 
 L_skip_read:
 	ldr lr, [sp], #16

@@ -1,4 +1,4 @@
-
+  * Move to x22 for the word pointer rather than x22
   * Make eval not loop; leave that to readWord
   * Develop a way to write secondaries to dictionary
   * Develop a way to recognize immediate words and enter/exit compile mode
@@ -91,7 +91,7 @@ TEN-24-06: 2024-02-06 - To Add and Beyond
 * Started building the interpreter (for secondaries & primaries)
 
 TEN-24-05: 2024-02-05 - Stack Primaries
-* Check print - uses x10 - is that a register callee can trash?
+* Check print - uses x22 - is that a register callee can trash?
 * Develop push
 
 TEN-24-04: 2024-02-01 - Primaries and Secondaries

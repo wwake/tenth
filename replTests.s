@@ -73,7 +73,7 @@ TEST_START eval_of_just_push42_leaves_42_on_stack
 	LOAD_ADDRESS x19, L_eval_test_stack
 
 	LOAD_ADDRESS x0, L_input_buffer
-	LOAD_ADDRESS x10, L_input_buffer
+	LOAD_ADDRESS x22, L_input_buffer
 
 	// Act
 	bl eval
@@ -113,7 +113,7 @@ TEST_START eval_of_three_words_puts_84_on_stack
 	LOAD_ADDRESS x19, L_eval_test_stack
 
 	LOAD_ADDRESS x0, L_input_three_words
-	LOAD_ADDRESS x10, L_input_three_words
+	LOAD_ADDRESS x22, L_input_three_words
 
 	// Act
 	bl eval
@@ -143,10 +143,10 @@ L_captured:
 .text
 .align 2
 
-// Assumes x10 points to a string
+// Assumes x22 points to a string
 captureError:
 	LOAD_ADDRESS x0, L_captured
-	ldrb w1, [x10]
+	ldrb w1, [x22]
 	strb w1, [x0]
 	ret
 
@@ -156,7 +156,7 @@ TEST_START eval_calls_syntax_error_routine_for_unknown_word
 	DICT_HEADER "_syntaxError", captureError
 
 	LOAD_ADDRESS x0, L_missing_word
-	mov x10, x0
+	mov x22, x0
 
 	// Act
 	bl eval1

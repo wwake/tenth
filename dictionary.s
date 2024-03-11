@@ -28,7 +28,7 @@ dict_init:
 // Inputs:
 //   x0 - address of search string
 // Uses:
-//   x10 - temp to walk through dictionary
+//   x22 - temp to walk through dictionary
 //   x11 - holds address of search string
 // Outputs:
 //   0 if not found, -or-
@@ -36,28 +36,28 @@ dict_init:
 
 dict_search:
 	str lr, [sp, #-16]!
-	str x10, [sp, #8]
+	str x22, [sp, #8]
 	str x11, [sp, #-16]!
 
 	mov x11, x0   // hold addr of target
-	mov x10, x21  // ptr to search dict.
+	mov x22, x21  // ptr to search dict.
 
 L_keep_looking:
 	LOAD_ADDRESS x1, systemDictionary
-	cmp x10, x1		// at end of dict.?
+	cmp x22, x1		// at end of dict.?
 	b.eq L_not_found
 
 	mov x0, x11		// match?
-	ldr x1, [x10, #8]
+	ldr x1, [x22, #8]
 	bl streq
 
 	cmp x0, #1
 	b.eq L_found
-		ldr x10, [x10]	// move to next
+		ldr x22, [x22]	// move to next
 	b L_keep_looking	// repeat
 
 L_found:
-	add x0, x10, #16 // return word addr.
+	add x0, x22, #16 // return word addr.
 	b L_exit_search
 
 L_not_found:
@@ -65,6 +65,6 @@ L_not_found:
 
 L_exit_search:
 	ldr x11, [sp], #16
-	ldr x10, [sp, #8]
+	ldr x22, [sp, #8]
 	ldr lr, [sp], #16
 	ret
