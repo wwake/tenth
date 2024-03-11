@@ -5,6 +5,7 @@
 
 .global strlen
 .global streq
+.global strcpyz
 
 .global print
 .global printnum
@@ -54,6 +55,24 @@ streq:
 		mov x0, #0
 
 l_exit_streq:
+	ret
+
+
+// strcpyz - do a string copy (including 0) and put an extra 0 at the end
+// Input:
+//   x0 - source
+//   x1 - target
+// Uses:
+//   w2 - temp
+//
+strcpyz:
+L_keep_copying:
+	ldrb w2, [x0], #1
+	strb w2, [x1], #1
+	cmp wzr, w2
+	b.ne L_keep_copying
+
+	strb wzr, [x1]		// write the extra zero byte
 	ret
 
 

@@ -18,9 +18,6 @@ _start:
 	bl tokenize_replaces_newline_with_0
 	bl tokenize_replaces_spaces_and_appends_0
 
-	bl strcpyz_copies_empty_string_plus_null_byte
-	bl strcpyz_copies_non_empty_string_plus_null_byte
-
 	unix_exit
 	ldr lr, [sp], #16
 	ret
@@ -141,68 +138,3 @@ TEST_START read_with_word_at_start
 
 TEST_END
 
-.data
-L_strcpyz_empty:
-	.asciz ""
-
-L_strcpyz_non_empty:
-	.asciz "dup"
-
-L_strcpyz_target:
-	.fill 20, 1, 0xff
-.align 2
-
-.text
-.align 2
-
-// strcpyz - do a string copy (including 0) and put an extra 0 at the end
-// Input:
-//   x0 - source
-//   x1 - target
-// Uses:
-//   w2 - temp
-//
-strcpyz:
-L_keep_copying:
-	ldrb w2, [x0], #1
-	strb w2, [x1], #1
-	cmp wzr, w2
-	b.ne L_keep_copying
-
-	strb wzr, [x1]		// write the extra zero byte
-	ret
-
-TEST_START strcpyz_copies_empty_string_plus_null_byte
-	LOAD_ADDRESS x0, L_strcpyz_empty
-	LOAD_ADDRESS x1, L_strcpyz_target
-	
-	bl strcpyz
-
-	LOAD_ADDRESS x0, L_strcpyz_target
-	ldrb w0, [x0]
-	mov x1, #0
-	bl assertEqual
-
-	LOAD_ADDRESS x0, L_strcpyz_target
-	ldrb w0, [x0, #1]
-	mov x1, #0
-	bl assertEqual
-TEST_END
-
-TEST_START strcpyz_copies_non_empty_string_plus_null_byte
-	LOAD_ADDRESS x0, L_strcpyz_non_empty
-	LOAD_ADDRESS x1, L_strcpyz_target
-
-	bl strcpyz
-
-	LOAD_ADDRESS x0, L_strcpyz_target
-	LOAD_ADDRESS x1, L_strcpyz_non_empty
-	bl streq
-	mov x1, #1
-	bl assertEqual
-
-	LOAD_ADDRESS x0, L_strcpyz_target
-	ldrb w0, [x0, #4]		// one past the string's \0 byte
-	mov x1, #0
-	bl assertEqual
-TEST_END

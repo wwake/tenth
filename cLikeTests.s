@@ -22,6 +22,9 @@ _start:
 	bl streq_for_identical_strings
 	bl streq_for_string_vs_itself
 
+	bl strcpyz_copies_empty_string_plus_null_byte
+	bl strcpyz_copies_non_empty_string_plus_null_byte
+
 	bl dec2str_converts_positive
 	bl dec2str_converts_zero
 	bl dec2str_converts_negative
@@ -122,6 +125,55 @@ TEST_START streq_for_string_vs_itself
 	bl assertEqual
 TEST_END
 
+
+.data
+L_strcpyz_empty:
+	.asciz ""
+
+L_strcpyz_non_empty:
+	.asciz "dup"
+
+L_strcpyz_target:
+	.fill 20, 1, 0xff
+.align 2
+
+.text
+.align 2
+
+TEST_START strcpyz_copies_empty_string_plus_null_byte
+	LOAD_ADDRESS x0, L_strcpyz_empty
+	LOAD_ADDRESS x1, L_strcpyz_target
+
+	bl strcpyz
+
+	LOAD_ADDRESS x0, L_strcpyz_target
+	ldrb w0, [x0]
+	mov x1, #0
+	bl assertEqual
+
+	LOAD_ADDRESS x0, L_strcpyz_target
+	ldrb w0, [x0, #1]
+	mov x1, #0
+	bl assertEqual
+TEST_END
+
+TEST_START strcpyz_copies_non_empty_string_plus_null_byte
+	LOAD_ADDRESS x0, L_strcpyz_non_empty
+	LOAD_ADDRESS x1, L_strcpyz_target
+
+	bl strcpyz
+
+	LOAD_ADDRESS x0, L_strcpyz_target
+	LOAD_ADDRESS x1, L_strcpyz_non_empty
+	bl streq
+	mov x1, #1
+	bl assertEqual
+
+	LOAD_ADDRESS x0, L_strcpyz_target
+	ldrb w0, [x0, #4]		// one past the string's \0 byte
+	mov x1, #0
+	bl assertEqual
+TEST_END
 
 .data
 L_string_zero: .asciz "0"
