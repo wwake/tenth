@@ -89,6 +89,7 @@ L_repl_loop:
 		bl print
 
 	// read
+	LOAD_ADDRESS x4, readLine
 	bl readWord
 
 	// eval

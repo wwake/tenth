@@ -7,9 +7,9 @@
 
 // unix_read - reads characters
 // Arguments:
-//   fd - file descriptor (0 = stdin) - number
-//   buffer - label of buffer memory
-//   count - max # of characters to read - number
+//   x0 - file descriptor (0 = stdin) - number
+//   x1 - address of buffer memory
+//   x2 - count - max # of characters to read - number
 // Modifies:
 //   x0, x1, x2, x16
 // Output:
@@ -17,13 +17,13 @@
 // Note: Includes \n as the last character when read from a terminal
 //
 .macro unix_read fd, buffer, count
-	mov x0, \fd
-	LOAD_ADDRESS x1, \buffer
-	mov x2, \count
+	str x1, [sp, #-16]!
+
 	mov x16, #3   // 3 = macos read
 	svc 0
 
-	LOAD_ADDRESS x1, \buffer
+	ldr x1, [sp], #16
+
 	strb wzr, [x1, x0]
 .endm
 

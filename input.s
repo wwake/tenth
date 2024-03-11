@@ -2,6 +2,7 @@
 .include "unix_functions.macros"
 
 .global readWord
+.global readLine
 .global tokenize
 
 .equ INPUT_BUFFER_SIZE, 250
@@ -52,14 +53,20 @@ input_init:
 
 
 // readWord - input and then tokenize
+// Inputs:
+//   x4 - address of the routine to call to read a line
+//
 readWord:
 	str lr, [sp, #-16]!
 
-//	ldr x0, [x22]
-	mov x0, #0
-	cmp x0, #0
+	//ldrb w0, [x22]
+	mov w0, #0
+	cmp w0, #0
 	b.ne L_skip_read
-		unix_read #0, L_input_buffer, INPUT_BUFFER_SIZE
+		mov x0, #0
+		LOAD_ADDRESS x1, L_input_buffer
+		mov x2, INPUT_BUFFER_SIZE
+		blr x4
 
 		LOAD_ADDRESS x0, L_input_buffer
 		bl tokenize
@@ -71,3 +78,8 @@ L_skip_read:
 	ldr lr, [sp], #16
 	ret
 
+
+
+readLine:
+	unix_read #0, L_input_buffer, INPUT_BUFFER_SIZE
+	ret

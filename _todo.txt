@@ -1,4 +1,4 @@
-  * Move to x22 for the word pointer rather than x22
+  * Refactor: Extract a function for unix read
   * Make eval not loop; leave that to readWord
   * Develop a way to write secondaries to dictionary
   * Develop a way to recognize immediate words and enter/exit compile mode
@@ -11,6 +11,10 @@ REPL
 * Should VSP point to the last element? instead of next free slot.
 * Note that our arithmetic operations don't check for overflow
 * Fix dec2str on most negative 64-bit number (-9223372036854775808) [?]
+
+TEN-24-20: 2024-03-11 - Multiple Words/Line
+  * Move to x22 for the word pointer rather than x10
+
 
 TEN-24-19: 2024-03-07 - Detecting Incorrect Words
   * Make failed dictionary lookup report syntax error

@@ -21,6 +21,9 @@ L_input_buffer:
 _start:
 	str lr, [sp, #-16]!
 	
+	mov x0, #0
+	LOAD_ADDRESS x1, L_input_buffer
+	mov x2, #99
 	unix_read #0, L_input_buffer, #99
 
 	bl printnum
@@ -28,6 +31,9 @@ _start:
 	LOAD_ADDRESS x0, L_input_buffer
 	bl print
 
+	mov x0, #0
+	LOAD_ADDRESS x1, L_input_buffer
+	mov x2, INPUT_BUFFER_SIZE
 	unix_read #0, L_input_buffer, #99
 
 	bl printnum
