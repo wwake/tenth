@@ -83,6 +83,8 @@ repl:
 	str lr, [sp, #-16]!
 	str x22, [sp, #8]
 
+	bl inputInit
+
 L_repl_loop:
 	// prompt
 		LOAD_ADDRESS x0, L_prompt

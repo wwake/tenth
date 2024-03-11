@@ -1,6 +1,7 @@
 .include "assembler.macros"
 .include "unix_functions.macros"
 
+.global inputInit
 .global readWord
 .global readLine
 .global tokenize
@@ -48,9 +49,9 @@ L_tokenize_exit:	// put extra zero at end
 	ret
 
 
-input_init:
+inputInit:
 	LOAD_ADDRESS x22, L_input_buffer
-
+	ret
 
 // readWord - input and then tokenize
 // Inputs:
