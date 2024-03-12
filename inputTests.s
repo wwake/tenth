@@ -152,7 +152,7 @@ L_expect_source2:
 
 
 L_read_source3:
-	.asciz "1 dup add\n"
+	.asciz "1   dup  add\n"
 L_expect_source3a:
 	.asciz "1"
 L_expect_source3b:
