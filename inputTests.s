@@ -221,29 +221,34 @@ TEST_START read_read_multiple_words_separated_by_spaces
 	bl readWord
 
 	LOAD_ADDRESS x1, L_expect_source3a
-	bl streq
-	mov x1, #1
-	bl assertEqual
+	bl assertEqualStrings
 
 
 	LOAD_ADDRESS x4, stub_readLine
 	bl readWord
 
 	LOAD_ADDRESS x1, L_expect_source3b
-	bl streq
-	mov x1, #1
-	bl assertEqual
+	bl assertEqualStrings
 
 
 	LOAD_ADDRESS x4, stub_readLine
 	bl readWord
 
 	LOAD_ADDRESS x1, L_expect_source3c
-	bl streq
-	mov x1, #1
-	bl assertEqual
+	bl assertEqualStrings
 TEST_END
 
+
+L_stringdiff1:
+	.asciz "  x0=>"
+
+L_stringdiff2:
+	.asciz "\n  x1=>"
+
+L_newline:
+	.asciz "\n"
+
+.align 2
 
 // assertEqualString -
 // Inputs:
@@ -252,6 +257,9 @@ TEST_END
 assertEqualStrings:
 	str lr, [sp, #-16]!
 
+	str x0, [sp, #-16]!
+	str x1, [sp, #8]
+
 	bl streq
 	mov x1, #1
 	bl assertEqual
@@ -259,9 +267,24 @@ assertEqualStrings:
 	cmp x0, #1
 	b.eq L_exit_assertEqualString
 
-	// TBD - print strings
+	LOAD_ADDRESS x0, L_stringdiff1
+	bl print
+
+	ldr x0, [sp]			// saved x0
+	bl print
+
+	LOAD_ADDRESS x0, L_stringdiff2
+	bl print
+
+	ldr x0, [sp, #8]		// saved x1
+	bl print
+
+	LOAD_ADDRESS x0, L_newline
+	bl print
 
 L_exit_assertEqualString:
+	ldr x1, [sp, #8]
+	ldr x0, [sp], #16
 	ldr lr, [sp], #16
 	ret
 
