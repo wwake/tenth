@@ -1,3 +1,5 @@
+
+  * Skip spaces at front of word
   * Make eval not loop; leave that to readWord
   * Develop a way to write secondaries to dictionary
   * Develop a way to recognize immediate words and enter/exit compile mode

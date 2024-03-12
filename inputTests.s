@@ -19,6 +19,7 @@ _start:
 	bl tokenize_replaces_spaces_and_appends_0
 
 	bl read_with_word_at_start
+	bl read_with_word_starting_with_spaces
 
 	unix_exit
 	ldr lr, [sp], #16
@@ -133,11 +134,24 @@ TEST_START tokenize_replaces_spaces_and_appends_0
 	bl assertEqual
 TEST_END
 
+.data
+.p2align 3
+L_read_source:
+	.quad 0
 
-.align 2
-L_read_source1:
+L_expect_source1:
 	.asciz "dup"
 
+L_read_source1:
+	.asciz "dup\n"
+
+L_expect_source2:
+	.asciz "sub"
+
+L_read_source2:
+	.asciz "  sub\n"
+
+.text
 .align 2
 
 // L_stub_readLine - simulate line read
@@ -149,7 +163,8 @@ L_read_source1:
 stub_readLine:
 	str lr, [sp, #-16]!
 
-	LOAD_ADDRESS x0, L_read_source1
+	LOAD_ADDRESS x0, L_read_source
+	ldr x0, [x0]
 	bl strcpyz
 
 	ldr lr, [sp], #16
@@ -158,10 +173,30 @@ stub_readLine:
 TEST_START read_with_word_at_start
 	bl inputInit
 
+	LOAD_ADDRESS x0, L_read_source
+	LOAD_ADDRESS x1, L_read_source1
+	str x1, [x0]
+
 	LOAD_ADDRESS x4, stub_readLine
 	bl readWord
 
-	LOAD_ADDRESS x1, L_read_source1
+	LOAD_ADDRESS x1, L_expect_source1
+	bl streq
+	mov x1, #1
+	bl assertEqual
+TEST_END
+
+TEST_START read_with_word_starting_with_spaces
+	bl inputInit
+
+	LOAD_ADDRESS x0, L_read_source
+	LOAD_ADDRESS x1, L_read_source2
+	str x1, [x0]
+
+	LOAD_ADDRESS x4, stub_readLine	// with source2
+	bl readWord
+
+	LOAD_ADDRESS x1, L_expect_source2
 	bl streq
 	mov x1, #1
 	bl assertEqual

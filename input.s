@@ -51,6 +51,7 @@ L_tokenize_exit:	// put extra zero at end
 
 inputInit:
 	LOAD_ADDRESS x22, inputBuffer
+	strb wzr, [x22]
 	ret
 
 // readWord - input and then tokenize
@@ -70,6 +71,27 @@ readWord:
 		LOAD_ADDRESS x1, inputBuffer
 		mov x2, INPUT_BUFFER_SIZE
 		blr x4		// read line
+
+		LOAD_ADDRESS x22, inputBuffer
+
+		// x0 => start of word
+find_word_start:
+		ldrb w0, [x22]
+		cmp w0, #0x20		// space
+		b.ne not_a_space
+			add x22, x22, #1
+			b find_word_start
+not_a_space:
+		mov x0, x22
+
+find_trailing_nl:
+		ldrb w1, [x22], #1
+		cmp w1, 0x0a		// newline
+		b.ne find_trailing_nl
+
+		strb wzr, [x22, #-1]
+
+	b L_skip_read
 
 		LOAD_ADDRESS x0, inputBuffer
 		bl tokenize
