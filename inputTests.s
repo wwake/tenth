@@ -161,6 +161,15 @@ L_expect_source3c:
 	.asciz "add"
 
 
+L_read_source4a:
+	.asciz "\n"
+
+L_read_source4b:
+	.asciz "mul\n"
+
+L_expect_source4:
+	.asciz "mul"
+
 .text
 .align 2
 
@@ -236,6 +245,11 @@ TEST_START read_read_multiple_words_separated_by_spaces
 
 	LOAD_ADDRESS x1, L_expect_source3c
 	bl assertEqualStrings
+TEST_END
+
+
+TEST_START read_from_newline_only_line_causes_readLine
+
 TEST_END
 
 
