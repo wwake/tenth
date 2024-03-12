@@ -265,7 +265,7 @@ assertEqualStrings:
 	bl assertEqual
 
 	cmp x0, #1
-	b.eq L_exit_assertEqualString
+	b.eq exit_assertEqualString
 
 	LOAD_ADDRESS x0, L_stringdiff1
 	bl print
@@ -282,7 +282,7 @@ assertEqualStrings:
 	LOAD_ADDRESS x0, L_newline
 	bl print
 
-L_exit_assertEqualString:
+exit_assertEqualString:
 	ldr x1, [sp, #8]
 	ldr x0, [sp], #16
 	ldr lr, [sp], #16

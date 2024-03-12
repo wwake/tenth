@@ -64,9 +64,11 @@ inputInit:
 readWord:
 	str lr, [sp, #-16]!
 
+	// Check for x22 at \0
 	ldrb w0, [x22]
 	cmp w0, #0
-	b.ne L_skip_read
+	b.ne L_find_word_start
+		// Read a new line
 		mov x0, #0
 		LOAD_ADDRESS x1, inputBuffer
 		mov x2, INPUT_BUFFER_SIZE
@@ -83,32 +85,19 @@ L_find_word_start:
 not_a_space:
 		mov x0, x22
 
-find_trailing_nl:
+find_trailing_space_or_nl:
 		ldrb w1, [x22], #1
 		cmp w1, 0x0a		// newline
-		b.ne find_trailing_nl
+		b.eq exit_space_or_nl
+		cmp w1, 0x20		// space
+		b.eq exit_space_or_nl
+		b find_trailing_space_or_nl
 
-		strb wzr, [x22, #-1]
+exit_space_or_nl:
+	strb wzr, [x22, #-1]
 
-	b L_skip_read
-
-		LOAD_ADDRESS x0, inputBuffer
-		bl tokenize
-
-		LOAD_ADDRESS x22, inputBuffer
-		mov x0, x22
-
-		bl strlen
-		LOAD_ADDRESS x22, inputBuffer
-		add x22, x22, x0
-		add x22, x22, #1
-
-		LOAD_ADDRESS x0, inputBuffer
-
-L_skip_read:
 	ldr lr, [sp], #16
 	ret
-
 
 
 readLine:
