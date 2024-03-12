@@ -31,6 +31,7 @@ assertEqual:
 	adr x0, L_passMessage
 	bl print
 
+	mov x0, #1
 	b L_exiting
 	
 L_failed:
@@ -50,6 +51,8 @@ L_failed:
 
 	adr x0, L_failMessageEnd
 	bl print
+
+	mov x0, #0
 
 L_exiting:
 	ldr x11, [sp], #16

@@ -58,7 +58,7 @@ inputInit:
 // Inputs:
 //   x4 - address of the routine to call to read a line
 // Output:
-//   x0 - ptr to next word (0-terminated string)
+//   x0 - ptr to start of returned word (0-terminated string)
 //   x22 - updated
 //
 readWord:
@@ -74,13 +74,12 @@ readWord:
 
 		LOAD_ADDRESS x22, inputBuffer
 
-		// x0 => start of word
-find_word_start:
+L_find_word_start:
 		ldrb w0, [x22]
-		cmp w0, #0x20		// space
+		cmp w0, #0x20		// space (skip)
 		b.ne not_a_space
 			add x22, x22, #1
-			b find_word_start
+			b L_find_word_start
 not_a_space:
 		mov x0, x22
 

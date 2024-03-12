@@ -20,6 +20,7 @@ _start:
 
 	bl read_with_word_at_start
 	bl read_with_word_starting_with_spaces
+	//bl read_read_multiple_words_separated_by_spaces
 
 	unix_exit
 	ldr lr, [sp], #16
@@ -139,17 +140,26 @@ TEST_END
 L_read_source:
 	.quad 0
 
+L_read_source1:
+	.asciz "dup\n"
 L_expect_source1:
 	.asciz "dup"
 
-L_read_source1:
-	.asciz "dup\n"
-
+L_read_source2:
+	.asciz "  sub\n"
 L_expect_source2:
 	.asciz "sub"
 
-L_read_source2:
-	.asciz "  sub\n"
+
+L_read_source3:
+	.asciz "1 dup add\n"
+L_expect_source3a:
+	.asciz "1"
+L_expect_source3b:
+	.asciz "dup"
+L_expect_source3c:
+	.asciz "add"
+
 
 .text
 .align 2
@@ -193,12 +203,66 @@ TEST_START read_with_word_starting_with_spaces
 	LOAD_ADDRESS x1, L_read_source2
 	str x1, [x0]
 
-	LOAD_ADDRESS x4, stub_readLine	// with source2
+	LOAD_ADDRESS x4, stub_readLine
 	bl readWord
 
 	LOAD_ADDRESS x1, L_expect_source2
+	bl assertEqualStrings
+TEST_END
+
+TEST_START read_read_multiple_words_separated_by_spaces
+	bl inputInit
+
+	LOAD_ADDRESS x0, L_read_source
+	LOAD_ADDRESS x1, L_read_source3
+	str x1, [x0]
+
+	LOAD_ADDRESS x4, stub_readLine
+	bl readWord
+
+	LOAD_ADDRESS x1, L_expect_source3a
+	bl streq
+	mov x1, #1
+	bl assertEqual
+
+
+	LOAD_ADDRESS x4, stub_readLine
+	bl readWord
+
+	LOAD_ADDRESS x1, L_expect_source3b
+	bl streq
+	mov x1, #1
+	bl assertEqual
+
+
+	LOAD_ADDRESS x4, stub_readLine
+	bl readWord
+
+	LOAD_ADDRESS x1, L_expect_source3c
 	bl streq
 	mov x1, #1
 	bl assertEqual
 TEST_END
+
+
+// assertEqualString -
+// Inputs:
+//   x0 - actual string
+//   x1 - expected string
+assertEqualStrings:
+	str lr, [sp, #-16]!
+
+	bl streq
+	mov x1, #1
+	bl assertEqual
+
+	cmp x0, #1
+	b.eq L_exit_assertEqualString
+
+	// TBD - print strings
+
+L_exit_assertEqualString:
+	ldr lr, [sp], #16
+	ret
+
 
