@@ -24,6 +24,8 @@
 .data
 .align 2
 
+.quad 0		// empty space in front of stack
+
 // data_stack: Run-time data stack, pointed to by X19 (VSP)
 // VSP points to the next place to write
 data_stack:

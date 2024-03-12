@@ -1,8 +1,6 @@
 .include "assembler.macros"
 .include "unix_functions.macros"
 
-.global data_stack
-
 .global runInterpreter
 .global start2d
 .global end2d
