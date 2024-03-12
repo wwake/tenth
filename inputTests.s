@@ -20,7 +20,7 @@ _start:
 
 	bl read_with_word_at_start
 	bl read_with_word_starting_with_spaces
-	//bl read_read_multiple_words_separated_by_spaces
+	bl read_read_multiple_words_separated_by_spaces
 
 	unix_exit
 	ldr lr, [sp], #16
