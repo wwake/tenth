@@ -2,38 +2,9 @@
 .include "unix_functions.macros"
 .include "dictionary.macros"
 
-.global eval
 .global eval1
 .global repl
 .global wordNotFoundError
-
-// eval - evaluate a line of input
-// Inputs:
-//   x0 - input, words separated by \0 bytes
-//   x22 - points to current word
-//
-eval:
-	str lr, [sp, #-16]!
-
-	L_eval_while_nonempty:
-		ldrb w0, [x0]
-		cmp w0, #0
-		b.eq L_end_eval
-
-		mov x0, x22
-		bl eval1
-
-		mov x0, x22
-		bl strlen
-
-		add x22, x22, x0
-		add x22, x22, #1
-		mov x0, x22
-	b L_eval_while_nonempty
-
-L_end_eval:
-	ldr lr, [sp], #16
-ret
 
 // eval1 - evaluates one instruction
 // Input:

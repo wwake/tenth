@@ -14,9 +14,7 @@ _start:
 
 	TEST_ALL "replTests"
 
-	bl eval_of_empty_string_just_stops
 	bl eval_of_just_push42_leaves_42_on_stack
-	bl eval_of_three_words_puts_84_on_stack
 
 	bl eval_calls_syntax_error_routine_for_unknown_word
 
@@ -27,9 +25,6 @@ _start:
 
 .data
 .p2align 3
-
-L_empty_string:
-	.ascii "\0"
 
 L_input_buffer:
 	.asciz "push42"
@@ -48,23 +43,6 @@ push42:
 	DATA_PUSH x0
 ret
 
-TEST_START eval_of_empty_string_just_stops
-	// Arrange
-	bl dict_init
-
-	LOAD_ADDRESS x19, L_eval_test_stack
-
-	LOAD_ADDRESS x0, L_empty_string
-
-	// Act
-	bl eval
-
-	// Assert
-	mov x0, x19
-	LOAD_ADDRESS x1, L_eval_test_stack
-	bl assertEqual
-TEST_END
-
 TEST_START eval_of_just_push42_leaves_42_on_stack
 	// Arrange
 	bl dict_init
@@ -76,7 +54,7 @@ TEST_START eval_of_just_push42_leaves_42_on_stack
 	LOAD_ADDRESS x22, L_input_buffer
 
 	// Act
-	bl eval
+	bl eval1
 
 	// Assert
 	LOAD_ADDRESS x0, L_eval_test_stack
@@ -101,36 +79,6 @@ L_input_three_words:
 	.asciz "add"
 	.asciz ""
 	.fill 10
-
-.text
-.align 2
-TEST_START eval_of_three_words_puts_84_on_stack
-	// Arrange
-	bl dict_init
-	DICT_HEADER "push42", push42
-	DICT_HEADER "add", add
-
-	LOAD_ADDRESS x19, L_eval_test_stack
-
-	LOAD_ADDRESS x0, L_input_three_words
-	LOAD_ADDRESS x22, L_input_three_words
-
-	// Act
-	bl eval
-
-	// Assert
-	LOAD_ADDRESS x0, L_eval_test_stack
-	ldr x0, [x0]
-	mov x1, #84
-	bl assertEqual
-
-	mov x0, x19
-	LOAD_ADDRESS x1, L_eval_test_stack
-	add x1, x1, #8
-	bl assertEqual
-
-TEST_END
-
 
 .data
 .align 2
