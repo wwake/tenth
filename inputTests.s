@@ -24,15 +24,6 @@ _start:
 	ldr lr, [sp], #16
 	ret
 
-.data
-.p2align 3
-
-L_read_index:
-	.quad 0
-
-L_read_source:
-	.quad 0, 0, 0, 0, 0
-
 L_read_source1:
 	.asciz "dup\n"
 L_expect_source1:
@@ -73,6 +64,15 @@ L_read_multiline_nonempty:
 L_expect_read_multiline_1:
 	.asciz "1"
 
+.data
+.p2align 3
+
+L_read_index:
+	.quad 0
+
+L_read_source:
+	.quad 0, 0, 0, 0, 0
+
 .text
 .align 2
 
@@ -93,13 +93,13 @@ L_expect_read_multiline_1:
 	str xzr, [x0]
 .endm
 
-// L_stub_readLine2 - simulate line read
+// stub_readLine - simulate line read
 // Input:
 //   x0 = fd
 //   x1 = input buffer
 //   x2 = max char's to read
 //
-stub_readLine2:
+stub_readLine:
 	str lr, [sp, #-16]!
 
 	LOAD_ADDRESS x9, L_read_index
@@ -117,28 +117,12 @@ stub_readLine2:
 	ldr lr, [sp], #16
 	ret
 
-// L_stub_readLine - simulate line read
-// Input:
-//   x0 = fd
-//   x1 = input buffer
-//   x2 = max char's to read
-//
-stub_readLine:
-	str lr, [sp, #-16]!
-
-	LOAD_ADDRESS x0, L_read_source
-	ldr x0, [x0]
-	bl strcpyz
-
-	ldr lr, [sp], #16
-	ret
-
 TEST_START read_with_word_at_start
 	bl inputInit
 
-	LOAD_ADDRESS x0, L_read_source
-	LOAD_ADDRESS x1, L_read_source1
-	str x1, [x0]
+	READ_STUB_INIT
+	READ_STUB_ADD L_read_source1
+	READ_STUB_READY
 
 	LOAD_ADDRESS x4, stub_readLine
 	bl readWord
@@ -150,9 +134,9 @@ TEST_END
 TEST_START read_with_word_starting_with_spaces
 	bl inputInit
 
-	LOAD_ADDRESS x0, L_read_source
-	LOAD_ADDRESS x1, L_read_source2
-	str x1, [x0]
+	READ_STUB_INIT
+	READ_STUB_ADD L_read_source2
+	READ_STUB_READY
 
 	LOAD_ADDRESS x4, stub_readLine
 	bl readWord
@@ -164,9 +148,9 @@ TEST_END
 TEST_START read_read_multiple_words_separated_by_spaces
 	bl inputInit
 
-	LOAD_ADDRESS x0, L_read_source
-	LOAD_ADDRESS x1, L_read_source3
-	str x1, [x0]
+	READ_STUB_INIT
+	READ_STUB_ADD L_read_source3
+	READ_STUB_READY
 
 	LOAD_ADDRESS x4, stub_readLine
 	bl readWord
@@ -196,11 +180,9 @@ TEST_START read_from_newline_only_line_causes_readLine
 	READ_STUB_ADD L_read_multiline_nonempty
 	READ_STUB_READY
 
-	LOAD_ADDRESS x4, stub_readLine2
+	LOAD_ADDRESS x4, stub_readLine
 	bl readWord
 
 	LOAD_ADDRESS x1, L_expect_read_multiline_1
 	bl assertEqualStrings
 TEST_END
-
-
