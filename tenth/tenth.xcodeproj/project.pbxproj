@@ -18,6 +18,7 @@
 		916C5CB82B7C155E00EA6FE5 /* coreTests.macros in Sources */ = {isa = PBXBuildFile; fileRef = 916C5CB72B7C155E00EA6FE5 /* coreTests.macros */; };
 		91908DBE2B966ABC008CC466 /* replTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91908DBD2B966ABC008CC466 /* replTests.s */; };
 		91908DC12B97B19E008CC466 /* repl.s in Sources */ = {isa = PBXBuildFile; fileRef = 91908DC02B97B19E008CC466 /* repl.s */; };
+		91CAE5EB2BA23EB7001E8E9E /* repl.macros in Sources */ = {isa = PBXBuildFile; fileRef = 91CAE5EA2BA23EB7001E8E9E /* repl.macros */; };
 		91D342EB2B98F8A4001B1D00 /* main.s in Sources */ = {isa = PBXBuildFile; fileRef = 91D342EA2B98F8A4001B1D00 /* main.s */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +61,7 @@
 		91908DBD2B966ABC008CC466 /* replTests.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = replTests.s; path = ../replTests.s; sourceTree = "<group>"; };
 		91908DC02B97B19E008CC466 /* repl.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = repl.s; path = ../repl.s; sourceTree = "<group>"; };
 		91B9F1322B742898005730DF /* interpreter.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = interpreter.s; path = ../interpreter.s; sourceTree = "<group>"; };
+		91CAE5EA2BA23EB7001E8E9E /* repl.macros */ = {isa = PBXFileReference; lastKnownFileType = text; name = repl.macros; path = ../repl.macros; sourceTree = "<group>"; };
 		91D342EA2B98F8A4001B1D00 /* main.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = main.s; path = ../main.s; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -159,6 +161,7 @@
 				91908DC02B97B19E008CC466 /* repl.s */,
 				91D342EA2B98F8A4001B1D00 /* main.s */,
 				913B91F92B9A57AB00943E4E /* input.s */,
+				91CAE5EA2BA23EB7001E8E9E /* repl.macros */,
 			);
 			name = repl;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 				91908DC12B97B19E008CC466 /* repl.s in Sources */,
 				91908DBE2B966ABC008CC466 /* replTests.s in Sources */,
 				912FE2722B9121400065D33E /* dictionary.s in Sources */,
+				91CAE5EB2BA23EB7001E8E9E /* repl.macros in Sources */,
 				91451FBF2B73E3C700D8C89A /* coreTests.s in Sources */,
 				912FE2702B9111330065D33E /* dictionaryTests.s in Sources */,
 				916C5CB82B7C155E00EA6FE5 /* coreTests.macros in Sources */,

@@ -1,0 +1,4 @@
+
+
+.equ RUN_MODE, 0
+.equ COMPILE_MODE, 1

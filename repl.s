@@ -1,14 +1,12 @@
 .include "assembler.macros"
 .include "unix_functions.macros"
 .include "dictionary.macros"
+.include "repl.macros"
 
 .global eval
 .global evalAll
 .global repl
 .global wordNotFoundError
-
-.equ RUN_MODE, 0
-.equ COMPILE_MODE, 1
 
 // eval - evaluates one instruction
 // Input:

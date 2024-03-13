@@ -2,7 +2,7 @@ all: tests
 
 LD=ld -macos_version_min 14.0.0 -lSystem -syslibroot `xcrun -sdk macosx --show-sdk-path` -e _start -arch arm64
 
-MACROS=unix_functions.macros assembler.macros dictionary.macros
+MACROS=unix_functions.macros assembler.macros dictionary.macros repl.macros
 TEST_MACROS=asUnit.macros coreTests.macros
 
 %o: %.s
