@@ -37,6 +37,13 @@ _start:
 	ret
 	
 
+TEST_START colon_enters_compile_mode
+	mov x0, 0
+	mov x1, 1
+	bl assertEqual
+TEST_END
+
+
 .data
 
 .p2align 2

@@ -18,6 +18,7 @@ _start:
 	bl eval_calls_syntax_error_routine_for_unknown_word
 
 	bl evalAll_calls_eval_in_run_mode
+	bl evalAll_calls_compile_x23_in_compile_mode
 
 	unix_exit
 	ldr lr, [sp], #16
@@ -128,7 +129,7 @@ TEST_START evalAll_calls_eval_in_run_mode
 
 	LOAD_ADDRESS x19, L_eval_test_stack
 	str xzr, [x19]
-	mov x24, RUN_MODE				// set run mode
+	mov x24, RUN_MODE
 	LOAD_ADDRESS x0, L_eval_word
 	
 	bl evalAll
@@ -139,20 +140,33 @@ TEST_START evalAll_calls_eval_in_run_mode
 TEST_END
 
 
-L_test_compile:
+.data
+L_capture:
+	.fill 10, 8, 0
 
+.text
+.align 2
+
+// x0 = input word
+L_test_compile:
+	str lr, [sp, #-16]!
+
+	LOAD_ADDRESS x1, L_capture
+	bl strcpyz
+
+	ldr lr, [sp], #16
 	ret
 
-TEST_START evalAll_calls_compile_x23_in compile_mode
-
+TEST_START evalAll_calls_compile_x23_in_compile_mode
+	LOAD_ADDRESS x23, L_test_compile
 	LOAD_ADDRESS x19, L_eval_test_stack
 	str xzr, [x19]
-	mov x24, #0				// set run mode
+	mov x24, COMPILE_MODE
 	LOAD_ADDRESS x0, L_eval_word
 
 	bl evalAll
 
-	ldr x0, [x19, #-8]
-	mov x1, #1
-	bl assertEqual
+	LOAD_ADDRESS x0, L_capture
+	LOAD_ADDRESS x1, L_eval_word
+	bl assertEqualStrings
 TEST_END

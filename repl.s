@@ -45,9 +45,23 @@ L_data_top_suffix:
 evalAll:
 	str lr, [sp, #-16]!
 
-	bl eval
+	and x1, x24, COMPILE_MODE
+	cmp x1, COMPILE_MODE
+	b.ne L_evaluate
+		blr x23
+		b L_end_evalAll
+	L_evaluate:
+		bl eval
 
+L_end_evalAll:
 	ldr lr, [sp], #16
+	ret
+
+
+.text
+.align 2
+
+compile:
 	ret
 
 .text
@@ -58,7 +72,7 @@ evalAll:
 repl:
 	str lr, [sp, #-16]!
 	str x22, [sp, #8]
-
+	LOAD_ADDRESS x23, compile
 	bl inputInit
 
 L_repl_loop:
