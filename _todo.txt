@@ -1,4 +1,3 @@
-
   * Repeat readLine if no words in line
   * Clean out tokenize and eval
   * Develop a way to write secondaries to dictionary
@@ -17,6 +16,7 @@ TEN-24-21: 2024-03-12 - Tokenize in readWord
   * Skip spaces at front of word
   * Create assertStringEquals that prints mismatched strings
   * Allow multiple words/line
+  * [Offline - moved assertStringEquals to asUnit.s]
 
 TEN-24-20: 2024-03-11 - Multiple Words/Line
   * Move to x22 for the word pointer rather than x10

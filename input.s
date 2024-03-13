@@ -65,6 +65,7 @@ readWord:
 	str lr, [sp, #-16]!
 
 	// Check for x22 at \0
+L_check_if_at_end:
 	ldrb w0, [x22]
 	cmp w0, #0
 	b.ne L_find_word_start
@@ -83,7 +84,13 @@ L_find_word_start:
 			add x22, x22, #1
 			b L_find_word_start
 not_a_space:
-		mov x0, x22
+		mov x0, x22			// Set the return to point to this word
+
+		ldrb w1, [x22]
+		cmp w1, 0x0a
+		b.ne find_trailing_space_or_nl	// At end of line - go back & read more
+		add x22, x22, #1
+		b L_check_if_at_end
 
 find_trailing_space_or_nl:
 		ldrb w1, [x22], #1
