@@ -15,8 +15,9 @@ _start:
 	TEST_ALL "replTests"
 
 	bl eval_of_just_push42_leaves_42_on_stack
-
 	bl eval_calls_syntax_error_routine_for_unknown_word
+
+	bl evalAll_calls_eval_in_run_mode
 
 	unix_exit
 	ldr lr, [sp], #16
@@ -113,5 +114,30 @@ TEST_START eval_calls_syntax_error_routine_for_unknown_word
 	LOAD_ADDRESS x0, L_captured
 	ldrb w0, [x0]
 	mov x1, #67		// "C" of "CAP"
+	bl assertEqual
+TEST_END
+
+
+L_eval_word:
+	.asciz "1"
+
+L_test_compile:
+
+	ret
+
+
+TEST_START evalAll_calls_eval_in_run_mode
+	bl dict_init
+	DICT_HEADER "1", push1
+
+	LOAD_ADDRESS x19, L_eval_test_stack
+	str xzr, [x19]
+	mov x24, #0				// set run mode
+	LOAD_ADDRESS x0, L_eval_word
+	
+	bl evalAll
+
+	ldr x0, [x19, #-8]
+	mov x1, #1
 	bl assertEqual
 TEST_END

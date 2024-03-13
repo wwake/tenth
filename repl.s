@@ -7,10 +7,13 @@
 .global repl
 .global wordNotFoundError
 
+.equ RUN_MODE, 0
+.equ COMPILE_MODE, 1
+
 // eval - evaluates one instruction
 // Input:
 //   x0 - word to execute
-//   x22 - current word from input
+//   x22 - next word in input
 // Assumes - first dictionary entry is the syntax error routine (uses x22)
 // Output:
 //   side effect from execution
