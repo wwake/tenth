@@ -5,6 +5,9 @@
 
 .global nl
 
+.global _colon
+.global _semicolon
+
 .global _push
 .global push1
 
@@ -61,8 +64,34 @@ nl:
 L_nl_character:
 	.asciz "\n"
 	
+L_colon:
+	.asciz "in :\n"
+
+L_semicolon:
+	.asciz "in ;\n"
+
 .p2align 2
 
+
+// _colon (:) - enter compile mode
+_colon:
+	str lr, [sp, #-16]!
+
+	LOAD_ADDRESS x0, L_colon
+	bl print
+
+	ldr lr, [sp], #16
+	ret
+
+// _semicolon (;) - exit compile mode
+_semicolon:
+	str lr, [sp, #-16]!
+
+	LOAD_ADDRESS x0, L_semicolon
+	bl print
+
+	ldr lr, [sp], #16
+	ret
 
 // _push - push the following word on the stack
 // Input: x20 - VPC pointing to data vaue (in secondary)
