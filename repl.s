@@ -31,13 +31,6 @@ L_call_found_routine:
 	ret
 
 .data
-L_prompt:
-	.asciz "10> "
-
-L_input_buffer:
-	.align 2
-	.fill 250, 8, 0
-	.byte 0
 
 L_data_top_prefix:
 	.asciz ">>>> Top of stack: "
@@ -46,7 +39,6 @@ L_data_top_suffix:
 
 .text
 .align 2
-
 
 // repl
 //
@@ -57,10 +49,6 @@ repl:
 	bl inputInit
 
 L_repl_loop:
-	// prompt
-		LOAD_ADDRESS x0, L_prompt
-		bl print
-
 	// read
 	LOAD_ADDRESS x4, readLine
 	bl readWord

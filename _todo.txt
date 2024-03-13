@@ -1,7 +1,7 @@
   * Develop a way to write secondaries to dictionary
   * Develop a way to recognize immediate words and enter/exit compile mode
   * Develop ": wordToDefine body ;"
-REPL
+Compiler
 
 * Read a string from a file
 * Update tests to use the DICT and SECONDARY macros
@@ -11,6 +11,7 @@ REPL
 * Fix dec2str on most negative 64-bit number (-9223372036854775808) [?]
 
 TEN-24-22: 2024-03-13 - Read Multiple Lines
+REPL
   * Repeat readLine if no words in line
   * Remove dead code for tokenize and eval
   * Rename eval1 to eval

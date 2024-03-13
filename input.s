@@ -8,9 +8,11 @@
 .equ INPUT_BUFFER_SIZE, 250
 
 .data
+L_prompt:
+	.asciz "10> "
 
-inputBuffer:
 .align 2
+inputBuffer:
    .fill 250, 8, 0
    .byte 0
 
@@ -37,6 +39,10 @@ L_check_if_at_end:
 	ldrb w0, [x22]
 	cmp w0, #0
 	b.ne L_find_word_start
+		// prompt
+		LOAD_ADDRESS x0, L_prompt
+		bl print
+
 		// Read a new line
 		mov x0, #0
 		LOAD_ADDRESS x1, inputBuffer
