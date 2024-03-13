@@ -4,7 +4,6 @@
 .global inputInit
 .global readWord
 .global readLine
-.global tokenize
 
 .equ INPUT_BUFFER_SIZE, 250
 
@@ -18,43 +17,12 @@ inputBuffer:
 .text
 .align 2
 
-// tokenize - split line into multiple strings
-//   x0 - points to a string with spaces in it
-// Output:
-//   The string has all spaces or newlines replaced with \0,
-//   and adds an extra \0 at the end
-tokenize:
-
-L_tokenize_loop:
-	ldrb w1, [x0]
-	cmp w1, #0
-	b.eq L_tokenize_exit
-
-	cmp w1, #32		// compare to space
-	b.ne L_replace_newline
-		strb wzr, [x0]
-
-L_replace_newline:
-	cmp w1, #10		// compare to newline
-	b.ne L_tokenize_move_to_next
-		strb wzr, [x0]
-
-L_tokenize_move_to_next:
-	add x0, x0, #1	// skip forward 1 char.
-	b L_tokenize_loop
-
-L_tokenize_exit:	// put extra zero at end
-	add x0, x0, 1
-	strb wzr, [x0]
-	ret
-
-
 inputInit:
 	LOAD_ADDRESS x22, inputBuffer
 	strb wzr, [x22]
 	ret
 
-// readWord - input and then tokenize
+// readWord - get next word, reading new lines if necessary
 // Inputs:
 //   x4 - address of the routine to call to read a line
 // Output:
