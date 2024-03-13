@@ -1,5 +1,6 @@
+  * Allow you to enter/exit compile mode
   * Develop a way to write secondaries to dictionary
-  * Develop a way to recognize immediate words and enter/exit compile mode
+  * Develop a way to recognize immediate words and
   * Develop ": wordToDefine body ;"
 Compiler
 

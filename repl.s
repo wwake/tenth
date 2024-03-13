@@ -37,6 +37,17 @@ L_data_top_prefix:
 L_data_top_suffix:
 	.asciz "\n"
 
+
+.text
+.align 2
+L_evalAll:
+	str lr, [sp, #-16]!
+
+	bl eval
+
+	ldr lr, [sp], #16
+	ret
+
 .text
 .align 2
 
@@ -54,7 +65,7 @@ L_repl_loop:
 	bl readWord
 
 	// eval
-	bl eval
+	bl L_evalAll
 
 	// print
 	LOAD_ADDRESS x0, L_data_top_prefix
