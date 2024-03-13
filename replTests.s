@@ -54,7 +54,7 @@ TEST_START eval_of_just_push42_leaves_42_on_stack
 	LOAD_ADDRESS x22, L_input_buffer
 
 	// Act
-	bl eval1
+	bl eval
 
 	// Assert
 	LOAD_ADDRESS x0, L_eval_test_stack
@@ -107,7 +107,7 @@ TEST_START eval_calls_syntax_error_routine_for_unknown_word
 	mov x22, x0
 
 	// Act
-	bl eval1
+	bl eval
 
 	// Assert
 	LOAD_ADDRESS x0, L_captured

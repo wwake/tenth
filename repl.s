@@ -2,11 +2,11 @@
 .include "unix_functions.macros"
 .include "dictionary.macros"
 
-.global eval1
+.global eval
 .global repl
 .global wordNotFoundError
 
-// eval1 - evaluates one instruction
+// eval - evaluates one instruction
 // Input:
 //   x0 - word to execute
 //   x22 - current word from input
@@ -14,7 +14,7 @@
 // Output:
 //   side effect from execution
 //
-eval1:
+eval:
 	str lr, [sp, #-16]!
 
 	bl dict_search
@@ -66,7 +66,7 @@ L_repl_loop:
 	bl readWord
 
 	// eval
-	bl eval1
+	bl eval
 
 	// print
 	LOAD_ADDRESS x0, L_data_top_prefix
