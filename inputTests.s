@@ -76,20 +76,20 @@ L_expect_read_multiline_1:
 .text
 .align 2
 
-// STUB_INIT - resets stub array index, leaves x0 pointing to L_read_source array
+// READ_STUB_INIT - resets stub array index, leaves x0 pointing to L_read_source array
 // Output: x0 points to array
 //
-.macro STUB_INIT
+.macro READ_STUB_INIT
 	LOAD_ADDRESS x0, L_read_index
 	str xzr, [x0], #8
 .endm
 
-.macro STUB_ADD label
+.macro READ_STUB_ADD label
 	LOAD_ADDRESS x1, \label
 	str x1, [x0], #8
 .endm
 
-.macro STUB_READY
+.macro READ_STUB_READY
 	str xzr, [x0]
 .endm
 
@@ -191,10 +191,10 @@ TEST_END
 
 
 TEST_START read_from_newline_only_line_causes_readLine
-	STUB_INIT
-	STUB_ADD L_read_multiline_empty
-	STUB_ADD L_read_multiline_nonempty
-	STUB_READY
+	READ_STUB_INIT
+	READ_STUB_ADD L_read_multiline_empty
+	READ_STUB_ADD L_read_multiline_nonempty
+	READ_STUB_READY
 
 	LOAD_ADDRESS x4, stub_readLine2
 	bl readWord

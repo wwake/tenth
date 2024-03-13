@@ -1,4 +1,3 @@
-  * Clean out tokenize and eval
   * Develop a way to write secondaries to dictionary
   * Develop a way to recognize immediate words and enter/exit compile mode
   * Develop ": wordToDefine body ;"
@@ -13,6 +12,8 @@ REPL
 
 TEN-24-22: 2024-03-13 - Read Multiple Lines
   * Repeat readLine if no words in line
+  * Remove dead code for tokenize and eval
+  * Rename eval1 to eval
 
 TEN-24-21: 2024-03-12 - Tokenize in readWord
   * Skip spaces at front of word
