@@ -121,10 +121,6 @@ TEST_END
 L_eval_word:
 	.asciz "1"
 
-L_test_compile:
-
-	ret
-
 
 TEST_START evalAll_calls_eval_in_run_mode
 	bl dict_init
@@ -132,9 +128,28 @@ TEST_START evalAll_calls_eval_in_run_mode
 
 	LOAD_ADDRESS x19, L_eval_test_stack
 	str xzr, [x19]
-	mov x24, #0				// set run mode
+	mov x24, RUN_MODE				// set run mode
 	LOAD_ADDRESS x0, L_eval_word
 	
+	bl evalAll
+
+	ldr x0, [x19, #-8]
+	mov x1, #1
+	bl assertEqual
+TEST_END
+
+
+L_test_compile:
+
+	ret
+
+TEST_START evalAll_calls_compile_x23_in compile_mode
+
+	LOAD_ADDRESS x19, L_eval_test_stack
+	str xzr, [x19]
+	mov x24, #0				// set run mode
+	LOAD_ADDRESS x0, L_eval_word
+
 	bl evalAll
 
 	ldr x0, [x19, #-8]
