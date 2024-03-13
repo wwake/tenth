@@ -3,6 +3,7 @@
 .include "dictionary.macros"
 
 .global eval
+.global evalAll
 .global repl
 .global wordNotFoundError
 
@@ -40,7 +41,7 @@ L_data_top_suffix:
 
 .text
 .align 2
-L_evalAll:
+evalAll:
 	str lr, [sp, #-16]!
 
 	bl eval
@@ -65,7 +66,7 @@ L_repl_loop:
 	bl readWord
 
 	// eval
-	bl L_evalAll
+	bl evalAll
 
 	// print
 	LOAD_ADDRESS x0, L_data_top_prefix
