@@ -49,6 +49,7 @@ TEST_START eval_of_just_push42_leaves_42_on_stack
 	// Arrange
 	bl dict_init
 	DICT_HEADER "push42", push42
+	DICT_END
 
 	LOAD_ADDRESS x19, L_eval_test_stack
 
@@ -104,6 +105,7 @@ TEST_START eval_calls_syntax_error_routine_for_unknown_word
 	// Arrange
 	bl dict_init
 	DICT_HEADER "_syntaxError", captureError
+	DICT_END
 
 	LOAD_ADDRESS x0, L_missing_word
 	mov x22, x0
@@ -126,6 +128,7 @@ L_eval_word:
 TEST_START evalAll_calls_eval_in_run_mode
 	bl dict_init
 	DICT_HEADER "1", push1
+	DICT_END
 
 	LOAD_ADDRESS x19, L_eval_test_stack
 	str xzr, [x19]

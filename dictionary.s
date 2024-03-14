@@ -7,6 +7,9 @@
 .global dict_init
 .global dict_search
 
+.global metaNext
+.global metaList
+
 .data
 .p2align 3
 
@@ -17,10 +20,21 @@ systemDictionary:
 
 	.fill 300, 8, 0
 
+
+metaNext:		// pointer to next slot in metaList
+	.quad 0
+
+metaList:
+	.fill 160, 8, 0
+
 .text
 
 dict_init:
 	LOAD_ADDRESS x21, systemDictionary
+
+	LOAD_ADDRESS x0, metaNext
+	LOAD_ADDRESS x1, metaList
+	str x1, [x0]
 	ret
 
 

@@ -146,13 +146,13 @@
 			isa = PBXGroup;
 			children = (
 				91238D812B730AD800052895 /* cLikeTests.s */,
-				912FE26F2B9111330065D33E /* dictionaryTests.s */,
-				91451FBE2B73E3C700D8C89A /* coreTests.s */,
-				91451FC12B73E3F000D8C89A /* interpreterTests.s */,
-				91451FC32B73E40500D8C89A /* unitTestPlayground.s */,
 				916C5CB72B7C155E00EA6FE5 /* coreTests.macros */,
-				91908DBD2B966ABC008CC466 /* replTests.s */,
+				91451FBE2B73E3C700D8C89A /* coreTests.s */,
+				912FE26F2B9111330065D33E /* dictionaryTests.s */,
 				913B91FD2B9A5AB400943E4E /* inputTests.s */,
+				91451FC12B73E3F000D8C89A /* interpreterTests.s */,
+				91908DBD2B966ABC008CC466 /* replTests.s */,
+				91451FC32B73E40500D8C89A /* unitTestPlayground.s */,
 			);
 			name = tests;
 			sourceTree = "<group>";

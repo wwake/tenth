@@ -41,6 +41,7 @@ L_load_system_dictionary:
 	DICT_HEADER "sub", sub
 	DICT_HEADER ":", _colon
 	DICT_HEADER ";", _semicolon
+	DICT_END
 
 	ldr lr, [sp], #16
 

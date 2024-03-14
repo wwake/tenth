@@ -1,3 +1,6 @@
+.equ META, 1
+.equ REGULAR, 0
+
 // DICT_HEADER name, codeAddress
 // Input:
 //   name of the entry "in quotes"
@@ -7,16 +10,27 @@
 //   Store 3 words in next entry: link to previous dictionary entry, pointer to name string, and pointer to code
 //   Increment x21 by 3 words
 // Uses:
-//   x0 as a temp
+//   x0-x4 as a temp
 //   x21 is increased for new entry
 //
-.macro DICT_HEADER name, codeAddress
+.macro DICT_HEADER name, codeAddress, isMeta=REGULAR
 	str x21, [x21, #24]
 	add x21, x21, #24
 
 	LOAD_ADDRESS x0, L_DICT_HEADER_\@
 	str x0, [x21, #8]
 
+	mov x3, \isMeta
+	mov x4, META
+	cmp x3, x4
+	b.ne L_skip_meta\@
+		LOAD_ADDRESS x1, metaNext
+		ldr x2, [x1]
+		str x0, [x2]
+		add x2, x2, #8
+		str x2, [x1]
+
+L_skip_meta\@:
 	LOAD_ADDRESS x0, \codeAddress
 	str x0, [x21, #16]
 
@@ -25,3 +39,9 @@
 	.text
 .endm
 
+
+.macro DICT_END
+	LOAD_ADDRESS x0, metaNext
+	ldr x0, [x0]
+	str xzr, [x0]
+.endm

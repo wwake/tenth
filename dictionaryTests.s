@@ -16,6 +16,7 @@ _start:
 	bl empty_dictionary_has_zeros
 
 	bl adding_to_dictionary_adds_item
+	bl adding_meta_to_dictionary
 
 	bl search_empty_dictionary
 	bl search_word_found_returns_word_address
@@ -43,6 +44,7 @@ TEST_END
 .data
 .p2align 3
 L_nl_string: .asciz "nl"
+L_colon_string: .asciz ":"
 
 .text
 TEST_START adding_to_dictionary_adds_item
@@ -51,6 +53,7 @@ TEST_START adding_to_dictionary_adds_item
 
 	// Act:
 	DICT_HEADER "nl", nl
+	DICT_END
 
 	// Assert:
 	mov x0, x21
@@ -73,6 +76,33 @@ TEST_START adding_to_dictionary_adds_item
 	bl assertEqual
 TEST_END
 
+TEST_START adding_meta_to_dictionary
+	// Arrange:
+	bl dict_init
+
+	// Act:
+	DICT_HEADER ":", _colon, META
+	DICT_END
+
+	// Assert:
+	LOAD_ADDRESS x0, metaList
+	ldr x0, [x0]
+	LOAD_ADDRESS x1, L_colon_string
+	bl assertEqualStrings
+
+	LOAD_ADDRESS x0, metaNext
+	ldr x0, [x0]
+	LOAD_ADDRESS x1, metaList
+	add x1, x1, #8
+	bl assertEqual
+
+	LOAD_ADDRESS x0, metaNext
+	ldr x0, [x0]
+	ldr x0, [x0]
+	mov x1, #0
+	bl assertEqual
+TEST_END
+
 TEST_START search_empty_dictionary
 	// Arrange:
 	bl dict_init
@@ -91,6 +121,7 @@ TEST_START search_word_not_found_returns_0
 	bl dict_init
 	DICT_HEADER "add", add
 	DICT_HEADER "sub", sub
+	DICT_END
 
 	// Act:
 	LOAD_ADDRESS x0, L_nl_string
@@ -107,6 +138,7 @@ TEST_START search_word_found_returns_word_address
 	DICT_HEADER "add", add
 	DICT_HEADER "nl", nl
 	DICT_HEADER "sub", sub
+	DICT_END
 
 	// Act:
 	LOAD_ADDRESS x0, L_nl_string
