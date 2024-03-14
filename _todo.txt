@@ -1,6 +1,7 @@
   * Develop a way to recognize meta words
   * Develop a way to write secondaries to dictionary
   * Develop ": wordToDefine body ;"
+  * Lookup words before repl tests for isMeta, so we can simplify isMeta to compare pointers directly
 Compiler
 
 * Read a string from a file

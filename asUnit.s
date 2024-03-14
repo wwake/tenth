@@ -2,6 +2,8 @@
 
 .global assertEqual
 .global assertEqualStrings
+.global assertTrue
+.global assertFalse
 
 .text
 .align 2
@@ -115,3 +117,31 @@ exit_assertEqualString:
 	ldr lr, [sp], #16
 	ret
 
+
+
+// assertTrue - check that x0 == 1 (true)
+// Uses x0, x1
+// Returns result in x0; prints message if x0 == 0
+//
+assertTrue:
+	str lr, [sp, #-16]!
+
+	mov x1, #1
+	bl assertEqual
+
+	ldr lr, [sp], #16
+	ret
+
+
+// assertFalse - check that x0 == 0 (false)
+// Uses x0, x1
+// Returns result in x0; prints message if x0 <> 0
+//
+assertFalse:
+	str lr, [sp, #-16]!
+
+	mov x1, #0
+	bl assertEqual
+
+	ldr lr, [sp], #16
+	ret

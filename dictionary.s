@@ -9,6 +9,7 @@
 
 .global metaNext
 .global metaList
+.global isMeta
 
 .data
 .p2align 3
@@ -80,5 +81,42 @@ L_not_found:
 L_exit_search:
 	ldr x11, [sp], #16
 	ldr x22, [sp, #8]
+	ldr lr, [sp], #16
+	ret
+
+
+// isMeta - search for string in meta list; return 0 if missing, 1 if found
+// Input: x0 - pointer to string to search for
+// Output: x0 is 0 or 1 (false or true)
+//
+isMeta:
+	str lr, [sp, #-16]!
+	str x28, [sp, #8]
+	str x27, [sp, #-16]!
+
+	mov x27, x0
+	LOAD_ADDRESS x28, metaList
+
+L_meta_keep_looking:
+	ldr x1, [x28]
+	cmp x1, #0
+	b.ne L_compare_string
+		mov x0, #0
+		b L_isMetaEnd
+
+L_compare_string:
+	bl streq
+	cmp x0, #0
+	b.ne L_meta_found
+		add x28, x28, #8
+		mov x0, x27
+		b L_meta_keep_looking
+
+L_meta_found:
+	mov x0, #1
+
+L_isMetaEnd:
+	ldr x27, [sp], #16
+	ldr x28, [sp, #8]
 	ldr lr, [sp], #16
 	ret

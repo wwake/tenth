@@ -17,6 +17,7 @@ _start:
 
 	bl adding_to_dictionary_adds_item
 	bl adding_meta_to_dictionary
+	bl isMeta_finds_only_metas
 
 	bl search_empty_dictionary
 	bl search_word_found_returns_word_address
@@ -45,6 +46,8 @@ TEST_END
 .p2align 3
 L_nl_string: .asciz "nl"
 L_colon_string: .asciz ":"
+L_semicolon_string: .asciz ";"
+L_notmeta_string: .asciz "dup"
 
 .text
 TEST_START adding_to_dictionary_adds_item
@@ -101,6 +104,25 @@ TEST_START adding_meta_to_dictionary
 	ldr x0, [x0]
 	mov x1, #0
 	bl assertEqual
+TEST_END
+
+TEST_START isMeta_finds_only_metas
+	bl dict_init
+	DICT_HEADER ":", _colon, META
+	DICT_HEADER ";", _colon, META
+	DICT_END
+
+	LOAD_ADDRESS x0, L_colon_string
+	bl isMeta
+	bl assertTrue
+
+	LOAD_ADDRESS x0, L_semicolon_string
+	bl isMeta
+	bl assertTrue
+
+	LOAD_ADDRESS x0, L_notmeta_string
+	bl isMeta
+	bl assertFalse
 TEST_END
 
 TEST_START search_empty_dictionary
