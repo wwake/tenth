@@ -1,4 +1,3 @@
-  * Develop a way to recognize meta words
   * Develop a way to write secondaries to dictionary
   * Develop ": wordToDefine body ;"
   * Lookup words before repl tests for isMeta, so we can simplify isMeta to compare pointers directly
@@ -10,6 +9,13 @@ Compiler
 * Should VSP point to the last element? instead of next free slot.
 * Note that our arithmetic operations don't check for overflow
 * Fix dec2str on most negative 64-bit number (-9223372036854775808) [?]
+
+TEN-24-23: 2024-03-14 - Meta Routines
+* [offline] Extracted notes on ARM64, assembler, etc. to EnvironmentNotes.key
+
+Compiler
+  * Develop a way to recognize meta words
+  * Make REPL call metas even in compile mode
 
 TEN-24-22: 2024-03-13 - Read Multiple Lines
 REPL

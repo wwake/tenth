@@ -17,6 +17,7 @@ _start:
 	// Definition
 	bl colon_switches_to_compile_mode
 	bl semicolon_switches_to_run_mode
+	bl semicolon_writes_end2d_in_secondary
 
 	// Stack
 	bl push_pushes_one_item
@@ -62,6 +63,14 @@ TEST_START semicolon_switches_to_run_mode
 	bl assertEqual
 TEST_END
 
+
+TEST_START semicolon_writes_end2d_in_secondary
+	// set x25 (SEC_SPACE) somewhere
+	// call semicolon
+	// verify that end2d's word address is in the previous cell
+	// verify that SEC_SPACE increased by 8 bytes
+	//bl assertEqual
+TEST_END
 
 .data
 
