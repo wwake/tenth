@@ -87,8 +87,7 @@ _colon:
 _semicolon:
 	str lr, [sp, #-16]!
 
-	LOAD_ADDRESS x0, L_semicolon
-	bl print
+	mov x24, RUN_MODE
 
 	ldr lr, [sp], #16
 	ret

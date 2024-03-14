@@ -15,7 +15,8 @@ _start:
 	TEST_ALL "coreTests"
 
 	// Definition
-	bl colon_enters_compile_mode
+	bl colon_switches_to_compile_mode
+	bl semicolon_switches_to_run_mode
 
 	// Stack
 	bl push_pushes_one_item
@@ -41,13 +42,23 @@ _start:
 	ret
 	
 
-TEST_START colon_enters_compile_mode
+TEST_START colon_switches_to_compile_mode
 	mov x24, RUN_MODE
 
 	bl _colon
 
 	mov x0, x24
 	mov x1, COMPILE_MODE
+	bl assertEqual
+TEST_END
+
+TEST_START semicolon_switches_to_run_mode
+	mov x24, COMPILE_MODE
+
+	bl _semicolon
+
+	mov x0, x24
+	mov x1, RUN_MODE
 	bl assertEqual
 TEST_END
 
