@@ -42,18 +42,31 @@ L_data_top_suffix:
 
 .text
 .align 2
+// evalAll: evaluate or compile
+// Input: x0 - next word
+//
 evalAll:
 	str lr, [sp, #-16]!
+	str x28, [sp, #8]
+
+	mov x28, x0
 
 	and x1, x24, COMPILE_MODE
 	cmp x1, COMPILE_MODE
 	b.ne L_evaluate
+
+//	bl isMeta
+//	cmp x0, #1
+//	b.eq L_evaluate
+
 		blr x23
 		b L_end_evalAll
+
 	L_evaluate:
 		bl eval
 
 L_end_evalAll:
+	ldr x28, [sp, #8]
 	ldr lr, [sp], #16
 	ret
 
