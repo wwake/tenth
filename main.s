@@ -39,8 +39,8 @@ L_load_system_dictionary:
 	DICT_HEADER "neq", neq
 	DICT_HEADER "nl", nl
 	DICT_HEADER "sub", sub
-	DICT_HEADER ":", _colon
-	DICT_HEADER ";", _semicolon
+	DICT_HEADER ":", _colon, META
+	DICT_HEADER ";", _semicolon, META
 	DICT_END
 
 	ldr lr, [sp], #16

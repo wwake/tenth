@@ -19,6 +19,7 @@ _start:
 
 	bl evalAll_calls_eval_in_run_mode
 	bl evalAll_calls_compile_x23_in_compile_mode
+	bl evalAll_calls_meta_even_in_compile_mode
 
 	unix_exit
 	ldr lr, [sp], #16
@@ -172,4 +173,22 @@ TEST_START evalAll_calls_compile_x23_in_compile_mode
 	LOAD_ADDRESS x0, L_capture
 	LOAD_ADDRESS x1, L_eval_word
 	bl assertEqualStrings
+TEST_END
+
+L_semicolon:
+	.asciz ";"
+
+TEST_START evalAll_calls_meta_even_in_compile_mode
+	bl dict_init
+	DICT_HEADER ";", _semicolon, META
+	DICT_END
+
+	mov x24, COMPILE_MODE
+	LOAD_ADDRESS x0, L_semicolon
+
+	bl evalAll
+
+	mov x0, x24
+	mov x1, RUN_MODE
+	bl assertEqual
 TEST_END

@@ -55,14 +55,15 @@ evalAll:
 	cmp x1, COMPILE_MODE
 	b.ne L_evaluate
 
-//	bl isMeta
-//	cmp x0, #1
-//	b.eq L_evaluate
-
+	bl isMeta
+	cmp x0, #1
+	b.eq L_evaluate
+		mov x0, x28
 		blr x23
 		b L_end_evalAll
 
 	L_evaluate:
+		mov x0, x28
 		bl eval
 
 L_end_evalAll:
