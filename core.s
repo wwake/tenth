@@ -1,4 +1,5 @@
 .include "assembler.macros"
+.include "repl.macros"
 
 .global data_stack
 .global data_stack_init
@@ -77,8 +78,7 @@ L_semicolon:
 _colon:
 	str lr, [sp, #-16]!
 
-	LOAD_ADDRESS x0, L_colon
-	bl print
+	mov x24, COMPILE_MODE
 
 	ldr lr, [sp], #16
 	ret

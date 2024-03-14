@@ -1,6 +1,5 @@
-  * Allow you to enter/exit compile mode
+  * Develop a way to recognize meta words
   * Develop a way to write secondaries to dictionary
-  * Develop a way to recognize immediate words and
   * Develop ": wordToDefine body ;"
 Compiler
 
@@ -16,6 +15,8 @@ REPL
   * Repeat readLine if no words in line
   * Remove dead code for tokenize and eval
   * Rename eval1 to eval
+Compiler
+  * Allow you to enter/exit compile mode
 
 TEN-24-21: 2024-03-12 - Tokenize in readWord
   * Skip spaces at front of word

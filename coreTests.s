@@ -2,6 +2,7 @@
 .include "unix_functions.macros"
 .include "asUnit.macros"
 .include "coreTests.macros"
+.include "repl.macros"
 
 .global _start
 
@@ -12,6 +13,9 @@ _start:
 	str lr, [sp, #-16]!
 
 	TEST_ALL "coreTests"
+
+	// Definition
+	bl colon_enters_compile_mode
 
 	// Stack
 	bl push_pushes_one_item
@@ -38,8 +42,12 @@ _start:
 	
 
 TEST_START colon_enters_compile_mode
-	mov x0, 0
-	mov x1, 1
+	mov x24, RUN_MODE
+
+	bl _colon
+
+	mov x0, x24
+	mov x1, COMPILE_MODE
 	bl assertEqual
 TEST_END
 
