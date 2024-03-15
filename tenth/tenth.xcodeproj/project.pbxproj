@@ -63,6 +63,7 @@
 		91B9F1322B742898005730DF /* interpreter.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = interpreter.s; path = ../interpreter.s; sourceTree = "<group>"; };
 		91CAE5EA2BA23EB7001E8E9E /* repl.macros */ = {isa = PBXFileReference; lastKnownFileType = text; name = repl.macros; path = ../repl.macros; sourceTree = "<group>"; };
 		91CAE5EC2BA374B2001E8E9E /* EnvironmentNotes.key */ = {isa = PBXFileReference; lastKnownFileType = file; name = EnvironmentNotes.key; path = ../EnvironmentNotes.key; sourceTree = "<group>"; };
+		91CAE5ED2BA3DC73001E8E9E /* Design Notes.key */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Design Notes.key"; path = "../Design Notes.key"; sourceTree = "<group>"; };
 		91D342EA2B98F8A4001B1D00 /* main.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = main.s; path = ../main.s; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -80,6 +81,7 @@
 		91238D682B730A6000052895 = {
 			isa = PBXGroup;
 			children = (
+				91CAE5ED2BA3DC73001E8E9E /* Design Notes.key */,
 				91238D912B730AE600052895 /* Tenth.key */,
 				91CAE5EC2BA374B2001E8E9E /* EnvironmentNotes.key */,
 				91238D7B2B730AC100052895 /* _todo.txt */,
