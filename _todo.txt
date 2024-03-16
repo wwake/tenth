@@ -1,3 +1,4 @@
+
   * Develop a way to write secondaries to dictionary
   * Develop ": wordToDefine body ;"
   * Lookup words before repl tests for isMeta, so we can simplify isMeta to compare pointers directly
@@ -12,9 +13,10 @@ Compiler
 
 TEN-24-23: 2024-03-14 - Meta Routines
 * [offline] Extracted notes on ARM64, assembler, etc. to EnvironmentNotes.key
-
+* [offline] Extracted notes on design to DesignNotes.key
+* [offline] Updated README.md with notes on the Tenth language
 Compiler
-  * Develop a way to recognize meta words
+  * Develop a way to recognize meta words (search a list of names)
   * Make REPL call metas even in compile mode
 
 TEN-24-22: 2024-03-13 - Read Multiple Lines
