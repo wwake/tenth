@@ -1,6 +1,7 @@
 #ifndef core_defines
 #define core_defines 1
 
+#define VSP x19
 #define FLAGS x24
 
 #endif

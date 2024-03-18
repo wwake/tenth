@@ -2,7 +2,7 @@ all: tests
 
 LD=ld -macos_version_min 14.0.0 -lSystem -syslibroot `xcrun -sdk macosx --show-sdk-path` -e _start -arch arm64
 
-MACROS=unix_functions.macros assembler.macros dictionary.macros repl.macros
+MACROS=unix_functions.macros assembler.macros dictionary.macros repl.macros core.defines
 TEST_MACROS=asUnit.macros coreTests.macros
 
 %.o: %.s
@@ -22,14 +22,14 @@ cLikeTests.o: cLikeTests.s $(MACROS) $(TEST_MACROS)
 cLikeTests.out: cLikeTests.o cLike.o asUnit.o
 
 
-core.o: assembler.macros core.s
+core.o: core.s assembler.macros core.defines
 
 coreTests.o: coreTests.s $(MACROS) $(TEST_MACROS)
 
 coreTests.out: coreTests.o asUnit.o cLike.o core.o interpreter.o
 
 
-dictionary.o: dictionary.s dictionary.macros unix_functions.macros assembler.macros
+dictionary.o: dictionary.s dictionary.macros unix_functions.macros assembler.macros core.defines
 
 dictionaryTests.o: dictionaryTests.s dictionary.o $(MACROS) $(TEST_MACROS)
 
@@ -43,17 +43,17 @@ inputTests.o: inputTests.s $(MACROS) $(TEST_MACROS)
 inputTests.out: inputTests.o asUnit.o cLike.o input.o
 
 
-interpreter.o: interpreter.s unix_functions.macros assembler.macros
+interpreter.o: interpreter.s unix_functions.macros assembler.macros core.defines
 
 interpreterTests.o: interpreterTests.s interpreter.o $(MACROS) $(TEST_MACROS)
 
 interpreterTests.out: interpreterTests.o interpreter.o asUnit.o cLike.o core.o
 
 
-main.o: main.s
+main.o: main.s core.defines
 
 
-repl.o: repl.s
+repl.o: repl.s core.defines
 
 replTests.o: replTests.s $(MACROS) $(TEST_MACROS)
 
