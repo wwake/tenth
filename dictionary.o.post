@@ -1,7 +1,64 @@
-.include "assembler.macros"
+
+.macro LOAD_ADDRESS register, location
+ adrp \register, \location@PAGE
+ add \register, \register, \location@PAGEOFF
+.endm
+.macro DATA_PUSH register
+ str \register, [x19], #8
+.endm
+.macro DATA_POP register
+ ldr \register, [x19, #-8]!
+.endm
+.macro DATA_POP_AB register1, register2
+ DATA_POP \register1
+ DATA_POP \register2
+.endm
+.macro DATA_TOP register
+ ldr \register, [x19, #-8]
+.endm
+.equ META, 1
+.equ REGULAR, 0
+// DICT_HEADER name, codeAddress
+// Input:
+//   name of the entry "in quotes"
+//   codeAddress of code in entry
+//   x21 [SYS_DICT = dictionary pointer] points to newest dictionary entry
+// Process:
+//   Store 3 words in next entry: link to previous dictionary entry, pointer to name string, and pointer to code
+//   Increment SYS_DICT by 3 words
+// Uses:
+//   x0-x4 as a temp
+//   SYS_DICT is increased for new entry
+//
+.macro DICT_HEADER name, codeAddress, isMeta=REGULAR
+ str x21, [x21, #24]
+ add x21, x21, #24
+ LOAD_ADDRESS x0, L_DICT_HEADER_\@
+ str x0, [x21, #8]
+ mov x3, \isMeta
+ mov x4, META
+ cmp x3, x4
+ b.ne L_skip_meta\@
+  LOAD_ADDRESS x1, metaNext
+  ldr x2, [x1]
+  str x0, [x2]
+  add x2, x2, #8
+  str x2, [x1]
+L_skip_meta\@:
+ LOAD_ADDRESS x0, \codeAddress
+ str x0, [x21, #16]
+ .data
+ L_DICT_HEADER_\@: .asciz "\name"
+ .text
+.endm
+.macro DICT_END
+ LOAD_ADDRESS x0, metaNext
+ ldr x0, [x0]
+ str xzr, [x0]
+.endm
+
 .include "unix_functions.macros"
 .include "asUnit.macros"
-.include "dictionary.macros"
 .global systemDictionary
 .global dict_init
 .global dict_search
@@ -40,7 +97,7 @@ dict_search:
  str x22, [sp, #8]
  str x11, [sp, #-16]!
  mov x11, x0 // hold addr of target
- mov x22, x21 // ptr to search dict.
+ mov x22, x21
 L_keep_looking:
  LOAD_ADDRESS x1, systemDictionary
  cmp x22, x1 // at end of dict.?

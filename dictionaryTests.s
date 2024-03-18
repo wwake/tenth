@@ -1,7 +1,9 @@
-.include "assembler.macros"
+#include "core.defines"
+#include "dictionary.macros"
+#include "assembler.macros"
+
 .include "unix_functions.macros"
 .include "asUnit.macros"
-.include "dictionary.macros"
 
 .global _start
 
@@ -32,11 +34,11 @@ TEST_START empty_dictionary_has_zeros
 	bl dict_init
 
 	// Assert:
-	mov x0, x21
+	mov x0, SYS_DICT
 	LOAD_ADDRESS x1, systemDictionary
 	bl assertEqual
 
-	ldr x0, [x21]
+	ldr x0, [SYS_DICT]
 	mov x1, #0
 	bl assertEqual
 TEST_END
@@ -59,22 +61,22 @@ TEST_START adding_to_dictionary_adds_item
 	DICT_END
 
 	// Assert:
-	mov x0, x21
+	mov x0, SYS_DICT
 	LOAD_ADDRESS x1, systemDictionary
 	add x1, x1, #24
 	bl assertEqual
 
-	ldr x0, [x21]
+	ldr x0, [SYS_DICT]
 	LOAD_ADDRESS x1, systemDictionary
 	bl assertEqual
 
-	ldr x0, [x21, #8]
+	ldr x0, [SYS_DICT, #8]
 	LOAD_ADDRESS x1, L_nl_string
 	bl streq
 	mov x1, #1
 	bl assertEqual
 
-	ldr x0, [x21, #16]
+	ldr x0, [SYS_DICT, #16]
 	LOAD_ADDRESS x1, nl
 	bl assertEqual
 TEST_END
@@ -167,6 +169,6 @@ TEST_START search_word_found_returns_word_address
 	bl dict_search
 
 	// Assert:
-	add x1, x21, #-8
+	add x1, SYS_DICT, #-8
 	bl assertEqual
 TEST_END

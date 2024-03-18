@@ -1,7 +1,9 @@
-.include "assembler.macros"
+#include "core.defines"
+#include "assembler.macros"
+#include "dictionary.macros"
+
 .include "unix_functions.macros"
 .include "asUnit.macros"
-.include "dictionary.macros"
 
 .global systemDictionary
 .global dict_init
@@ -31,7 +33,7 @@ metaList:
 .text
 
 dict_init:
-	LOAD_ADDRESS x21, systemDictionary
+	LOAD_ADDRESS SYS_DICT, systemDictionary
 
 	LOAD_ADDRESS x0, metaNext
 	LOAD_ADDRESS x1, metaList
@@ -55,7 +57,7 @@ dict_search:
 	str x11, [sp, #-16]!
 
 	mov x11, x0   // hold addr of target
-	mov x22, x21  // ptr to search dict.
+	mov x22, SYS_DICT
 
 L_keep_looking:
 	LOAD_ADDRESS x1, systemDictionary

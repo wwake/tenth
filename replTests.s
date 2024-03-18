@@ -1,9 +1,9 @@
 #include "core.defines"
 #include "assembler.macros"
+#include "dictionary.macros"
 
 .include "unix_functions.macros"
 .include "asUnit.macros"
-.include "dictionary.macros"
 .include "repl.macros"
 
 .global _start

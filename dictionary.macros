@@ -5,20 +5,20 @@
 // Input:
 //   name of the entry "in quotes"
 //   codeAddress of code in entry
-//   x21 [DP = dictionary pointer] points to newest dictionary entry
+//   x21 [SYS_DICT = dictionary pointer] points to newest dictionary entry
 // Process:
 //   Store 3 words in next entry: link to previous dictionary entry, pointer to name string, and pointer to code
-//   Increment x21 by 3 words
+//   Increment SYS_DICT by 3 words
 // Uses:
 //   x0-x4 as a temp
-//   x21 is increased for new entry
+//   SYS_DICT is increased for new entry
 //
 .macro DICT_HEADER name, codeAddress, isMeta=REGULAR
-	str x21, [x21, #24]
-	add x21, x21, #24
+	str SYS_DICT, [SYS_DICT, #24]
+	add SYS_DICT, SYS_DICT, #24
 
 	LOAD_ADDRESS x0, L_DICT_HEADER_\@
-	str x0, [x21, #8]
+	str x0, [SYS_DICT, #8]
 
 	mov x3, \isMeta
 	mov x4, META
@@ -32,7 +32,7 @@
 
 L_skip_meta\@:
 	LOAD_ADDRESS x0, \codeAddress
-	str x0, [x21, #16]
+	str x0, [SYS_DICT, #16]
 
 	.data
 	L_DICT_HEADER_\@: .asciz "\name"
