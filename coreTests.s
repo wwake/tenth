@@ -1,3 +1,5 @@
+#include "core.defines"
+
 .include "assembler.macros"
 .include "unix_functions.macros"
 .include "asUnit.macros"
@@ -44,21 +46,21 @@ _start:
 	
 
 TEST_START colon_switches_to_compile_mode
-	mov x24, RUN_MODE
+	mov FLAGS, RUN_MODE
 
 	bl _colon
 
-	mov x0, x24
+	mov x0, FLAGS
 	mov x1, COMPILE_MODE
 	bl assertEqual
 TEST_END
 
 TEST_START semicolon_switches_to_run_mode
-	mov x24, COMPILE_MODE
+	mov FLAGS, COMPILE_MODE
 
 	bl _semicolon
 
-	mov x0, x24
+	mov x0, FLAGS
 	mov x1, RUN_MODE
 	bl assertEqual
 TEST_END

@@ -1,3 +1,5 @@
+#include "core.defines"
+
 .include "assembler.macros"
 .include "unix_functions.macros"
 .include "dictionary.macros"
@@ -51,7 +53,7 @@ evalAll:
 
 	mov x28, x0
 
-	and x1, x24, COMPILE_MODE
+	and x1, FLAGS, COMPILE_MODE
 	cmp x1, COMPILE_MODE
 	b.ne L_evaluate
 

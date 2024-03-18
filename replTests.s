@@ -1,3 +1,5 @@
+#include "core.defines"
+
 .include "assembler.macros"
 .include "unix_functions.macros"
 .include "asUnit.macros"
@@ -133,7 +135,7 @@ TEST_START evalAll_calls_eval_in_run_mode
 
 	LOAD_ADDRESS x19, L_eval_test_stack
 	str xzr, [x19]
-	mov x24, RUN_MODE
+	mov FLAGS, RUN_MODE
 	LOAD_ADDRESS x0, L_eval_word
 	
 	bl evalAll
@@ -165,7 +167,7 @@ TEST_START evalAll_calls_compile_x23_in_compile_mode
 	LOAD_ADDRESS x23, L_test_compile
 	LOAD_ADDRESS x19, L_eval_test_stack
 	str xzr, [x19]
-	mov x24, COMPILE_MODE
+	mov FLAGS, COMPILE_MODE
 	LOAD_ADDRESS x0, L_eval_word
 
 	bl evalAll
@@ -183,12 +185,12 @@ TEST_START evalAll_calls_meta_even_in_compile_mode
 	DICT_HEADER ";", _semicolon, META
 	DICT_END
 
-	mov x24, COMPILE_MODE
+	mov FLAGS, COMPILE_MODE
 	LOAD_ADDRESS x0, L_semicolon
 
 	bl evalAll
 
-	mov x0, x24
+	mov x0, FLAGS
 	mov x1, RUN_MODE
 	bl assertEqual
 TEST_END
