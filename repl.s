@@ -61,7 +61,7 @@ evalAll:
 	cmp x0, #1
 	b.eq L_evaluate
 		mov x0, x28
-		blr x23
+		blr COMPILER_ROUTINE
 		b L_end_evalAll
 
 	L_evaluate:
@@ -88,7 +88,7 @@ compile:
 repl:
 	str lr, [sp, #-16]!
 	str x22, [sp, #8]
-	LOAD_ADDRESS x23, compile
+	LOAD_ADDRESS COMPILER_ROUTINE, compile
 	bl inputInit
 
 L_repl_loop:

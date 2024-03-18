@@ -164,7 +164,7 @@ L_test_compile:
 	ret
 
 TEST_START evalAll_calls_compile_x23_in_compile_mode
-	LOAD_ADDRESS x23, L_test_compile
+	LOAD_ADDRESS COMPILER_ROUTINE, L_test_compile
 	LOAD_ADDRESS VSP, L_eval_test_stack
 	str xzr, [VSP]
 	mov FLAGS, COMPILE_MODE
