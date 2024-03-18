@@ -1,0 +1,6 @@
+#ifndef core_defines
+#define core_defines 1
+
+#define FLAGS x24
+
+#endif

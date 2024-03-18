@@ -5,8 +5,9 @@ LD=ld -macos_version_min 14.0.0 -lSystem -syslibroot `xcrun -sdk macosx --show-s
 MACROS=unix_functions.macros assembler.macros dictionary.macros repl.macros
 TEST_MACROS=asUnit.macros coreTests.macros
 
-%o: %.s
-	as -o $@ $^
+%.o: %.s
+	gcc -E -P -C $< -o $@.post
+	as -o $@ $@.post
 
 %.out: %.o
 	$(LD) -o $@ $^
@@ -67,7 +68,7 @@ unitTestDemo.out: unitTestDemo.o cLike.o core.o asUnit.o
 
 
 clean:
-	rm -f *.o *.out
+	rm -f *.o *.out *.post
 
 
 repl: repl.out

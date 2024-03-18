@@ -69,7 +69,7 @@ TEST_START semicolon_writes_end2d_in_secondary
 	// call semicolon
 	// verify that end2d's word address is in the previous cell
 	// verify that SEC_SPACE increased by 8 bytes
-//	bl assertEqual
+	//bl assertEqual
 TEST_END
 
 .data

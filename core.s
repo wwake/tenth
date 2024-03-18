@@ -1,3 +1,5 @@
+#include "core.defines"
+
 .include "assembler.macros"
 .include "repl.macros"
 
@@ -78,7 +80,7 @@ L_semicolon:
 _colon:
 	str lr, [sp, #-16]!
 
-	mov x24, COMPILE_MODE
+	mov FLAGS, COMPILE_MODE
 
 	ldr lr, [sp], #16
 	ret
@@ -87,7 +89,7 @@ _colon:
 _semicolon:
 	str lr, [sp, #-16]!
 
-	mov x24, RUN_MODE
+	mov FLAGS, RUN_MODE
 
 	ldr lr, [sp], #16
 	ret

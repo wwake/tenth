@@ -19,6 +19,7 @@
 		91908DBE2B966ABC008CC466 /* replTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91908DBD2B966ABC008CC466 /* replTests.s */; };
 		91908DC12B97B19E008CC466 /* repl.s in Sources */ = {isa = PBXBuildFile; fileRef = 91908DC02B97B19E008CC466 /* repl.s */; };
 		91CAE5EB2BA23EB7001E8E9E /* repl.macros in Sources */ = {isa = PBXBuildFile; fileRef = 91CAE5EA2BA23EB7001E8E9E /* repl.macros */; };
+		91CAE5F12BA8BE95001E8E9E /* core.defines in Sources */ = {isa = PBXBuildFile; fileRef = 91CAE5F02BA8BE95001E8E9E /* core.defines */; };
 		91D342EB2B98F8A4001B1D00 /* main.s in Sources */ = {isa = PBXBuildFile; fileRef = 91D342EA2B98F8A4001B1D00 /* main.s */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +65,7 @@
 		91CAE5EA2BA23EB7001E8E9E /* repl.macros */ = {isa = PBXFileReference; lastKnownFileType = text; name = repl.macros; path = ../repl.macros; sourceTree = "<group>"; };
 		91CAE5EC2BA374B2001E8E9E /* EnvironmentNotes.key */ = {isa = PBXFileReference; lastKnownFileType = file; name = EnvironmentNotes.key; path = ../EnvironmentNotes.key; sourceTree = "<group>"; };
 		91CAE5ED2BA3DC73001E8E9E /* DesignNotes.key */ = {isa = PBXFileReference; lastKnownFileType = file; name = DesignNotes.key; path = ../DesignNotes.key; sourceTree = "<group>"; };
+		91CAE5F02BA8BE95001E8E9E /* core.defines */ = {isa = PBXFileReference; lastKnownFileType = text; name = core.defines; path = ../core.defines; sourceTree = "<group>"; };
 		91D342EA2B98F8A4001B1D00 /* main.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = main.s; path = ../main.s; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -131,6 +133,7 @@
 				91238D8A2B730AD800052895 /* cLike.s */,
 				91238D832B730AD800052895 /* core.s */,
 				91B9F1322B742898005730DF /* interpreter.s */,
+				91CAE5F02BA8BE95001E8E9E /* core.defines */,
 			);
 			name = core;
 			sourceTree = "<group>";
@@ -229,6 +232,7 @@
 			files = (
 				91D342EB2B98F8A4001B1D00 /* main.s in Sources */,
 				913B91FA2B9A57AB00943E4E /* input.s in Sources */,
+				91CAE5F12BA8BE95001E8E9E /* core.defines in Sources */,
 				91451FC42B73E40500D8C89A /* unitTestPlayground.s in Sources */,
 				91451FC02B73E3D400D8C89A /* cLikeTests.s in Sources */,
 				913B91FE2B9A5AB400943E4E /* inputTests.s in Sources */,

@@ -1,4 +1,4 @@
-
+  * gcc -E -P file.s -o file.out   // -E = preprocessor only; -P = no line numbers generated
   * Develop a way to write secondaries to dictionary
   * Develop ": wordToDefine body ;"
   * Lookup words before repl tests for isMeta, so we can simplify isMeta to compare pointers directly
