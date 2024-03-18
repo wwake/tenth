@@ -124,7 +124,7 @@ L_captured:
   .ascii "?"
 .text
 .align 2
-// Assumes x22 points to a string
+// Assumes x22 = WORD_PTR points to a string
 captureError:
  LOAD_ADDRESS x0, L_captured
  ldrb w1, [x22]

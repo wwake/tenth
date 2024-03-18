@@ -53,7 +53,7 @@ dict_init:
 
 dict_search:
 	str lr, [sp, #-16]!
-	str x22, [sp, #8]
+	str x22, [sp, #8]		// save WORD_PTR
 	str x11, [sp, #-16]!
 
 	mov x11, x0   // hold addr of target
@@ -82,7 +82,7 @@ L_not_found:
 
 L_exit_search:
 	ldr x11, [sp], #16
-	ldr x22, [sp, #8]
+	ldr x22, [sp, #8]		// Restore WORD_PTR
 	ldr lr, [sp], #16
 	ret
 

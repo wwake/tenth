@@ -1,4 +1,22 @@
-.include "assembler.macros"
+
+.macro LOAD_ADDRESS register, location
+ adrp \register, \location@PAGE
+ add \register, \register, \location@PAGEOFF
+.endm
+.macro DATA_PUSH register
+ str \register, [x19], #8
+.endm
+.macro DATA_POP register
+ ldr \register, [x19, #-8]!
+.endm
+.macro DATA_POP_AB register1, register2
+ DATA_POP \register1
+ DATA_POP \register2
+.endm
+.macro DATA_TOP register
+ ldr \register, [x19, #-8]
+.endm
+
 .include "unix_functions.macros"
 .global inputInit
 .global readWord
@@ -22,11 +40,11 @@ inputInit:
 //   x4 - address of the routine to call to read a line
 // Output:
 //   x0 - ptr to start of returned word (0-terminated string)
-//   x22 - updated
+//   x22 - updated WORD_PTR
 //
 readWord:
  str lr, [sp, #-16]!
- // Check for x22 at \0
+ // Check for WORD_PTR at \0
 L_check_if_at_end:
  ldrb w0, [x22]
  cmp w0, #0

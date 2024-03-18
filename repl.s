@@ -126,7 +126,7 @@ wordNotFoundSuffix:
 
 .align 2
 // wordNotFoundError - prints error message and word that wasn't found
-// Input: x22 - points to string, the not-found word
+// Input: x22 = WORD_PTR - points to string, the not-found word
 // Output:
 //   Prints error message
 //
@@ -136,7 +136,7 @@ wordNotFoundError:
 	LOAD_ADDRESS x0, wordNotFoundMessage
 	bl print
 
-	mov x0, x22
+	mov x0, WORD_PTR
 	bl print
 
 	LOAD_ADDRESS x0, wordNotFoundSuffix

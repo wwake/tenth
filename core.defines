@@ -6,6 +6,8 @@
 
 #define SYS_DICT x21 	// system dictionary
 
+#define WORD_PTR x22		// pointer to next word to read
+
 #define FLAGS x24		// flag for run vs compile mode
 
 #endif

@@ -57,7 +57,7 @@ TEST_START eval_of_just_push42_leaves_42_on_stack
 	LOAD_ADDRESS VSP, L_eval_test_stack
 
 	LOAD_ADDRESS x0, L_input_buffer
-	LOAD_ADDRESS x22, L_input_buffer
+	LOAD_ADDRESS WORD_PTR, L_input_buffer
 
 	// Act
 	bl eval
@@ -97,10 +97,10 @@ L_captured:
 .text
 .align 2
 
-// Assumes x22 points to a string
+// Assumes x22 = WORD_PTR points to a string
 captureError:
 	LOAD_ADDRESS x0, L_captured
-	ldrb w1, [x22]
+	ldrb w1, [WORD_PTR]
 	strb w1, [x0]
 	ret
 
@@ -111,7 +111,7 @@ TEST_START eval_calls_syntax_error_routine_for_unknown_word
 	DICT_END
 
 	LOAD_ADDRESS x0, L_missing_word
-	mov x22, x0
+	mov WORD_PTR, x0
 
 	// Act
 	bl eval
