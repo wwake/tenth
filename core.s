@@ -102,7 +102,7 @@ _semicolon:
 //   x20 - VPC, updated to word after data value
 //
 _push:
-	ldr x0, [x20], #8
+	ldr x0, [VPC], #8
 	DATA_PUSH x0
 	ret
 
@@ -181,10 +181,10 @@ _jump_if_false:
 	DATA_POP x0
 	CMP x0, #0
 	b.eq L_skip_if
-		add x20, x20, #8	// skip past the address
+		add VPC, VPC, #8	// skip past the address
 	b L_end_jump_if_false
 L_skip_if:
-		ldr x20, [x20]		// transfer to the address
+		ldr VPC, [VPC]		// transfer to the address
 L_end_jump_if_false:
 	ret
 
@@ -195,5 +195,5 @@ L_end_jump_if_false:
 //   x20 changed to address value it formerly pointed to (=> a jump)
 //
 _jump:
-	ldr x20, [x20]
+	ldr VPC, [VPC]
 	ret

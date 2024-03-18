@@ -62,7 +62,7 @@ TEST_START interpret_empty_program
 	bl runInterpreter
 	
 // Assert:
-	mov x0, x20
+	mov x0, VPC
 	LOAD_ADDRESS x1, L_empty
 	bl assertEqual
 TEST_END
@@ -217,7 +217,7 @@ TEST_START recursive_factorial
 	DATA_PUSH x0
 
 	LOAD_ADDRESS x0, L_factorial
-	mov x20, x0
+	mov VPC, x0
 	bl start2d
 
 	// Assert

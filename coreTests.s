@@ -84,11 +84,11 @@ L_data: .quad 142, 58
 
 TEST_START push_pushes_one_item
 	LOAD_ADDRESS VSP, L_push_test_stack
-	adr x20, L_data
+	adr VPC, L_data
 
 	bl _push
 
-	mov x0, x20
+	mov x0, VPC
 	adr x1, L_data
 	add x1, x1, #8		// expect VPC to increment
 	bl assertEqual
@@ -113,7 +113,7 @@ TEST_START dup_duplicates_top_item
 	// Arrange:
 	LOAD_ADDRESS VSP, L_push_test_stack
 
-	adr x20, L_data
+	adr VPC, L_data
 	bl _push
 
 	// Act:
@@ -144,7 +144,7 @@ L_VPC_Update: .asciz "VPC should be incremented"
 TEST_START add_b_plus_a_is_a
 	LOAD_ADDRESS VSP, L_push_test_stack
 
-	adr x20, L_data
+	adr VPC, L_data
 
 	bl _push
 	bl _push
@@ -166,10 +166,10 @@ TEST_END
 TEST_START sub_b_minus_a_is_difference
 	// Arrange:
 	LOAD_ADDRESS VSP, L_push_test_stack
-	adr x20, L_data
+	adr VPC, L_data
 	bl _push
 
-	adr x20, L_data + 8
+	adr VPC, L_data + 8
 	bl _push
 
 	// Act:
@@ -184,10 +184,10 @@ TEST_END
 TEST_START mul_b_by_a_is_product
 	// Arrange:
 	LOAD_ADDRESS VSP, L_push_test_stack
-	adr x20, L_data
+	adr VPC, L_data
 	bl _push
 
-	adr x20, L_data + 8
+	adr VPC, L_data + 8
 	bl _push
 
 	// Act:
@@ -202,10 +202,10 @@ TEST_END
 TEST_START neq_true_if_values_differ
 	// Arrange:
 	LOAD_ADDRESS VSP, L_push_test_stack
-	adr x20, L_data
+	adr VPC, L_data
 	bl _push
 
-	adr x20, L_data + 8
+	adr VPC, L_data + 8
 	bl _push
 
 	// Act:
@@ -220,10 +220,10 @@ TEST_END
 TEST_START neq_false_if_values_the_same
 	// Arrange:
 	LOAD_ADDRESS VSP, L_push_test_stack
-	adr x20, L_data
+	adr VPC, L_data
 	bl _push
 
-	adr x20, L_data
+	adr VPC, L_data
 	bl _push
 
 	// Act:

@@ -21,7 +21,7 @@ runInterpreter:
 	str lr, [sp, #-16]!
 
 	LOAD_ADDRESS VSP, data_stack
-	mov x20, x0
+	mov VPC, x0
 	bl start2d
 
 	ldr lr, [sp], #16
@@ -40,12 +40,12 @@ runInterpreter:
 //
 start2d:
 	str lr, [sp, #-16]!		// push LR and...
-	str x20, [sp, #8]		// VPC to system stack
+	str VPC, [sp, #8]		// VPC to system stack
 
-	add x20, x0, #8			// start VPC just past start2d call
+	add VPC, x0, #8			// start VPC just past start2d call
 
 	L_interpreter_loop:
-		ldr x0, [x20], #8	 // Load word address, increment VPC
+		ldr x0, [VPC], #8	 // Load word address, increment VPC
 		ldr x1, [x0]		// Load address of code
 		blr x1				 // Call method
 		b L_interpreter_loop // Repeat
@@ -59,7 +59,7 @@ start2d:
 //   LR - restored (as pushed by start2d)
 //
 end2d:
-	ldr x20, [sp, #8]		// Restore VPC and...
+	ldr VPC, [sp, #8]		// Restore VPC and...
 	ldr lr, [sp], #16		// LR from system stack
 	ret						// Return
 

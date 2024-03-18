@@ -1,7 +1,9 @@
 #ifndef core_defines
 #define core_defines 1
 
-#define VSP x19
+#define VSP x19	// virtual stack pointer
+#define VPC x20 	// virtual program counter
+
 #define FLAGS x24
 
 #endif
