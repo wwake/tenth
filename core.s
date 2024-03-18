@@ -1,6 +1,6 @@
 #include "core.defines"
+#include "assembler.macros"
 
-.include "assembler.macros"
 .include "repl.macros"
 
 .global data_stack

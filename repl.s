@@ -1,6 +1,6 @@
 #include "core.defines"
+#include "assembler.macros"
 
-.include "assembler.macros"
 .include "unix_functions.macros"
 .include "dictionary.macros"
 .include "repl.macros"

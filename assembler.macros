@@ -5,11 +5,11 @@
 .endm
 
 .macro DATA_PUSH register
-	str \register, [x19], #8
+	str \register, [VSP], #8
 .endm
 
 .macro DATA_POP register
-	ldr \register, [x19, #-8]!
+	ldr \register, [VSP, #-8]!
 .endm
 
 .macro DATA_POP_AB register1, register2
@@ -18,5 +18,5 @@
 .endm
 
 .macro DATA_TOP register
-	ldr \register, [x19, #-8]
+	ldr \register, [VSP, #-8]
 .endm

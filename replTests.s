@@ -1,6 +1,6 @@
 #include "core.defines"
+#include "assembler.macros"
 
-.include "assembler.macros"
 .include "unix_functions.macros"
 .include "asUnit.macros"
 .include "dictionary.macros"
@@ -54,7 +54,7 @@ TEST_START eval_of_just_push42_leaves_42_on_stack
 	DICT_HEADER "push42", push42
 	DICT_END
 
-	LOAD_ADDRESS x19, L_eval_test_stack
+	LOAD_ADDRESS VSP, L_eval_test_stack
 
 	LOAD_ADDRESS x0, L_input_buffer
 	LOAD_ADDRESS x22, L_input_buffer
@@ -68,7 +68,7 @@ TEST_START eval_of_just_push42_leaves_42_on_stack
 	mov x1, #42
 	bl assertEqual
 
-	mov x0, x19
+	mov x0, VSP
 	LOAD_ADDRESS x1, L_eval_test_stack
 	add x1, x1, #8
 	bl assertEqual
@@ -133,14 +133,14 @@ TEST_START evalAll_calls_eval_in_run_mode
 	DICT_HEADER "1", push1
 	DICT_END
 
-	LOAD_ADDRESS x19, L_eval_test_stack
-	str xzr, [x19]
+	LOAD_ADDRESS VSP, L_eval_test_stack
+	str xzr, [VSP]
 	mov FLAGS, RUN_MODE
 	LOAD_ADDRESS x0, L_eval_word
 	
 	bl evalAll
 
-	ldr x0, [x19, #-8]
+	ldr x0, [VSP, #-8]
 	mov x1, #1
 	bl assertEqual
 TEST_END
@@ -165,8 +165,8 @@ L_test_compile:
 
 TEST_START evalAll_calls_compile_x23_in_compile_mode
 	LOAD_ADDRESS x23, L_test_compile
-	LOAD_ADDRESS x19, L_eval_test_stack
-	str xzr, [x19]
+	LOAD_ADDRESS VSP, L_eval_test_stack
+	str xzr, [VSP]
 	mov FLAGS, COMPILE_MODE
 	LOAD_ADDRESS x0, L_eval_word
 

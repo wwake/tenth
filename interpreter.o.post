@@ -1,4 +1,22 @@
-.include "assembler.macros"
+
+.macro LOAD_ADDRESS register, location
+ adrp \register, \location@PAGE
+ add \register, \register, \location@PAGEOFF
+.endm
+.macro DATA_PUSH register
+ str \register, [x19], #8
+.endm
+.macro DATA_POP register
+ ldr \register, [x19, #-8]!
+.endm
+.macro DATA_POP_AB register1, register2
+ DATA_POP \register1
+ DATA_POP \register2
+.endm
+.macro DATA_TOP register
+ ldr \register, [x19, #-8]
+.endm
+
 .include "unix_functions.macros"
 .global runInterpreter
 .global start2d

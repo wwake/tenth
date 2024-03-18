@@ -1,4 +1,6 @@
-.include "assembler.macros"
+#include "core.defines"
+#include "assembler.macros"
+
 .include "unix_functions.macros"
 
 .global runInterpreter
@@ -18,7 +20,7 @@
 runInterpreter:
 	str lr, [sp, #-16]!
 
-	LOAD_ADDRESS x19, data_stack
+	LOAD_ADDRESS VSP, data_stack
 	mov x20, x0
 	bl start2d
 

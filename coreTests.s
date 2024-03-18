@@ -1,6 +1,6 @@
 #include "core.defines"
+#include "assembler.macros"
 
-.include "assembler.macros"
 .include "unix_functions.macros"
 .include "asUnit.macros"
 .include "coreTests.macros"
@@ -83,7 +83,7 @@ L_push_test_stack: .quad 0, 99, 0, 0
 L_data: .quad 142, 58
 
 TEST_START push_pushes_one_item
-	LOAD_ADDRESS X19, L_push_test_stack
+	LOAD_ADDRESS VSP, L_push_test_stack
 	adr x20, L_data
 
 	bl _push
@@ -93,8 +93,8 @@ TEST_START push_pushes_one_item
 	add x1, x1, #8		// expect VPC to increment
 	bl assertEqual
 
-	mov x0, x19		 // Current VSP
-	
+	mov x0, VSP
+
 	LOAD_ADDRESS x1, L_push_test_stack
 	add x1, x1, #8		// Expect original stack+8
 	
@@ -111,7 +111,7 @@ TEST_END
 
 TEST_START dup_duplicates_top_item
 	// Arrange:
-	LOAD_ADDRESS x19, L_push_test_stack
+	LOAD_ADDRESS VSP, L_push_test_stack
 
 	adr x20, L_data
 	bl _push
@@ -151,7 +151,7 @@ TEST_START add_b_plus_a_is_a
 
 	bl add
 
-	mov x0, x19		 // Current VSP
+	mov x0, VSP
 	LOAD_ADDRESS x1, L_push_test_stack
 	add x1, x1, #8		// Expect original stack+8
 	bl assertEqual
@@ -165,7 +165,7 @@ TEST_END
 
 TEST_START sub_b_minus_a_is_difference
 	// Arrange:
-	LOAD_ADDRESS x19, L_push_test_stack
+	LOAD_ADDRESS VSP, L_push_test_stack
 	adr x20, L_data
 	bl _push
 
@@ -183,7 +183,7 @@ TEST_END
 
 TEST_START mul_b_by_a_is_product
 	// Arrange:
-	LOAD_ADDRESS x19, L_push_test_stack
+	LOAD_ADDRESS VSP, L_push_test_stack
 	adr x20, L_data
 	bl _push
 
@@ -201,7 +201,7 @@ TEST_END
 
 TEST_START neq_true_if_values_differ
 	// Arrange:
-	LOAD_ADDRESS x19, L_push_test_stack
+	LOAD_ADDRESS VSP, L_push_test_stack
 	adr x20, L_data
 	bl _push
 
@@ -219,7 +219,7 @@ TEST_END
 
 TEST_START neq_false_if_values_the_same
 	// Arrange:
-	LOAD_ADDRESS x19, L_push_test_stack
+	LOAD_ADDRESS VSP, L_push_test_stack
 	adr x20, L_data
 	bl _push
 
@@ -311,7 +311,7 @@ TEST_START if_zero_jumps_for_zero_value
 	bl runInterpreter
 
 // Assert
-	mov x0, x19
+	mov x0, VSP
 	LOAD_ADDRESS x1, data_stack
 	bl assertEqual			// check that VSP is back to original place
 TEST_END
@@ -336,7 +336,7 @@ TEST_START jump_skips_over_code
 	bl runInterpreter
 
 // Assert
-	mov x0, x19
+	mov x0, VSP
 	LOAD_ADDRESS x1, data_stack
 	bl assertEqual			// check that VSP is back to original place
 TEST_END

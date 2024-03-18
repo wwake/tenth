@@ -1,4 +1,6 @@
-.include "assembler.macros"
+#include "core.defines"
+#include "assembler.macros"
+
 .include "unix_functions.macros"
 .include "asUnit.macros"
 .include "coreTests.macros"
