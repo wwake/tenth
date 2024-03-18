@@ -142,7 +142,7 @@ L_VPC_Update: .asciz "VPC should be incremented"
 .p2align 2
 
 TEST_START add_b_plus_a_is_a
-	LOAD_ADDRESS x19, L_push_test_stack
+	LOAD_ADDRESS VSP, L_push_test_stack
 
 	adr x20, L_data
 
