@@ -56,22 +56,59 @@ TEST_START colon_switches_to_compile_mode
 TEST_END
 
 TEST_START semicolon_switches_to_run_mode
+	// Arrange:
+	LOAD_ADDRESS SEC_SPACE, L_semicolon_test_secondary
+
+	// Set up end2d's word address
+//	LOAD_ADDRESS x0, end2d
+//	LOAD_ADDRESS x1, end2d_wordAddress
+//	str x0, [x1]
+
 	mov FLAGS, COMPILE_MODE
 
+	// Act:
 	bl _semicolon
 
+	// Assert:
 	mov x0, FLAGS
 	mov x1, RUN_MODE
 	bl assertEqual
 TEST_END
 
 
+.data
+L_semicolon_test_secondary:
+	.fill 16, 8, 0
+
+.text
+.align 2
+
 TEST_START semicolon_writes_end2d_in_secondary
-	// set x25 (SEC_SPACE) somewhere
-	// call semicolon
-	// verify that end2d's word address is in the previous cell
-	// verify that SEC_SPACE increased by 8 bytes
-	//bl assertEqual
+	// Arrange:
+	LOAD_ADDRESS SEC_SPACE, L_semicolon_test_secondary
+
+	// Set up end2d's word address
+//	LOAD_ADDRESS x0, end2d
+//	LOAD_ADDRESS x1, end2d_wordAddress
+//	str x0, [x1]
+
+	// Act:
+	bl _semicolon
+
+	// Assert:
+	// Check that cell gets end2d's word address
+	LOAD_ADDRESS x0, L_semicolon_test_secondary
+	ldr x0, [x0]
+	ldr x0, [x0]
+	LOAD_ADDRESS x1, end2d_wordAddress
+	ldr x1, [x1]
+	bl assertEqual
+
+	// Check that SEC_SPACE moved forward after writing
+	mov x0, SEC_SPACE
+	LOAD_ADDRESS x1, L_semicolon_test_secondary
+	add x1, x1, #8
+	bl assertEqual
 TEST_END
 
 .data

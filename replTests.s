@@ -180,7 +180,18 @@ TEST_END
 L_semicolon:
 	.asciz ";"
 
+.data
+.p2align 3
+L_evalAll_test_space:
+	.quad 0
+	.quad 0
+
+.text
+.align 2
+
 TEST_START evalAll_calls_meta_even_in_compile_mode
+	LOAD_ADDRESS SEC_SPACE, L_evalAll_test_space
+
 	bl dict_init
 	DICT_HEADER ";", _semicolon, META
 	DICT_END

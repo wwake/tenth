@@ -6,7 +6,7 @@
 .global runInterpreter
 .global start2d
 .global end2d
-
+.global end2d_wordAddress
 
 .text
 .p2align 2
@@ -58,6 +58,13 @@ start2d:
 //   x20 - restored (as pushed by start2d)
 //   LR - restored (as pushed by start2d)
 //
+.data
+.p2align 3
+end2d_wordAddress:
+	.quad end2d
+
+.text
+.align 2
 end2d:
 	ldr VPC, [sp, #8]		// Restore VPC and...
 	ldr lr, [sp], #16		// LR from system stack

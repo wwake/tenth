@@ -86,8 +86,13 @@ _colon:
 	ret
 
 // _semicolon (;) - exit compile mode
+// Write a pointer to end2d's word address as last entry in secondary
+//
 _semicolon:
 	str lr, [sp, #-16]!
+
+	LOAD_ADDRESS x0, end2d_wordAddress
+	str x0, [SEC_SPACE], #8
 
 	mov FLAGS, RUN_MODE
 

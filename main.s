@@ -13,6 +13,8 @@ _start:
 
 	bl data_stack_init
 
+	bl L_sec_space_init
+
 	bl L_load_system_dictionary
 
 	// Initialize registers
@@ -26,6 +28,11 @@ _start:
 
 	ret
 
+
+L_sec_space_init:
+	// Setup SEC_SPACE
+	LOAD_ADDRESS SEC_SPACE, L_secondary_space
+	ret
 
 L_load_system_dictionary:
 	str lr, [sp, #-16]!
@@ -46,3 +53,8 @@ L_load_system_dictionary:
 	ldr lr, [sp], #16
 
 	ret
+
+
+.data
+L_secondary_space:
+	.fill 20000, 8, 0
