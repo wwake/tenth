@@ -12,4 +12,6 @@
 
 #define FLAGS x24		// flag for run vs compile mode
 
+#define SEC_SPACE x25	// area to write secondaries
+
 #endif
