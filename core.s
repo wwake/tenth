@@ -80,9 +80,23 @@ L_semicolon:
 _colon:
 	str lr, [sp, #-16]!
 
-	
+	// Read the word to be defined
+	bl readWord
 
+	// Copy the word to be defined after the last secondary
+	mov x1, SEC_SPACE
+	bl strcpyz
 
+	// Adjust SEC_SPACE to account for copied bytes + 1 byte for \0 + 7-byte buffer
+	mov x0, SEC_SPACE
+	bl strlen
+	add x0, x0, #8
+
+	// Adjust SEC_SPACE forward to address mod 8
+	add SEC_SPACE, SEC_SPACE, x0
+	and SEC_SPACE, SEC_SPACE, #-8
+
+	// Change to Compile mode
 	mov FLAGS, COMPILE_MODE
 
 	ldr lr, [sp], #16

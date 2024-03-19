@@ -56,7 +56,7 @@ readLine:
 //   READ_LINE_ROUTINE (register) - address of the routine to call to read a line
 // Output:
 //   x0 - ptr to start of returned word (0-terminated string)
-//   x22 - updated WORD_PTR
+//   WORD_PTR (register) - updated WORD_PTR
 //
 readWord:
  str lr, [sp, #-16]!

@@ -26,14 +26,14 @@ core.o: core.s assembler.macros core.defines
 
 coreTests.o: coreTests.s $(MACROS) $(TEST_MACROS)
 
-coreTests.out: coreTests.o asUnit.o cLike.o core.o interpreter.o
+coreTests.out: coreTests.o asUnit.o cLike.o core.o interpreter.o input.o
 
 
 dictionary.o: dictionary.s dictionary.macros unix_functions.macros assembler.macros core.defines
 
 dictionaryTests.o: dictionaryTests.s dictionary.o $(MACROS) $(TEST_MACROS)
 
-dictionaryTests.out: dictionaryTests.o dictionary.o asUnit.o interpreter.o core.o cLike.o
+dictionaryTests.out: dictionaryTests.o dictionary.o asUnit.o interpreter.o core.o cLike.o input.o
 
 
 input.o: input.s $(MACROS)
@@ -47,7 +47,7 @@ interpreter.o: interpreter.s unix_functions.macros assembler.macros core.defines
 
 interpreterTests.o: interpreterTests.s interpreter.o $(MACROS) $(TEST_MACROS)
 
-interpreterTests.out: interpreterTests.o interpreter.o asUnit.o cLike.o core.o
+interpreterTests.out: interpreterTests.o interpreter.o asUnit.o cLike.o core.o input.o
 
 
 main.o: main.s core.defines

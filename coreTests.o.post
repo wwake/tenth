@@ -49,6 +49,8 @@ _start:
  ldr lr, [sp], #16
  ret
 TEST_START colon_switches_to_compile_mode
+ LOAD_ADDRESS x25, L_test_secondary_area
+ LOAD_ADDRESS x26, L_readWords
  mov x24, RUN_MODE
  bl _colon
  mov x0, x24
@@ -61,7 +63,9 @@ L_test_secondary_area:
  .fill 16, 8, 0
 .p2align 3
 L_colon_test_string:
- .asciz "xy"
+ .asciz "xy34567 "
+L_colon_test_string_final:
+ .asciz "xy34567"
 .text
 .align 2
 // L_readWords - read words for test
@@ -69,21 +73,26 @@ L_colon_test_string:
 //
 L_readWords:
  str lr, [sp, #-16]!
+ // Copy test string to real inputBuffer
  LOAD_ADDRESS x0, L_colon_test_string
- // x1 was passed in
+ LOAD_ADDRESS x1, inputBuffer
  bl strcpyz
  ldr lr, [sp], #16
  ret
 TEST_START colon_writes_header_to_secondary
  // Arrange:
  LOAD_ADDRESS x25, L_test_secondary_area
- LOAD_ADDRESS x4, L_readWords
+ LOAD_ADDRESS x26, L_readWords
  // Act:
  bl _colon
  // Assert:
  LOAD_ADDRESS x0, L_test_secondary_area
- LOAD_ADDRESS x1, L_colon_test_string
-//	bl assertEqualStrings
+ LOAD_ADDRESS x1, L_colon_test_string_final
+ bl assertEqualStrings
+ mov x0, x25
+ LOAD_ADDRESS x1, L_test_secondary_area
+ add x1, x1, #8
+ bl assertEqual
  // LTSA + 8 should be same as old dictionary pointer
  // LTSA + 16 should point to LTSA
  // LTSA + 24 should point to start2d

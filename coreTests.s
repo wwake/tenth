@@ -48,6 +48,9 @@ _start:
 	
 
 TEST_START colon_switches_to_compile_mode
+	LOAD_ADDRESS SEC_SPACE, L_test_secondary_area
+	LOAD_ADDRESS READ_LINE_ROUTINE, L_readWords
+
 	mov FLAGS, RUN_MODE
 
 	bl _colon
@@ -65,7 +68,10 @@ L_test_secondary_area:
 
 .p2align 3
 L_colon_test_string:
-	.asciz "xy"
+	.asciz "xy34567 "
+
+L_colon_test_string_final:
+	.asciz "xy34567"
 
 .text
 .align 2
@@ -75,8 +81,9 @@ L_colon_test_string:
 L_readWords:
 	str lr, [sp, #-16]!
 
+	// Copy test string to real inputBuffer
 	LOAD_ADDRESS x0, L_colon_test_string
-	// x1 was passed in
+	LOAD_ADDRESS x1, inputBuffer
 	bl strcpyz
 
 	ldr lr, [sp], #16
@@ -85,15 +92,20 @@ L_readWords:
 TEST_START colon_writes_header_to_secondary
 	// Arrange:
 	LOAD_ADDRESS SEC_SPACE, L_test_secondary_area
-	LOAD_ADDRESS x4, L_readWords
+	LOAD_ADDRESS READ_LINE_ROUTINE, L_readWords
 
 	// Act:
 	bl _colon
 
 	// Assert:
 	LOAD_ADDRESS x0, L_test_secondary_area
-	LOAD_ADDRESS x1, L_colon_test_string
-//	bl assertEqualStrings
+	LOAD_ADDRESS x1, L_colon_test_string_final
+	bl assertEqualStrings
+
+	mov x0, SEC_SPACE
+	LOAD_ADDRESS x1, L_test_secondary_area
+	add x1, x1, #8
+	bl assertEqual
 
 	// LTSA + 8 should be same as old dictionary pointer
 	// LTSA + 16 should point to LTSA
