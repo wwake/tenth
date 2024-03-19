@@ -21,6 +21,7 @@
 .global inputInit
 .global readWord
 .global readLine
+.global inputBuffer
 .equ INPUT_BUFFER_SIZE, 250
 .data
 L_prompt:
@@ -35,9 +36,24 @@ inputInit:
  LOAD_ADDRESS x22, inputBuffer
  strb wzr, [x22]
  ret
+// readLine - print prompt and read next line
+// Input: none
+// Uses x0, x1, x2 - temp
+// Output: x0 - number of characters read
+//
+readLine:
+ // prompt
+ LOAD_ADDRESS x0, L_prompt
+ bl print
+ // Read a new line
+ mov x0, #0
+ LOAD_ADDRESS x1, inputBuffer
+ mov x2, INPUT_BUFFER_SIZE
+ unix_read #0, L_input_buffer, INPUT_BUFFER_SIZE
+ ret
 // readWord - get next word, reading new lines if necessary
 // Inputs:
-//   x4 - address of the routine to call to read a line
+//   READ_LINE_ROUTINE (register) - address of the routine to call to read a line
 // Output:
 //   x0 - ptr to start of returned word (0-terminated string)
 //   x22 - updated WORD_PTR
@@ -49,14 +65,7 @@ L_check_if_at_end:
  ldrb w0, [x22]
  cmp w0, #0
  b.ne L_find_word_start
-  // prompt
-  LOAD_ADDRESS x0, L_prompt
-  bl print
-  // Read a new line
-  mov x0, #0
-  LOAD_ADDRESS x1, inputBuffer
-  mov x2, INPUT_BUFFER_SIZE
-  blr x4 // read line
+  blr x26
   LOAD_ADDRESS x22, inputBuffer
 L_find_word_start:
   ldrb w0, [x22]
@@ -81,7 +90,4 @@ find_trailing_space_or_nl:
 exit_space_or_nl:
  strb wzr, [x22, #-1]
  ldr lr, [sp], #16
- ret
-readLine:
- unix_read #0, L_input_buffer, INPUT_BUFFER_SIZE
  ret

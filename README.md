@@ -1,6 +1,7 @@
 # tenth
 A threaded interpreter for a Forth-like language, in Arm64 assembler; for demo purposes only!
 
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
 ## More documentation
 * tenth.key - day-by-day notes

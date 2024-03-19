@@ -1,4 +1,21 @@
-.include "assembler.macros"
+
+.macro LOAD_ADDRESS register, location
+ adrp \register, \location@PAGE
+ add \register, \register, \location@PAGEOFF
+.endm
+.macro DATA_PUSH register
+ str \register, [x19], #8
+.endm
+.macro DATA_POP register
+ ldr \register, [x19, #-8]!
+.endm
+.macro DATA_POP_AB register1, register2
+ DATA_POP \register1
+ DATA_POP \register2
+.endm
+.macro DATA_TOP register
+ ldr \register, [x19, #-8]
+.endm
 .include "unix_functions.macros"
 .include "asUnit.macros"
 .include "dictionary.macros"
@@ -66,18 +83,24 @@ L_read_source:
  str xzr, [x0]
 .endm
 // stub_readLine - simulate line read
-// Input:
-//   x0 = fd
-//   x1 = input buffer
-//   x2 = max char's to read
+// Input: None
+// Output:
+//   Next line written to global inputBuffer
+//   x0 = # char's "read"
 //
 stub_readLine:
  str lr, [sp, #-16]!
+ // Get the read index
  LOAD_ADDRESS x9, L_read_index
  ldr x9, [x9]
+ // Copy the current string 
  LOAD_ADDRESS x0, L_read_source
  ldr x0, [x0, x9, LSL #3]
+ LOAD_ADDRESS x1, inputBuffer
  bl strcpyz
+ // Set string length as return value
+ bl strlen
+ // Move to next string in the input array
  LOAD_ADDRESS x9, L_read_index
  ldr x10, [x9]
  add x10, x10, #1
@@ -89,7 +112,7 @@ TEST_START read_with_word_at_start
  READ_STUB_INIT
  READ_STUB_ADD L_read_source1
  READ_STUB_READY
- LOAD_ADDRESS x4, stub_readLine
+ LOAD_ADDRESS x26, stub_readLine
  bl readWord
  LOAD_ADDRESS x1, L_expect_source1
  bl assertEqualStrings
@@ -99,7 +122,7 @@ TEST_START read_with_word_starting_with_spaces
  READ_STUB_INIT
  READ_STUB_ADD L_read_source2
  READ_STUB_READY
- LOAD_ADDRESS x4, stub_readLine
+ LOAD_ADDRESS x26, stub_readLine
  bl readWord
  LOAD_ADDRESS x1, L_expect_source2
  bl assertEqualStrings
@@ -109,15 +132,15 @@ TEST_START read_read_multiple_words_separated_by_spaces
  READ_STUB_INIT
  READ_STUB_ADD L_read_source3
  READ_STUB_READY
- LOAD_ADDRESS x4, stub_readLine
+ LOAD_ADDRESS x26, stub_readLine
  bl readWord
  LOAD_ADDRESS x1, L_expect_source3a
  bl assertEqualStrings
- LOAD_ADDRESS x4, stub_readLine
+ LOAD_ADDRESS x26, stub_readLine
  bl readWord
  LOAD_ADDRESS x1, L_expect_source3b
  bl assertEqualStrings
- LOAD_ADDRESS x4, stub_readLine
+ LOAD_ADDRESS x26, stub_readLine
  bl readWord
  LOAD_ADDRESS x1, L_expect_source3c
  bl assertEqualStrings
@@ -127,7 +150,7 @@ TEST_START read_from_newline_only_line_causes_readLine
  READ_STUB_ADD L_read_multiline_empty
  READ_STUB_ADD L_read_multiline_nonempty
  READ_STUB_READY
- LOAD_ADDRESS x4, stub_readLine
+ LOAD_ADDRESS x26, stub_readLine
  bl readWord
  LOAD_ADDRESS x1, L_expect_read_multiline_1
  bl assertEqualStrings

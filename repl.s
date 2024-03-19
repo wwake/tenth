@@ -93,7 +93,7 @@ repl:
 
 L_repl_loop:
 	// read
-	LOAD_ADDRESS x4, readLine
+	LOAD_ADDRESS READ_LINE_ROUTINE, readLine
 	bl readWord
 
 	// eval

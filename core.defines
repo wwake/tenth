@@ -14,4 +14,6 @@
 
 #define SEC_SPACE x25	// area to write secondaries
 
+#define READ_LINE_ROUTINE x26	// routine that prints prompt and reads next line
+
 #endif

@@ -80,6 +80,9 @@ L_semicolon:
 _colon:
 	str lr, [sp, #-16]!
 
+	
+
+
 	mov FLAGS, COMPILE_MODE
 
 	ldr lr, [sp], #16

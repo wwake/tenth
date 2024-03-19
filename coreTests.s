@@ -18,6 +18,8 @@ _start:
 
 	// Definition
 	bl colon_switches_to_compile_mode
+	bl colon_writes_header_to_secondary
+
 	bl semicolon_switches_to_run_mode
 	bl semicolon_writes_end2d_in_secondary
 
@@ -55,14 +57,56 @@ TEST_START colon_switches_to_compile_mode
 	bl assertEqual
 TEST_END
 
+.data
+.p2align 3
+
+L_test_secondary_area:
+	.fill 16, 8, 0
+
+.p2align 3
+L_colon_test_string:
+	.asciz "xy"
+
+.text
+.align 2
+// L_readWords - read words for test
+// Input: x0=#0, x1=addr of buffer, x2=#chars max to read
+//
+L_readWords:
+	str lr, [sp, #-16]!
+
+	LOAD_ADDRESS x0, L_colon_test_string
+	// x1 was passed in
+	bl strcpyz
+
+	ldr lr, [sp], #16
+	ret
+
+TEST_START colon_writes_header_to_secondary
+	// Arrange:
+	LOAD_ADDRESS SEC_SPACE, L_test_secondary_area
+	LOAD_ADDRESS x4, L_readWords
+
+	// Act:
+	bl _colon
+
+	// Assert:
+	LOAD_ADDRESS x0, L_test_secondary_area
+	LOAD_ADDRESS x1, L_colon_test_string
+//	bl assertEqualStrings
+
+	// LTSA + 8 should be same as old dictionary pointer
+	// LTSA + 16 should point to LTSA
+	// LTSA + 24 should point to start2d
+	// Dictionary pointer should be updated
+//	bl assertEqual
+
+TEST_END
+
+
 TEST_START semicolon_switches_to_run_mode
 	// Arrange:
-	LOAD_ADDRESS SEC_SPACE, L_semicolon_test_secondary
-
-	// Set up end2d's word address
-//	LOAD_ADDRESS x0, end2d
-//	LOAD_ADDRESS x1, end2d_wordAddress
-//	str x0, [x1]
+	LOAD_ADDRESS SEC_SPACE, L_test_secondary_area
 
 	mov FLAGS, COMPILE_MODE
 
@@ -76,28 +120,19 @@ TEST_START semicolon_switches_to_run_mode
 TEST_END
 
 
-.data
-L_semicolon_test_secondary:
-	.fill 16, 8, 0
-
 .text
 .align 2
 
 TEST_START semicolon_writes_end2d_in_secondary
 	// Arrange:
-	LOAD_ADDRESS SEC_SPACE, L_semicolon_test_secondary
-
-	// Set up end2d's word address
-//	LOAD_ADDRESS x0, end2d
-//	LOAD_ADDRESS x1, end2d_wordAddress
-//	str x0, [x1]
+	LOAD_ADDRESS SEC_SPACE, L_test_secondary_area
 
 	// Act:
 	bl _semicolon
 
 	// Assert:
 	// Check that cell gets end2d's word address
-	LOAD_ADDRESS x0, L_semicolon_test_secondary
+	LOAD_ADDRESS x0, L_test_secondary_area
 	ldr x0, [x0]
 	ldr x0, [x0]
 	LOAD_ADDRESS x1, end2d_wordAddress
@@ -106,7 +141,7 @@ TEST_START semicolon_writes_end2d_in_secondary
 
 	// Check that SEC_SPACE moved forward after writing
 	mov x0, SEC_SPACE
-	LOAD_ADDRESS x1, L_semicolon_test_secondary
+	LOAD_ADDRESS x1, L_test_secondary_area
 	add x1, x1, #8
 	bl assertEqual
 TEST_END

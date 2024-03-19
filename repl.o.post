@@ -89,7 +89,7 @@ repl:
  bl inputInit
 L_repl_loop:
  // read
- LOAD_ADDRESS x4, readLine
+ LOAD_ADDRESS x26, readLine
  bl readWord
  // eval
  bl evalAll
