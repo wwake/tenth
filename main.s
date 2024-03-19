@@ -1,6 +1,8 @@
-.include "assembler.macros"
+#include "core.defines"
+#include "assembler.macros"
+#include "dictionary.macros"
+
 .include "unix_functions.macros"
-.include "dictionary.macros"
 
 .global _start
 
