@@ -83,22 +83,38 @@ TEST_START colon_writes_header_to_secondary
  // Arrange:
  LOAD_ADDRESS x25, L_test_secondary_area
  LOAD_ADDRESS x26, L_readWords
- mov x21, #800
+ mov x21, #800 // starting dictionary
  // Act:
  bl _colon
- // Assert:
+ // Assert: String was written to dictionary
  LOAD_ADDRESS x0, L_test_secondary_area
  LOAD_ADDRESS x1, L_colon_test_string_final
  bl assertEqualStrings
+ // Assert: SEC_SPACE was adjusted to the right boundary
+ // That's 8 bytes for the string, 3*8 bytes for the header cells
  mov x0, x25
+ LOAD_ADDRESS x1, L_test_secondary_area
+ add x1, x1, #32
+ bl assertEqual
+ // Assert: First cell is pointer to old dictionary
+ LOAD_ADDRESS x0, L_test_secondary_area
+ add x0, x0, #8
+ ldr x0, [x0]
+ mov x1, #800 // starting dictionary
+ bl assertEqual
+ // Assert: Dictionary pointer should be updated
+ mov x0, x21
  LOAD_ADDRESS x1, L_test_secondary_area
  add x1, x1, #8
  bl assertEqual
- // LTSA + 8 should be same as old dictionary pointer
- // LTSA + 16 should point to LTSA
- // LTSA + 24 should point to start2d
- // Dictionary pointer should be updated
-//	bl assertEqual
+ // Assert: Second cell is pointer to new string
+ ldr x0, [x21, #8]
+ LOAD_ADDRESS x1, L_test_secondary_area
+ bl assertEqual
+ // Assert: Third cell points to start2d
+ ldr x0, [x21, #16]
+ LOAD_ADDRESS x1, start2d
+ bl assertEqual
 TEST_END
 TEST_START semicolon_switches_to_run_mode
  // Arrange:

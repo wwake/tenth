@@ -76,13 +76,23 @@ _colon:
  mov x1, x25
  bl strcpyz
  // Adjust SEC_SPACE to account for copied bytes + 1 byte for \0 + 7-byte buffer
- // so SEC_SPACE points to a 64-bit boundary; x1 = old SEC_SPACE
+ // so SEC_SPACE points to a 64-bit boundary; x1 = pointer to saved string
  mov x0, x25
  bl strlen
  add x0, x0, #8
  and x0, x0, #-8
- mov x1, x25
+ mov x1, x25 // hold pointer to saved string
  add x25, x25, x0
+ // Put old dictionary at first slot; update dictionary
+ str x21, [x25]
+ mov x21, x25
+ // Put pointer to word string in the second slot
+ str x1, [x21, #8]
+ // Put pointer to start2d in the third slot
+ LOAD_ADDRESS x0, start2d
+ str x0, [x21, #16]
+ // Move SEC_SPACE past the headers
+ add x25, x25, #24
  // Change to Compile mode
  mov x24, COMPILE_MODE
  ldr lr, [sp], #16
