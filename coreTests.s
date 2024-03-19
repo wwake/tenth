@@ -93,6 +93,7 @@ TEST_START colon_writes_header_to_secondary
 	// Arrange:
 	LOAD_ADDRESS SEC_SPACE, L_test_secondary_area
 	LOAD_ADDRESS READ_LINE_ROUTINE, L_readWords
+	mov SYS_DICT, #800
 
 	// Act:
 	bl _colon
@@ -107,6 +108,7 @@ TEST_START colon_writes_header_to_secondary
 	add x1, x1, #8
 	bl assertEqual
 
+	
 	// LTSA + 8 should be same as old dictionary pointer
 	// LTSA + 16 should point to LTSA
 	// LTSA + 24 should point to start2d

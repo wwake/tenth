@@ -88,13 +88,15 @@ _colon:
 	bl strcpyz
 
 	// Adjust SEC_SPACE to account for copied bytes + 1 byte for \0 + 7-byte buffer
+	// so SEC_SPACE points to a 64-bit boundary; x1 = old SEC_SPACE
 	mov x0, SEC_SPACE
 	bl strlen
 	add x0, x0, #8
+	and x0, x0, #-8
 
-	// Adjust SEC_SPACE forward to address mod 8
+	mov x1, SEC_SPACE
 	add SEC_SPACE, SEC_SPACE, x0
-	and SEC_SPACE, SEC_SPACE, #-8
+
 
 	// Change to Compile mode
 	mov FLAGS, COMPILE_MODE

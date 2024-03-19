@@ -83,6 +83,7 @@ TEST_START colon_writes_header_to_secondary
  // Arrange:
  LOAD_ADDRESS x25, L_test_secondary_area
  LOAD_ADDRESS x26, L_readWords
+ mov x21, #800
  // Act:
  bl _colon
  // Assert:

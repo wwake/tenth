@@ -76,12 +76,13 @@ _colon:
  mov x1, x25
  bl strcpyz
  // Adjust SEC_SPACE to account for copied bytes + 1 byte for \0 + 7-byte buffer
+ // so SEC_SPACE points to a 64-bit boundary; x1 = old SEC_SPACE
  mov x0, x25
  bl strlen
  add x0, x0, #8
- // Adjust SEC_SPACE forward to address mod 8
+ and x0, x0, #-8
+ mov x1, x25
  add x25, x25, x0
- and x25, x25, #-8
  // Change to Compile mode
  mov x24, COMPILE_MODE
  ldr lr, [sp], #16
