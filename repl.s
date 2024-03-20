@@ -28,8 +28,8 @@ eval:
 		add x0, x0, #40		// x0 <- ptr to error-handling
 
 L_call_found_routine:
-	ldr x0, [x0]			// load ptr to code
-	blr x0					// call code
+	ldr x1, [x0]			// load ptr to code
+	blr x1					// call code
 
 	ldr lr, [sp], #16
 	ret
