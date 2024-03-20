@@ -1,4 +1,3 @@
-  * Define STD_PROLOG and STD_EPILOG macros
   * dict_search - seems to unnecessarily use x22 as a temp
   * Lookup words before repl tests for isMeta, so we can simplify isMeta to compare pointers directly
   * Explore whether we can use relocatable addresses elsewhere
@@ -17,6 +16,7 @@ Compiler/REPL
   * Write body for secondaries
   * Develop ": wordToDefine body ;"
   * Compile should report undefined words
+  * Define STD_PROLOG and STD_EPILOG macros
 
 TEN-24-25: 2024-03-19 - Write Secondary Headers
 Compiler
