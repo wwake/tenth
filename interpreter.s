@@ -14,8 +14,8 @@
 // runInterpreter: startup method for the interpreter
 // Input: x0 - word address of the method to run
 // Output:
-//   x19 - the data stack (VSP)
-//   x20 - the position in the current block (VPC)
+//   VSP (register) - the data stack
+//   VPC (register) - the position in the current block
 //
 runInterpreter:
 	str lr, [sp, #-16]!
@@ -31,12 +31,12 @@ runInterpreter:
 //    Note: this has no "ret"; it relies on end2d being at the end of the sec. list
 // Input: x0 is the starting point of the secondary list
 // Process:
-//   x20 - VPC, starts at initial x0, then moves through the secondary list
+//   VPC (register), starts at initial x0, then moves through the secondary list
 //   x0 - temp: set to input of next secondary to call
 //   x1 - temp: holds word address of next secondary to cal
 // Output:
-//   x19 - VSP - may be updated by secondaries caled
-//   x20 - VPC - remains mutated (end2d must restore)
+//   VSP (register) - may be updated by secondaries caled
+//   VPC (register) - remains mutated (end2d must restore)
 //
 start2d:
 	str lr, [sp, #-16]!		// push LR and...
@@ -54,8 +54,8 @@ start2d:
 // end2d - footer routine for all secondaries; handles the return
 // Input: none
 // Output:
-//   x19 - remains altered if changed by other routines
-//   x20 - restored (as pushed by start2d)
+//   VSP (register) - remains altered if changed by other routines
+//   VPC (register) - restored (as pushed by start2d)
 //   LR - restored (as pushed by start2d)
 //
 .data

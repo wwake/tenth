@@ -34,6 +34,8 @@ inputInit:
 // Output: x0 - number of characters read
 //
 readLine:
+	str lr, [sp, #-16]!
+
 	// prompt
 	LOAD_ADDRESS x0, L_prompt
 	bl print
@@ -45,6 +47,7 @@ readLine:
 
 	unix_read #0, L_input_buffer, INPUT_BUFFER_SIZE
 
+	ldr lr, [sp], #16
 	ret
 
 // readWord - get next word, reading new lines if necessary

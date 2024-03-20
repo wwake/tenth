@@ -1,4 +1,5 @@
-  * Write header for secondaries
+
+  * Fix REPL read problem (examine readLine)
   * Write body for secondaries
   * dict_search - seems to unnecessarily use x22 as a temp
   * Develop ": wordToDefine body ;"
@@ -13,11 +14,15 @@ Compiler
 * Note that our arithmetic operations don't check for overflow
 * Fix dec2str on most negative 64-bit number (-9223372036854775808) [?]
 
+TEN-24-25: 2024-03-19 - Write Secondary Headers
+Compiler
+  * Write header for secondaries
+  * Found REPL defect - freezes on input
+
 TEN-24-24: 2024-03-18 - Write New Secondaries
 * Introduce preprocessor: gcc -E -P file.s -o file.out   // -E = preprocessor only; -P = no line numbers generated
 Compiler:
   * Write footer for secondaries
-
 
 TEN-24-23: 2024-03-14 - Meta Routines
 * [offline] Extracted notes on ARM64, assembler, etc. to EnvironmentNotes.key

@@ -87,9 +87,10 @@ repl:
  str x22, [sp, #8]
  LOAD_ADDRESS x23, compile
  bl inputInit
+ LOAD_ADDRESS x26, readLine
+ mov x24, RUN_MODE
 L_repl_loop:
  // read
- LOAD_ADDRESS x26, readLine
  bl readWord
  // eval
  bl evalAll

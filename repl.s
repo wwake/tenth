@@ -91,9 +91,11 @@ repl:
 	LOAD_ADDRESS COMPILER_ROUTINE, compile
 	bl inputInit
 
+	LOAD_ADDRESS READ_LINE_ROUTINE, readLine
+	mov FLAGS, RUN_MODE
+
 L_repl_loop:
 	// read
-	LOAD_ADDRESS READ_LINE_ROUTINE, readLine
 	bl readWord
 
 	// eval

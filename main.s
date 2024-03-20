@@ -19,9 +19,6 @@ _start:
 
 	bl L_load_system_dictionary
 
-	// Initialize registers
-	// TBD
-
 	// Run
 	bl repl
 

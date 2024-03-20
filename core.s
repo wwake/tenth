@@ -135,8 +135,8 @@ _semicolon:
 // Input: x20 - VPC pointing to data vaue (in secondary)
 // Process:
 // Output:
-//   X19 - VSP, updated as value was pushed
-//   x20 - VPC, updated to word after data value
+//   VSP (register), updated as value was pushed
+//   VPC (register), updated to word after data value
 //
 _push:
 	ldr x0, [VPC], #8

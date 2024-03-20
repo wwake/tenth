@@ -67,8 +67,6 @@ _start:
  bl data_stack_init
  bl L_sec_space_init
  bl L_load_system_dictionary
- // Initialize registers
- // TBD
  // Run
  bl repl
  ldr x22, [sp, #8]
