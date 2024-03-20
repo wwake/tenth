@@ -16,6 +16,12 @@
 .macro DATA_TOP register
  ldr \register, [x19, #-8]
 .endm
+.macro STD_PROLOG
+ str lr, [sp, #-16]!
+.endm
+.macro STD_EPILOG
+ ldr lr, [sp], #16
+.endm
 .equ META, 1
 .equ REGULAR, 0
 // DICT_HEADER name, codeAddress
@@ -64,7 +70,7 @@ L_skip_meta\@:
 .text
 .p2align 2
 _start:
- str lr, [sp, #-16]!
+ STD_PROLOG
  TEST_ALL "replTests"
  bl eval_of_just_push42_leaves_42_on_stack
  bl eval_calls_syntax_error_routine_for_unknown_word
@@ -74,7 +80,7 @@ _start:
  bl compile_puts_found_word_into_sec_space
  bl compile_writes_error_message_if_not_found
  unix_exit
- ldr lr, [sp], #16
+ STD_EPILOG
  ret
 .data
 .p2align 3
@@ -160,10 +166,10 @@ L_capture:
 .align 2
 // x0 = input word
 L_test_compile:
- str lr, [sp, #-16]!
+ STD_PROLOG
  LOAD_ADDRESS x1, L_capture
  bl strcpyz
- ldr lr, [sp], #16
+ STD_EPILOG
  ret
 TEST_START evalAll_calls_compile_x23_in_compile_mode
  LOAD_ADDRESS x23, L_test_compile
@@ -225,10 +231,10 @@ TEST_START compile_puts_found_word_into_sec_space
 TEST_END
 // x0 = word not found
 L_local_error_handler:
- str lr, [sp, #-16]!
+ STD_PROLOG
  LOAD_ADDRESS x1, L_capture_error_message
  bl strcpyz
- ldr lr, [sp], #16
+ STD_EPILOG
  ret
 TEST_START compile_writes_error_message_if_not_found
  // Arrange:

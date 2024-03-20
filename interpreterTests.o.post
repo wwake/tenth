@@ -16,6 +16,12 @@
 .macro DATA_TOP register
  ldr \register, [x19, #-8]
 .endm
+.macro STD_PROLOG
+ str lr, [sp, #-16]!
+.endm
+.macro STD_EPILOG
+ ldr lr, [sp], #16
+.endm
 
 .include "unix_functions.macros"
 .include "asUnit.macros"
@@ -24,14 +30,14 @@
 .text
 .p2align 2
 _start:
- str lr, [sp, #-16]!
+ STD_PROLOG
  TEST_ALL "interpreterTests"
  bl interpret_empty_program
  bl secondary_runs_yielding_result_on_stack
  bl secondary_calls_another_secondary
  bl recursive_factorial
  unix_exit
- ldr lr, [sp], #16
+ STD_EPILOG
  ret
 .data
 .p2align 2

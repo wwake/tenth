@@ -21,7 +21,7 @@
 //   side effect from execution
 //
 eval:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 	str x29, [sp, #8]
 
 	mov x29, x0
@@ -41,7 +41,7 @@ L_call_found_routine:
 	blr x1					// call code
 
 L_eval_exiting:
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 .data
@@ -59,7 +59,7 @@ L_data_top_suffix:
 // Uses: x28 - temp pointing to the current word
 //
 evalAll:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 	str x28, [sp, #8]
 
 	mov x28, x0
@@ -81,7 +81,7 @@ evalAll:
 
 L_end_evalAll:
 	ldr x28, [sp, #8]
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 
@@ -96,7 +96,7 @@ L_end_evalAll:
 //   Else: print an error message
 // 
 compile:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 	str x29, [sp, #8]
 
 	mov x29, x0
@@ -115,7 +115,7 @@ L_word_found:
 
 L_exiting_compile:
 	ldr x29, [sp, #8]
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 .text
@@ -124,7 +124,7 @@ L_exiting_compile:
 // repl
 //
 repl:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 	str x22, [sp, #8]
 	LOAD_ADDRESS COMPILER_ROUTINE, compile
 	bl inputInit
@@ -153,7 +153,7 @@ L_repl_loop:
 	b L_repl_loop
 
 	ldr x22, [sp, #8]
-	ldr lr, [sp], #16
+	STD_EPILOG
 
 	ret
 
@@ -177,7 +177,7 @@ global_word_not_found_handler:
 //   Prints error message
 //
 wordNotFoundError:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 	str x29, [sp, #8]
 
 	mov x29, x0
@@ -192,5 +192,5 @@ wordNotFoundError:
 	bl print
 
 	ldr x29, [sp, #8]
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret

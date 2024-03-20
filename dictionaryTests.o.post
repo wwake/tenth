@@ -56,6 +56,12 @@ L_skip_meta\@:
 .macro DATA_TOP register
  ldr \register, [x19, #-8]
 .endm
+.macro STD_PROLOG
+ str lr, [sp, #-16]!
+.endm
+.macro STD_EPILOG
+ ldr lr, [sp], #16
+.endm
 
 .include "unix_functions.macros"
 .include "asUnit.macros"
@@ -63,7 +69,7 @@ L_skip_meta\@:
 .text
 .p2align 2
 _start:
- str lr, [sp, #-16]!
+ STD_PROLOG
  TEST_ALL "dictionaryTests"
  bl empty_dictionary_has_zeros
  bl adding_to_dictionary_adds_item
@@ -73,7 +79,7 @@ _start:
  bl search_word_found_returns_word_address
  bl search_word_not_found_returns_0
  unix_exit
- ldr lr, [sp], #16
+ STD_EPILOG
 ret
 TEST_START empty_dictionary_has_zeros
  // Act:

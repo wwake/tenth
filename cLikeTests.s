@@ -8,7 +8,7 @@
 .p2align 2
 
 _start:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 
 	TEST_ALL "cLikeTests"
 
@@ -30,7 +30,7 @@ _start:
 	bl dec2str_converts_negative
 
 	unix_exit
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 

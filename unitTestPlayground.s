@@ -19,7 +19,7 @@ L_input_buffer:
 // 3	AUE_NULL	ALL	{ user_ssize_t read(int fd, user_addr_t cbuf, user_size_t nbyte); }
 
 _start:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 	
 	mov x0, #0
 	LOAD_ADDRESS x1, L_input_buffer
@@ -57,7 +57,7 @@ _start:
 	// bl test2
 
 	unix_exit
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 hello:

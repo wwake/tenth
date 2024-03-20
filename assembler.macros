@@ -20,3 +20,11 @@
 .macro DATA_TOP register
 	ldr \register, [VSP, #-8]
 .endm
+
+.macro STD_PROLOG
+	str lr, [sp, #-16]!
+.endm
+
+.macro STD_EPILOG
+	ldr lr, [sp], #16
+.endm

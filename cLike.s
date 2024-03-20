@@ -87,7 +87,7 @@ L_keep_copying:
 // output: none
 //
 print:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 	str x28, [sp, #8]
 
 	mov x28, x0
@@ -101,19 +101,19 @@ print:
 	svc 0
 
 	ldr x28, [sp, #8]
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 // printnum: prints a number as decimal
 // Input: x0 - number to print
 // Output: none
 printnum:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 
 	bl dec2str
 	bl print
 
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 .data

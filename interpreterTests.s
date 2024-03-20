@@ -11,7 +11,7 @@
 .p2align 2
 
 _start:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 
 	TEST_ALL "interpreterTests"
 
@@ -21,7 +21,7 @@ _start:
 	bl recursive_factorial
 
 	unix_exit
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 

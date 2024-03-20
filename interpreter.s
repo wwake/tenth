@@ -18,13 +18,13 @@
 //   VPC (register) - the position in the current block
 //
 runInterpreter:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 
 	LOAD_ADDRESS VSP, data_stack
 	mov VPC, x0
 	bl start2d
 
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 // start2d: header routine (starting point) for all secondaries
@@ -39,7 +39,7 @@ runInterpreter:
 //   VPC (register) - remains mutated (end2d must restore)
 //
 start2d:
-	str lr, [sp, #-16]!		// push LR and...
+	STD_PROLOG		// push LR and...
 	str VPC, [sp, #8]		// VPC to system stack
 
 	add VPC, x0, #8			// start VPC just past start2d call
@@ -67,6 +67,6 @@ end2d_wordAddress:
 .align 2
 end2d:
 	ldr VPC, [sp, #8]		// Restore VPC and...
-	ldr lr, [sp], #16		// LR from system stack
+	STD_EPILOG		// LR from system stack
 	ret						// Return
 

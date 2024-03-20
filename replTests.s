@@ -12,7 +12,7 @@
 .p2align 2
 
 _start:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 
 	TEST_ALL "replTests"
 
@@ -27,7 +27,7 @@ _start:
 	bl compile_writes_error_message_if_not_found
 
 	unix_exit
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 
@@ -147,12 +147,12 @@ L_capture:
 
 // x0 = input word
 L_test_compile:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 
 	LOAD_ADDRESS x1, L_capture
 	bl strcpyz
 
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 TEST_START evalAll_calls_compile_x23_in_compile_mode
@@ -237,12 +237,12 @@ TEST_END
 
 // x0 = word not found
 L_local_error_handler:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 
 	LOAD_ADDRESS x1, L_capture_error_message
 	bl strcpyz
 
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 TEST_START compile_writes_error_message_if_not_found

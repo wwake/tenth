@@ -24,7 +24,7 @@ L_failMessageEnd:
 
 // assertEqual: prints pass if x0 == x1, or fail message if x0 != x1
 assertEqual:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 	str WORD_PTR, [sp, #8]
 	str x11, [sp, #-16]!
 
@@ -63,7 +63,7 @@ L_failed:
 L_exiting:
 	ldr x11, [sp], #16
 	ldr WORD_PTR, [sp, #8]
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 .align 2
@@ -85,7 +85,7 @@ L_newline:
 //   x0 - actual string
 //   x1 - expected string
 assertEqualStrings:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 
 	str x0, [sp, #-16]!
 	str x1, [sp, #8]
@@ -115,7 +115,7 @@ assertEqualStrings:
 exit_assertEqualString:
 	ldr x1, [sp, #8]
 	ldr x0, [sp], #16
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 
@@ -125,12 +125,12 @@ exit_assertEqualString:
 // Returns result in x0; prints message if x0 == 0
 //
 assertTrue:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 
 	mov x1, #1
 	bl assertEqual
 
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 
@@ -139,10 +139,10 @@ assertTrue:
 // Returns result in x0; prints message if x0 <> 0
 //
 assertFalse:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 
 	mov x1, #0
 	bl assertEqual
 
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret

@@ -5,7 +5,7 @@
 .text
 .p2align 2
 _start:
- str lr, [sp, #-16]!
+ STD_PROLOG
  TEST_ALL "cLikeTests"
  bl empty_string_length_0
  bl knows_length_for_nonempty_string
@@ -21,7 +21,7 @@ _start:
  bl dec2str_converts_zero
  bl dec2str_converts_negative
  unix_exit
- ldr lr, [sp], #16
+ STD_EPILOG
  ret
 TEST_START empty_string_length_0
  adr x0, L_empty_string

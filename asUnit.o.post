@@ -16,6 +16,12 @@
 .macro DATA_TOP register
  ldr \register, [x19, #-8]
 .endm
+.macro STD_PROLOG
+ str lr, [sp, #-16]!
+.endm
+.macro STD_EPILOG
+ ldr lr, [sp], #16
+.endm
 
 .global assertEqual
 .global assertEqualStrings
@@ -34,7 +40,7 @@ L_failMessageEnd:
 .align 2
 // assertEqual: prints pass if x0 == x1, or fail message if x0 != x1
 assertEqual:
- str lr, [sp, #-16]!
+ STD_PROLOG
  str x22, [sp, #8]
  str x11, [sp, #-16]!
  mov x22, x0
@@ -62,7 +68,7 @@ L_failed:
 L_exiting:
  ldr x11, [sp], #16
  ldr x22, [sp, #8]
- ldr lr, [sp], #16
+ STD_EPILOG
  ret
 .align 2
 L_stringdiff1:
@@ -77,7 +83,7 @@ L_newline:
 //   x0 - actual string
 //   x1 - expected string
 assertEqualStrings:
- str lr, [sp, #-16]!
+ STD_PROLOG
  str x0, [sp, #-16]!
  str x1, [sp, #8]
  bl streq
@@ -98,25 +104,25 @@ assertEqualStrings:
 exit_assertEqualString:
  ldr x1, [sp, #8]
  ldr x0, [sp], #16
- ldr lr, [sp], #16
+ STD_EPILOG
  ret
 // assertTrue - check that x0 == 1 (true)
 // Uses x0, x1
 // Returns result in x0; prints message if x0 == 0
 //
 assertTrue:
- str lr, [sp, #-16]!
+ STD_PROLOG
  mov x1, #1
  bl assertEqual
- ldr lr, [sp], #16
+ STD_EPILOG
  ret
 // assertFalse - check that x0 == 0 (false)
 // Uses x0, x1
 // Returns result in x0; prints message if x0 <> 0
 //
 assertFalse:
- str lr, [sp, #-16]!
+ STD_PROLOG
  mov x1, #0
  bl assertEqual
- ldr lr, [sp], #16
+ STD_EPILOG
  ret

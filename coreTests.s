@@ -12,7 +12,7 @@
 .p2align 2
 
 _start:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 
 	TEST_ALL "coreTests"
 
@@ -43,7 +43,7 @@ _start:
 	bl jump_skips_over_code
 
 	unix_exit
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 	
 
@@ -79,14 +79,14 @@ L_colon_test_string_final:
 // Input: x0=#0, x1=addr of buffer, x2=#chars max to read
 //
 L_readWords:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 
 	// Copy test string to real inputBuffer
 	LOAD_ADDRESS x0, L_colon_test_string
 	LOAD_ADDRESS x1, inputBuffer
 	bl strcpyz
 
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 TEST_START colon_writes_header_to_secondary

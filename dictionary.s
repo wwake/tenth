@@ -52,7 +52,7 @@ dict_init:
 //   word address of found entry
 
 dict_search:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 	str x22, [sp, #8]		// save WORD_PTR
 	str x11, [sp, #-16]!
 
@@ -83,7 +83,7 @@ L_not_found:
 L_exit_search:
 	ldr x11, [sp], #16
 	ldr x22, [sp, #8]		// Restore WORD_PTR
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 
@@ -92,7 +92,7 @@ L_exit_search:
 // Output: x0 is 0 or 1 (false or true)
 //
 isMeta:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 	str x28, [sp, #8]
 	str x27, [sp, #-16]!
 
@@ -120,5 +120,5 @@ L_meta_found:
 L_isMetaEnd:
 	ldr x27, [sp], #16
 	ldr x28, [sp, #8]
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret

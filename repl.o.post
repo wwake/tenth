@@ -16,6 +16,12 @@
 .macro DATA_TOP register
  ldr \register, [x19, #-8]
 .endm
+.macro STD_PROLOG
+ str lr, [sp, #-16]!
+.endm
+.macro STD_EPILOG
+ ldr lr, [sp], #16
+.endm
 
 .include "unix_functions.macros"
 .include "dictionary.macros"
@@ -35,7 +41,7 @@
 //   side effect from execution
 //
 eval:
- str lr, [sp, #-16]!
+ STD_PROLOG
  str x29, [sp, #8]
  mov x29, x0
  bl dict_search
@@ -51,7 +57,7 @@ L_call_found_routine:
  ldr x1, [x0] // load ptr to code
  blr x1 // call code
 L_eval_exiting:
- ldr lr, [sp], #16
+ STD_EPILOG
  ret
 .data
 L_data_top_prefix:
@@ -65,7 +71,7 @@ L_data_top_suffix:
 // Uses: x28 - temp pointing to the current word
 //
 evalAll:
- str lr, [sp, #-16]!
+ STD_PROLOG
  str x28, [sp, #8]
  mov x28, x0
  and x1, x24, COMPILE_MODE
@@ -82,7 +88,7 @@ evalAll:
   bl eval
 L_end_evalAll:
  ldr x28, [sp, #8]
- ldr lr, [sp], #16
+ STD_EPILOG
  ret
 .text
 .align 2
@@ -94,7 +100,7 @@ L_end_evalAll:
 //   Else: print an error message
 // 
 compile:
- str lr, [sp, #-16]!
+ STD_PROLOG
  str x29, [sp, #8]
  mov x29, x0
  bl dict_search
@@ -109,14 +115,14 @@ L_word_found:
  str x0, [x25], #8
 L_exiting_compile:
  ldr x29, [sp, #8]
- ldr lr, [sp], #16
+ STD_EPILOG
  ret
 .text
 .align 2
 // repl
 //
 repl:
- str lr, [sp, #-16]!
+ STD_PROLOG
  str x22, [sp, #8]
  LOAD_ADDRESS x23, compile
  bl inputInit
@@ -137,7 +143,7 @@ L_repl_loop:
  // loop
  b L_repl_loop
  ldr x22, [sp, #8]
- ldr lr, [sp], #16
+ STD_EPILOG
  ret
 .data
 .p2align 3
@@ -156,7 +162,7 @@ global_word_not_found_handler:
 //   Prints error message
 //
 wordNotFoundError:
- str lr, [sp, #-16]!
+ STD_PROLOG
  str x29, [sp, #8]
  mov x29, x0
  LOAD_ADDRESS x0, wordNotFoundMessage
@@ -166,5 +172,5 @@ wordNotFoundError:
  LOAD_ADDRESS x0, wordNotFoundSuffix
  bl print
  ldr x29, [sp, #8]
- ldr lr, [sp], #16
+ STD_EPILOG
  ret

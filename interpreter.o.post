@@ -16,6 +16,12 @@
 .macro DATA_TOP register
  ldr \register, [x19, #-8]
 .endm
+.macro STD_PROLOG
+ str lr, [sp, #-16]!
+.endm
+.macro STD_EPILOG
+ ldr lr, [sp], #16
+.endm
 
 .include "unix_functions.macros"
 .global runInterpreter
@@ -31,11 +37,11 @@
 //   VPC (register) - the position in the current block
 //
 runInterpreter:
- str lr, [sp, #-16]!
+ STD_PROLOG
  LOAD_ADDRESS x19, data_stack
  mov x20, x0
  bl start2d
- ldr lr, [sp], #16
+ STD_EPILOG
  ret
 // start2d: header routine (starting point) for all secondaries
 //    Note: this has no "ret"; it relies on end2d being at the end of the sec. list
@@ -49,7 +55,7 @@ runInterpreter:
 //   VPC (register) - remains mutated (end2d must restore)
 //
 start2d:
- str lr, [sp, #-16]! // push LR and...
+ STD_PROLOG // push LR and...
  str x20, [sp, #8] // VPC to system stack
  add x20, x0, #8 // start VPC just past start2d call
  L_interpreter_loop:
@@ -72,5 +78,5 @@ end2d_wordAddress:
 .align 2
 end2d:
  ldr x20, [sp, #8] // Restore VPC and...
- ldr lr, [sp], #16 // LR from system stack
+ STD_EPILOG // LR from system stack
  ret // Return

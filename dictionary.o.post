@@ -16,6 +16,12 @@
 .macro DATA_TOP register
  ldr \register, [x19, #-8]
 .endm
+.macro STD_PROLOG
+ str lr, [sp, #-16]!
+.endm
+.macro STD_EPILOG
+ ldr lr, [sp], #16
+.endm
 .equ META, 1
 .equ REGULAR, 0
 // DICT_HEADER name, codeAddress
@@ -93,7 +99,7 @@ dict_init:
 //   x0 = 0 if not found, -or-
 //   word address of found entry
 dict_search:
- str lr, [sp, #-16]!
+ STD_PROLOG
  str x22, [sp, #8] // save WORD_PTR
  str x11, [sp, #-16]!
  mov x11, x0 // hold addr of target
@@ -117,14 +123,14 @@ L_not_found:
 L_exit_search:
  ldr x11, [sp], #16
  ldr x22, [sp, #8] // Restore WORD_PTR
- ldr lr, [sp], #16
+ STD_EPILOG
  ret
 // isMeta - search for string in meta list; return 0 if missing, 1 if found
 // Input: x0 - pointer to string to search for
 // Output: x0 is 0 or 1 (false or true)
 //
 isMeta:
- str lr, [sp, #-16]!
+ STD_PROLOG
  str x28, [sp, #8]
  str x27, [sp, #-16]!
  mov x27, x0
@@ -147,5 +153,5 @@ L_meta_found:
 L_isMetaEnd:
  ldr x27, [sp], #16
  ldr x28, [sp, #8]
- ldr lr, [sp], #16
+ STD_EPILOG
  ret

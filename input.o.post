@@ -16,6 +16,12 @@
 .macro DATA_TOP register
  ldr \register, [x19, #-8]
 .endm
+.macro STD_PROLOG
+ str lr, [sp, #-16]!
+.endm
+.macro STD_EPILOG
+ ldr lr, [sp], #16
+.endm
 
 .include "unix_functions.macros"
 .global inputInit
@@ -42,7 +48,7 @@ inputInit:
 // Output: x0 - number of characters read
 //
 readLine:
- str lr, [sp, #-16]!
+ STD_PROLOG
  // prompt
  LOAD_ADDRESS x0, L_prompt
  bl print
@@ -51,7 +57,7 @@ readLine:
  LOAD_ADDRESS x1, inputBuffer
  mov x2, INPUT_BUFFER_SIZE
  unix_read #0, L_input_buffer, INPUT_BUFFER_SIZE
- ldr lr, [sp], #16
+ STD_EPILOG
  ret
 // readWord - get next word, reading new lines if necessary
 // Inputs:
@@ -61,7 +67,7 @@ readLine:
 //   WORD_PTR (register) - updated WORD_PTR
 //
 readWord:
- str lr, [sp, #-16]!
+ STD_PROLOG
  // Check for WORD_PTR at \0
 L_check_if_at_end:
  ldrb w0, [x22]
@@ -91,5 +97,5 @@ find_trailing_space_or_nl:
   b find_trailing_space_or_nl
 exit_space_or_nl:
  strb wzr, [x22, #-1]
- ldr lr, [sp], #16
+ STD_EPILOG
  ret

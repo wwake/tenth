@@ -11,7 +11,7 @@
 .p2align 2
 
 _start:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 
 	TEST_ALL "inputTests"
 
@@ -22,7 +22,7 @@ _start:
 	bl read_from_newline_only_line_causes_readLine
 
 	unix_exit
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 L_read_source1:
@@ -101,7 +101,7 @@ L_read_source:
 //   x0 = # char's "read"
 //
 stub_readLine:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 
 	// Get the read index
 	LOAD_ADDRESS x9, L_read_index
@@ -122,7 +122,7 @@ stub_readLine:
 	add x10, x10, #1
 	str x10, [x9]
 
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 TEST_START read_with_word_at_start

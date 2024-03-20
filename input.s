@@ -34,7 +34,7 @@ inputInit:
 // Output: x0 - number of characters read
 //
 readLine:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 
 	// prompt
 	LOAD_ADDRESS x0, L_prompt
@@ -47,7 +47,7 @@ readLine:
 
 	unix_read #0, L_input_buffer, INPUT_BUFFER_SIZE
 
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 // readWord - get next word, reading new lines if necessary
@@ -58,7 +58,7 @@ readLine:
 //   WORD_PTR (register) - updated WORD_PTR
 //
 readWord:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 
 	// Check for WORD_PTR at \0
 L_check_if_at_end:
@@ -95,6 +95,6 @@ find_trailing_space_or_nl:
 exit_space_or_nl:
 	strb wzr, [WORD_PTR, #-1]
 
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 

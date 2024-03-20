@@ -56,12 +56,12 @@ data_stack_init:
 // Output:
 //   value is printed
 nl:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 	
 	adr x0, L_nl_character
 	bl print
 	
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 L_nl_character:
@@ -78,7 +78,7 @@ L_semicolon:
 
 // _colon (:) - enter compile mode
 _colon:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 
 	// Read the word to be defined
 	bl readWord
@@ -114,21 +114,21 @@ _colon:
 	// Change to Compile mode
 	mov FLAGS, COMPILE_MODE
 
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 // _semicolon (;) - exit compile mode
 // Write a pointer to end2d's word address as last entry in secondary
 //
 _semicolon:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 
 	LOAD_ADDRESS x0, end2d_wordAddress
 	str x0, [SEC_SPACE], #8
 
 	mov FLAGS, RUN_MODE
 
-	ldr lr, [sp], #16
+	STD_EPILOG
 	ret
 
 // _push - push the following word on the stack

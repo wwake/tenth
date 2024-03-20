@@ -11,7 +11,7 @@
 .p2align 2
 
 _start:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 
 	TEST_ALL "dictionaryTests"
 
@@ -26,7 +26,7 @@ _start:
 	bl search_word_not_found_returns_0
 
 	unix_exit
-	ldr lr, [sp], #16
+	STD_EPILOG
 ret
 
 TEST_START empty_dictionary_has_zeros

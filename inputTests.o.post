@@ -16,6 +16,12 @@
 .macro DATA_TOP register
  ldr \register, [x19, #-8]
 .endm
+.macro STD_PROLOG
+ str lr, [sp, #-16]!
+.endm
+.macro STD_EPILOG
+ ldr lr, [sp], #16
+.endm
 .include "unix_functions.macros"
 .include "asUnit.macros"
 .include "dictionary.macros"
@@ -23,14 +29,14 @@
 .text
 .p2align 2
 _start:
- str lr, [sp, #-16]!
+ STD_PROLOG
  TEST_ALL "inputTests"
  bl read_with_word_at_start
  bl read_with_word_starting_with_spaces
  bl read_read_multiple_words_separated_by_spaces
  bl read_from_newline_only_line_causes_readLine
  unix_exit
- ldr lr, [sp], #16
+ STD_EPILOG
  ret
 L_read_source1:
  .asciz "dup\n"
@@ -89,7 +95,7 @@ L_read_source:
 //   x0 = # char's "read"
 //
 stub_readLine:
- str lr, [sp, #-16]!
+ STD_PROLOG
  // Get the read index
  LOAD_ADDRESS x9, L_read_index
  ldr x9, [x9]
@@ -105,7 +111,7 @@ stub_readLine:
  ldr x10, [x9]
  add x10, x10, #1
  str x10, [x9]
- ldr lr, [sp], #16
+ STD_EPILOG
  ret
 TEST_START read_with_word_at_start
  bl inputInit

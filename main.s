@@ -10,7 +10,7 @@
 .align 2
 
 _start:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 	str x22, [sp, #8]
 
 	bl data_stack_init
@@ -25,7 +25,7 @@ _start:
 	bl repl
 
 	ldr x22, [sp, #8]
-	ldr lr, [sp], #16
+	STD_EPILOG
 
 	ret
 
@@ -36,7 +36,7 @@ L_sec_space_init:
 	ret
 
 L_load_system_dictionary:
-	str lr, [sp, #-16]!
+	STD_PROLOG
 
 	bl dict_init
 	DICT_HEADER "_wordNotFoundError", wordNotFoundError
@@ -51,7 +51,7 @@ L_load_system_dictionary:
 	DICT_HEADER ";", _semicolon, META
 	DICT_END
 
-	ldr lr, [sp], #16
+	STD_EPILOG
 
 	ret
 
