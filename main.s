@@ -19,6 +19,8 @@ _start:
 
 	bl L_load_system_dictionary
 
+	bl L_error_handler_init
+
 	// Run
 	bl repl
 
@@ -53,6 +55,12 @@ L_load_system_dictionary:
 
 	ret
 
+
+L_error_handler_init:
+	LOAD_ADDRESS x0, global_error_handler
+	LOAD_ADDRESS x1, wordNotFoundError
+	str x1, [x0]
+	ret
 
 .data
 L_secondary_space:

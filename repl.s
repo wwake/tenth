@@ -8,7 +8,9 @@
 .global eval
 .global evalAll
 .global repl
+.global global_error_handler
 .global wordNotFoundError
+.global compile
 
 // eval - evaluates one instruction
 // Input:
@@ -45,7 +47,8 @@ L_data_top_suffix:
 .text
 .align 2
 // evalAll: evaluate or compile
-// Input: x0 - next word
+// Input: x0 - current word
+// Uses: x28 - temp pointing to the current word
 //
 evalAll:
 	str lr, [sp, #-16]!
@@ -77,7 +80,34 @@ L_end_evalAll:
 .text
 .align 2
 
+// compile - put word address for a name into the currently-building secondary
+// Input: x0 = pointer to string name
+// Uses: x0 = temp
+// Output:
+//   If word is found, it's added to current secondary
+//   Else: print an error message
+// 
 compile:
+	str lr, [sp, #-16]!
+	str x29, [sp, #8]
+
+	mov x29, x0
+
+	bl dict_search
+	cmp x0, #0
+	b.ne L_word_found
+		mov x0, x29
+		LOAD_ADDRESS x1, global_error_handler
+		ldr x1, [x1]
+		blr x1
+		b L_exiting_compile
+
+L_word_found:
+	str x0, [SEC_SPACE], #8
+
+L_exiting_compile:
+	ldr x29, [sp, #8]
+	ldr lr, [sp], #16
 	ret
 
 .text
@@ -119,13 +149,19 @@ L_repl_loop:
 
 	ret
 
-
+.data
+.p2align 3
 wordNotFoundMessage:
 	.asciz "Word not found: "
 
 wordNotFoundSuffix:
 	.asciz "\n"
 
+.p2align 3
+global_error_handler:
+	.quad 0
+
+.text
 .align 2
 // wordNotFoundError - prints error message and word that wasn't found
 // Input: x22 = WORD_PTR - points to string, the not-found word

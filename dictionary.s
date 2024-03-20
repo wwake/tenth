@@ -48,7 +48,7 @@ dict_init:
 //   x22 - temp to walk through dictionary
 //   x11 - holds address of search string
 // Outputs:
-//   0 if not found, -or-
+//   x0 = 0 if not found, -or-
 //   word address of found entry
 
 dict_search:

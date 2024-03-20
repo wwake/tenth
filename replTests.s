@@ -23,6 +23,9 @@ _start:
 	bl evalAll_calls_compile_x23_in_compile_mode
 	bl evalAll_calls_meta_even_in_compile_mode
 
+	bl compile_puts_found_word_into_sec_space
+	bl compile_writes_error_message_if_not_found
+
 	unix_exit
 	ldr lr, [sp], #16
 	ret
@@ -204,4 +207,81 @@ TEST_START evalAll_calls_meta_even_in_compile_mode
 	mov x0, FLAGS
 	mov x1, RUN_MODE
 	bl assertEqual
+TEST_END
+
+
+.data
+.p2align 3
+
+L_compile_test_space:
+	.fill 10, 8, 0
+
+L_compile_word_to_find:
+	.asciz "1"
+
+.p2align 3
+
+.text
+.align 2
+TEST_START compile_puts_found_word_into_sec_space
+	// Arrange:
+	LOAD_ADDRESS SEC_SPACE, L_compile_test_space
+
+	bl dict_init
+	DICT_HEADER "1", push1
+	DICT_END
+
+	LOAD_ADDRESS x0, L_compile_word_to_find
+
+	// Act:
+	bl compile
+
+	// Assert
+	LOAD_ADDRESS x0, L_compile_word_to_find
+	bl dict_search
+	mov x1, x0
+
+	LOAD_ADDRESS x0, L_compile_test_space
+	ldr x0, [x0]
+	bl assertEqual
+TEST_END
+
+
+.data
+.p2align 3
+L_compile_word_to_not_find:
+	.asciz "NOT_A_REAL_WORD"
+
+.p2align 3
+L_capture_compile_messsage:
+	.fill 20, 8, 0
+
+.text
+.align 2
+
+// x0 = word not found
+L_local_error_handler:
+	str lr, [sp, #-16]!
+
+	LOAD_ADDRESS x1, L_capture_compile_messsage
+	bl strcpyz
+
+	ldr lr, [sp], #16
+	ret
+
+TEST_START compile_writes_error_message_if_not_found
+	// Arrange:
+	LOAD_ADDRESS x0, global_error_handler
+	LOAD_ADDRESS x1, L_local_error_handler
+	str x1, [x0]
+
+	LOAD_ADDRESS x0, L_compile_word_to_not_find
+
+	// Act:
+	bl compile
+
+	// Assert:
+	LOAD_ADDRESS x0, L_capture_compile_messsage
+	LOAD_ADDRESS x1, L_compile_word_to_not_find
+	bl assertEqualStrings
 TEST_END
