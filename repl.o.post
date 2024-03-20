@@ -36,14 +36,21 @@
 //
 eval:
  str lr, [sp, #-16]!
+ str x29, [sp, #8]
+ mov x29, x0
  bl dict_search
  cmp x0, #0 // Call
  b.ne L_call_found_routine
-  LOAD_ADDRESS x0, systemDictionary
-  add x0, x0, #40 // x0 <- ptr to error-handling
+  mov x0, x29
+  LOAD_ADDRESS x1, global_error_handler
+  ldr x1, [x1]
+  blr x1
+  b L_eval_exiting
 L_call_found_routine:
+ ldr x29, [sp, #8]
  ldr x1, [x0] // load ptr to code
  blr x1 // call code
+L_eval_exiting:
  ldr lr, [sp], #16
  ret
 .data
@@ -144,17 +151,20 @@ global_error_handler:
 .text
 .align 2
 // wordNotFoundError - prints error message and word that wasn't found
-// Input: x22 = WORD_PTR - points to string, the not-found word
+// Input: x0 = WORD_PTR - points to string, the not-found word
 // Output:
 //   Prints error message
 //
 wordNotFoundError:
  str lr, [sp, #-16]!
+ str x29, [sp, #8]
+ mov x29, x0
  LOAD_ADDRESS x0, wordNotFoundMessage
  bl print
- mov x0, x22
+ mov x0, x29
  bl print
  LOAD_ADDRESS x0, wordNotFoundSuffix
  bl print
+ ldr x29, [sp, #8]
  ldr lr, [sp], #16
  ret

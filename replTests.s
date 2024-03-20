@@ -109,9 +109,9 @@ captureError:
 
 TEST_START eval_calls_syntax_error_routine_for_unknown_word
 	// Arrange
-	bl dict_init
-	DICT_HEADER "_syntaxError", captureError
-	DICT_END
+	LOAD_ADDRESS x0, global_error_handler
+	LOAD_ADDRESS x1, L_local_error_handler
+	str x1, [x0]
 
 	LOAD_ADDRESS x0, L_missing_word
 	mov WORD_PTR, x0
@@ -120,10 +120,9 @@ TEST_START eval_calls_syntax_error_routine_for_unknown_word
 	bl eval
 
 	// Assert
-	LOAD_ADDRESS x0, L_captured
-	ldrb w0, [x0]
-	mov x1, #67		// "C" of "CAP"
-	bl assertEqual
+	LOAD_ADDRESS x0, L_capture_compile_messsage
+	LOAD_ADDRESS x1, L_missing_word
+	bl assertEqualStrings
 TEST_END
 
 
