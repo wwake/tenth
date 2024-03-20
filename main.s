@@ -57,7 +57,7 @@ L_load_system_dictionary:
 
 
 L_error_handler_init:
-	LOAD_ADDRESS x0, global_error_handler
+	LOAD_ADDRESS x0, global_word_not_found_handler
 	LOAD_ADDRESS x1, wordNotFoundError
 	str x1, [x0]
 	ret

@@ -8,7 +8,7 @@
 .global eval
 .global evalAll
 .global repl
-.global global_error_handler
+.global global_word_not_found_handler
 .global wordNotFoundError
 .global compile
 
@@ -30,7 +30,7 @@ eval:
 	cmp x0, #0		// Call
 	b.ne L_call_found_routine
 		mov x0, x29
-		LOAD_ADDRESS x1, global_error_handler
+		LOAD_ADDRESS x1, global_word_not_found_handler
 		ldr x1, [x1]
 		blr x1
 		b L_eval_exiting
@@ -105,7 +105,7 @@ compile:
 	cmp x0, #0
 	b.ne L_word_found
 		mov x0, x29
-		LOAD_ADDRESS x1, global_error_handler
+		LOAD_ADDRESS x1, global_word_not_found_handler
 		ldr x1, [x1]
 		blr x1
 		b L_exiting_compile
@@ -166,13 +166,13 @@ wordNotFoundSuffix:
 	.asciz "\n"
 
 .p2align 3
-global_error_handler:
+global_word_not_found_handler:
 	.quad 0
 
 .text
 .align 2
 // wordNotFoundError - prints error message and word that wasn't found
-// Input: x0 = WORD_PTR - points to string, the not-found word
+// Input: x0 = points to the not-found word
 // Output:
 //   Prints error message
 //

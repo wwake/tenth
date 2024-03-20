@@ -109,7 +109,7 @@ captureError:
 
 TEST_START eval_calls_syntax_error_routine_for_unknown_word
 	// Arrange
-	LOAD_ADDRESS x0, global_error_handler
+	LOAD_ADDRESS x0, global_word_not_found_handler
 	LOAD_ADDRESS x1, L_local_error_handler
 	str x1, [x0]
 
@@ -270,7 +270,7 @@ L_local_error_handler:
 
 TEST_START compile_writes_error_message_if_not_found
 	// Arrange:
-	LOAD_ADDRESS x0, global_error_handler
+	LOAD_ADDRESS x0, global_word_not_found_handler
 	LOAD_ADDRESS x1, L_local_error_handler
 	str x1, [x0]
 
