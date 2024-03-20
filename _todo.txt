@@ -1,3 +1,4 @@
+
   * dict_search - seems to unnecessarily use x22 as a temp
   * Lookup words before repl tests for isMeta, so we can simplify isMeta to compare pointers directly
   * Explore whether we can use relocatable addresses elsewhere
@@ -10,7 +11,7 @@ Compiler
 * Note that our arithmetic operations don't check for overflow
 * Fix dec2str on most negative 64-bit number (-9223372036854775808) [?]
 
-TEN-24-26: 2024-03-20 -
+TEN-24-26: 2024-03-20 - REPL with NOP
 Compiler/REPL
   * Fix REPL read problem (examine readLine) - readLine wrongly omitted procedure prolog/epilog
   * Write body for secondaries
@@ -26,7 +27,7 @@ Compiler
 TEN-24-24: 2024-03-18 - Write New Secondaries
 * Introduce preprocessor: gcc -E -P file.s -o file.out   // -E = preprocessor only; -P = no line numbers generated
 Compiler:
-  * Write footer for secondaries
+  * Write footer for secondaries (;)
 
 TEN-24-23: 2024-03-14 - Meta Routines
 * [offline] Extracted notes on ARM64, assembler, etc. to EnvironmentNotes.key
