@@ -94,18 +94,8 @@ L_input_three_words:
 L_missing_word:
   .asciz "CAP"
 
-L_captured:
-  .ascii "?"
-
 .text
 .align 2
-
-// Assumes x22 = WORD_PTR points to a string
-captureError:
-	LOAD_ADDRESS x0, L_captured
-	ldrb w1, [WORD_PTR]
-	strb w1, [x0]
-	ret
 
 TEST_START eval_calls_syntax_error_routine_for_unknown_word
 	// Arrange
@@ -120,7 +110,7 @@ TEST_START eval_calls_syntax_error_routine_for_unknown_word
 	bl eval
 
 	// Assert
-	LOAD_ADDRESS x0, L_capture_compile_messsage
+	LOAD_ADDRESS x0, L_capture_error_message
 	LOAD_ADDRESS x1, L_missing_word
 	bl assertEqualStrings
 TEST_END
@@ -245,24 +235,11 @@ TEST_START compile_puts_found_word_into_sec_space
 	bl assertEqual
 TEST_END
 
-
-.data
-.p2align 3
-L_compile_word_to_not_find:
-	.asciz "NOT_A_REAL_WORD"
-
-.p2align 3
-L_capture_compile_messsage:
-	.fill 20, 8, 0
-
-.text
-.align 2
-
 // x0 = word not found
 L_local_error_handler:
 	str lr, [sp, #-16]!
 
-	LOAD_ADDRESS x1, L_capture_compile_messsage
+	LOAD_ADDRESS x1, L_capture_error_message
 	bl strcpyz
 
 	ldr lr, [sp], #16
@@ -280,7 +257,17 @@ TEST_START compile_writes_error_message_if_not_found
 	bl compile
 
 	// Assert:
-	LOAD_ADDRESS x0, L_capture_compile_messsage
+	LOAD_ADDRESS x0, L_capture_error_message
 	LOAD_ADDRESS x1, L_compile_word_to_not_find
 	bl assertEqualStrings
 TEST_END
+
+
+.data
+.p2align 3
+L_compile_word_to_not_find:
+	.asciz "NOT_A_REAL_WORD"
+
+.p2align 3
+L_capture_error_message:
+	.fill 20, 8, 0
