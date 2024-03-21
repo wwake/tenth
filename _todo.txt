@@ -1,9 +1,8 @@
-  * Explore whether we can use relocatable addresses elsewhere
   * Numeric constants (eval and compile)
+  * Explore whether we can use relocatable addresses elsewhere
   * Strings (eval and compile)
 Compiler
 
-Primaries
 * Arithmetic: [+, -, *], /, MOD, DIVMOD, MIN, MAX, ABS, NEG
 * Logical: AND, OR, NOT, XOR
 * Relational: <0, ==0, ==, !=, <, <=, >, >=
@@ -12,6 +11,11 @@ Primaries
 * Control [somewhat tbd]: if-else-endif, do-while, repeat-until, while-end, for-next
 * I/O: [nl], print
 * Strings [tbd]
+Primaries
+
+
+* Strings (eval and compile)
+Compiler
 
 Ideas
 * Should VSP point to the last element? instead of next free slot.

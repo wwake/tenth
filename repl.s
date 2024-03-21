@@ -28,17 +28,18 @@ eval:
 
 	bl dict_search
 	cmp x0, #0
-	b.ne L_call_found_routine
-		mov x0, x29
-		LOAD_ADDRESS x1, global_word_not_found_handler
-		ldr x1, [x1]
-		blr x1
-		b L_eval_exiting
-
-L_call_found_routine:
+	b.eq L_word_not_found
+	// Handle a known word
 	ldr x29, [sp, #8]
 	ldr x1, [x0]			// load ptr to code
 	blr x1					// call code
+		b L_eval_exiting
+
+L_word_not_found:
+	mov x0, x29
+	LOAD_ADDRESS x1, global_word_not_found_handler
+	ldr x1, [x1]
+	blr x1
 
 L_eval_exiting:
 	STD_EPILOG
