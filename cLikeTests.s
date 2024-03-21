@@ -30,7 +30,8 @@ _start:
 	bl dec2str_converts_negative
 
 	bl str2positive_converts_positive
-	bl str2positive_returns0_if_not_number
+	bl str2positive_returns0_if_starts_numeric
+	bl str2positive_returns0_if_starts_alpha
 
 	unix_exit
 	STD_EPILOG
@@ -224,8 +225,11 @@ TEST_END
 L_positive_string:
 	.asciz "1234"
 
-L_non_numeric_string:
+L_non_numeric_string_starts_numeric:
 	.asciz "123z"
+
+L_non_numeric_string_starts_non_numeric:
+	.asciz "z123"
 
 .align 2
 
@@ -242,7 +246,27 @@ TEST_START str2positive_converts_positive
 TEST_END
 
 
-TEST_START str2positive_returns0_if_not_number
+TEST_START str2positive_returns0_if_starts_numeric
+	// Arrange:
+	LOAD_ADDRESS x0, L_non_numeric_string_starts_numeric
 
+	// Act:
+	bl str2positive
+
+	// Assert:
+	mov x1, #0
+	bl assertEqual
+TEST_END
+
+TEST_START str2positive_returns0_if_starts_alpha
+	// Arrange:
+	LOAD_ADDRESS x0, L_non_numeric_string_starts_non_numeric
+
+	// Act:
+	bl str2positive
+
+	// Assert:
+	mov x1, #0
+	bl assertEqual
 TEST_END
 

@@ -200,7 +200,7 @@ L_str2pos_loop:
 		b L_str2pos_loop
 
 L_non_numeric:
-//	mov x1, #0
+	mov x1, #0
 
 L_exit:
 	mov x0, x1
