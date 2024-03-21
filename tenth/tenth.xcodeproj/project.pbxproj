@@ -131,9 +131,9 @@
 			isa = PBXGroup;
 			children = (
 				91238D8A2B730AD800052895 /* cLike.s */,
+				91CAE5F02BA8BE95001E8E9E /* core.defines */,
 				91238D832B730AD800052895 /* core.s */,
 				91B9F1322B742898005730DF /* interpreter.s */,
-				91CAE5F02BA8BE95001E8E9E /* core.defines */,
 			);
 			name = core;
 			sourceTree = "<group>";

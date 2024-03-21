@@ -29,6 +29,9 @@ _start:
 	bl dec2str_converts_zero
 	bl dec2str_converts_negative
 
+	bl str2positive_converts_positive
+	bl str2positive_returns0_if_not_number
+
 	unix_exit
 	STD_EPILOG
 	ret
@@ -216,5 +219,30 @@ TEST_START dec2str_converts_negative
 
 	mov x1, #1
 	bl assertEqual
+TEST_END
+
+L_positive_string:
+	.asciz "1234"
+
+L_non_numeric_string:
+	.asciz "123z"
+
+.align 2
+
+TEST_START str2positive_converts_positive
+	// Arrange:
+	LOAD_ADDRESS x0, L_positive_string
+
+	// Act:
+	bl str2positive
+
+	// Assert:
+	mov x1, #1234
+	bl assertEqual
+TEST_END
+
+
+TEST_START str2positive_returns0_if_not_number
+
 TEST_END
 

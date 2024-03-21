@@ -10,6 +10,7 @@
 .global print
 .global printnum
 .global dec2str
+.global str2positive
 
 // strlen
 // input: x0 is address of a 0-terminated string
@@ -176,4 +177,31 @@ dec2str:
 		strb w3, [x0]
 
 L_dec2str_end:
+	ret
+
+// str2positive - returns positive integer or 0; doesn't detect overflow
+// Input: x0 = pointer to 0-terminated string to check
+// Uses: x1 - gathered sum
+//       w2 - current character
+// Output: x0 = number if valid, 0 if not a positive integer
+//
+str2positive:
+	mov x1, #0
+	mov x3, #10
+
+L_str2pos_loop:
+	ldrb w2, [x0], #1
+	cmp w2, #0
+	b.eq L_exit
+		sub w2, w2, 0x30	// '0'
+		cmp w2, #9
+		b.hi L_non_numeric	// unsigned greater-than
+		madd x1, x1, x3, x2
+		b L_str2pos_loop
+
+L_non_numeric:
+//	mov x1, #0
+
+L_exit:
+	mov x0, x1
 	ret
