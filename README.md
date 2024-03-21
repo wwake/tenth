@@ -5,8 +5,8 @@ A threaded interpreter for a Forth-like language, in Arm64 assembler; for demo p
 
 ## More documentation
 * tenth.key - day-by-day notes
-* Design Notes.key - overview of design of the interpreter and compiler
 * EnvironmentNotes.key - notes about ARM64 assembler programming (and related tools)
+* Design Notes.key - overview of design of the interpreter and compiler
 * *TODO* - asUnit.key - notes about the assembly unit-testing package we developed. 
 
 
@@ -63,7 +63,7 @@ In these descriptions, a, b, and c represent the first, second, and third elemen
 
 ## Control - somewhat TBD
 * flag if [else] endif
-* loop..flag while
+* do.. flag while
 * repeat.. flag until
 * flag while .. flag end
 * end start FOR.. NEXT

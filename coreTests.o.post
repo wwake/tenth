@@ -1,5 +1,5 @@
 // Global register values
-// Next: x27
+// Free: x27, x28
 
 .macro LOAD_ADDRESS register, location
  adrp \register, \location@PAGE
@@ -57,10 +57,13 @@ _start:
  STD_EPILOG
  ret
 TEST_START colon_switches_to_compile_mode
+ // Arrange:
  LOAD_ADDRESS x25, L_test_secondary_area
  LOAD_ADDRESS x26, L_readWords
  mov x24, RUN_MODE
+ // Act:
  bl _colon
+ // Assert:
  mov x0, x24
  mov x1, COMPILE_MODE
  bl assertEqual

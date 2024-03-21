@@ -48,13 +48,16 @@ _start:
 	
 
 TEST_START colon_switches_to_compile_mode
+	// Arrange:
 	LOAD_ADDRESS SEC_SPACE, L_test_secondary_area
 	LOAD_ADDRESS READ_LINE_ROUTINE, L_readWords
 
 	mov FLAGS, RUN_MODE
 
+	// Act:
 	bl _colon
 
+	// Assert:
 	mov x0, FLAGS
 	mov x1, COMPILE_MODE
 	bl assertEqual

@@ -45,36 +45,36 @@ dict_init:
 // Inputs:
 //   x0 - address of search string
 // Uses:
-//   x22 - temp to walk through dictionary
-//   x11 - holds address of search string
+//   x28 - temp to walk through dictionary
+//   x11 - temp - holds address of search string
 // Outputs:
 //   x0 = 0 if not found, -or-
 //   word address of found entry
 
 dict_search:
 	STD_PROLOG
-	str x22, [sp, #8]		// save NEXT_WORD
+	str x28, [sp, #8]
 	str x11, [sp, #-16]!
 
 	mov x11, x0   // hold addr of target
-	mov x22, SYS_DICT
+	mov x28, SYS_DICT
 
 L_keep_looking:
 	LOAD_ADDRESS x1, systemDictionary
-	cmp x22, x1		// at end of dict.?
+	cmp x28, x1		// at end of dict.?
 	b.eq L_not_found
 
 	mov x0, x11		// match?
-	ldr x1, [x22, #8]
+	ldr x1, [x28, #8]
 	bl streq
 
 	cmp x0, #1
 	b.eq L_found
-		ldr x22, [x22]	// move to next
+		ldr x28, [x28]	// move to next
 	b L_keep_looking	// repeat
 
 L_found:
-	add x0, x22, #16 // return word addr.
+	add x0, x28, #16 // return word addr.
 	b L_exit_search
 
 L_not_found:
@@ -82,7 +82,7 @@ L_not_found:
 
 L_exit_search:
 	ldr x11, [sp], #16
-	ldr x22, [sp, #8]		// Restore NEXT_WORD
+	ldr x28, [sp, #8]
 	STD_EPILOG
 	ret
 
