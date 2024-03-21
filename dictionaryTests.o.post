@@ -1,3 +1,5 @@
+// Global register values
+// Next: x27
 .equ META, 1
 .equ REGULAR, 0
 // DICT_HEADER name, codeAddress

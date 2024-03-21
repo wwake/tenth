@@ -1,16 +1,32 @@
 
   * dict_search - seems to unnecessarily use x22 as a temp
-  * Lookup words in evalAll rather than eval and compile
+  * Should we lookup words in evalAll rather than eval and compile?
   * Lookup words before repl tests for isMeta, so we can simplify isMeta to compare pointers directly
+  * Eliminate COMPILER_ROUTINE register
+  * Make readword prompt print (c) when in compile mode
   * Explore whether we can use relocatable addresses elsewhere
+  * Numeric constants (eval and compile)
+  * Strings (eval and compile)
 Compiler
 
+Primaries
+* Arithmetic: [+, -, *], /, DIV, DIVMOD, MIN, MAX, ABS, NEG
+* Logical: AND, OR, NOT, XOR
+* Relational: <0, ==0, ==, !=, <, <=, >, >=
+* Stack: push tbd, POP, SWAP, DUP, CAB, CBA, BAB
+* Memory: variables [tbd], arrays [tbd] !, @
+* Control [somewhat tbd]: if-else-endif, loop-while, repeat-until, while-end, for-next
+* I/O: [nl], print
+* Strings [tbd]
+
+Ideas
 * Should VSP point to the last element? instead of next free slot.
 * Read a string from a file
 
 TEN_24-27: 2024-03-21 - Compiler Loose Ends
 * [offline] Raised data stack size to 10K
 * [offline] Decided to ignore overflow and not worry about most negative number
+
 TEN-24-26: 2024-03-20 - REPL with NOP
 Compiler/REPL
   * Fix REPL read problem (examine readLine) - readLine wrongly omitted procedure prolog/epilog

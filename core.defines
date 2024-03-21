@@ -1,19 +1,21 @@
 #ifndef core_defines
 #define core_defines 1
 
-#define VSP x19	// virtual stack pointer
-#define VPC x20 	// virtual program counter
+// Global register values
 
-#define SYS_DICT x21 	// system dictionary
-
-#define NEXT_WORD x22		// pointer to next word to read
-
-#define COMPILER_ROUTINE x23	// ptr to compiler function
-
-#define FLAGS x24		// flag for run vs compile mode
-
-#define SEC_SPACE x25	// area to write secondaries
 
 #define READ_LINE_ROUTINE x26	// routine that prints prompt and reads next line
+#define NEXT_WORD x22	// pointer to next word to read
+
+#define COMPILER_ROUTINE x23	// address of compiler routine
+#define SYS_DICT x21 	// system dictionary
+#define SEC_SPACE x25	// area to write secondaries
+
+#define VSP x19			// virtual stack pointer
+#define VPC x20 			// virtual program counter
+#define FLAGS x24			// flag for run vs compile mode
+
+
+// Next: x27
 
 #endif

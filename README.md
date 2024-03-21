@@ -32,12 +32,14 @@ In these descriptions, a, b, and c represent the first, second, and third elemen
 * XOR  a = b ^ a
 
 ## Relational Words
-* <     a<0
-* 0=     a==0
-* <       b < a
+* <0     a<0
+* ==0    a==0
 * ==     b == a
-* >       b > a
-* !=      b != a
+* !=     b != a
+* <      b < a
+* <=     b <= a
+* >      b > a
+* >=     b >= a
 
 *Note: 0 = false, non-zero = true. Operations yield 0 or 1.*
 
@@ -53,7 +55,7 @@ In these descriptions, a, b, and c represent the first, second, and third elemen
 ## Memory - TBD
 * Variables - TBD
 * !   mem[a] = b
-* @ a = mem[a]
+* @   a = mem[a]
 
 ## I/O
 * nl - print newline
@@ -63,7 +65,6 @@ In these descriptions, a, b, and c represent the first, second, and third elemen
 * flag if [else] endif
 * loop..flag while
 * repeat.. flag until
-* flag while .. flag 
-  end
+* flag while .. flag end
 * end start FOR.. NEXT
 
