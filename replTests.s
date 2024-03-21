@@ -20,7 +20,7 @@ _start:
 	bl eval_calls_syntax_error_routine_for_unknown_word
 
 	bl evalAll_calls_eval_in_run_mode
-	bl evalAll_calls_compile_x23_in_compile_mode
+	bl evalAll_calls_compiler_in_compile_mode
 	bl evalAll_calls_meta_even_in_compile_mode
 
 	bl compile_puts_found_word_into_sec_space
@@ -155,18 +155,31 @@ L_test_compile:
 	STD_EPILOG
 	ret
 
-TEST_START evalAll_calls_compile_x23_in_compile_mode
-	LOAD_ADDRESS COMPILER_ROUTINE, L_test_compile
+TEST_START evalAll_calls_compiler_in_compile_mode
+	// Arrange:
 	LOAD_ADDRESS VSP, L_eval_test_stack
 	str xzr, [VSP]
 	mov FLAGS, COMPILE_MODE
-	LOAD_ADDRESS x0, L_eval_word
 
+	LOAD_ADDRESS SEC_SPACE, L_compile_test_space
+
+	bl dict_init
+	DICT_HEADER "1", push1
+	DICT_END
+
+	LOAD_ADDRESS x0, L_compile_word_to_find
+
+	// Act:
 	bl evalAll
 
-	LOAD_ADDRESS x0, L_capture
-	LOAD_ADDRESS x1, L_eval_word
-	bl assertEqualStrings
+	// Assert
+	LOAD_ADDRESS x0, L_compile_word_to_find
+	bl dict_search
+	mov x1, x0
+
+	LOAD_ADDRESS x0, L_compile_test_space
+	ldr x0, [x0]
+	bl assertEqual
 TEST_END
 
 L_semicolon:

@@ -1,3 +1,5 @@
+// Global register values
+// Free: x23, x27, x28
 
 .macro LOAD_ADDRESS register, location
  adrp \register, \location@PAGE
@@ -15,6 +17,12 @@
 .endm
 .macro DATA_TOP register
  ldr \register, [x19, #-8]
+.endm
+.macro STD_PROLOG
+ str lr, [sp, #-16]!
+.endm
+.macro STD_EPILOG
+ ldr lr, [sp], #16
 .endm
 .equ META, 1
 .equ REGULAR, 0
@@ -62,7 +70,7 @@ L_skip_meta\@:
 .text
 .align 2
 _start:
- str lr, [sp, #-16]!
+ STD_PROLOG
  str x22, [sp, #8]
  bl data_stack_init
  bl L_sec_space_init
@@ -71,16 +79,15 @@ _start:
  // Run
  bl repl
  ldr x22, [sp, #8]
- ldr lr, [sp], #16
+ STD_EPILOG
  ret
 L_sec_space_init:
  // Setup SEC_SPACE
  LOAD_ADDRESS x25, L_secondary_space
  ret
 L_load_system_dictionary:
- str lr, [sp, #-16]!
+ STD_PROLOG
  bl dict_init
- DICT_HEADER "_wordNotFoundError", wordNotFoundError
  DICT_HEADER "1", push1
  DICT_HEADER "add", add
  DICT_HEADER "dup", dup
@@ -91,10 +98,10 @@ L_load_system_dictionary:
  DICT_HEADER ":", _colon, META
  DICT_HEADER ";", _semicolon, META
  DICT_END
- ldr lr, [sp], #16
+ STD_EPILOG
  ret
 L_error_handler_init:
- LOAD_ADDRESS x0, global_error_handler
+ LOAD_ADDRESS x0, global_word_not_found_handler
  LOAD_ADDRESS x1, wordNotFoundError
  str x1, [x0]
  ret

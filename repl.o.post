@@ -1,5 +1,5 @@
 // Global register values
-// Free: x27, x28
+// Free: x23, x27, x28
 
 .macro LOAD_ADDRESS register, location
  adrp \register, \location@PAGE
@@ -47,7 +47,7 @@ eval:
  str x29, [sp, #8]
  mov x29, x0
  bl dict_search
- cmp x0, #0 // Call
+ cmp x0, #0
  b.ne L_call_found_routine
   mov x0, x29
   LOAD_ADDRESS x1, global_word_not_found_handler
@@ -83,7 +83,7 @@ evalAll:
  cmp x0, #1
  b.eq L_evaluate
   mov x0, x28
-  blr x23
+  bl compile
   b L_end_evalAll
  L_evaluate:
   mov x0, x28
@@ -126,7 +126,6 @@ L_exiting_compile:
 repl:
  STD_PROLOG
  str x22, [sp, #8]
- LOAD_ADDRESS x23, compile
  bl inputInit
  LOAD_ADDRESS x26, readLine
  mov x24, RUN_MODE

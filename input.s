@@ -2,6 +2,7 @@
 #include "assembler.macros"
 
 .include "unix_functions.macros"
+.include "repl.macros"
 
 .global inputInit
 .global readWord
@@ -11,6 +12,9 @@
 .equ INPUT_BUFFER_SIZE, 250
 
 .data
+L_compile_prefix:
+	.asciz "©"
+
 L_prompt:
 	.asciz "10> "
 
@@ -36,7 +40,14 @@ inputInit:
 readLine:
 	STD_PROLOG
 
-	// prompt
+	// prompt (with © first if in compile mode)
+	and x1, FLAGS, COMPILE_MODE
+	cmp x1, COMPILE_MODE
+	b.ne L_print_prompt
+		LOAD_ADDRESS x0, L_compile_prefix
+		bl print
+
+L_print_prompt:
 	LOAD_ADDRESS x0, L_prompt
 	bl print
 

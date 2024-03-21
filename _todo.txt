@@ -1,8 +1,3 @@
-
-  * dict_search - seems to unnecessarily use x22 as a temp
-  * Should we lookup words in evalAll rather than eval and compile?
-  * Lookup words before REPL tests for isMeta, so we can simplify isMeta to compare pointers directly
-  * Eliminate COMPILER_ROUTINE register
   * Make readword prompt print © when in compile mode
   * Explore whether we can use relocatable addresses elsewhere
   * Numeric constants (eval and compile)
@@ -28,6 +23,10 @@ TEN_24-27: 2024-03-21 - Compiler Loose Ends
 * [offline] Decided to ignore overflow and not worry about most negative number
 * [offline] Rearranged registers
 * [offline] Created asUnit.key to describe asUnit
+* dict_search - use x28 rather than x22 as a temp
+* Should we lookup words in evalAll rather than eval and compile? No, they're too similar.
+* Lookup words before REPL tests for isMeta, so we can simplify isMeta to compare pointers directly? No, it's an optimization we'll defer.
+  * Eliminate COMPILER_ROUTINE register
 
 TEN-24-26: 2024-03-20 - REPL with NOP
 Compiler/REPL

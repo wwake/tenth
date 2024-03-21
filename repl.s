@@ -27,7 +27,7 @@ eval:
 	mov x29, x0
 
 	bl dict_search
-	cmp x0, #0		// Call
+	cmp x0, #0
 	b.ne L_call_found_routine
 		mov x0, x29
 		LOAD_ADDRESS x1, global_word_not_found_handler
@@ -72,7 +72,7 @@ evalAll:
 	cmp x0, #1
 	b.eq L_evaluate
 		mov x0, x28
-		blr COMPILER_ROUTINE
+		bl compile
 		b L_end_evalAll
 
 	L_evaluate:
@@ -126,7 +126,7 @@ L_exiting_compile:
 repl:
 	STD_PROLOG
 	str x22, [sp, #8]
-	LOAD_ADDRESS COMPILER_ROUTINE, compile
+
 	bl inputInit
 
 	LOAD_ADDRESS READ_LINE_ROUTINE, readLine
