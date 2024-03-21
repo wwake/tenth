@@ -1,4 +1,3 @@
-  * Make readword prompt print © when in compile mode
   * Explore whether we can use relocatable addresses elsewhere
   * Numeric constants (eval and compile)
   * Strings (eval and compile)
@@ -26,7 +25,8 @@ TEN_24-27: 2024-03-21 - Compiler Loose Ends
 * dict_search - use x28 rather than x22 as a temp
 * Should we lookup words in evalAll rather than eval and compile? No, they're too similar.
 * Lookup words before REPL tests for isMeta, so we can simplify isMeta to compare pointers directly? No, it's an optimization we'll defer.
-  * Eliminate COMPILER_ROUTINE register
+* Eliminate COMPILER_ROUTINE register
+* Make readword prompt print red with Ⓒ when in compile mode - and green with Ⓡ compile mode
 
 TEN-24-26: 2024-03-20 - REPL with NOP
 Compiler/REPL
