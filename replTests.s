@@ -133,10 +133,6 @@ TEST_START eval_pushes_number_on_data_stack
 
 	LOAD_ADDRESS VSP, L_push_test_stack
 
-	LOAD_ADDRESS x0, global_word_not_found_handler
-	LOAD_ADDRESS x1, wordNotFoundError
-	str x1, [x0]
-
 	LOAD_ADDRESS x0, L_numeric_string
 
 	// Act:
