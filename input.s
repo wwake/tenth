@@ -12,11 +12,11 @@
 .equ INPUT_BUFFER_SIZE, 250
 
 .data
-L_compile_prefix:
-	.asciz "©"
+L_compile_prompt:
+	.asciz "\033[31m©10>\033[0m "
 
-L_prompt:
-	.asciz "10> "
+L_run_prompt:
+	.asciz "\033[32m10>\033[0m "
 
 .align 2
 inputBuffer:
@@ -44,14 +44,16 @@ readLine:
 	and x1, FLAGS, COMPILE_MODE
 	cmp x1, COMPILE_MODE
 	b.ne L_print_prompt
-		LOAD_ADDRESS x0, L_compile_prefix
+		LOAD_ADDRESS x0, L_compile_prompt
 		bl print
+		b L_reading
 
 L_print_prompt:
-	LOAD_ADDRESS x0, L_prompt
+	LOAD_ADDRESS x0, L_run_prompt
 	bl print
 
 	// Read a new line
+L_reading:
 	mov x0, #0
 	LOAD_ADDRESS x1, inputBuffer
 	mov x2, INPUT_BUFFER_SIZE
