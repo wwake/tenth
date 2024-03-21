@@ -76,6 +76,7 @@ _start:
  TEST_ALL "replTests"
  bl eval_of_just_push42_leaves_42_on_stack
  bl eval_calls_syntax_error_routine_for_unknown_word
+ bl eval_pushes_number_on_data_stack
  bl evalAll_calls_eval_in_run_mode
  bl evalAll_calls_compiler_in_compile_mode
  bl evalAll_calls_meta_even_in_compile_mode
@@ -145,6 +146,30 @@ TEST_START eval_calls_syntax_error_routine_for_unknown_word
  LOAD_ADDRESS x0, L_capture_error_message
  LOAD_ADDRESS x1, L_missing_word
  bl assertEqualStrings
+TEST_END
+.data
+.p2align 3
+L_push_test_stack:
+ .quad 0, 99, 0, 0
+L_numeric_string:
+ .asciz "321"
+.text
+.align 2
+TEST_START eval_pushes_number_on_data_stack
+ // Arrange:
+ bl dict_init
+ LOAD_ADDRESS x19, L_push_test_stack
+ LOAD_ADDRESS x0, global_word_not_found_handler
+ LOAD_ADDRESS x1, wordNotFoundError
+ str x1, [x0]
+ LOAD_ADDRESS x0, L_numeric_string
+ // Act:
+ bl eval
+ // Assert:
+ LOAD_ADDRESS x0, L_push_test_stack
+ ldr x0, [x0]
+ mov x1, #321
+ bl assertEqual
 TEST_END
 L_eval_word:
  .asciz "1"

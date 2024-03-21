@@ -38,28 +38,39 @@
 // Input:
 //   x0 - word to execute
 //   x22 - next word in input
+// Uses:
+//   x29 - temp
 // Assumes - first dictionary entry is the syntax error routine (uses x22)
 // Output:
 //   side effect from execution
 //
 eval:
  STD_PROLOG
- str x29, [sp, #8]
- mov x29, x0
+ str x28, [sp, #8]
+ mov x28, x0
  bl dict_search
  cmp x0, #0
+ b.eq L_check_for_numeric
+  // Handle a known word
+  ldr x28, [sp, #8]
+  ldr x1, [x0] // load ptr to code
+  blr x1 // call code
+ b L_eval_exiting
+L_check_for_numeric:
+ mov x0, x28
+ bl str2positive
+ cmp x0, #0
  b.eq L_word_not_found
- // Handle a known word
- ldr x29, [sp, #8]
- ldr x1, [x0] // load ptr to code
- blr x1 // call code
-  b L_eval_exiting
+  // Push the number on the data stack
+  DATA_PUSH x0
+ b L_eval_exiting
 L_word_not_found:
- mov x0, x29
+ mov x0, x28
  LOAD_ADDRESS x1, global_word_not_found_handler
  ldr x1, [x1]
  blr x1
 L_eval_exiting:
+ str x28, [sp, #8]
  STD_EPILOG
  ret
 .data
@@ -155,7 +166,7 @@ wordNotFoundSuffix:
  .asciz "\n"
 .p2align 3
 global_word_not_found_handler:
- .quad 0
+ .quad wordNotFoundError
 .text
 .align 2
 // wordNotFoundError - prints error message and word that wasn't found
