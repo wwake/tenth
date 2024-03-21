@@ -100,7 +100,7 @@ dict_init:
 //   word address of found entry
 dict_search:
  STD_PROLOG
- str x22, [sp, #8] // save WORD_PTR
+ str x22, [sp, #8] // save NEXT_WORD
  str x11, [sp, #-16]!
  mov x11, x0 // hold addr of target
  mov x22, x21
@@ -122,7 +122,7 @@ L_not_found:
  mov x0, #0 // return 0 on fail
 L_exit_search:
  ldr x11, [sp], #16
- ldr x22, [sp, #8] // Restore WORD_PTR
+ ldr x22, [sp, #8] // Restore NEXT_WORD
  STD_EPILOG
  ret
 // isMeta - search for string in meta list; return 0 if missing, 1 if found

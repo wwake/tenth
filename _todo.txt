@@ -1,16 +1,16 @@
 
   * dict_search - seems to unnecessarily use x22 as a temp
+  * Lookup words in evalAll rather than eval and compile
   * Lookup words before repl tests for isMeta, so we can simplify isMeta to compare pointers directly
   * Explore whether we can use relocatable addresses elsewhere
 Compiler
 
-* Read a string from a file
-* Update tests to use the DICT and SECONDARY macros
-* Change data stack to a bigger size
 * Should VSP point to the last element? instead of next free slot.
-* Note that our arithmetic operations don't check for overflow
-* Fix dec2str on most negative 64-bit number (-9223372036854775808) [?]
+* Read a string from a file
 
+TEN_24-27: 2024-03-21 - Compiler Loose Ends
+* [offline] Raised data stack size to 10K
+* [offline] Decided to ignore overflow and not worry about most negative number
 TEN-24-26: 2024-03-20 - REPL with NOP
 Compiler/REPL
   * Fix REPL read problem (examine readLine) - readLine wrongly omitted procedure prolog/epilog
@@ -18,6 +18,7 @@ Compiler/REPL
   * Develop ": wordToDefine body ;"
   * Compile should report undefined words
   * Define STD_PROLOG and STD_EPILOG macros
+Woohoo! You can define and run secondaries!
 
 TEN-24-25: 2024-03-19 - Write Secondary Headers
 Compiler

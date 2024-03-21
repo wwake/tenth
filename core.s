@@ -25,7 +25,7 @@
 .global _jump
 .global _jump_if_false
 
-.equ DATA_STACK_SIZE, 1000
+.equ DATA_STACK_SIZE, 10000
 
 .data
 .align 2

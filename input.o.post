@@ -64,11 +64,11 @@ readLine:
 //   READ_LINE_ROUTINE (register) - address of the routine to call to read a line
 // Output:
 //   x0 - ptr to start of returned word (0-terminated string)
-//   WORD_PTR (register) - updated WORD_PTR
+//   NEXT_WORD (register) - updated NEXT_WORD
 //
 readWord:
  STD_PROLOG
- // Check for WORD_PTR at \0
+ // Check for NEXT_WORD at \0
 L_check_if_at_end:
  ldrb w0, [x22]
  cmp w0, #0

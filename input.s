@@ -23,8 +23,8 @@ inputBuffer:
 .align 2
 
 inputInit:
-	LOAD_ADDRESS WORD_PTR, inputBuffer
-	strb wzr, [WORD_PTR]
+	LOAD_ADDRESS NEXT_WORD, inputBuffer
+	strb wzr, [NEXT_WORD]
 	ret
 
 
@@ -55,37 +55,37 @@ readLine:
 //   READ_LINE_ROUTINE (register) - address of the routine to call to read a line
 // Output:
 //   x0 - ptr to start of returned word (0-terminated string)
-//   WORD_PTR (register) - updated WORD_PTR
+//   NEXT_WORD (register) - updated NEXT_WORD
 //
 readWord:
 	STD_PROLOG
 
-	// Check for WORD_PTR at \0
+	// Check for NEXT_WORD at \0
 L_check_if_at_end:
-	ldrb w0, [WORD_PTR]
+	ldrb w0, [NEXT_WORD]
 	cmp w0, #0
 	b.ne L_find_word_start
 		blr READ_LINE_ROUTINE
 
-		LOAD_ADDRESS WORD_PTR, inputBuffer
+		LOAD_ADDRESS NEXT_WORD, inputBuffer
 
 L_find_word_start:
-		ldrb w0, [WORD_PTR]
+		ldrb w0, [NEXT_WORD]
 		cmp w0, #0x20		// space (skip)
 		b.ne not_a_space
-			add WORD_PTR, WORD_PTR, #1
+			add NEXT_WORD, NEXT_WORD, #1
 			b L_find_word_start
 not_a_space:
-		mov x0, WORD_PTR			// Set the return to point to this word
+		mov x0, NEXT_WORD			// Set the return to point to this word
 
-		ldrb w1, [WORD_PTR]
+		ldrb w1, [NEXT_WORD]
 		cmp w1, 0x0a
 		b.ne find_trailing_space_or_nl	// At end of line - go back & read more
-		add WORD_PTR, WORD_PTR, #1
+		add NEXT_WORD, NEXT_WORD, #1
 		b L_check_if_at_end
 
 find_trailing_space_or_nl:
-		ldrb w1, [WORD_PTR], #1
+		ldrb w1, [NEXT_WORD], #1
 		cmp w1, 0x0a		// newline
 		b.eq exit_space_or_nl
 		cmp w1, 0x20		// space
@@ -93,7 +93,7 @@ find_trailing_space_or_nl:
 		b find_trailing_space_or_nl
 
 exit_space_or_nl:
-	strb wzr, [WORD_PTR, #-1]
+	strb wzr, [NEXT_WORD, #-1]
 
 	STD_EPILOG
 	ret

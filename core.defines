@@ -6,7 +6,7 @@
 
 #define SYS_DICT x21 	// system dictionary
 
-#define WORD_PTR x22		// pointer to next word to read
+#define NEXT_WORD x22		// pointer to next word to read
 
 #define COMPILER_ROUTINE x23	// ptr to compiler function
 

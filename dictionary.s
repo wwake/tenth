@@ -53,7 +53,7 @@ dict_init:
 
 dict_search:
 	STD_PROLOG
-	str x22, [sp, #8]		// save WORD_PTR
+	str x22, [sp, #8]		// save NEXT_WORD
 	str x11, [sp, #-16]!
 
 	mov x11, x0   // hold addr of target
@@ -82,7 +82,7 @@ L_not_found:
 
 L_exit_search:
 	ldr x11, [sp], #16
-	ldr x22, [sp, #8]		// Restore WORD_PTR
+	ldr x22, [sp, #8]		// Restore NEXT_WORD
 	STD_EPILOG
 	ret
 

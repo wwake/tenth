@@ -60,7 +60,7 @@ TEST_START eval_of_just_push42_leaves_42_on_stack
 	LOAD_ADDRESS VSP, L_eval_test_stack
 
 	LOAD_ADDRESS x0, L_input_buffer
-	LOAD_ADDRESS WORD_PTR, L_input_buffer
+	LOAD_ADDRESS NEXT_WORD, L_input_buffer
 
 	// Act
 	bl eval
@@ -104,7 +104,7 @@ TEST_START eval_calls_syntax_error_routine_for_unknown_word
 	str x1, [x0]
 
 	LOAD_ADDRESS x0, L_missing_word
-	mov WORD_PTR, x0
+	mov NEXT_WORD, x0
 
 	// Act
 	bl eval
