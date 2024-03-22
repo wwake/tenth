@@ -83,25 +83,24 @@ _colon:
 	// Read the word to be defined
 	bl readWord
 
-	// Copy the word to be defined after the last secondary
+	// Put word string after last secondary
 	mov x1, SEC_SPACE
 	bl strcpyz
 
-	// Adjust SEC_SPACE to account for copied bytes + 1 byte for \0 + 7-byte buffer
-	// so SEC_SPACE points to a 64-bit boundary; x1 = pointer to saved string
+	// Adjust SEC_SPACE to a 64-bit boundary
 	mov x0, SEC_SPACE
 	bl strlen
 	add x0, x0, #8
 	and x0, x0, #-8
 
-	mov x1, SEC_SPACE			// hold pointer to saved string
+	mov x1, SEC_SPACE
 	add SEC_SPACE, SEC_SPACE, x0
 
 	// Put old dictionary at first slot; update dictionary
 	str SYS_DICT, [SEC_SPACE]
 	mov SYS_DICT, SEC_SPACE
 
-	// Put pointer to word string in the second slot
+	// Put pointer to word string in 2d slot
 	str x1, [SYS_DICT, #8]
 
 	// Put pointer to start2d in the third slot

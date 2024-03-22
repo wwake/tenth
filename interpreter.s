@@ -67,6 +67,6 @@ end2d_wordAddress:
 .align 2
 end2d:
 	ldr VPC, [sp, #8]		// Restore VPC and...
-	STD_EPILOG		// LR from system stack
+	STD_EPILOG				//   ... LR from system stack
 	ret						// Return
 

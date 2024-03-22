@@ -1,5 +1,6 @@
-  * Numeric constants (eval and compile)
-  * Explore whether we can use relocatable addresses elsewhere
+
+  * CALL_ERROR_HANDLER macro
+  * Numeric constants (compile)
   * Strings (eval and compile)
 Compiler
 
@@ -9,11 +10,11 @@ Compiler
 * Stack: push tbd, POP, SWAP, DUP, CAB, CBA, BAB
 * Memory: variables [tbd], arrays [tbd] !, @
 * Control [somewhat tbd]: if-else-endif, do-while, repeat-until, while-end, for-next
-* I/O: [nl], print
+* I/O: [nl], . [print]
 * Strings [tbd]
 Primaries
 
-
+* Explore whether we can use relocatable addresses elsewhere
 * Strings (eval and compile)
 Compiler
 
@@ -31,6 +32,7 @@ TEN_24-27: 2024-03-21 - Compiler Loose Ends
 * Lookup words before REPL tests for isMeta, so we can simplify isMeta to compare pointers directly? No, it's an optimization we'll defer.
 * Eliminate COMPILER_ROUTINE register
 * Make readword prompt print red with Ⓒ when in compile mode - and green with Ⓡ compile mode
+* Numeric constants (eval)
 
 TEN-24-26: 2024-03-20 - REPL with NOP
 Compiler/REPL
