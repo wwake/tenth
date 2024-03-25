@@ -5,6 +5,7 @@
 .global sub
 .global mul
 .global div
+.global mod
 
 
 // add - replace top two a,b with b+a
@@ -38,8 +39,25 @@ mul:
 	ret
 
 
+// div - replace top a,b with b/a (signed integer division)
+// Input: Data stack with two values on top
+// Process: x0, x1 - temp
+// Output: Data stack has popped two values and pushed their dividend
 div:
 	DATA_POP_AB x1, x0
 	sdiv x0, x0, x1
 	DATA_PUSH x0
 	ret
+
+
+// mod - replace top a,b with b%a (signed mod)
+// Input: Data stack with two values on top
+// Process: x0, x1 - temp
+// Output: Data stack has popped two values and pushed their remainder
+mod:
+	DATA_POP_AB x1, x0
+	sdiv x2, x0, x1
+	msub x0, x1, x2, x0
+	DATA_PUSH x0
+	ret
+

@@ -30,35 +30,15 @@ _start:
 	bl sub_b_minus_a_is_difference
 	bl mul_b_by_a_is_product
 	bl div_b_by_a_is_dividend
+	bl mod_b_by_a_is_dividend
 
 	unix_exit
 	STD_EPILOG
 	ret
 
 
-TEST_START add_b_plus_a_is_a
-	LOAD_ADDRESS VSP, L_push_test_stack
-
-	adr VPC, L_data
-
-	bl _push
-	bl _push
-
-	bl add
-
-	mov x0, VSP
-	LOAD_ADDRESS x1, L_push_test_stack
-	add x1, x1, #8		// Expect original stack+8
-	bl assertEqual
-
-	LOAD_ADDRESS x0, L_push_test_stack
-	ldr x0, [x0]
-	mov x1, #200		// Expected stack contents
-	bl assertEqual
-
-TEST_END
-
-TEST_START sub_b_minus_a_is_difference
+.macro BINOP_TEST test_name, routine_to_test, expected
+TEST_START \test_name
 	// Arrange:
 	LOAD_ADDRESS VSP, L_push_test_stack
 	adr VPC, L_data
@@ -68,47 +48,18 @@ TEST_START sub_b_minus_a_is_difference
 	bl _push
 
 	// Act:
-	bl sub
+	bl \routine_to_test
 
 	// Assert:
 	DATA_POP x0
-	mov x1, #84
+	mov x1, \expected
 	bl assertEqual
 TEST_END
+.endm
 
-TEST_START mul_b_by_a_is_product
-	// Arrange:
-	LOAD_ADDRESS VSP, L_push_test_stack
-	adr VPC, L_data
-	bl _push
 
-	adr VPC, L_data + 8
-	bl _push
-
-	// Act:
-	bl mul
-
-	// Assert:
-	DATA_POP x0
-	mov x1, #8236
-	bl assertEqual
-TEST_END
-
-TEST_START div_b_by_a_is_dividend
-	// Arrange:
-	LOAD_ADDRESS VSP, L_push_test_stack
-	adr VPC, L_data
-	bl _push
-
-	adr VPC, L_data + 8
-	bl _push
-
-	// Act:
-	bl div
-
-	// Assert:
-	DATA_POP x0
-	mov x1, #2
-	bl assertEqual
-
-TEST_END
+BINOP_TEST "add_b_plus_a_is_a", add, 200
+BINOP_TEST "sub_b_minus_a_is_difference", sub, 84
+BINOP_TEST "mul_b_by_a_is_product", mul, 8236
+BINOP_TEST "div_b_by_a_is_dividend", div, 2
+BINOP_TEST "mod_b_by_a_is_dividend", mod, 26

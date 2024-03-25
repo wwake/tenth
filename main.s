@@ -50,7 +50,8 @@ L_load_system_dictionary:
 	DICT_HEADER "-", sub
 	DICT_HEADER "*", mul
 	DICT_HEADER "/", div
-	
+	DICT_HEADER "%", mod
+
 	DICT_HEADER ":", _colon, META
 	DICT_HEADER ";", _semicolon, META
 	DICT_HEADER ".", dotprint

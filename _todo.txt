@@ -1,6 +1,5 @@
-* Remove automatic print from repl
 * I/O: [nl], . [print]
-* Arithmetic: [+, -, *], /, MOD, DIVMOD, MIN, MAX, ABS, NEG
+* Arithmetic: %, /%, MIN, MAX, ABS, NEG
 * Logical: AND, OR, NOT, XOR
 * Relational: <0, ==0, ==, !=, <, <=, >, >=
 * Stack: POP, SWAP, DUP, CAB, CBA, BAB
@@ -25,7 +24,9 @@ Compiler
   * Print error message in red
 I/O
   * Make . pop and print a number
-
+  * Remove automatic print from repl
+Arithmetic
+  * /
 
 TEN_24-27: 2024-03-21 - Compiler Loose Ends
 * [offline] Raised data stack size to 10K
