@@ -70,11 +70,6 @@ L_eval_exiting:
  str x28, [sp, #8]
  STD_EPILOG
  ret
-.data
-L_data_top_prefix:
- .asciz ">>>> Top of stack: "
-L_data_top_suffix:
- .asciz "\n"
 .text
 .align 2
 // evalAll: evaluate or compile
@@ -151,13 +146,7 @@ L_repl_loop:
  bl readWord
  // eval
  bl evalAll
- // print
- LOAD_ADDRESS x0, L_data_top_prefix
- bl print
- DATA_TOP x0
- bl printnum
- LOAD_ADDRESS x0, L_data_top_suffix
- bl print
+ // no print - use "." if you want it
  // loop
  b L_repl_loop
  ldr x22, [sp, #8]

@@ -61,7 +61,7 @@ In these descriptions, a, b, and c represent the first, second, and third elemen
 
 ## I/O
 * nl - print newline
-* . - print number on top of stack (non-destructive)
+* . - pop and print number on top of stack (destructive)
 
 ## Control - somewhat TBD
 * flag if [else] endif

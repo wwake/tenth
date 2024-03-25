@@ -1,4 +1,4 @@
-
+* Remove automatic print from repl
 * I/O: [nl], . [print]
 * Arithmetic: [+, -, *], /, MOD, DIVMOD, MIN, MAX, ABS, NEG
 * Logical: AND, OR, NOT, XOR
@@ -23,6 +23,9 @@ Compiler
   * Add a word for 0
   * Define and us WORD_NOT_FOUND macro
   * Print error message in red
+I/O
+  * Make . pop and print a number
+
 
 TEN_24-27: 2024-03-21 - Compiler Loose Ends
 * [offline] Raised data stack size to 10K
