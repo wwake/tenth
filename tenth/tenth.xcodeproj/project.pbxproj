@@ -67,6 +67,7 @@
 		91CAE5F02BA8BE95001E8E9E /* core.defines */ = {isa = PBXFileReference; lastKnownFileType = text; name = core.defines; path = ../core.defines; sourceTree = "<group>"; };
 		91CAE5F22BACAC50001E8E9E /* asUnit.key */ = {isa = PBXFileReference; lastKnownFileType = file; name = asUnit.key; path = ../asUnit.key; sourceTree = "<group>"; };
 		91D342EA2B98F8A4001B1D00 /* main.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = main.s; path = ../main.s; sourceTree = "<group>"; };
+		91E41A1E2BB2056400F83677 /* io.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = io.s; path = ../io.s; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +135,7 @@
 				91CAE5F02BA8BE95001E8E9E /* core.defines */,
 				91238D832B730AD800052895 /* core.s */,
 				91B9F1322B742898005730DF /* interpreter.s */,
+				91E41A1E2BB2056400F83677 /* io.s */,
 			);
 			name = core;
 			sourceTree = "<group>";

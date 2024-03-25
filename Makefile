@@ -43,6 +43,9 @@ inputTests.o: inputTests.s $(MACROS) $(TEST_MACROS)
 inputTests.out: inputTests.o asUnit.o cLike.o input.o
 
 
+io.o: io.s core.defines assembler.macros
+
+
 interpreter.o: interpreter.s unix_functions.macros assembler.macros core.defines
 
 interpreterTests.o: interpreterTests.s interpreter.o $(MACROS) $(TEST_MACROS)
@@ -59,7 +62,7 @@ replTests.o: replTests.s $(MACROS) $(TEST_MACROS)
 
 replTests.out: replTests.o repl.o asUnit.o cLike.o core.o dictionary.o input.o interpreter.o
 
-repl.out: repl.o core.o cLike.o dictionary.o input.o interpreter.o main.o
+repl.out: repl.o core.o cLike.o dictionary.o input.o interpreter.o io.o main.o
 
 
 unitTestDemo.o: unitTestDemo.s $(MACROS) $(TEST_MACROS)

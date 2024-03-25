@@ -39,6 +39,7 @@ L_load_system_dictionary:
 	STD_PROLOG
 
 	bl dict_init
+	DICT_HEADER "0", push0
 	DICT_HEADER "1", push1
 	DICT_HEADER "add", add
 	DICT_HEADER "dup", dup
@@ -48,6 +49,7 @@ L_load_system_dictionary:
 	DICT_HEADER "sub", sub
 	DICT_HEADER ":", _colon, META
 	DICT_HEADER ";", _semicolon, META
+	DICT_HEADER ".", dotprint
 	DICT_END
 
 	STD_EPILOG

@@ -1,13 +1,11 @@
-  * Print error message in red
-Compiler
 
+* I/O: [nl], . [print]
 * Arithmetic: [+, -, *], /, MOD, DIVMOD, MIN, MAX, ABS, NEG
 * Logical: AND, OR, NOT, XOR
 * Relational: <0, ==0, ==, !=, <, <=, >, >=
-* Stack: push tbd, POP, SWAP, DUP, CAB, CBA, BAB
-* Memory: variables [tbd], arrays [tbd] !, @
+* Stack: POP, SWAP, DUP, CAB, CBA, BAB
 * Control [somewhat tbd]: if-else-endif, do-while, repeat-until, while-end, for-next
-* I/O: [nl], . [print]
+* Memory: variables [tbd], arrays [tbd] !, @
 * Strings [tbd]
 Primaries
 
@@ -24,6 +22,7 @@ Compiler
   * Numeric constants (compile)
   * Add a word for 0
   * Define and us WORD_NOT_FOUND macro
+  * Print error message in red
 
 TEN_24-27: 2024-03-21 - Compiler Loose Ends
 * [offline] Raised data stack size to 10K
