@@ -11,6 +11,7 @@
 .global _colon
 .global _semicolon
 
+.global _push_word_address
 .global _push
 .global push1
 
@@ -137,6 +138,10 @@ _semicolon:
 //   VSP (register), updated as value was pushed
 //   VPC (register), updated to word after data value
 //
+.p2align 3
+_push_word_address:
+	.quad _push
+
 _push:
 	ldr x0, [VPC], #8
 	DATA_PUSH x0

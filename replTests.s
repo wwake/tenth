@@ -25,6 +25,7 @@ _start:
 	bl evalAll_calls_meta_even_in_compile_mode
 
 	bl compile_puts_found_word_into_sec_space
+//	bl compile_emits_push_when_number_found
 	bl compile_writes_error_message_if_not_found
 
 	unix_exit
@@ -252,6 +253,9 @@ L_compile_test_space:
 L_compile_word_to_find:
 	.asciz "1"
 
+L_compile_number_to_find:
+	.asciz "42"
+
 .p2align 3
 
 .text
@@ -276,6 +280,27 @@ TEST_START compile_puts_found_word_into_sec_space
 
 	LOAD_ADDRESS x0, L_compile_test_space
 	ldr x0, [x0]
+	bl assertEqual
+TEST_END
+
+TEST_START compile_emits_push_when_number_found
+	// Arrange:
+	LOAD_ADDRESS SEC_SPACE, L_compile_test_space
+	LOAD_ADDRESS x0, L_compile_number_to_find
+
+	// Act:
+	bl compile
+
+	// Assert:
+	LOAD_ADDRESS x0, L_compile_test_space
+	ldr x0, [x0]
+	LOAD_ADDRESS x1, _push_word_address
+	bl assertEqual
+
+	LOAD_ADDRESS x0, L_compile_test_space
+	add x0, x0, #8
+	ldr x0, [x0]
+	mov x1, #42
 	bl assertEqual
 TEST_END
 

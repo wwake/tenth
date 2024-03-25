@@ -116,15 +116,16 @@ compile:
 
 	bl dict_search
 	cmp x0, #0
-	b.ne L_word_found
-		mov x0, x29
-		LOAD_ADDRESS x1, global_word_not_found_handler
-		ldr x1, [x1]
-		blr x1
+	b.eq L_compile_word_not_found
+		// word was found, store in secondary
+		str x0, [SEC_SPACE], #8
 		b L_exiting_compile
 
-L_word_found:
-	str x0, [SEC_SPACE], #8
+L_compile_word_not_found:
+	mov x0, x29
+	LOAD_ADDRESS x1, global_word_not_found_handler
+	ldr x1, [x1]
+	blr x1
 
 L_exiting_compile:
 	ldr x29, [sp, #8]

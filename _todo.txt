@@ -1,7 +1,5 @@
-
-  * CALL_ERROR_HANDLER macro
   * Numeric constants (compile)
-  * Strings (eval and compile)
+  * CALL_ERROR_HANDLER macro
 Compiler
 
 * Arithmetic: [+, -, *], /, MOD, DIVMOD, MIN, MAX, ABS, NEG
