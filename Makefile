@@ -12,6 +12,13 @@ TEST_MACROS=asUnit.macros coreTests.macros
 %.out: %.o
 	$(LD) -o $@ $^
 
+arithmetic.o: arithmetic.s core.defines assembler.macros
+
+arithmeticTests.o: arithmeticTests.s $(MACROS) $(TEST_MACROS)
+
+arithmeticTests.out: arithmeticTests.o arithmetic.o asUnit.o cLike.o core.o interpreter.o input.o
+
+
 asUnit.o: asUnit.s
 
 
@@ -33,7 +40,7 @@ dictionary.o: dictionary.s dictionary.macros unix_functions.macros assembler.mac
 
 dictionaryTests.o: dictionaryTests.s dictionary.o $(MACROS) $(TEST_MACROS)
 
-dictionaryTests.out: dictionaryTests.o dictionary.o asUnit.o interpreter.o core.o cLike.o input.o
+dictionaryTests.out: dictionaryTests.o dictionary.o arithmetic.o asUnit.o interpreter.o core.o cLike.o input.o
 
 
 input.o: input.s $(MACROS)
@@ -50,7 +57,7 @@ interpreter.o: interpreter.s unix_functions.macros assembler.macros core.defines
 
 interpreterTests.o: interpreterTests.s interpreter.o $(MACROS) $(TEST_MACROS)
 
-interpreterTests.out: interpreterTests.o interpreter.o asUnit.o cLike.o core.o input.o
+interpreterTests.out: interpreterTests.o interpreter.o arithmetic.o asUnit.o cLike.o core.o input.o
 
 
 main.o: main.s core.defines
@@ -62,7 +69,7 @@ replTests.o: replTests.s $(MACROS) $(TEST_MACROS)
 
 replTests.out: replTests.o repl.o asUnit.o cLike.o core.o dictionary.o input.o interpreter.o
 
-repl.out: repl.o core.o cLike.o dictionary.o input.o interpreter.o io.o main.o
+repl.out: repl.o arithmetic.o core.o cLike.o dictionary.o input.o interpreter.o io.o main.o
 
 
 unitTestDemo.o: unitTestDemo.s $(MACROS) $(TEST_MACROS)
@@ -77,8 +84,8 @@ clean:
 repl: repl.out
 	./repl.out
 
-tests: cLikeTests.out coreTests.out dictionaryTests.out inputTests.out interpreterTests.out replTests.out
-	./cLikeTests.out ; ./coreTests.out ; ./dictionaryTests.out; ./inputTests.out; ./interpreterTests.out; ./replTests.out
+tests: arithmeticTests.out cLikeTests.out coreTests.out dictionaryTests.out inputTests.out interpreterTests.out replTests.out
+	./arithmeticTests.out ; ./cLikeTests.out ; ./coreTests.out ; ./dictionaryTests.out; ./inputTests.out; ./interpreterTests.out; ./replTests.out
 
 playground: unitTestDemo.out
 	./unitTestDemo.out
