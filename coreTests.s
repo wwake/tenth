@@ -28,6 +28,7 @@ _start:
 	bl dup_duplicates_top_item
 
 	// Arithmetic
+	bl push_0
 	bl add_b_plus_a_is_a
 	bl sub_b_minus_a_is_difference
 	bl mul_b_by_a_is_product
@@ -246,6 +247,27 @@ L_VPC_Update: .asciz "VPC should be incremented"
 
 .text
 .p2align 2
+
+
+TEST_START push_0
+	// Arrange:
+	LOAD_ADDRESS VSP, L_push_test_stack
+	str VSP, [VSP]
+
+	// Act:
+	bl push0
+
+	// Assert:
+	LOAD_ADDRESS x0, L_push_test_stack
+	ldr x0, [x0]
+	mov x1, #0
+	bl assertEqual
+
+	mov x0, VSP
+	LOAD_ADDRESS x1, L_push_test_stack
+	add x1, x1, #8
+	bl assertEqual
+TEST_END
 
 TEST_START add_b_plus_a_is_a
 	LOAD_ADDRESS VSP, L_push_test_stack

@@ -14,6 +14,8 @@ A threaded interpreter for a Forth-like language, in Arm64 assembler; for demo p
 In these descriptions, a, b, and c represent the first, second, and third elements on the stack, respectively.
 
 ## Arithmetic Words
+* 0    push 0 on data stack
+* 1    push 1 on data stack
 * +    b+a
 * -    b-a
 * *    b*a

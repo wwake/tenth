@@ -1,4 +1,4 @@
-  * Numeric constants (compile)
+  * Word for 0
   * CALL_ERROR_HANDLER macro
 Compiler
 
@@ -19,6 +19,10 @@ Compiler
 Ideas
 * Should VSP point to the last element? instead of next free slot.
 * Read a string from a file
+
+TEN-24-28: 2024-03-25 - Compile Numbers to “push n”
+Compiler
+  * Numeric constants (compile)
 
 TEN_24-27: 2024-03-21 - Compiler Loose Ends
 * [offline] Raised data stack size to 10K

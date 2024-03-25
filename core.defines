@@ -11,8 +11,8 @@
 #define SEC_SPACE x25	// area to write secondaries
 
 #define VSP x19			// virtual stack pointer
-#define VPC x20 			// virtual program counter
-#define FLAGS x24			// flag for run vs compile mode
+#define VPC x20 		// virtual program counter
+#define FLAGS x24		// flag for run vs compile mode
 
 
 // Free: x23, x27, x28

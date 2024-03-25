@@ -13,6 +13,7 @@
 
 .global _push_word_address
 .global _push
+.global push0
 .global push1
 
 .global dup
@@ -151,6 +152,9 @@ _push:
 	DATA_PUSH x0
 	ret
 
+push0:
+	DATA_PUSH xzr
+	ret
 
 push1:
 	mov x0, #1
