@@ -122,9 +122,12 @@ _semicolon:
 //   VSP (register), updated as value was pushed
 //   VPC (register), updated to word after data value
 //
+.data
 .p2align 3
 _push_word_address:
  .quad _push
+.text
+.align 2
 _push:
  ldr x0, [x20], #8
  DATA_PUSH x0

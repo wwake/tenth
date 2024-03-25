@@ -25,7 +25,7 @@ _start:
 	bl evalAll_calls_meta_even_in_compile_mode
 
 	bl compile_puts_found_word_into_sec_space
-//	bl compile_emits_push_when_number_found
+	bl compile_emits_push_when_number_found
 	bl compile_writes_error_message_if_not_found
 
 	unix_exit
