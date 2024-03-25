@@ -4,6 +4,7 @@
 .global add
 .global sub
 .global mul
+.global div
 
 
 // add - replace top two a,b with b+a
@@ -33,5 +34,12 @@ ret
 mul:
 	DATA_POP_AB x1, x0
 	mul x0, x0, x1
+	DATA_PUSH x0
+	ret
+
+
+div:
+	DATA_POP_AB x1, x0
+	sdiv x0, x0, x1
 	DATA_PUSH x0
 	ret
