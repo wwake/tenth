@@ -1,5 +1,4 @@
-  * Word for 0
-  * CALL_ERROR_HANDLER macro
+  * Print error message in red
 Compiler
 
 * Arithmetic: [+, -, *], /, MOD, DIVMOD, MIN, MAX, ABS, NEG
@@ -23,6 +22,8 @@ Ideas
 TEN-24-28: 2024-03-25 - Compile Numbers to “push n”
 Compiler
   * Numeric constants (compile)
+  * Add a word for 0
+  * Define and us WORD_NOT_FOUND macro
 
 TEN_24-27: 2024-03-21 - Compiler Loose Ends
 * [offline] Raised data stack size to 10K

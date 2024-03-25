@@ -1,3 +1,14 @@
 
 .equ RUN_MODE, 0
 .equ COMPILE_MODE, 1
+
+// WORD_NOT_FOUND - call global error routine
+// Input: register with pointer to word
+// Uses x0, x1
+//
+.macro WORD_NOT_FOUND ptr_to_word
+	mov x0, \ptr_to_word
+	LOAD_ADDRESS x1, global_word_not_found_handler
+	ldr x1, [x1]
+	blr x1
+.endm

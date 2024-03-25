@@ -47,10 +47,7 @@ L_check_for_numeric:
 	b L_eval_exiting
 
 L_word_not_found:
-	mov x0, x28
-	LOAD_ADDRESS x1, global_word_not_found_handler
-	ldr x1, [x1]
-	blr x1
+	WORD_NOT_FOUND x28
 
 L_eval_exiting:
 	str x28, [sp, #8]
@@ -133,10 +130,7 @@ L_compile_check_for_number:
 		b L_exiting_compile
 
 L_compile_word_not_found:
-	mov x0, x29
-	LOAD_ADDRESS x1, global_word_not_found_handler
-	ldr x1, [x1]
-	blr x1
+	WORD_NOT_FOUND x29
 
 L_exiting_compile:
 	ldr x29, [sp, #8]
@@ -194,6 +188,12 @@ wordNotFoundSuffix:
 global_word_not_found_handler:
 	.quad wordNotFoundError
 
+L_enter_red_mode:
+	.asciz "\033[31m"
+
+L_exit_red_mode:
+	.asciz "\033[0m"
+
 .text
 .align 2
 // wordNotFoundError - prints error message and word that wasn't found
@@ -207,10 +207,16 @@ wordNotFoundError:
 
 	mov x29, x0
 
+	LOAD_ADDRESS x0, L_enter_red_mode
+	bl print
+
 	LOAD_ADDRESS x0, wordNotFoundMessage
 	bl print
 
 	mov x0, x29
+	bl print
+
+	LOAD_ADDRESS x0, L_exit_red_mode
 	bl print
 
 	LOAD_ADDRESS x0, wordNotFoundSuffix
