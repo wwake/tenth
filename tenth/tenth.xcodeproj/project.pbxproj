@@ -11,7 +11,7 @@
 		912FE2722B9121400065D33E /* dictionary.s in Sources */ = {isa = PBXBuildFile; fileRef = 912FE2712B9121400065D33E /* dictionary.s */; };
 		913B91FA2B9A57AB00943E4E /* input.s in Sources */ = {isa = PBXBuildFile; fileRef = 913B91F92B9A57AB00943E4E /* input.s */; };
 		913B91FE2B9A5AB400943E4E /* inputTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 913B91FD2B9A5AB400943E4E /* inputTests.s */; };
-		91451FBF2B73E3C700D8C89A /* coreTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91451FBE2B73E3C700D8C89A /* coreTests.s */; };
+		91451FBF2B73E3C700D8C89A /* compileTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91451FBE2B73E3C700D8C89A /* compileTests.s */; };
 		91451FC02B73E3D400D8C89A /* cLikeTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91238D812B730AD800052895 /* cLikeTests.s */; };
 		91451FC22B73E3F000D8C89A /* interpreterTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91451FC12B73E3F000D8C89A /* interpreterTests.s */; };
 		91451FC42B73E40500D8C89A /* unitTestPlayground.s in Sources */ = {isa = PBXBuildFile; fileRef = 91451FC32B73E40500D8C89A /* unitTestPlayground.s */; };
@@ -45,7 +45,7 @@
 		91238D7B2B730AC100052895 /* _todo.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = _todo.txt; path = ../_todo.txt; sourceTree = "<group>"; };
 		91238D7F2B730AD800052895 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; name = Makefile; path = ../Makefile; sourceTree = "<group>"; };
 		91238D812B730AD800052895 /* cLikeTests.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = cLikeTests.s; path = ../cLikeTests.s; sourceTree = "<group>"; };
-		91238D832B730AD800052895 /* core.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = core.s; path = ../core.s; sourceTree = "<group>"; };
+		91238D832B730AD800052895 /* compile.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = compile.s; path = ../compile.s; sourceTree = "<group>"; };
 		91238D842B730AD800052895 /* assembler.macros */ = {isa = PBXFileReference; lastKnownFileType = text; name = assembler.macros; path = ../assembler.macros; sourceTree = "<group>"; };
 		91238D862B730AD800052895 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		91238D882B730AD800052895 /* asUnit.macros */ = {isa = PBXFileReference; lastKnownFileType = text; name = asUnit.macros; path = ../asUnit.macros; sourceTree = "<group>"; };
@@ -59,7 +59,7 @@
 		912FE2752B9122B00065D33E /* dictionary.macros */ = {isa = PBXFileReference; lastKnownFileType = text; name = dictionary.macros; path = ../dictionary.macros; sourceTree = "<group>"; };
 		913B91F92B9A57AB00943E4E /* input.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = input.s; path = ../input.s; sourceTree = "<group>"; };
 		913B91FD2B9A5AB400943E4E /* inputTests.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = inputTests.s; path = ../inputTests.s; sourceTree = "<group>"; };
-		91451FBE2B73E3C700D8C89A /* coreTests.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = coreTests.s; path = ../coreTests.s; sourceTree = "<group>"; };
+		91451FBE2B73E3C700D8C89A /* compileTests.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = compileTests.s; path = ../compileTests.s; sourceTree = "<group>"; };
 		91451FC12B73E3F000D8C89A /* interpreterTests.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = interpreterTests.s; path = ../interpreterTests.s; sourceTree = "<group>"; };
 		91451FC32B73E40500D8C89A /* unitTestPlayground.s */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; name = unitTestPlayground.s; path = ../unitTestPlayground.s; sourceTree = "<group>"; };
 		916C5CB72B7C155E00EA6FE5 /* coreTests.macros */ = {isa = PBXFileReference; lastKnownFileType = text; name = coreTests.macros; path = ../coreTests.macros; sourceTree = "<group>"; };
@@ -144,7 +144,7 @@
 			children = (
 				91238D8A2B730AD800052895 /* cLike.s */,
 				91CAE5F02BA8BE95001E8E9E /* core.defines */,
-				91238D832B730AD800052895 /* core.s */,
+				91238D832B730AD800052895 /* compile.s */,
 				91B9F1322B742898005730DF /* interpreter.s */,
 				91E41A1E2BB2056400F83677 /* io.s */,
 				91E41A202BB20ACA00F83677 /* arithmetic.s */,
@@ -169,7 +169,7 @@
 				91E41A232BB20C0000F83677 /* arithmeticTests.s */,
 				91238D812B730AD800052895 /* cLikeTests.s */,
 				916C5CB72B7C155E00EA6FE5 /* coreTests.macros */,
-				91451FBE2B73E3C700D8C89A /* coreTests.s */,
+				91451FBE2B73E3C700D8C89A /* compileTests.s */,
 				912FE26F2B9111330065D33E /* dictionaryTests.s */,
 				913B91FD2B9A5AB400943E4E /* inputTests.s */,
 				91451FC12B73E3F000D8C89A /* interpreterTests.s */,
@@ -263,7 +263,7 @@
 				91908DBE2B966ABC008CC466 /* replTests.s in Sources */,
 				912FE2722B9121400065D33E /* dictionary.s in Sources */,
 				91CAE5EB2BA23EB7001E8E9E /* repl.macros in Sources */,
-				91451FBF2B73E3C700D8C89A /* coreTests.s in Sources */,
+				91451FBF2B73E3C700D8C89A /* compileTests.s in Sources */,
 				912FE2702B9111330065D33E /* dictionaryTests.s in Sources */,
 				916C5CB82B7C155E00EA6FE5 /* coreTests.macros in Sources */,
 				91E41A262BB2E94E00F83677 /* stack.s in Sources */,

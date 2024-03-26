@@ -16,7 +16,7 @@ arithmetic.o: arithmetic.s core.defines assembler.macros
 
 arithmeticTests.o: arithmeticTests.s $(MACROS) $(TEST_MACROS)
 
-arithmeticTests.out: arithmeticTests.o arithmetic.o asUnit.o cLike.o core.o interpreter.o input.o stack.o
+arithmeticTests.out: arithmeticTests.o arithmetic.o asUnit.o cLike.o compile.o interpreter.o input.o stack.o
 
 
 asUnit.o: asUnit.s
@@ -29,18 +29,18 @@ cLikeTests.o: cLikeTests.s $(MACROS) $(TEST_MACROS)
 cLikeTests.out: cLikeTests.o cLike.o asUnit.o
 
 
-core.o: core.s assembler.macros core.defines
+compile.o: compile.s assembler.macros core.defines
 
-coreTests.o: coreTests.s $(MACROS) $(TEST_MACROS)
+compileTests.o: compileTests.s $(MACROS) $(TEST_MACROS)
 
-coreTests.out: coreTests.o asUnit.o cLike.o core.o interpreter.o input.o relational.o stack.o
+compileTests.out: compileTests.o asUnit.o cLike.o compile.o interpreter.o input.o relational.o stack.o
 
 
 dictionary.o: dictionary.s dictionary.macros unix_functions.macros assembler.macros core.defines
 
 dictionaryTests.o: dictionaryTests.s dictionary.o $(MACROS) $(TEST_MACROS)
 
-dictionaryTests.out: dictionaryTests.o dictionary.o arithmetic.o asUnit.o interpreter.o core.o cLike.o input.o io.o stack.o
+dictionaryTests.out: dictionaryTests.o dictionary.o arithmetic.o asUnit.o interpreter.o compile.o cLike.o input.o io.o stack.o
 
 
 input.o: input.s $(MACROS)
@@ -57,7 +57,7 @@ interpreter.o: interpreter.s unix_functions.macros assembler.macros core.defines
 
 interpreterTests.o: interpreterTests.s interpreter.o $(MACROS) $(TEST_MACROS)
 
-interpreterTests.out: interpreterTests.o interpreter.o arithmetic.o asUnit.o cLike.o core.o input.o relational.o stack.o
+interpreterTests.out: interpreterTests.o interpreter.o arithmetic.o asUnit.o cLike.o compile.o input.o relational.o stack.o
 
 
 main.o: main.s core.defines
@@ -74,9 +74,9 @@ repl.o: repl.s core.defines
 
 replTests.o: replTests.s $(MACROS) $(TEST_MACROS)
 
-replTests.out: replTests.o repl.o asUnit.o cLike.o core.o dictionary.o input.o interpreter.o stack.o
+replTests.out: replTests.o repl.o asUnit.o cLike.o compile.o dictionary.o input.o interpreter.o stack.o
 
-repl.out: repl.o arithmetic.o core.o cLike.o dictionary.o input.o interpreter.o io.o main.o relational.o stack.o
+repl.out: repl.o arithmetic.o compile.o cLike.o dictionary.o input.o interpreter.o io.o main.o relational.o stack.o
 
 
 stack.o: stack.s $(MACROS)
@@ -88,7 +88,7 @@ stackTests.out: stackTests.o stack.o asUnit.o cLike.o
 
 unitTestDemo.o: unitTestDemo.s $(MACROS) $(TEST_MACROS)
 
-unitTestDemo.out: unitTestDemo.o cLike.o core.o asUnit.o
+unitTestDemo.out: unitTestDemo.o cLike.o compile.o asUnit.o
 
 
 clean:
@@ -98,8 +98,8 @@ clean:
 repl: repl.out
 	./repl.out
 
-tests: arithmeticTests.out cLikeTests.out coreTests.out dictionaryTests.out inputTests.out interpreterTests.out relationalTests.out replTests.out stackTests.out
-	./arithmeticTests.out ; ./cLikeTests.out ; ./coreTests.out ; ./dictionaryTests.out; ./inputTests.out; ./interpreterTests.out; ./relationalTests.out; ./replTests.out; ./stackTests.out
+tests: arithmeticTests.out cLikeTests.out compileTests.out dictionaryTests.out inputTests.out interpreterTests.out relationalTests.out replTests.out stackTests.out
+	./arithmeticTests.out ; ./cLikeTests.out ; ./compileTests.out ; ./dictionaryTests.out; ./inputTests.out; ./interpreterTests.out; ./relationalTests.out; ./replTests.out; ./stackTests.out
 
 playground: unitTestDemo.out
 	./unitTestDemo.out
