@@ -11,7 +11,7 @@
 .data
 .p2align 3
 
-test_data_stack: .quad 0, 99, 0, 0
+L_test_data_stack: .quad 0, 99, 0, 0
 
 .text
 .p2align 3
@@ -50,7 +50,7 @@ _start:
 .macro BINOP_TEST test_name, routine_to_test, expected
 TEST_START \test_name
 	// Arrange:
-	LOAD_ADDRESS VSP, test_data_stack
+	LOAD_ADDRESS VSP, L_test_data_stack
 	adr VPC, L_data
 	bl _push
 
@@ -70,7 +70,7 @@ TEST_END
 .macro UNARY_OP_TEST test_name, data_offset, routine_to_test, expected
 TEST_START \test_name
 	// Arrange:
-	LOAD_ADDRESS VSP, test_data_stack
+	LOAD_ADDRESS VSP, L_test_data_stack
 	adr VPC, L_data + \data_offset
 	bl _push
 
@@ -97,7 +97,7 @@ BINOP_TEST "m_b_a_is_maximum", max, 142
 
 TEST_START divmod_puts_mod_on_top_then_dividend
 	// Arrange:
-	LOAD_ADDRESS VSP, test_data_stack
+	LOAD_ADDRESS VSP, L_test_data_stack
 	adr VPC, L_data
 	bl _push
 

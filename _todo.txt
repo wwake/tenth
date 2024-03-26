@@ -1,4 +1,3 @@
-* Arithmetic: ABS, NEG
 * Logical: AND, OR, NOT, XOR
 * Relational: <0, ==0, ==, !=, <, <=, >, >=
 * Stack: POP, SWAP, DUP, CAB, CBA, BAB
@@ -17,7 +16,8 @@ Ideas
 
 TEN-24-29: 2024-03-26 - Operators
 Operators
-  * Arithmetic: MIN, MAX, /%,
+  * Arithmetic: MIN, MAX, /%, ABS, NEG
+  * Logical: 
 
 TEN-24-28: 2024-03-25 - Compile Numbers to “push n”
 Compiler
