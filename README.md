@@ -26,8 +26,8 @@ In these descriptions, a, b, and c represent the first, second, and third elemen
 * neg &emsp;&emsp;&emsp;&emsp;ab ⇒ (-a)b
 
 ## Logical Words
-* and  abc ⇒ (b & a)c
-* or   abc ⇒ (b | a)c
+* &  abc ⇒ (b & a)c
+* |   abc ⇒ (b | a)c
 * not  abc ⇒ (~a)bc
 * eor  abc ⇒ (b ^ a)c
 

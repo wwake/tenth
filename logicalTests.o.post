@@ -1,0 +1,78 @@
+// Global register values
+// Free: x23, x27, x28
+
+.macro LOAD_ADDRESS register, location
+ adrp \register, \location@PAGE
+ add \register, \register, \location@PAGEOFF
+.endm
+.macro DATA_PUSH register
+ str \register, [x19], #8
+.endm
+.macro DATA_POP register
+ ldr \register, [x19, #-8]!
+.endm
+.macro DATA_POP_AB register1, register2
+ DATA_POP \register1
+ DATA_POP \register2
+.endm
+.macro DATA_TOP register
+ ldr \register, [x19, #-8]
+.endm
+.macro STD_PROLOG
+ str lr, [sp, #-16]!
+.endm
+.macro STD_EPILOG
+ ldr lr, [sp], #16
+.endm
+
+.include "unix_functions.macros"
+.include "asUnit.macros"
+.include "coreTests.macros"
+.global _start
+.data
+.p2align 3
+L_test_data_stack: .quad 0, 99, 0, 0
+.text
+.p2align 3
+L_data: .quad 142, 58, -7
+.align 2
+_start:
+ STD_PROLOG
+ TEST_ALL "logicalTests"
+ bl and_puts_a_logical_and_b_on_stack
+ bl or_puts_a_logical_or_b_on_stack
+ unix_exit
+ STD_EPILOG
+ ret
+.macro BINOP_TEST test_name, routine_to_test, expected
+TEST_START \test_name
+ // Arrange:
+ LOAD_ADDRESS x19, L_test_data_stack
+ adr x20, L_data
+ bl _push
+ adr x20, L_data + 8
+ bl _push
+ // Act:
+ bl \routine_to_test
+ // Assert:
+ DATA_POP x0
+ mov x1, \expected
+ bl assertEqual
+TEST_END
+.endm
+.macro UNARY_OP_TEST test_name, data_offset, routine_to_test, expected
+TEST_START \test_name
+ // Arrange:
+ LOAD_ADDRESS x19, L_test_data_stack
+ adr x20, L_data + \data_offset
+ bl _push
+ // Act:
+ bl \routine_to_test
+ // Assert:
+ DATA_POP x0
+ mov x1, \expected
+ bl assertEqual
+TEST_END
+.endm
+BINOP_TEST and_puts_a_logical_and_b_on_stack, andRoutine, 10
+BINOP_TEST or_puts_a_logical_or_b_on_stack, orRoutine, 190
