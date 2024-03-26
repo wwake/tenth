@@ -146,15 +146,15 @@
 		91238D992B730B9500052895 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				91E41A202BB20ACA00F83677 /* arithmetic.s */,
 				91238D8A2B730AD800052895 /* cLike.s */,
 				91238D832B730AD800052895 /* compile.s */,
 				91E41A302BB2F4E700F83677 /* control.s */,
 				91CAE5F02BA8BE95001E8E9E /* core.defines */,
 				91B9F1322B742898005730DF /* interpreter.s */,
 				91E41A1E2BB2056400F83677 /* io.s */,
-				91E41A202BB20ACA00F83677 /* arithmetic.s */,
-				91E41A252BB2E94E00F83677 /* stack.s */,
 				91E41A2C2BB2F0B600F83677 /* relational.s */,
+				91E41A252BB2E94E00F83677 /* stack.s */,
 			);
 			name = core;
 			sourceTree = "<group>";
@@ -162,8 +162,8 @@
 		912FE2732B91225F0065D33E /* dictionary */ = {
 			isa = PBXGroup;
 			children = (
-				912FE2712B9121400065D33E /* dictionary.s */,
 				912FE2752B9122B00065D33E /* dictionary.macros */,
+				912FE2712B9121400065D33E /* dictionary.s */,
 			);
 			name = dictionary;
 			sourceTree = "<group>";
@@ -190,10 +190,10 @@
 		91908DBF2B97B17F008CC466 /* repl */ = {
 			isa = PBXGroup;
 			children = (
-				91908DC02B97B19E008CC466 /* repl.s */,
-				91D342EA2B98F8A4001B1D00 /* main.s */,
 				913B91F92B9A57AB00943E4E /* input.s */,
+				91D342EA2B98F8A4001B1D00 /* main.s */,
 				91CAE5EA2BA23EB7001E8E9E /* repl.macros */,
+				91908DC02B97B19E008CC466 /* repl.s */,
 			);
 			name = repl;
 			sourceTree = "<group>";
