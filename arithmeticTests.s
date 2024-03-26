@@ -39,6 +39,9 @@ _start:
 	bl neg_a_goes_to_positive_a
 	bl pos_a_goes_to_negative_a
 
+	bl abs_of_neg_a_goes_to_positive_a
+	bl abs_of_pos_a_goes_to_positive_a
+
 	unix_exit
 	STD_EPILOG
 	ret
@@ -117,4 +120,7 @@ TEST_END
 
 UNARY_OP_TEST "neg_a_goes_to_positive_a", 16, neg, 7
 UNARY_OP_TEST "pos_a_goes_to_negative_a", 8, neg, -58
+
+UNARY_OP_TEST "abs_of_neg_a_goes_to_positive_a", 16, abs, 7
+UNARY_OP_TEST "abs_of_pos_a_goes_to_positive_a", 8, abs, 58
 

@@ -57,6 +57,7 @@ L_load_system_dictionary:
 	DICT_HEADER "max", max
 
 	DICT_HEADER "neg", neg
+	DICT_HEADER "abs", abs
 
 	DICT_HEADER ":", _colon, META
 	DICT_HEADER ";", _semicolon, META

@@ -12,6 +12,7 @@
 .global max
 
 .global neg
+.global abs
 
 // add - replace top two a,b with b+a
 // Input: Data stack with two values on top
@@ -105,10 +106,21 @@ divmod:
 
 // neg - replace a,b with (-a)b
 // Input: Data stack with two values on top
-// Process: x0, x1 - temp
+// Process: x0 - temp
 // Output: Data stack has replaced top value with its negative
 neg:
 	DATA_POP x0
 	neg x0, x0
+	DATA_PUSH x0
+	ret
+
+// abs - replace a,b with (|a|)b
+// Input: Data stack with two values on top
+// Process: x0 - temp
+// Output: Data stack has replaced top value with its absolute value
+abs:
+	DATA_POP x0
+	cmp x0, #0
+	csneg x0, x0, x0, GE
 	DATA_PUSH x0
 	ret
