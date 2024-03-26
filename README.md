@@ -26,10 +26,10 @@ In these descriptions, a, b, and c represent the first, second, and third elemen
 * neg &emsp;&emsp;&emsp;&emsp;ab ⇒ (-a)b
 
 ## Logical Words
-* AND  abc ⇒ (b & a)c
-* OR   abc ⇒ (b | a)c
-* NOT  abc ⇒ (~a)bc
-* XOR  abc ⇒ (b ^ a)c
+* and  abc ⇒ (b & a)c
+* or   abc ⇒ (b | a)c
+* not  abc ⇒ (~a)bc
+* eor  abc ⇒ (b ^ a)c
 
 ## Relational Words
 * &lt;0   a&lt;0
@@ -47,12 +47,12 @@ In these descriptions, a, b, and c represent the first, second, and third elemen
 * 0    push 0 on data stack
 * 1    push 1 on data stack
 * n    push n on the data stack (call neg afterwards if a negative number is needed)
-* POP    ab⇒b
-* SWAP  ab⇒ba
-* DUP   a⇒aa 
-* CAB  abc⇒cab
-* CBA  abc⇒cba
-* BAB  ab⇒bab
+* pop    ab⇒b
+* swap  ab⇒ba
+* dup   a⇒aa 
+* cab  abc⇒cab
+* cba  abc⇒cba
+* bab  ab⇒bab
 
 ## Memory - TBD
 * Variables - TBD
