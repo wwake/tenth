@@ -11,7 +11,7 @@
 .data
 .p2align 3
 
-L_push_test_stack: .quad 0, 99, 0, 0
+test_data_stack: .quad 0, 99, 0, 0
 
 .text
 .p2align 3
@@ -40,7 +40,7 @@ _start:
 .macro BINOP_TEST test_name, routine_to_test, expected
 TEST_START \test_name
 	// Arrange:
-	LOAD_ADDRESS VSP, L_push_test_stack
+	LOAD_ADDRESS VSP, test_data_stack
 	adr VPC, L_data
 	bl _push
 
