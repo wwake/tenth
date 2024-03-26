@@ -11,6 +11,8 @@
 .global min
 .global max
 
+.global neg
+
 // add - replace top two a,b with b+a
 // Input: Data stack with two values on top
 // Process: x0, x1 - temp
@@ -101,3 +103,12 @@ divmod:
 	DATA_PUSH x0
 	ret
 
+// neg - replace a,b with (-a)b
+// Input: Data stack with two values on top
+// Process: x0, x1 - temp
+// Output: Data stack has replaced top value with its negative
+neg:
+	DATA_POP x0
+	neg x0, x0
+	DATA_PUSH x0
+	ret

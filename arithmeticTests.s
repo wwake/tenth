@@ -15,7 +15,7 @@ test_data_stack: .quad 0, 99, 0, 0
 
 .text
 .p2align 3
-L_data: .quad 142, 58
+L_data: .quad 142, 58, -7
 
 
 .align 2
@@ -36,6 +36,9 @@ _start:
 
 	bl divmod_puts_mod_on_top_then_dividend
 
+	bl neg_a_goes_to_positive_a
+	bl pos_a_goes_to_negative_a
+
 	unix_exit
 	STD_EPILOG
 	ret
@@ -49,6 +52,23 @@ TEST_START \test_name
 	bl _push
 
 	adr VPC, L_data + 8
+	bl _push
+
+	// Act:
+	bl \routine_to_test
+
+	// Assert:
+	DATA_POP x0
+	mov x1, \expected
+	bl assertEqual
+TEST_END
+.endm
+
+.macro UNARY_OP_TEST test_name, data_offset, routine_to_test, expected
+TEST_START \test_name
+	// Arrange:
+	LOAD_ADDRESS VSP, test_data_stack
+	adr VPC, L_data + \data_offset
 	bl _push
 
 	// Act:
@@ -93,3 +113,8 @@ TEST_START divmod_puts_mod_on_top_then_dividend
 	mov x1, #2
 	bl assertEqual
 TEST_END
+
+
+UNARY_OP_TEST "neg_a_goes_to_positive_a", 16, neg, 7
+UNARY_OP_TEST "pos_a_goes_to_negative_a", 8, neg, -58
+
