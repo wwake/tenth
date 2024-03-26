@@ -32,12 +32,12 @@ In these descriptions, a, b, and c represent the first, second, and third elemen
 * XOR  abc ⇒ (b ^ a)c
 
 ## Relational Words
-* <0   a<0
+* &lt;0   a&lt;0
 * ==0  a==0
 * ==   b == a
 * !=   b != a
-* <    b < a
-* <=   b <= a
+* &lt;    b &lt; a
+* &lt;=   b &lt;= a
 * >    b > a
 * >=   b >= a
 
