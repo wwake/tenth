@@ -25,12 +25,14 @@ _start:
 
 	TEST_ALL "arithmeticTests"
 
-	// Arithmetic
 	bl add_b_plus_a_is_a
 	bl sub_b_minus_a_is_difference
 	bl mul_b_by_a_is_product
 	bl div_b_by_a_is_dividend
 	bl mod_b_by_a_is_dividend
+
+	bl m_b_a_is_minimum
+	bl m_b_a_is_maximum
 
 	unix_exit
 	STD_EPILOG
@@ -63,3 +65,6 @@ BINOP_TEST "sub_b_minus_a_is_difference", sub, 84
 BINOP_TEST "mul_b_by_a_is_product", mul, 8236
 BINOP_TEST "div_b_by_a_is_dividend", div, 2
 BINOP_TEST "mod_b_by_a_is_dividend", mod, 26
+
+BINOP_TEST "m_b_a_is_minimum", min, 58
+BINOP_TEST "m_b_a_is_maximum", max, 142

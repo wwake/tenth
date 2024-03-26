@@ -30,6 +30,8 @@
 .global mul
 .global div
 .global mod
+.global min
+.global max
 // add - replace top two a,b with b+a
 // Input: Data stack with two values on top
 // Process: x0, x1 - temp
@@ -74,5 +76,25 @@ mod:
  DATA_POP_AB x1, x0
  sdiv x2, x0, x1
  msub x0, x1, x2, x0
+ DATA_PUSH x0
+ ret
+// min - replace top a,b with min(b,a)
+// Input: Data stack with two values on top
+// Process: x0, x1 - temp
+// Output: Data stack has popped two values and pushed their minimum
+min:
+ DATA_POP_AB x1, x0
+ cmp x0, x1
+ csel x0, x0, x1, LE
+ DATA_PUSH x0
+ ret
+// max - replace top a,b with max(b,a)
+// Input: Data stack with two values on top
+// Process: x0, x1 - temp
+// Output: Data stack has popped two values and pushed their maximum
+max:
+ DATA_POP_AB x1, x0
+ cmp x0, x1
+ csel x0, x0, x1, GE
  DATA_PUSH x0
  ret

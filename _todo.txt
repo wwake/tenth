@@ -1,4 +1,3 @@
-
 * Arithmetic: MIN, MAX, /%, ABS, NEG
 * Logical: AND, OR, NOT, XOR
 * Relational: <0, ==0, ==, !=, <, <=, >, >=
