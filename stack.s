@@ -15,7 +15,7 @@
 .equ DATA_STACK_SIZE, 10000
 
 .data
-.align 2
+.p2align 3
 
 .quad 0		// empty space in front of stack
 

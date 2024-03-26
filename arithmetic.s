@@ -14,6 +14,9 @@
 .global neg
 .global abs
 
+.text
+.align 2
+
 // add - replace top two a,b with b+a
 // Input: Data stack with two values on top
 // Process: x0, x1 - temp

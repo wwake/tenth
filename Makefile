@@ -91,7 +91,7 @@ replTests.o: replTests.s $(MACROS) $(TEST_MACROS)
 
 replTests.out: replTests.o repl.o asUnit.o cLike.o compile.o dictionary.o input.o interpreter.o stack.o
 
-repl.out: repl.o arithmetic.o compile.o cLike.o dictionary.o input.o interpreter.o io.o main.o relational.o stack.o
+repl.out: repl.o arithmetic.o compile.o cLike.o dictionary.o input.o interpreter.o io.o logical.o main.o relational.o stack.o
 
 
 stack.o: stack.s $(MACROS)

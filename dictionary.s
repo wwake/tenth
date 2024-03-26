@@ -21,7 +21,7 @@ systemDictionary:
 	.quad 0
 	.quad 0
 
-	.fill 300, 8, 0
+	.fill 800, 8, 0
 
 
 metaNext:		// pointer to next slot in metaList

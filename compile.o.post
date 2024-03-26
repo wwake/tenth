@@ -28,6 +28,7 @@
 .include "repl.macros"
 .global _colon
 .global _semicolon
+.text
 .p2align 2
 // _colon (:) - enter compile mode
 _colon:

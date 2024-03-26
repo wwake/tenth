@@ -28,6 +28,8 @@ _start:
 	bl or_puts_a_logical_or_b_on_stack
 	bl xor_puts_a_logical_xor_b_on_stack
 
+	bl not_does_logical_negation
+
 	unix_exit
 	STD_EPILOG
 	ret
@@ -76,3 +78,5 @@ BINOP_TEST and_puts_a_logical_and_b_on_stack, andRoutine, 10
 BINOP_TEST or_puts_a_logical_or_b_on_stack, orRoutine, 190
 
 BINOP_TEST xor_puts_a_logical_xor_b_on_stack, xorRoutine, 180
+
+UNARY_OP_TEST not_does_logical_negation, 16, notRoutine, 6

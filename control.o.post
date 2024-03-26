@@ -27,6 +27,7 @@
 
 .global _jump
 .global _jump_if_false
+.text
 .p2align 2
 // _jump_if_false: evaluate top of stack, branch around code if false
 // Input:

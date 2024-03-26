@@ -1,6 +1,7 @@
 .include "assembler.macros"
 .include "unix_functions.macros"
 
+.text
 .align 2
 
 .global strlen

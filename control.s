@@ -4,6 +4,7 @@
 .global _jump
 .global _jump_if_false
 
+.text
 .p2align 2
 
 

@@ -7,6 +7,7 @@
 .global _colon
 .global _semicolon
 
+.text
 .p2align 2
 
 

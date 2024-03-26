@@ -59,10 +59,10 @@ L_load_system_dictionary:
 	DICT_HEADER "neg", neg
 	DICT_HEADER "abs", abs
 
-	DICT_HEADER "&", abs
-	DICT_HEADER "|", abs
-	DICT_HEADER "^", abs
-	//DICT_HEADER "~", abs
+	DICT_HEADER "&", andRoutine
+	DICT_HEADER "|", orRoutine
+	DICT_HEADER "^", xorRoutine
+	DICT_HEADER "~", notRoutine
 
 	DICT_HEADER ":", _colon, META
 	DICT_HEADER ";", _semicolon, META
