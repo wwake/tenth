@@ -166,17 +166,17 @@
 		91451FBD2B73E36D00D8C89A /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				91E41A232BB20C0000F83677 /* arithmeticTests.s */,
 				91238D812B730AD800052895 /* cLikeTests.s */,
 				916C5CB72B7C155E00EA6FE5 /* coreTests.macros */,
 				91451FBE2B73E3C700D8C89A /* coreTests.s */,
-				91E41A232BB20C0000F83677 /* arithmeticTests.s */,
 				912FE26F2B9111330065D33E /* dictionaryTests.s */,
 				913B91FD2B9A5AB400943E4E /* inputTests.s */,
 				91451FC12B73E3F000D8C89A /* interpreterTests.s */,
-				91908DBD2B966ABC008CC466 /* replTests.s */,
-				91451FC32B73E40500D8C89A /* unitTestPlayground.s */,
-				91E41A292BB2EEAA00F83677 /* stackTests.s */,
 				91E41A2E2BB2F1B600F83677 /* relationalTests.s */,
+				91908DBD2B966ABC008CC466 /* replTests.s */,
+				91E41A292BB2EEAA00F83677 /* stackTests.s */,
+				91451FC32B73E40500D8C89A /* unitTestPlayground.s */,
 			);
 			name = tests;
 			sourceTree = "<group>";

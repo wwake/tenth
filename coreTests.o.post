@@ -39,13 +39,6 @@ _start:
  bl colon_writes_header_to_secondary
  bl semicolon_switches_to_run_mode
  bl semicolon_writes_end2d_in_secondary
- // Stack
- bl push_pushes_one_item
- bl dup_duplicates_top_item
- bl push_0
- // Logical
- bl neq_true_if_values_differ
- bl neq_false_if_values_the_same
  // Conditional
  bl if_zero_does_not_jump_for_non_zero_value
  bl if_zero_jumps_for_zero_value
