@@ -33,6 +33,6 @@ orRoutine:
 // Output: Data stack has two values replaced by logical xor
 xorRoutine:
 	DATA_POP_AB x1, x0
-	orr x0, x0, x1
+	eor x0, x0, x1
 	DATA_PUSH x0
 	ret

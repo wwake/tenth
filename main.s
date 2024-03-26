@@ -61,6 +61,8 @@ L_load_system_dictionary:
 
 	DICT_HEADER "&", abs
 	DICT_HEADER "|", abs
+	DICT_HEADER "^", abs
+	//DICT_HEADER "~", abs
 
 	DICT_HEADER ":", _colon, META
 	DICT_HEADER ";", _semicolon, META
