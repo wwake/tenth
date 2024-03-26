@@ -6,6 +6,7 @@
 .global mul
 .global div
 .global mod
+.global divmod
 
 .global min
 .global max
@@ -84,6 +85,19 @@ max:
 	DATA_POP_AB x1, x0
 	cmp x0, x1
 	csel x0, x0, x1, GE
+	DATA_PUSH x0
+	ret
+
+
+// divmod - replace a,b,c with (a%b)(a/b)c
+// Input: Data stack with two values on top
+// Process: x0, x1 - temp
+// Output: Data stack has popped two values and pushed their quotient then remainder
+divmod:
+	DATA_POP_AB x1, x0
+	sdiv x2, x0, x1
+	msub x0, x1, x2, x0
+	DATA_PUSH x2
 	DATA_PUSH x0
 	ret
 

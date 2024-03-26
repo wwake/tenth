@@ -34,6 +34,8 @@ _start:
 	bl m_b_a_is_minimum
 	bl m_b_a_is_maximum
 
+	bl divmod_puts_mod_on_top_then_dividend
+
 	unix_exit
 	STD_EPILOG
 	ret
@@ -68,3 +70,26 @@ BINOP_TEST "mod_b_by_a_is_dividend", mod, 26
 
 BINOP_TEST "m_b_a_is_minimum", min, 58
 BINOP_TEST "m_b_a_is_maximum", max, 142
+
+
+TEST_START divmod_puts_mod_on_top_then_dividend
+	// Arrange:
+	LOAD_ADDRESS VSP, test_data_stack
+	adr VPC, L_data
+	bl _push
+
+	adr VPC, L_data + 8
+	bl _push
+
+	// Act:
+	bl divmod
+
+	// Assert:
+	DATA_POP x0
+	mov x1, #26
+	bl assertEqual
+
+	DATA_POP x0
+	mov x1, #2
+	bl assertEqual
+TEST_END

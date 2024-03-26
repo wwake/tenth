@@ -1,4 +1,4 @@
-* Arithmetic: MIN, MAX, /%, ABS, NEG
+* Arithmetic: /%, ABS, NEG
 * Logical: AND, OR, NOT, XOR
 * Relational: <0, ==0, ==, !=, <, <=, >, >=
 * Stack: POP, SWAP, DUP, CAB, CBA, BAB
@@ -14,6 +14,10 @@ Compiler
 Ideas
 * Should VSP point to the last element? instead of next free slot.
 * Read a string from a file
+
+TEN-24-29: 2024-03-26 - Operators
+Operators
+  * Arithmetic: MIN, MAX
 
 TEN-24-28: 2024-03-25 - Compile Numbers to “push n”
 Compiler
