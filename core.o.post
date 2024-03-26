@@ -26,49 +26,11 @@
 .endm
 
 .include "repl.macros"
-.global data_stack
-.global data_stack_init
-.global nl
 .global _colon
 .global _semicolon
-.global _push_word_address
-.global _push
-.global push0
-.global push1
-.global dup
 .global neq
 .global _jump
 .global _jump_if_false
-.equ DATA_STACK_SIZE, 10000
-.data
-.align 2
-.quad 0 // empty space in front of stack
-// data_stack: Run-time data stack, pointed to by X19 (VSP)
-// VSP points to the next place to write
-data_stack:
- .fill DATA_STACK_SIZE, 8, 0
-// --------------------------
-.text
-.align 2
-// data_stack_init - setup stack and VSP
-//
-data_stack_init:
- LOAD_ADDRESS x19, data_stack
- ret
-// nl - print a newline
-// Input: none
-// Process:
-//   x0 - used as temp to refer to NL character
-// Output:
-//   value is printed
-nl:
- STD_PROLOG
- adr x0, L_nl_character
- bl print
- STD_EPILOG
- ret
-L_nl_character:
- .asciz "\n"
 L_colon:
  .asciz "in :\n"
 L_semicolon:
@@ -112,40 +74,6 @@ _semicolon:
  str x0, [x25], #8
  mov x24, RUN_MODE
  STD_EPILOG
- ret
-// _push - push the following word on the stack
-// Input: x20 - VPC pointing to data vaue (in secondary)
-// Process:
-// Output:
-//   VSP (register), updated as value was pushed
-//   VPC (register), updated to word after data value
-//
-.data
-.p2align 3
-_push_word_address:
- .quad _push
-.text
-.align 2
-_push:
- ldr x0, [x20], #8
- DATA_PUSH x0
- ret
-push0:
- DATA_PUSH xzr
- ret
-push1:
- mov x0, #1
- DATA_PUSH x0
- ret
-// dup - duplicate the item on top of the data stack
-// Input: x19, VSP points to top of stack
-// Output:
-//   stack has top element duplicated
-//   x19 increased
-//
-dup:
- DATA_TOP x0
- DATA_PUSH x0
  ret
 // neq - pop a, b and push replace top a,b with boolean
 // Input: Data stack with two values on top

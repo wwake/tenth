@@ -3,6 +3,8 @@
 
 .global dotprint
 
+.global nl
+
 .data
 L_space:
 	.asciz " "
@@ -21,3 +23,23 @@ dotprint:
 
 	STD_EPILOG
 	ret
+
+
+// nl - print a newline
+// Input: none
+// Process:
+//   x0 - used as temp to refer to NL character
+// Output:
+//   value is printed
+nl:
+	STD_PROLOG
+
+	adr x0, L_nl_character
+	bl print
+
+	STD_EPILOG
+	ret
+
+L_nl_character:
+	.asciz "\n"
+

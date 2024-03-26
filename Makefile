@@ -16,7 +16,7 @@ arithmetic.o: arithmetic.s core.defines assembler.macros
 
 arithmeticTests.o: arithmeticTests.s $(MACROS) $(TEST_MACROS)
 
-arithmeticTests.out: arithmeticTests.o arithmetic.o asUnit.o cLike.o core.o interpreter.o input.o
+arithmeticTests.out: arithmeticTests.o arithmetic.o asUnit.o cLike.o core.o interpreter.o input.o stack.o
 
 
 asUnit.o: asUnit.s
@@ -33,14 +33,14 @@ core.o: core.s assembler.macros core.defines
 
 coreTests.o: coreTests.s $(MACROS) $(TEST_MACROS)
 
-coreTests.out: coreTests.o asUnit.o cLike.o core.o interpreter.o input.o
+coreTests.out: coreTests.o asUnit.o cLike.o core.o interpreter.o input.o stack.o
 
 
 dictionary.o: dictionary.s dictionary.macros unix_functions.macros assembler.macros core.defines
 
 dictionaryTests.o: dictionaryTests.s dictionary.o $(MACROS) $(TEST_MACROS)
 
-dictionaryTests.out: dictionaryTests.o dictionary.o arithmetic.o asUnit.o interpreter.o core.o cLike.o input.o
+dictionaryTests.out: dictionaryTests.o dictionary.o arithmetic.o asUnit.o interpreter.o core.o cLike.o input.o io.o stack.o
 
 
 input.o: input.s $(MACROS)
@@ -57,7 +57,7 @@ interpreter.o: interpreter.s unix_functions.macros assembler.macros core.defines
 
 interpreterTests.o: interpreterTests.s interpreter.o $(MACROS) $(TEST_MACROS)
 
-interpreterTests.out: interpreterTests.o interpreter.o arithmetic.o asUnit.o cLike.o core.o input.o
+interpreterTests.out: interpreterTests.o interpreter.o arithmetic.o asUnit.o cLike.o core.o input.o stack.o
 
 
 main.o: main.s core.defines
@@ -67,9 +67,12 @@ repl.o: repl.s core.defines
 
 replTests.o: replTests.s $(MACROS) $(TEST_MACROS)
 
-replTests.out: replTests.o repl.o asUnit.o cLike.o core.o dictionary.o input.o interpreter.o
+replTests.out: replTests.o repl.o asUnit.o cLike.o core.o dictionary.o input.o interpreter.o stack.o
 
-repl.out: repl.o arithmetic.o core.o cLike.o dictionary.o input.o interpreter.o io.o main.o
+repl.out: repl.o arithmetic.o core.o cLike.o dictionary.o input.o interpreter.o io.o main.o stack.o
+
+
+stack.o: stack.s $(MACROS)
 
 
 unitTestDemo.o: unitTestDemo.s $(MACROS) $(TEST_MACROS)
