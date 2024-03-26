@@ -13,12 +13,6 @@
 .global _jump_if_false
 
 
-L_colon:
-	.asciz "in :\n"
-
-L_semicolon:
-	.asciz "in ;\n"
-
 .p2align 2
 
 

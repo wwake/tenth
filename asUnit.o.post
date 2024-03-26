@@ -1,5 +1,5 @@
 // Global register values
-// Next: x27
+// Free: x23, x27, x28
 
 .macro LOAD_ADDRESS register, location
  adrp \register, \location@PAGE

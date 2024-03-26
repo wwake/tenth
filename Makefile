@@ -74,6 +74,10 @@ repl.out: repl.o arithmetic.o core.o cLike.o dictionary.o input.o interpreter.o 
 
 stack.o: stack.s $(MACROS)
 
+stackTests.o: stackTests.s $(MACROS) $(TEST_MACROS)
+
+stackTests.out: stackTests.o stack.o asUnit.o cLike.o
+
 
 unitTestDemo.o: unitTestDemo.s $(MACROS) $(TEST_MACROS)
 
@@ -87,8 +91,8 @@ clean:
 repl: repl.out
 	./repl.out
 
-tests: arithmeticTests.out cLikeTests.out coreTests.out dictionaryTests.out inputTests.out interpreterTests.out replTests.out
-	./arithmeticTests.out ; ./cLikeTests.out ; ./coreTests.out ; ./dictionaryTests.out; ./inputTests.out; ./interpreterTests.out; ./replTests.out
+tests: arithmeticTests.out cLikeTests.out coreTests.out dictionaryTests.out inputTests.out interpreterTests.out replTests.out stackTests.out
+	./arithmeticTests.out ; ./cLikeTests.out ; ./coreTests.out ; ./dictionaryTests.out; ./inputTests.out; ./interpreterTests.out; ./replTests.out; ./stackTests.out
 
 playground: unitTestDemo.out
 	./unitTestDemo.out
