@@ -33,7 +33,7 @@ core.o: core.s assembler.macros core.defines
 
 coreTests.o: coreTests.s $(MACROS) $(TEST_MACROS)
 
-coreTests.out: coreTests.o asUnit.o cLike.o core.o interpreter.o input.o stack.o
+coreTests.out: coreTests.o asUnit.o cLike.o core.o interpreter.o input.o relational.o stack.o
 
 
 dictionary.o: dictionary.s dictionary.macros unix_functions.macros assembler.macros core.defines
@@ -57,10 +57,17 @@ interpreter.o: interpreter.s unix_functions.macros assembler.macros core.defines
 
 interpreterTests.o: interpreterTests.s interpreter.o $(MACROS) $(TEST_MACROS)
 
-interpreterTests.out: interpreterTests.o interpreter.o arithmetic.o asUnit.o cLike.o core.o input.o stack.o
+interpreterTests.out: interpreterTests.o interpreter.o arithmetic.o asUnit.o cLike.o core.o input.o relational.o stack.o
 
 
 main.o: main.s core.defines
+
+
+relational.o: relational.s $(MACROS)
+
+relationalTests.o: relationalTests.s $(MACROS) $(TEST_MACROS)
+
+relationalTests.out: relationalTests.o relational.o asUnit.o asUnit.o cLike.o stack.o
 
 
 repl.o: repl.s core.defines
@@ -69,7 +76,7 @@ replTests.o: replTests.s $(MACROS) $(TEST_MACROS)
 
 replTests.out: replTests.o repl.o asUnit.o cLike.o core.o dictionary.o input.o interpreter.o stack.o
 
-repl.out: repl.o arithmetic.o core.o cLike.o dictionary.o input.o interpreter.o io.o main.o stack.o
+repl.out: repl.o arithmetic.o core.o cLike.o dictionary.o input.o interpreter.o io.o main.o relational.o stack.o
 
 
 stack.o: stack.s $(MACROS)
@@ -91,8 +98,8 @@ clean:
 repl: repl.out
 	./repl.out
 
-tests: arithmeticTests.out cLikeTests.out coreTests.out dictionaryTests.out inputTests.out interpreterTests.out replTests.out stackTests.out
-	./arithmeticTests.out ; ./cLikeTests.out ; ./coreTests.out ; ./dictionaryTests.out; ./inputTests.out; ./interpreterTests.out; ./replTests.out; ./stackTests.out
+tests: arithmeticTests.out cLikeTests.out coreTests.out dictionaryTests.out inputTests.out interpreterTests.out relationalTests.out replTests.out stackTests.out
+	./arithmeticTests.out ; ./cLikeTests.out ; ./coreTests.out ; ./dictionaryTests.out; ./inputTests.out; ./interpreterTests.out; ./relationalTests.out; ./replTests.out; ./stackTests.out
 
 playground: unitTestDemo.out
 	./unitTestDemo.out
