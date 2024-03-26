@@ -26,6 +26,8 @@
 		91E41A2A2BB2EEAA00F83677 /* stackTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91E41A292BB2EEAA00F83677 /* stackTests.s */; };
 		91E41A2D2BB2F0B600F83677 /* relational.s in Sources */ = {isa = PBXBuildFile; fileRef = 91E41A2C2BB2F0B600F83677 /* relational.s */; };
 		91E41A2F2BB2F1B600F83677 /* relationalTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91E41A2E2BB2F1B600F83677 /* relationalTests.s */; };
+		91E41A312BB2F4E700F83677 /* control.s in Sources */ = {isa = PBXBuildFile; fileRef = 91E41A302BB2F4E700F83677 /* control.s */; };
+		91E41A332BB2F56200F83677 /* controlTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91E41A322BB2F56200F83677 /* controlTests.s */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -79,6 +81,8 @@
 		91E41A292BB2EEAA00F83677 /* stackTests.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = stackTests.s; path = ../stackTests.s; sourceTree = "<group>"; };
 		91E41A2C2BB2F0B600F83677 /* relational.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = relational.s; path = ../relational.s; sourceTree = "<group>"; };
 		91E41A2E2BB2F1B600F83677 /* relationalTests.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = relationalTests.s; path = ../relationalTests.s; sourceTree = "<group>"; };
+		91E41A302BB2F4E700F83677 /* control.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = control.s; path = ../control.s; sourceTree = "<group>"; };
+		91E41A322BB2F56200F83677 /* controlTests.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = controlTests.s; path = ../controlTests.s; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,8 +147,9 @@
 			isa = PBXGroup;
 			children = (
 				91238D8A2B730AD800052895 /* cLike.s */,
-				91CAE5F02BA8BE95001E8E9E /* core.defines */,
 				91238D832B730AD800052895 /* compile.s */,
+				91E41A302BB2F4E700F83677 /* control.s */,
+				91CAE5F02BA8BE95001E8E9E /* core.defines */,
 				91B9F1322B742898005730DF /* interpreter.s */,
 				91E41A1E2BB2056400F83677 /* io.s */,
 				91E41A202BB20ACA00F83677 /* arithmetic.s */,
@@ -168,8 +173,9 @@
 			children = (
 				91E41A232BB20C0000F83677 /* arithmeticTests.s */,
 				91238D812B730AD800052895 /* cLikeTests.s */,
-				916C5CB72B7C155E00EA6FE5 /* coreTests.macros */,
 				91451FBE2B73E3C700D8C89A /* compileTests.s */,
+				91E41A322BB2F56200F83677 /* controlTests.s */,
+				916C5CB72B7C155E00EA6FE5 /* coreTests.macros */,
 				912FE26F2B9111330065D33E /* dictionaryTests.s */,
 				913B91FD2B9A5AB400943E4E /* inputTests.s */,
 				91451FC12B73E3F000D8C89A /* interpreterTests.s */,
@@ -260,6 +266,8 @@
 				91E41A2F2BB2F1B600F83677 /* relationalTests.s in Sources */,
 				91E41A2D2BB2F0B600F83677 /* relational.s in Sources */,
 				91908DC12B97B19E008CC466 /* repl.s in Sources */,
+				91E41A332BB2F56200F83677 /* controlTests.s in Sources */,
+				91E41A312BB2F4E700F83677 /* control.s in Sources */,
 				91908DBE2B966ABC008CC466 /* replTests.s in Sources */,
 				912FE2722B9121400065D33E /* dictionary.s in Sources */,
 				91CAE5EB2BA23EB7001E8E9E /* repl.macros in Sources */,
