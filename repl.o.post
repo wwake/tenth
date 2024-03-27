@@ -145,6 +145,7 @@ repl:
  STD_PROLOG
  str x22, [sp, #8]
  bl inputInit
+ bl init_control_stack
  LOAD_ADDRESS x26, readLine
  mov x24, RUN_MODE
 L_repl_loop:

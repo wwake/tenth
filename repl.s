@@ -140,6 +140,7 @@ repl:
 	str x22, [sp, #8]
 
 	bl inputInit
+	bl init_control_stack
 
 	LOAD_ADDRESS READ_LINE_ROUTINE, readLine
 	mov FLAGS, RUN_MODE

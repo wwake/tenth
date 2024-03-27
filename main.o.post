@@ -1,5 +1,5 @@
 // Global register values
-// Free: x23, x27, x28
+// Free: x23, x28
 
 .macro LOAD_ADDRESS register, location
  adrp \register, \location@PAGE
@@ -17,6 +17,12 @@
 .endm
 .macro DATA_TOP register
  ldr \register, [x19, #-8]
+.endm
+.macro CONTROL_PUSH register
+ str \register, [x27], #8
+.endm
+.macro CONTROL_POP register
+ ldr \register, [x27, #-8]!
 .endm
 .macro STD_PROLOG
  str lr, [sp, #-16]!
@@ -110,6 +116,8 @@ L_load_system_dictionary:
  DICT_HEADER ":", _colon, META
  DICT_HEADER ";", _semicolon, META
  DICT_HEADER ".", dotprint
+ DICT_HEADER "repeat", repeat, META
+ DICT_HEADER "until", until, META
  DICT_END
  STD_EPILOG
  ret

@@ -67,6 +67,10 @@ L_load_system_dictionary:
 	DICT_HEADER ":", _colon, META
 	DICT_HEADER ";", _semicolon, META
 	DICT_HEADER ".", dotprint
+
+	DICT_HEADER "repeat", repeat, META
+	DICT_HEADER "until", until, META
+
 	DICT_END
 
 	STD_EPILOG

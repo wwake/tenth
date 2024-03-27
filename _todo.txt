@@ -12,6 +12,7 @@ Compiler
 Ideas
 * Should VSP point to the last element? instead of next free slot.
 * Read a string from a file
+* Detect stack underflow and overflow (data, control)
 
 TEN-24-29: 2024-03-26 - Operators
 Operators
