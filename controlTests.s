@@ -146,9 +146,12 @@ L_test_secondary_area:
 .align 2
 
 TEST_START repeat_until_generates_right_code
+	str x28, [sp, #8]
+
 	// Arrange:
 	LOAD_ADDRESS SEC_SPACE, L_test_secondary_area
 	bl init_control_stack
+	mov x28, CONTROL_STACK
 
 	// Act:
 	bl repeat
@@ -171,4 +174,11 @@ TEST_START repeat_until_generates_right_code
 	ldr x0, [x0, #8]
 	mov x1, x0
 	bl assertEqual
+
+	// Make sure CONTROL_STACK is back where it started
+	mov x0, CONTROL_STACK
+	mov x1, x28
+	bl assertEqual
+
+	ldr x28, [sp, #8]
 TEST_END
