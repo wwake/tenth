@@ -89,7 +89,7 @@ repl.o: repl.s core.defines
 
 replTests.o: replTests.s $(MACROS) $(TEST_MACROS)
 
-replTests.out: replTests.o repl.o asUnit.o cLike.o compile.o dictionary.o input.o interpreter.o stack.o
+replTests.out: replTests.o repl.o asUnit.o cLike.o compile.o control.o dictionary.o input.o interpreter.o stack.o
 
 repl.out: repl.o arithmetic.o cLike.o compile.o control.o dictionary.o input.o interpreter.o io.o logical.o main.o relational.o stack.o
 

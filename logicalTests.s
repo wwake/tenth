@@ -14,7 +14,7 @@ L_test_data_stack: .quad 0, 99, 0, 0
 
 .text
 .p2align 3
-L_data: .quad 142, 58, -7
+L_data: .quad 142, 58, -7, 0
 
 
 .align 2
@@ -28,7 +28,10 @@ _start:
 	bl or_puts_a_logical_or_b_on_stack
 	bl xor_puts_a_logical_xor_b_on_stack
 
-	bl not_does_logical_negation
+	bl not_does_bitwise_negation
+
+	bl logical_not_converts_0_to_1
+	bl logical_not_converts_nonzero_to_0
 
 	unix_exit
 	STD_EPILOG
@@ -79,4 +82,7 @@ BINOP_TEST or_puts_a_logical_or_b_on_stack, orRoutine, 190
 
 BINOP_TEST xor_puts_a_logical_xor_b_on_stack, xorRoutine, 180
 
-UNARY_OP_TEST not_does_logical_negation, 16, notRoutine, 6
+UNARY_OP_TEST not_does_bitwise_negation, 16, notRoutine, 6
+
+UNARY_OP_TEST logical_not_converts_0_to_1, 24, bangRoutine, 1
+UNARY_OP_TEST logical_not_converts_nonzero_to_0, 16, bangRoutine, 0

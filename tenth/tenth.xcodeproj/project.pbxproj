@@ -157,9 +157,9 @@
 				91CAE5F02BA8BE95001E8E9E /* core.defines */,
 				91B9F1322B742898005730DF /* interpreter.s */,
 				91E41A1E2BB2056400F83677 /* io.s */,
+				91E41A342BB350BB00F83677 /* logical.s */,
 				91E41A2C2BB2F0B600F83677 /* relational.s */,
 				91E41A252BB2E94E00F83677 /* stack.s */,
-				91E41A342BB350BB00F83677 /* logical.s */,
 			);
 			name = core;
 			sourceTree = "<group>";
@@ -184,11 +184,11 @@
 				912FE26F2B9111330065D33E /* dictionaryTests.s */,
 				913B91FD2B9A5AB400943E4E /* inputTests.s */,
 				91451FC12B73E3F000D8C89A /* interpreterTests.s */,
+				91E41A362BB350CE00F83677 /* logicalTests.s */,
 				91E41A2E2BB2F1B600F83677 /* relationalTests.s */,
 				91908DBD2B966ABC008CC466 /* replTests.s */,
 				91E41A292BB2EEAA00F83677 /* stackTests.s */,
 				91451FC32B73E40500D8C89A /* unitTestPlayground.s */,
-				91E41A362BB350CE00F83677 /* logicalTests.s */,
 			);
 			name = tests;
 			sourceTree = "<group>";

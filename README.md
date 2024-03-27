@@ -29,7 +29,8 @@ In these descriptions, a, b, and c represent the first, second, and third elemen
 * & &emsp;&emsp;&emsp;&emsp;abc ⇒ (b & a)c - and
 * | &emsp;&emsp;&emsp;&emsp;abc ⇒ (b | a)c - or
 * ^ &emsp;&emsp;&emsp;&emsp;abc ⇒ (b ^ a)c - xor
-* ~ &emsp;&emsp;&emsp;&emsp;abc ⇒ (~a)bc - not
+* ~ &emsp;&emsp;&emsp;&emsp;abc ⇒ (~a)bc - bitwise not
+* ! &emsp;&emsp;&emsp;&emsp;abc ⇒ (!a)bc - logical not (0=>1, non-zero=>0)
 
 ## Relational Words
 * &lt;0   a&lt;0
