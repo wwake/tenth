@@ -21,6 +21,14 @@
 	ldr \register, [VSP, #-8]
 .endm
 
+.macro CONTROL_PUSH register
+	str \register, [CONTROL_STACK], #8
+.endm
+
+.macro CONTROL_POP register
+	ldr \register, [CONTROL_STACK, #-8]!
+.endm
+
 .macro STD_PROLOG
 	str lr, [sp, #-16]!
 .endm

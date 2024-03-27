@@ -20,6 +20,8 @@ _start:
 
 	bl jump_skips_over_code
 
+	bl repeat_until_generates_right_code
+
 	unix_exit
 	STD_EPILOG
 	ret
@@ -54,6 +56,7 @@ L_test_secondary:
 
 
 TEST_START if_zero_does_not_jump_for_non_zero_value
+// 		7 if 42 end
 // Arrange
 	DICT_START L_test_dictionary
 	DICT_ADD _jump_if_false	// 0
@@ -80,6 +83,7 @@ TEST_START if_zero_does_not_jump_for_non_zero_value
 TEST_END
 
 TEST_START if_zero_jumps_for_zero_value
+// 		0 if 42 end
 	// Arrange
 	DICT_START L_test_dictionary
 	DICT_ADD _jump_if_false
@@ -128,4 +132,43 @@ TEST_START jump_skips_over_code
 	mov x0, VSP
 	LOAD_ADDRESS x1, data_stack
 	bl assertEqual			// check that VSP is back to original place
+TEST_END
+
+
+.data
+.p2align 3
+
+L_test_secondary_area:
+	.fill 16, 8, 0
+
+
+.text
+.align 2
+
+TEST_START repeat_until_generates_right_code
+	// Arrange:
+	LOAD_ADDRESS SEC_SPACE, L_test_secondary_area
+	bl init_control_stack
+
+	// Act:
+	bl repeat
+
+	bl until
+
+	// Assert:
+	LOAD_ADDRESS x0, L_test_secondary_area
+	ldr x0, [x0]
+	LOAD_ADDRESS x1, _jump_if_false_word_address
+	bl assertEqual
+
+	LOAD_ADDRESS x0, L_test_secondary_area
+	ldr x0, [x0]
+	ldr x0, [x0]
+	LOAD_ADDRESS x1, _jump_if_false
+	bl assertEqual
+
+	LOAD_ADDRESS x0, L_test_secondary_area
+	ldr x0, [x0, #8]
+	mov x1, x0
+	bl assertEqual
 TEST_END

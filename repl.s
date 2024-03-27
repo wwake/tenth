@@ -17,7 +17,7 @@
 //   x0 - word to execute
 //   x22 - next word in input
 // Uses:
-//   x29 - temp
+//   x28 - temp
 // Assumes - first dictionary entry is the syntax error routine (uses x22)
 // Output:
 //   side effect from execution

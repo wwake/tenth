@@ -1,11 +1,38 @@
 #include "core.defines"
 #include "assembler.macros"
 
-.global _jump
+.global init_control_stack
+
 .global _jump_if_false
+.global _jump_if_false_word_address
+
+.global _jump
+
+.global repeat
+.global until
+
+
+.data
+.p2align 3
+
+control_stack: .fill 20, 8, 0
+
+
+_jump_if_false_word_address:
+	.quad _jump_if_false
+
 
 .text
-.p2align 2
+
+.p2align 3
+
+
+// init_control_stack
+// Result: CONTROL_STACK now points to control_stack
+//
+init_control_stack:
+	LOAD_ADDRESS CONTROL_STACK, control_stack
+	ret
 
 
 // _jump_if_false: evaluate top of stack, branch around code if false
@@ -37,4 +64,26 @@ L_end_jump_if_false:
 //
 _jump:
 	ldr VPC, [VPC]
+	ret
+
+
+// repeat: meta word that is the start of repeat-until loop
+// Result: Store current secondary address in the control stack
+//
+repeat:
+	CONTROL_PUSH SEC_SPACE
+	ret
+
+
+// until: meta word
+//
+until:
+	// Write jump_if_false to secondary
+	LOAD_ADDRESS x0, _jump_if_false_word_address
+	str x0, [SEC_SPACE], #8
+
+	// Pop control stack and write that address to secondary
+	CONTROL_POP x0
+	str x0, [SEC_SPACE], #8
+
 	ret

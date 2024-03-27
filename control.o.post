@@ -1,5 +1,5 @@
 // Global register values
-// Free: x23, x27, x28
+// Free: x23, x28
 
 .macro LOAD_ADDRESS register, location
  adrp \register, \location@PAGE
@@ -18,6 +18,12 @@
 .macro DATA_TOP register
  ldr \register, [x19, #-8]
 .endm
+.macro CONTROL_PUSH register
+ str \register, [x27], #8
+.endm
+.macro CONTROL_POP register
+ ldr \register, [x27, #-8]!
+.endm
 .macro STD_PROLOG
  str lr, [sp, #-16]!
 .endm
@@ -25,10 +31,25 @@
  ldr lr, [sp], #16
 .endm
 
-.global _jump
+.global init_control_stack
 .global _jump_if_false
+.global _jump_if_false_word_address
+.global _jump
+.global repeat
+.global until
+.data
+.p2align 3
+control_stack: .fill 20, 8, 0
+_jump_if_false_word_address:
+ .quad _jump_if_false
 .text
-.p2align 2
+.p2align 3
+// init_control_stack
+// Result: CONTROL_STACK now points to control_stack
+//
+init_control_stack:
+ LOAD_ADDRESS x27, control_stack
+ ret
 // _jump_if_false: evaluate top of stack, branch around code if false
 // Input:
 //   data value on top of stack
@@ -57,4 +78,20 @@ L_end_jump_if_false:
 //
 _jump:
  ldr x20, [x20]
+ ret
+// repeat: meta word that is the start of repeat-until loop
+// Result: Store current secondary address in the control stack
+//
+repeat:
+ CONTROL_PUSH x25
+ ret
+// until: meta word
+//
+until:
+ // Write jump_if_false to secondary
+ LOAD_ADDRESS x0, _jump_if_false_word_address
+ str x0, [x25], #8
+ // Pop control stack and write that address to secondary
+ CONTROL_POP x0
+ str x0, [x25], #8
  ret

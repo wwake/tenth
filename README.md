@@ -26,10 +26,10 @@ In these descriptions, a, b, and c represent the first, second, and third elemen
 * neg &emsp;&emsp;&emsp;&emsp;ab ⇒ (-a)b
 
 ## Logical Words
-* &  abc ⇒ (b & a)c
-* |   abc ⇒ (b | a)c
-* not  abc ⇒ (~a)bc
-* eor  abc ⇒ (b ^ a)c
+* & &emsp;&emsp;&emsp;&emsp;abc ⇒ (b & a)c - and
+* | &emsp;&emsp;&emsp;&emsp;abc ⇒ (b | a)c - or
+* ^ &emsp;&emsp;&emsp;&emsp;abc ⇒ (b ^ a)c - xor
+* ~ &emsp;&emsp;&emsp;&emsp;abc ⇒ (~a)bc - not
 
 ## Relational Words
 * &lt;0   a&lt;0
@@ -54,19 +54,19 @@ In these descriptions, a, b, and c represent the first, second, and third elemen
 * cba  abc⇒cba
 * bab  ab⇒bab
 
-## Memory - TBD
-* Variables - TBD
-* !   mem[a] = b
-* @   a = mem[a]
-
 ## I/O
 * nl - print newline
 * . - pop and print number on top of stack (destructive)
 
 ## Control - somewhat TBD
+* repeat .. flag until - repeats until flag at top of stack is true; consumes flag
 * flag if [else] endif
-* do.. flag while
-* repeat.. flag until
+* do .. flag while
 * flag while .. flag end
 * end start FOR.. NEXT
+
+## Memory - TBD
+* Variables - TBD
+* !   mem[a] = b
+* @   a = mem[a]
 

@@ -14,7 +14,8 @@
 #define VPC x20 		// virtual program counter
 #define FLAGS x24		// flag for run vs compile mode
 
+#define CONTROL_STACK x27	// stack for compiling control words
 
-// Free: x23, x27, x28
+// Free: x23, x28
 
 #endif

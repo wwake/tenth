@@ -14,7 +14,7 @@
 _start:
 	STD_PROLOG
 
-	TEST_ALL "coreTests"
+	TEST_ALL "compileTests"
 
 	// Definition
 	bl colon_switches_to_compile_mode

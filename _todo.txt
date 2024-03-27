@@ -1,7 +1,6 @@
-* Logical: NOT, XOR
+* Control [somewhat tbd]: repeat-until, if-else-endif, do-while, while-end, for-next
 * Relational: <0, ==0, ==, !=, <, <=, >, >=
 * Stack: POP, SWAP, DUP, CAB, CBA, BAB
-* Control [somewhat tbd]: if-else-endif, do-while, repeat-until, while-end, for-next
 * Memory: variables [tbd], arrays [tbd] !, @
 * Strings [tbd]
 Primaries
@@ -17,7 +16,10 @@ Ideas
 TEN-24-29: 2024-03-26 - Operators
 Operators
   * Arithmetic: MIN, MAX, /%, ABS, NEG
-  * Logical: &, |
+  * Logical: &, |, ^, ~
+Control
+  * Discussed several control structures
+  * Wrote test for repeat-until
 
 TEN-24-28: 2024-03-25 - Compile Numbers to “push n”
 Compiler

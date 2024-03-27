@@ -1,5 +1,5 @@
 // Global register values
-// Free: x23, x27, x28
+// Free: x23, x28
 
 .macro LOAD_ADDRESS register, location
  adrp \register, \location@PAGE
@@ -17,6 +17,12 @@
 .endm
 .macro DATA_TOP register
  ldr \register, [x19, #-8]
+.endm
+.macro CONTROL_PUSH register
+ str \register, [x27], #8
+.endm
+.macro CONTROL_POP register
+ ldr \register, [x27, #-8]!
 .endm
 .macro STD_PROLOG
  str lr, [sp, #-16]!
@@ -39,7 +45,7 @@
 //   x0 - word to execute
 //   x22 - next word in input
 // Uses:
-//   x29 - temp
+//   x28 - temp
 // Assumes - first dictionary entry is the syntax error routine (uses x22)
 // Output:
 //   side effect from execution
