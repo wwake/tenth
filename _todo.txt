@@ -1,4 +1,5 @@
-* Control [somewhat tbd]: repeat-until, if-else-endif, do-while, while-end, for-next
+* Change . to non-destructive print
+* Control [somewhat tbd]: if-else-endif, do-while, while-end, for-next
 * Relational: <0, ==0, ==, !=, <, <=, >, >=
 * Stack: POP, SWAP, DUP, CAB, CBA, BAB
 * Memory: variables [tbd], arrays [tbd] !, @
@@ -13,6 +14,12 @@ Ideas
 * Should VSP point to the last element? instead of next free slot.
 * Read a string from a file
 * Detect stack underflow and overflow (data, control)
+
+TEN-24-30: 2024-03-27 - Repeat-Until
+Control
+  * repeat, until
+Operator
+  * ! (not)
 
 TEN-24-29: 2024-03-26 - Operators
 Operators

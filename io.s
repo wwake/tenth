@@ -15,7 +15,7 @@ L_space:
 dotprint:
 	STD_PROLOG
 
-	DATA_POP x0
+	DATA_TOP x0
 	bl printnum
 
 	LOAD_ADDRESS x0, L_space

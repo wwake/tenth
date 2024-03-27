@@ -57,7 +57,7 @@ In these descriptions, a, b, and c represent the first, second, and third elemen
 
 ## I/O
 * nl - print newline
-* . - pop and print number on top of stack (destructive)
+* . - print number on top of stack (non-destructive)
 
 ## Control - somewhat TBD
 * repeat .. flag until - repeats until flag at top of stack is true; consumes flag
