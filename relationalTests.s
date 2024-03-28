@@ -33,6 +33,10 @@ _start:
 	bl ge_true_if_values_equal
 	bl ge_true_if_value_greater
 
+	bl lt0_when_value_negative
+	bl lt0_when_value_zero
+	bl lt0_when_value_positive
+
 	unix_exit
 	STD_EPILOG
 	ret
@@ -70,6 +74,10 @@ TEST_START \name
 TEST_END
 .endm
 
+.macro TEST_UNARY_RELATION name, relop, a, expected
+	TEST_RELATION \name, \relop, 99, \a, \expected
+.endm
+
 TEST_RELATION neq_true_if_values_different, neq, 142, 58, 1
 TEST_RELATION neq_false_if_values_same, neq, 142, 142, 0
 
@@ -91,3 +99,7 @@ TEST_RELATION gt_true_if_value_greater, gt, 143, 142, 1
 TEST_RELATION ge_false_if_value_less, ge, 142, 143, 0
 TEST_RELATION ge_true_if_values_equal, ge, 142, 142, 1
 TEST_RELATION ge_true_if_value_greater, ge, 143, 142, 1
+
+TEST_UNARY_RELATION lt0_when_value_negative, lt0, -1,  1
+TEST_UNARY_RELATION lt0_when_value_zero, lt0, 0, 0
+TEST_UNARY_RELATION lt0_when_value_positive, lt0, 1, 0

@@ -80,6 +80,8 @@ L_load_system_dictionary:
 	DICT_HEADER ">", gt
 	DICT_HEADER ">=", ge
 
+	DICT_HEADER "<0", lt0
+
 	DICT_END
 
 	STD_EPILOG
