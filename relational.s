@@ -9,6 +9,7 @@
 .global ge
 
 .global lt0
+.global eq0
 
 .text
 .p2align 2
@@ -39,3 +40,4 @@ BINARY_RELOP gt, gt, "greater than"
 BINARY_RELOP ge, ge, "greater than or equals"
 
 UNARY_RELOP lt0, lt, "less than 0"
+UNARY_RELOP eq0, eq, "equal to 0"

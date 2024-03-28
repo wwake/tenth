@@ -1,5 +1,4 @@
 
-* Relational: <0, ==0
 * Stack: POP, SWAP, DUP, CAB, CBA, BAB
 * Control [somewhat tbd]: if-else-endif, do-while, while-end, for-next
 * Memory: variables [tbd], arrays [tbd] !, @
@@ -19,8 +18,9 @@ Ideas
 TEN-24-31: 2024-03-28 - Nested Repeat-Until
 * Verify nested control structures work (lang level, unit test, lldb)
 Operators
-  * Relational: ==, !=, <, <=, >, >=
-
+  * Relational: ==, !=, <, <=, >, >=, <0, ==0
+  * Stack
+  
 TEN-24-30: 2024-03-27 - Repeat-Until
 Control
   * repeat, until

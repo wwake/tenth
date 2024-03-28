@@ -37,6 +37,10 @@ _start:
 	bl lt0_when_value_zero
 	bl lt0_when_value_positive
 
+	bl eq0_when_value_negative
+	bl eq0_when_value_zero
+	bl eq0_when_value_positive
+
 	unix_exit
 	STD_EPILOG
 	ret
@@ -103,3 +107,7 @@ TEST_RELATION ge_true_if_value_greater, ge, 143, 142, 1
 TEST_UNARY_RELATION lt0_when_value_negative, lt0, -1,  1
 TEST_UNARY_RELATION lt0_when_value_zero, lt0, 0, 0
 TEST_UNARY_RELATION lt0_when_value_positive, lt0, 1, 0
+
+TEST_UNARY_RELATION eq0_when_value_negative, eq0, -1,  0
+TEST_UNARY_RELATION eq0_when_value_zero, eq0, 0, 1
+TEST_UNARY_RELATION eq0_when_value_positive, eq0, 1, 0
