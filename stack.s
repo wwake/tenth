@@ -110,7 +110,12 @@ countData:
 	ret
 
 
-
+// Pop - pop top item on data stack
+//
 pop:
 	DATA_POP x0
+	ret
+
+// Swap - swap top two items on stack
+swap:
 	ret
