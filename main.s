@@ -43,7 +43,6 @@ L_load_system_dictionary:
 	DICT_HEADER "1", push1
 
 	DICT_HEADER "dup", dup
-	DICT_HEADER "neq", neq
 	DICT_HEADER "nl", nl
 
 	DICT_HEADER "+", add
@@ -73,6 +72,9 @@ L_load_system_dictionary:
 	DICT_HEADER "until", until, META
 
 	DICT_HEADER "#", countData
+
+	DICT_HEADER "==", eq
+	DICT_HEADER "!=", neq
 
 	DICT_END
 
