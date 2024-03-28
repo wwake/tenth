@@ -44,6 +44,7 @@ L_load_system_dictionary:
 
 	DICT_HEADER "dup", dup
 	DICT_HEADER "pop", pop
+	DICT_HEADER "swap", pop
 
 	DICT_HEADER "nl", nl
 

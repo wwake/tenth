@@ -10,8 +10,8 @@
 .global push1
 
 .global pop
-
 .global dup
+.global swap
 
 .global countData
 
@@ -118,4 +118,7 @@ pop:
 
 // Swap - swap top two items on stack
 swap:
+	DATA_POP_AB x0, x1
+	DATA_PUSH x0
+	DATA_PUSH x1
 	ret

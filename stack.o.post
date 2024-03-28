@@ -39,6 +39,7 @@
 .global push1
 .global pop
 .global dup
+.global swap
 .global countData
 .equ DATA_STACK_SIZE, 10000
 .data
@@ -107,6 +108,14 @@ countData:
  bl print
  STD_EPILOG
  ret
+// Pop - pop top item on data stack
+//
 pop:
  DATA_POP x0
+ ret
+// Swap - swap top two items on stack
+swap:
+ DATA_POP_AB x0, x1
+ DATA_PUSH x0
+ DATA_PUSH x1
  ret

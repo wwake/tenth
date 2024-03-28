@@ -142,7 +142,7 @@ TEST_START swap_should_swap_top_two_items
 	DATA_PUSH x0
 
 	// Act:
-	bl pop
+	bl swap
 
 	// Assert:
 	LOAD_ADDRESS x0, L_push_test_stack
