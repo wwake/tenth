@@ -11,8 +11,11 @@ _start:
 
 	TEST_ALL "relationalTests"
 
-	bl neq_true_if_values_differ
-	bl neq_false_if_values_the_same
+	bl neq_true_if_values_different
+	bl neq_false_if_values_same
+
+	bl eq_true_if_values_same
+	bl eq_false_if_values_differ
 
 	unix_exit
 	STD_EPILOG
@@ -30,62 +33,29 @@ L_data: .quad 142, 58
 .p2align 3
 
 
-.macro TEST_RELATION function, a, b, expected
-TEST_START neq_true_if_values_differ
+.macro TEST_RELATION name, relop, a, b, expected
+TEST_START \name
 	// Arrange:
 	LOAD_ADDRESS VSP, L_push_test_stack
-	adr VPC, L_data
-	bl _push
+	
+	mov x0, \a
+	DATA_PUSH x0
 
-	adr VPC, L_data + 8
-	bl _push
+	mov x0, \b
+	DATA_PUSH x0
 
 	// Act:
-	bl neq
+	bl \relop
 
 	// Assert:
 	DATA_POP x0
-	mov x1, #1
+	mov x1, \expected
 	bl assertEqual
 TEST_END
 .endm
 
-TEST_START neq_true_if_values_differ
-	// Arrange:
-	LOAD_ADDRESS VSP, L_push_test_stack
-	LOAD_ADDRESS x0, L_data
-	ldr x0, [x0]
-	DATA_PUSH x0
+TEST_RELATION neq_true_if_values_different, neq, 142, 58, 1
+TEST_RELATION neq_false_if_values_same, neq, 142, 142, 0
 
-	LOAD_ADDRESS x0, L_data
-	ldr x0, [x0, #8]
-	DATA_PUSH x0
-
-	// Act:
-	bl neq
-
-	// Assert:
-	DATA_POP x0
-	mov x1, #1
-	bl assertEqual
-TEST_END
-
-TEST_START neq_false_if_values_the_same
-	// Arrange:
-	LOAD_ADDRESS VSP, L_push_test_stack
-	LOAD_ADDRESS x0, L_data
-	ldr x0, [x0]
-	DATA_PUSH x0
-
-	LOAD_ADDRESS x0, L_data
-	ldr x0, [x0]
-	DATA_PUSH x0
-
-	// Act:
-	bl neq
-
-	// Assert:
-	DATA_POP x0
-	mov x1, #0
-	bl assertEqual
-TEST_END
+TEST_RELATION eq_true_if_values_same, eq, 142, 142, 1
+TEST_RELATION eq_false_if_values_differ, eq, 142, 143, 0
