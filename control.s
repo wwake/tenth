@@ -11,8 +11,6 @@
 .global repeat
 .global until
 
-.global control_stack
-
 .data
 .p2align 3
 

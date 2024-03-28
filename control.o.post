@@ -37,7 +37,6 @@
 .global _jump
 .global repeat
 .global until
-.global control_stack
 .data
 .p2align 3
 control_stack: .fill 20, 8, 0

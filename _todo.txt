@@ -1,5 +1,4 @@
 
-* Verify nested control structures work (lang level, unit test, lldb, stack overflow)
 * Relational: <0, ==0, ==, !=, <, <=, >, >=
 * Stack: POP, SWAP, DUP, CAB, CBA, BAB
 * Control [somewhat tbd]: if-else-endif, do-while, while-end, for-next
@@ -16,6 +15,9 @@ Ideas
 * Read a string from a file
 * Detect stack underflow and overflow (data, control)
 * Warn if you use repeat-until in run mode?
+
+TEN-24-31: 2024-03-28 - Nested Repeat-Until
+* Verify nested control structures work (lang level, unit test, lldb)
 
 TEN-24-30: 2024-03-27 - Repeat-Until
 Control
