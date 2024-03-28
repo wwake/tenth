@@ -72,6 +72,8 @@ L_load_system_dictionary:
 	DICT_HEADER "repeat", repeat, META
 	DICT_HEADER "until", until, META
 
+	DICT_HEADER "#", countData
+
 	DICT_END
 
 	STD_EPILOG
@@ -86,5 +88,7 @@ L_error_handler_init:
 	ret
 
 .data
+.p2align 3
+
 L_secondary_space:
 	.fill 20000, 8, 0

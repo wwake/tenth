@@ -40,7 +40,7 @@ control.o: control.s assembler.macros core.defines
 
 controlTests.o: controlTests.s $(MACROS) $(TEST_MACROS)
 
-controlTests.out: controlTests.o asUnit.o cLike.o control.o interpreter.o input.o relational.o stack.o
+controlTests.out: controlTests.o asUnit.o cLike.o control.o interpreter.o input.o io.o relational.o stack.o
 
 
 dictionary.o: dictionary.s dictionary.macros unix_functions.macros assembler.macros core.defines

@@ -1,3 +1,4 @@
+
 * Verify nested control structures work (lang level, unit test, lldb, stack overflow)
 * Relational: <0, ==0, ==, !=, <, <=, >, >=
 * Stack: POP, SWAP, DUP, CAB, CBA, BAB
@@ -6,7 +7,7 @@
 * Strings [tbd]
 Primaries
 
-* Explore whether we can use relocatable addresses elsewhere
+* Explore whether we can use relocatable addresses elsewhere [seems ok in data segment]
 * Strings (eval and compile)
 Compiler
 

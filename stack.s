@@ -11,6 +11,7 @@
 
 .global dup
 
+.global countData
 
 .equ DATA_STACK_SIZE, 10000
 
@@ -69,13 +70,40 @@ push1:
 
 
 // dup - duplicate the item on top of the data stack
-// Input: x19, VSP points to top of stack
+// Input: VSP (register) points one past the top of stack
 // Output:
 //   stack has top element duplicated
-//   x19 increased
+//   VSP increased
 //
 dup:
 	DATA_TOP x0
 	DATA_PUSH x0
+	ret
+
+
+
+stack_count_label:
+	.asciz "Stack size: "
+
+stack_count_suffix:
+	.asciz "\n"
+
+.align 2
+
+countData:
+	STD_PROLOG
+
+	LOAD_ADDRESS x0, stack_count_label
+	bl print
+
+	LOAD_ADDRESS x0, data_stack
+	sub x0, VSP, x0
+	asr x0, x0, #3
+	bl printnum
+
+	LOAD_ADDRESS x0, stack_count_suffix
+	bl print
+
+	STD_EPILOG
 	ret
 

@@ -21,6 +21,7 @@ _start:
 	bl jump_skips_over_code
 
 	bl repeat_until_generates_right_code
+	bl nested_repeat_until_generates_right_code
 
 	unix_exit
 	STD_EPILOG
@@ -173,6 +174,63 @@ TEST_START repeat_until_generates_right_code
 	LOAD_ADDRESS x0, L_test_secondary_area
 	ldr x0, [x0, #8]
 	mov x1, x0
+	bl assertEqual
+
+	// Make sure CONTROL_STACK is back where it started
+	mov x0, CONTROL_STACK
+	mov x1, x28
+	bl assertEqual
+
+	ldr x28, [sp, #8]
+TEST_END
+
+TEST_START nested_repeat_until_generates_right_code
+	str x28, [sp, #8]
+
+	// Arrange:
+	LOAD_ADDRESS SEC_SPACE, L_test_secondary_area
+	bl init_control_stack
+	mov x28, CONTROL_STACK
+
+	// Act:
+	mov x0, #1		// @ space + 0
+	str x0, [SEC_SPACE], #8
+	
+	bl repeat
+
+		mov x0, #2	// @ space + 8
+		str x0, [SEC_SPACE], #8
+
+		bl repeat
+
+		mov x0, #3	// @ space + 16
+		str x0, [SEC_SPACE], #8
+
+		bl until
+
+	bl until
+
+	// Assert:
+	LOAD_ADDRESS x0, L_test_secondary_area
+	ldr x0, [x0, #24]
+	LOAD_ADDRESS x1, _jump_if_false_word_address
+	bl assertEqual
+
+	LOAD_ADDRESS x0, L_test_secondary_area
+	ldr x0, [x0, #32]
+	LOAD_ADDRESS x1, L_test_secondary_area
+	add x1, x1, #16
+	bl assertEqual
+
+	LOAD_ADDRESS x0, L_test_secondary_area
+	ldr x0, [x0, #40]
+	LOAD_ADDRESS x1, _jump_if_false_word_address
+	bl assertEqual
+
+	LOAD_ADDRESS x0, L_test_secondary_area
+	ldr x0, [x0, #48]
+	LOAD_ADDRESS x1, L_test_secondary_area
+	add x1, x1, #8
 	bl assertEqual
 
 	// Make sure CONTROL_STACK is back where it started
