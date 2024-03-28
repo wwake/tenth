@@ -16,10 +16,11 @@ _start:
 
 	TEST_ALL "stackTests"
 
-	// Stack
 	bl push_pushes_one_item
-	bl dup_duplicates_top_item
 	bl push_0
+
+	bl pop_should_remove_one_item
+	bl dup_duplicates_top_item
 
 	unix_exit
 	STD_EPILOG
@@ -96,6 +97,31 @@ TEST_START push_0
 	LOAD_ADDRESS x0, L_push_test_stack
 	ldr x0, [x0]
 	mov x1, #0
+	bl assertEqual
+
+	mov x0, VSP
+	LOAD_ADDRESS x1, L_push_test_stack
+	add x1, x1, #8
+	bl assertEqual
+TEST_END
+
+TEST_START pop_should_remove_one_item
+	// Arrange:
+	LOAD_ADDRESS VSP, L_push_test_stack
+
+	mov x0, #21
+	DATA_PUSH x0
+
+	mov x0, #17
+	DATA_PUSH x0
+
+	// Act:
+	bl pop
+
+	// Assert:
+	LOAD_ADDRESS x0, L_push_test_stack
+	ldr x0, [x0]
+	mov x1, #21
 	bl assertEqual
 
 	mov x0, VSP

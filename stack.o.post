@@ -37,6 +37,7 @@
 .global _push
 .global push0
 .global push1
+.global pop
 .global dup
 .global countData
 .equ DATA_STACK_SIZE, 10000
@@ -105,4 +106,7 @@ countData:
  LOAD_ADDRESS x0, stack_count_suffix
  bl print
  STD_EPILOG
+ ret
+pop:
+ DATA_POP x0
  ret

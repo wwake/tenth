@@ -9,6 +9,8 @@
 .global push0
 .global push1
 
+.global pop
+
 .global dup
 
 .global countData
@@ -107,3 +109,8 @@ countData:
 	STD_EPILOG
 	ret
 
+
+
+pop:
+	DATA_POP x0
+	ret

@@ -43,6 +43,8 @@ L_load_system_dictionary:
 	DICT_HEADER "1", push1
 
 	DICT_HEADER "dup", dup
+	DICT_HEADER "pop", pop
+
 	DICT_HEADER "nl", nl
 
 	DICT_HEADER "+", add
