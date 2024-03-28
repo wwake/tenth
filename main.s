@@ -75,6 +75,10 @@ L_load_system_dictionary:
 
 	DICT_HEADER "==", eq
 	DICT_HEADER "!=", neq
+	DICT_HEADER "<", lt
+	DICT_HEADER "<=", le
+	DICT_HEADER ">", gt
+	DICT_HEADER ">=", ge
 
 	DICT_END
 

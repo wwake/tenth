@@ -17,6 +17,22 @@ _start:
 	bl eq_true_if_values_same
 	bl eq_false_if_values_differ
 
+	bl lt_true_if_value_less
+	bl lt_false_if_values_equal
+	bl lt_false_if_value_greater
+
+	bl le_true_if_value_less
+	bl le_true_if_values_equal
+	bl le_false_if_value_greater
+
+	bl gt_false_if_value_less
+	bl gt_false_if_values_equal
+	bl gt_true_if_value_greater
+
+	bl ge_false_if_value_less
+	bl ge_true_if_values_equal
+	bl ge_true_if_value_greater
+
 	unix_exit
 	STD_EPILOG
 	ret
@@ -59,3 +75,19 @@ TEST_RELATION neq_false_if_values_same, neq, 142, 142, 0
 
 TEST_RELATION eq_true_if_values_same, eq, 142, 142, 1
 TEST_RELATION eq_false_if_values_differ, eq, 142, 143, 0
+
+TEST_RELATION lt_true_if_value_less, lt, 142, 143, 1
+TEST_RELATION lt_false_if_values_equal, lt, 142, 142, 0
+TEST_RELATION lt_false_if_value_greater, lt, 143, 142, 0
+
+TEST_RELATION le_true_if_value_less, le, 142, 143, 1
+TEST_RELATION le_true_if_values_equal, le, 142, 142, 1
+TEST_RELATION le_false_if_value_greater, le, 143, 142, 0
+
+TEST_RELATION gt_false_if_value_less, gt, 142, 143, 0
+TEST_RELATION gt_false_if_values_equal, gt, 142, 142, 0
+TEST_RELATION gt_true_if_value_greater, gt, 143, 142, 1
+
+TEST_RELATION ge_false_if_value_less, ge, 142, 143, 0
+TEST_RELATION ge_true_if_values_equal, ge, 142, 142, 1
+TEST_RELATION ge_true_if_value_greater, ge, 143, 142, 1
