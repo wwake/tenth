@@ -24,6 +24,7 @@ _start:
 	bl swap_should_swap_top_two_items
 	bl cab_puts_third_item_on_top
 	bl cba_reverses_order_of_first_three_items
+	bl bab_copies_second_item_to_top
 
 	unix_exit
 	STD_EPILOG
@@ -231,5 +232,37 @@ TEST_START cba_reverses_order_of_first_three_items
 
 	DATA_POP x0
 	mov x1, #1
+	bl assertEqual
+TEST_END
+
+TEST_START bab_copies_second_item_to_top
+	// Arrange:
+	LOAD_ADDRESS VSP, L_push_test_stack
+
+	mov x0, #2
+	DATA_PUSH x0
+
+	mov x0, #1
+	DATA_PUSH x0
+
+	// Act:
+	bl bab
+
+	// Assert:
+	mov x0, VSP
+	LOAD_ADDRESS x1, L_push_test_stack
+	add x1, x1, #24
+	bl assertEqual
+
+	DATA_POP x0
+	mov x1, #2
+	bl assertEqual
+
+	DATA_POP x0
+	mov x1, #1
+	bl assertEqual
+
+	DATA_POP x0
+	mov x1, #2
 	bl assertEqual
 TEST_END

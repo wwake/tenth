@@ -14,6 +14,7 @@
 .global swap
 .global cab
 .global cba
+.global bab
 
 .global countData
 
@@ -135,4 +136,10 @@ cab:
 cba:
 	DATA_POP_ABC x1, x2, x3
 	DATA_PUSH_ABC x3, x2, x1
+	ret
+
+// bab - duplicate second item and push it on top
+bab:
+	DATA_POP_AB x1, x2
+	DATA_PUSH_ABC x2, x1, x2
 	ret
