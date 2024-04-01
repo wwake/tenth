@@ -13,6 +13,7 @@
 .global dup
 .global swap
 .global cab
+.global cba
 
 .global countData
 
@@ -128,4 +129,10 @@ swap:
 cab:
 	DATA_POP_ABC x0, x1, x2
 	DATA_PUSH_ABC x2, x0, x1
+	ret
+
+// cba - reverse order of first three items
+cba:
+	DATA_POP_ABC x1, x2, x3
+	DATA_PUSH_ABC x3, x2, x1
 	ret

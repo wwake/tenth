@@ -46,6 +46,7 @@ L_load_system_dictionary:
 	DICT_HEADER "pop", pop
 	DICT_HEADER "swap", swap
 	DICT_HEADER "cab", cab
+	DICT_HEADER "cba", cba
 
 	DICT_HEADER "nl", nl
 

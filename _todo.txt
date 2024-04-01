@@ -1,6 +1,5 @@
 
-* Check CAB - seems off - make test use 1,2,3: 3 2 1 # cab # . pop . pop
-* Stack: CAB, CBA, BAB
+* Stack: CBA, BAB
 * Control [somewhat tbd]: if-else-fi, while-do-od
 * Memory: variable, array, !, @, +!, +@
 * Strings: constants, print$, split$, make$
@@ -17,8 +16,11 @@ Ideas
 * Warn if you use repeat-until in run mode?
 * Debugging - print stack before each step in start2d; dump secondary contents; 
 
+
 TEN-24-32: 2024-04-01 - Stack Operations, if, and while
 * [offline] Renamed _push* to push*, _jump* to jump*
+* Check CAB - seems off - repl called wrong function
+* Stack operations: CAB
 
 TEN-24-31: 2024-03-28 - Nested Repeat-Until
 * Verify nested control structures work (lang level, unit test, lldb)
