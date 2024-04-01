@@ -23,7 +23,10 @@
 .data
 .p2align 3
 
-.quad 0		// empty space in front of stack
+.quad 531717		// empty space in front of stack (LILIES upside down)
+.quad 531717
+.quad 531717
+.quad 531717
 
 // data_stack: Run-time data stack, pointed to by X19 (VSP)
 // VSP points to the next place to write
