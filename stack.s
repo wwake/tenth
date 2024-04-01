@@ -68,8 +68,8 @@ push0:
 	ret
 
 push1:
-	mov x0, #1
-	DATA_PUSH x0
+	mov x1, #1
+	DATA_PUSH x1
 	ret
 
 
@@ -80,8 +80,8 @@ push1:
 //   VSP increased
 //
 dup:
-	DATA_TOP x0
-	DATA_PUSH x0
+	DATA_TOP x1
+	DATA_PUSH x1
 	ret
 
 
@@ -120,15 +120,15 @@ pop:
 
 // Swap - swap top two items on stack
 swap:
-	DATA_POP_AB x0, x1
-	DATA_PUSH x0
+	DATA_POP_AB x1, x2
 	DATA_PUSH x1
+	DATA_PUSH x2
 	ret
 
 // CAB - put third item on top
 cab:
-	DATA_POP_ABC x0, x1, x2
-	DATA_PUSH_ABC x2, x0, x1
+	DATA_POP_ABC x1, x2, x3
+	DATA_PUSH_ABC x3, x1, x2
 	ret
 
 // cba - reverse order of first three items
