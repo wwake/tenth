@@ -149,6 +149,15 @@ L_test_secondary_area:
 .text
 .align 2
 
+// Looks up value at L_test_secondary_area + offset,
+// compares to memory address
+.macro ASSERT_SEC_CONTENTS_ADDRESS offset, address
+	LOAD_ADDRESS x0, L_test_secondary_area
+	ldr x0, [x0, \offset]
+	LOAD_ADDRESS x1, \address
+	bl assertEqual
+.endm
+
 TEST_START repeat_until_generates_right_code
 	str x28, [sp, #8]
 
@@ -163,10 +172,7 @@ TEST_START repeat_until_generates_right_code
 	bl until
 
 	// Assert:
-	LOAD_ADDRESS x0, L_test_secondary_area
-	ldr x0, [x0]
-	LOAD_ADDRESS x1, jump_if_false_word_address
-	bl assertEqual
+	ASSERT_SEC_CONTENTS_ADDRESS 0, jump_if_false_word_address
 
 	LOAD_ADDRESS x0, L_test_secondary_area
 	ldr x0, [x0]
@@ -214,10 +220,7 @@ TEST_START nested_repeat_until_generates_right_code
 	bl until
 
 	// Assert:
-	LOAD_ADDRESS x0, L_test_secondary_area
-	ldr x0, [x0, #24]
-	LOAD_ADDRESS x1, jump_if_false_word_address
-	bl assertEqual
+	ASSERT_SEC_CONTENTS_ADDRESS 24, jump_if_false_word_address
 
 	LOAD_ADDRESS x0, L_test_secondary_area
 	ldr x0, [x0, #32]
@@ -225,10 +228,7 @@ TEST_START nested_repeat_until_generates_right_code
 	add x1, x1, #16
 	bl assertEqual
 
-	LOAD_ADDRESS x0, L_test_secondary_area
-	ldr x0, [x0, #40]
-	LOAD_ADDRESS x1, jump_if_false_word_address
-	bl assertEqual
+	ASSERT_SEC_CONTENTS_ADDRESS 40, jump_if_false_word_address
 
 	LOAD_ADDRESS x0, L_test_secondary_area
 	ldr x0, [x0, #48]
@@ -272,10 +272,7 @@ TEST_START if_fi_generates_right_code
 	mov x1, #1
 	bl assertEqual
 
-	LOAD_ADDRESS x0, L_test_secondary_area
-	ldr x0, [x0, #8]
-	LOAD_ADDRESS x1, jump_if_false_word_address
-	bl assertEqual
+	ASSERT_SEC_CONTENTS_ADDRESS 8, jump_if_false_word_address
 
 	LOAD_ADDRESS x0, L_test_secondary_area
 	ldr x0, [x0, #16]
@@ -334,10 +331,7 @@ TEST_START if_else_fi_generates_right_code
 	mov x1, #1
 	bl assertEqual
 
-	LOAD_ADDRESS x0, L_test_secondary_area
-	ldr x0, [x0, #8]
-	LOAD_ADDRESS x1, jump_if_false_word_address
-	bl assertEqual
+	ASSERT_SEC_CONTENTS_ADDRESS 8, jump_if_false_word_address
 
 	LOAD_ADDRESS x0, L_test_secondary_area
 	ldr x0, [x0, #16]
@@ -350,10 +344,7 @@ TEST_START if_else_fi_generates_right_code
 	mov x1, #2
 	bl assertEqual
 
-	LOAD_ADDRESS x0, L_test_secondary_area
-	ldr x0, [x0, #32]
-	LOAD_ADDRESS x1, jump_word_address
-	bl assertEqual
+	ASSERT_SEC_CONTENTS_ADDRESS 32, jump_word_address
 
 	LOAD_ADDRESS x0, L_test_secondary_area
 	ldr x0, [x0, #40]
