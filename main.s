@@ -79,6 +79,9 @@ L_load_system_dictionary:
 	DICT_HEADER "if", if, META
 	DICT_HEADER "else", else, META
 	DICT_HEADER "fi", fi, META
+	DICT_HEADER "while", while, META
+	DICT_HEADER "do", do, META
+	DICT_HEADER "od", od, META
 
 	DICT_HEADER "#", countData
 
