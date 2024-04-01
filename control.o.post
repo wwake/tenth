@@ -58,6 +58,9 @@
 .global if
 .global else
 .global fi
+.global while
+.global do
+.global od
 .data
 .p2align 3
 control_stack: .fill 20, 8, 0
@@ -151,5 +154,36 @@ else:
 // Pop address from control stack, backpatch current SEC_SPACE there
 fi:
  CONTROL_POP x0
+ str x25, [x0]
+ ret
+// while - handles start of while-do-od
+// Push current address to control stack
+//
+while:
+ CONTROL_PUSH x25
+ ret
+// do - handles middle of while-do-od
+//
+do:
+ // Generate the jump
+ LOAD_ADDRESS x0, jump_if_false_word_address
+ STORE_SEC x0
+ // Get the placeholder address to patch
+ CONTROL_PUSH x25
+ // Generate placeholder address
+ mov x1, #-1
+ STORE_SEC x1
+ ret
+// od - handles end of while-do-od
+od:
+ // Generate the jump
+ LOAD_ADDRESS x0, jump_word_address
+ STORE_SEC x0
+ // Pop jump_if_false (x0) and start address (x1)
+ CONTROL_POP x0
+ CONTROL_POP x1
+ // Write start address for jump
+ STORE_SEC x1
+ // Patch jump_if_false address to point to end
  str x25, [x0]
  ret

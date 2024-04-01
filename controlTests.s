@@ -26,6 +26,8 @@ _start:
 	bl if_fi_generates_right_code
 	bl if_else_fi_generates_right_code
 
+	bl do_while_od_generates_right_code
+
 	unix_exit
 	STD_EPILOG
 	ret
@@ -149,12 +151,13 @@ L_test_secondary_area:
 .text
 .align 2
 
-// Looks up value at L_test_secondary_area + offset,
-// compares to memory address
-.macro ASSERT_SEC_CONTENTS_ADDRESS offset, address
+// The contents at L_test_secondary_area + offset,
+// should be address + offset2
+.macro ASSERT_SEC_CONTENTS_ADDRESS offset, address, offset2=0
 	LOAD_ADDRESS x0, L_test_secondary_area
 	ldr x0, [x0, \offset]
 	LOAD_ADDRESS x1, \address
+	add x1, x1, \offset2
 	bl assertEqual
 .endm
 
@@ -361,6 +364,62 @@ TEST_START if_else_fi_generates_right_code
 	ldr x0, [x0, #56]
 	mov x1, #4
 	bl assertEqual
+
+	// Make sure CONTROL_STACK is back where it started
+	mov x0, CONTROL_STACK
+	mov x1, x28
+	bl assertEqual
+
+	ldr x28, [sp, #8]
+TEST_END
+
+.macro ASSERT_SEC_CONTENTS_CONSTANT offset, value
+	LOAD_ADDRESS x0, L_test_secondary_area
+	ldr x0, [x0, \offset]
+	mov x1, \value
+	bl assertEqual
+.endm
+
+TEST_START do_while_od_generates_right_code
+	str x28, [sp, #8]
+
+	// Arrange:
+	LOAD_ADDRESS SEC_SPACE, L_test_secondary_area
+	bl init_control_stack
+	mov x28, CONTROL_STACK
+
+	// Act:
+	mov x0, #1		// @ space + 0
+	STORE_SEC x0
+
+	bl while
+
+	mov x0, #2	// @ space + 24
+	STORE_SEC x0
+
+	bl do
+
+	mov x0, #3	// @ space +
+	STORE_SEC x0
+
+	bl od
+
+	mov x0, #4	// @ space +
+	STORE_SEC x0
+
+	// Assert:
+	ASSERT_SEC_CONTENTS_CONSTANT 0, 1
+	ASSERT_SEC_CONTENTS_CONSTANT 8, 2
+
+	ASSERT_SEC_CONTENTS_ADDRESS 16, jump_if_false_word_address
+	ASSERT_SEC_CONTENTS_ADDRESS 24, L_test_secondary_area, 56
+
+	ASSERT_SEC_CONTENTS_CONSTANT 32, 3
+
+	ASSERT_SEC_CONTENTS_ADDRESS 40, jump_word_address
+	ASSERT_SEC_CONTENTS_ADDRESS 48, L_test_secondary_area, 8
+
+	ASSERT_SEC_CONTENTS_CONSTANT 56, 4
 
 	// Make sure CONTROL_STACK is back where it started
 	mov x0, CONTROL_STACK
