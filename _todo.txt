@@ -1,6 +1,5 @@
 
-* Stack: BAB
-* Control [somewhat tbd]: if-else-fi, while-do-od
+* Control: if-else-fi, while-do-od
 * Check for data stack underflow
 * Debugging tools for Tenth users
 * Memory: variable, array, !, @, +!, +@

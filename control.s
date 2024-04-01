@@ -11,6 +11,9 @@
 .global repeat
 .global until
 
+.global if
+.global fi
+
 .data
 .p2align 3
 
@@ -85,5 +88,29 @@ until:
 	//    address to secondary
 	CONTROL_POP x0
 	str x0, [SEC_SPACE], #8
+
+	ret
+
+// if - handles beginning of if statement
+// Generate jump_if_false, store addr on control stack
+if:
+	// Generate jump_if_false
+	LOAD_ADDRESS x0, jump_if_false_word_address
+	str x0, [SEC_SPACE], #8
+
+	// Save addr to backpatch
+	CONTROL_PUSH SEC_SPACE
+
+	// Generate -1 as a placeholder
+	mov x0, #-1
+	str x0, [SEC_SPACE], #8
+
+	ret
+
+// fi - handles end of if statement
+// Pop address from control stack, backpatch current SEC_SPACE there
+fi:
+	CONTROL_POP x0
+	str SEC_SPACE, [x0]
 
 	ret
