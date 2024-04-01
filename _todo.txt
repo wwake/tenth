@@ -1,8 +1,9 @@
 
-* Stack: SWAP, DUP, CAB, CBA, BAB
-* Control [somewhat tbd]: if-else-endif, do-while, while-end, for-next
-* Memory: variables [tbd], arrays [tbd] !, @
-* Strings [tbd]
+* Check CAB - seems off - make test use 1,2,3: 3 2 1 # cab # . pop . pop
+* Stack: CAB, CBA, BAB
+* Control [somewhat tbd]: if-else-fi, while-do-od
+* Memory: variable, array, !, @, +!, +@
+* Strings: constants, print$, split$, make$
 Primaries
 
 * Explore whether we can use relocatable addresses elsewhere [seems ok in data segment]
@@ -14,12 +15,16 @@ Ideas
 * Read a string from a file
 * Detect stack underflow and overflow (data, control)
 * Warn if you use repeat-until in run mode?
+* Debugging - print stack before each step in start2d; dump secondary contents; 
+
+TEN-24-32: 2024-04-01 - Stack Operations, if, and while
+* [offline] Renamed _push* to push*, _jump* to jump*
 
 TEN-24-31: 2024-03-28 - Nested Repeat-Until
 * Verify nested control structures work (lang level, unit test, lldb)
 Operators
   * Relational: ==, !=, <, <=, >, >=, <0, ==0
-  * Stack: pop,
+  * Stack: pop, swap, 
 
 TEN-24-30: 2024-03-27 - Repeat-Until
 Control

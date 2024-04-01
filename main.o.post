@@ -8,12 +8,25 @@
 .macro DATA_PUSH register
  str \register, [x19], #8
 .endm
+.macro DATA_PUSH_AB register1, register2
+ DATA_PUSH \register2
+ DATA_PUSH \register1
+.endm
+.macro DATA_PUSH_ABC register1, register2, register3
+ DATA_PUSH \register3
+ DATA_PUSH \register2
+ DATA_PUSH \register1
+.endm
 .macro DATA_POP register
  ldr \register, [x19, #-8]!
 .endm
 .macro DATA_POP_AB register1, register2
  DATA_POP \register1
  DATA_POP \register2
+.endm
+.macro DATA_POP_ABC register1, register2, register3
+ DATA_POP_AB \register1, \register2
+ DATA_POP \register3
 .endm
 .macro DATA_TOP register
  ldr \register, [x19, #-8]
@@ -98,7 +111,8 @@ L_load_system_dictionary:
  DICT_HEADER "1", push1
  DICT_HEADER "dup", dup
  DICT_HEADER "pop", pop
- DICT_HEADER "swap", pop
+ DICT_HEADER "swap", swap
+ DICT_HEADER "cab", cab
  DICT_HEADER "nl", nl
  DICT_HEADER "+", add
  DICT_HEADER "-", sub

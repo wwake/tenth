@@ -4,14 +4,15 @@
 .global data_stack
 .global data_stack_init
 
-.global _push_word_address
-.global _push
+.global push_word_address
+.global push
 .global push0
 .global push1
 
 .global pop
 .global dup
 .global swap
+.global cab
 
 .global countData
 
@@ -50,13 +51,13 @@ data_stack_init:
 //
 .data
 .p2align 3
-_push_word_address:
-	.quad _push
+push_word_address:
+	.quad push
 
 .text
 .align 2
 
-_push:
+push:
 	ldr x0, [VPC], #8
 	DATA_PUSH x0
 	ret
@@ -121,4 +122,10 @@ swap:
 	DATA_POP_AB x0, x1
 	DATA_PUSH x0
 	DATA_PUSH x1
+	ret
+
+// CAB - put third item on top
+cab:
+	DATA_POP_ABC x0, x1, x2
+	DATA_PUSH_ABC x2, x0, x1
 	ret

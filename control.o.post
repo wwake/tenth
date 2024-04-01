@@ -8,12 +8,25 @@
 .macro DATA_PUSH register
  str \register, [x19], #8
 .endm
+.macro DATA_PUSH_AB register1, register2
+ DATA_PUSH \register2
+ DATA_PUSH \register1
+.endm
+.macro DATA_PUSH_ABC register1, register2, register3
+ DATA_PUSH \register3
+ DATA_PUSH \register2
+ DATA_PUSH \register1
+.endm
 .macro DATA_POP register
  ldr \register, [x19, #-8]!
 .endm
 .macro DATA_POP_AB register1, register2
  DATA_POP \register1
  DATA_POP \register2
+.endm
+.macro DATA_POP_ABC register1, register2, register3
+ DATA_POP_AB \register1, \register2
+ DATA_POP \register3
 .endm
 .macro DATA_TOP register
  ldr \register, [x19, #-8]
@@ -32,16 +45,16 @@
 .endm
 
 .global init_control_stack
-.global _jump_if_false
-.global _jump_if_false_word_address
-.global _jump
+.global jump_if_false
+.global jump_if_false_word_address
+.global jump
 .global repeat
 .global until
 .data
 .p2align 3
 control_stack: .fill 20, 8, 0
-_jump_if_false_word_address:
- .quad _jump_if_false
+jump_if_false_word_address:
+ .quad jump_if_false
 .text
 .p2align 3
 // init_control_stack
@@ -50,17 +63,17 @@ _jump_if_false_word_address:
 init_control_stack:
  LOAD_ADDRESS x27, control_stack
  ret
-// _jump_if_false: evaluate top of stack, branch to specified address if false
+// jump_if_false: evaluate top of stack, branch to specified address if false
 // Input:
 //   data value on top of stack
-//   VPC (register) points to address value (in secondary) following _jump_if_false word
+//   VPC (register) points to address value (in secondary) following jump_if_false word
 // Process:
 //   x0 - temp
 // Output:
 //   Original data value is popped
 //   VPC (register), updated to either move past address value or jump to where it says
 //
-_jump_if_false:
+jump_if_false:
  DATA_POP x0
  cmp x0, #0
  b.eq L_skip_if
@@ -70,13 +83,13 @@ L_skip_if:
   ldr x20, [x20] // transfer to the address
 L_end_jump_if_false:
  ret
-// _jump: jump to target value
+// jump: jump to target value
 // Input:
 //   x20 points to address value (word in secondary)
 // Output:
 //   x20 changed to address value it formerly pointed to (=> a jump)
 //
-_jump:
+jump:
  ldr x20, [x20]
  ret
 // repeat: meta word that is the start of repeat-until loop
@@ -89,9 +102,10 @@ repeat:
 //
 until:
  // Write jump_if_false to secondary
- LOAD_ADDRESS x0, _jump_if_false_word_address
+ LOAD_ADDRESS x0, jump_if_false_word_address
  str x0, [x25], #8
- // Pop control stack and write that address to secondary
+ // Pop control stack and write that 
+ //    address to secondary
  CONTROL_POP x0
  str x0, [x25], #8
  ret

@@ -60,8 +60,8 @@ TEST_START if_zero_does_not_jump_for_non_zero_value
 // 		7 if 42 end
 // Arrange
 	DICT_START L_test_dictionary
-	DICT_ADD _jump_if_false	// 0
-	DICT_ADD _push			// 1
+	DICT_ADD jump_if_false	// 0
+	DICT_ADD push			// 1
 	DICT_ADD end2d			// 2
 
 	SECONDARY_START L_test_secondary, L_test_dictionary, start2d
@@ -87,8 +87,8 @@ TEST_START if_zero_jumps_for_zero_value
 // 		0 if 42 end
 	// Arrange
 	DICT_START L_test_dictionary
-	DICT_ADD _jump_if_false
-	DICT_ADD _push
+	DICT_ADD jump_if_false
+	DICT_ADD push
 	DICT_ADD end2d
 
 	SECONDARY_START L_test_secondary, L_test_dictionary, start2d
@@ -114,8 +114,8 @@ TEST_END
 TEST_START jump_skips_over_code
 // Arrange
 	DICT_START L_test_dictionary
-	DICT_ADD _jump  //0
-	DICT_ADD _push  //1
+	DICT_ADD jump  //0
+	DICT_ADD push  //1
 	DICT_ADD end2d  //2
 
 	SECONDARY_START L_test_secondary, L_test_dictionary, start2d
@@ -162,13 +162,13 @@ TEST_START repeat_until_generates_right_code
 	// Assert:
 	LOAD_ADDRESS x0, L_test_secondary_area
 	ldr x0, [x0]
-	LOAD_ADDRESS x1, _jump_if_false_word_address
+	LOAD_ADDRESS x1, jump_if_false_word_address
 	bl assertEqual
 
 	LOAD_ADDRESS x0, L_test_secondary_area
 	ldr x0, [x0]
 	ldr x0, [x0]
-	LOAD_ADDRESS x1, _jump_if_false
+	LOAD_ADDRESS x1, jump_if_false
 	bl assertEqual
 
 	LOAD_ADDRESS x0, L_test_secondary_area
@@ -213,7 +213,7 @@ TEST_START nested_repeat_until_generates_right_code
 	// Assert:
 	LOAD_ADDRESS x0, L_test_secondary_area
 	ldr x0, [x0, #24]
-	LOAD_ADDRESS x1, _jump_if_false_word_address
+	LOAD_ADDRESS x1, jump_if_false_word_address
 	bl assertEqual
 
 	LOAD_ADDRESS x0, L_test_secondary_area
@@ -224,7 +224,7 @@ TEST_START nested_repeat_until_generates_right_code
 
 	LOAD_ADDRESS x0, L_test_secondary_area
 	ldr x0, [x0, #40]
-	LOAD_ADDRESS x1, _jump_if_false_word_address
+	LOAD_ADDRESS x1, jump_if_false_word_address
 	bl assertEqual
 
 	LOAD_ADDRESS x0, L_test_secondary_area

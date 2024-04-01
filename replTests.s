@@ -294,7 +294,7 @@ TEST_START compile_emits_push_when_number_found
 	// Assert:
 	LOAD_ADDRESS x0, L_compile_test_space
 	ldr x0, [x0]
-	LOAD_ADDRESS x1, _push_word_address
+	LOAD_ADDRESS x1, push_word_address
 	bl assertEqual
 
 	LOAD_ADDRESS x0, L_compile_test_space

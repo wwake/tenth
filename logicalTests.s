@@ -43,10 +43,10 @@ TEST_START \test_name
 	// Arrange:
 	LOAD_ADDRESS VSP, L_test_data_stack
 	adr VPC, L_data
-	bl _push
+	bl push
 
 	adr VPC, L_data + 8
-	bl _push
+	bl push
 
 	// Act:
 	bl \routine_to_test
@@ -63,7 +63,7 @@ TEST_START \test_name
 	// Arrange:
 	LOAD_ADDRESS VSP, L_test_data_stack
 	adr VPC, L_data + \data_offset
-	bl _push
+	bl push
 
 	// Act:
 	bl \routine_to_test

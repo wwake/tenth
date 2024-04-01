@@ -80,9 +80,9 @@ L_add2_dictionary:
 
 add2:
 	.quad 0	 // address of start2d
-	.quad 0	 // _push
+	.quad 0	 // push
 	.quad 1	 // data: 1
-	.quad 0	 // _push
+	.quad 0	 // push
 	.quad 2	 // data: 2
 	.quad 0	 // add
 	.quad 0	 // end2d
@@ -93,7 +93,7 @@ TEST_START secondary_runs_yielding_result_on_stack
 // Arrange - build our secondary
 	LOAD_ADDRESS x0, L_add2_dictionary
 	LOAD_ADDRESS x1, start2d
-	LOAD_ADDRESS x2, _push
+	LOAD_ADDRESS x2, push
 	LOAD_ADDRESS x3, add
 	LOAD_ADDRESS x4, end2d
 
@@ -142,7 +142,7 @@ TEST_START secondary_calls_another_secondary
 // Arrange - build dictionary and two secondaries
 
 	DICT_START L_test_dictionary
-	DICT_ADD _push	// 0
+	DICT_ADD push	// 0
 	DICT_ADD end2d	// 1
 
 	SECONDARY_START L_secondary1, L_test_dictionary, start2d
@@ -191,21 +191,21 @@ TEST_START recursive_factorial
 	DICT_START L_test_dictionary
 	DICT_ADD end2d	// 0
 	DICT_ADD dup	// 1
-	DICT_ADD _push	// 2
+	DICT_ADD push	// 2
 	DICT_ADD neq	// 3
-	DICT_ADD _jump_if_false	// 4
+	DICT_ADD jump_if_false	// 4
 	DICT_ADD sub	// 5
 	DICT_ADD mul	// 6
 
 	SECONDARY_START L_factorial, L_test_dictionary, start2d
 	SECONDARY_ADD 1		// DUP
-	SECONDARY_ADD 2		// _push
+	SECONDARY_ADD 2		// push
 	SECONDARY_DATA 1	// literal 1
 	SECONDARY_ADD 3		// NEQ
-	SECONDARY_ADD 4		// _jump_if_false
+	SECONDARY_ADD 4		// jump_if_false
 	SECONDARY_TARGET 13	// address to jump to
 	SECONDARY_ADD 1		// DUP
-	SECONDARY_ADD 2		// _push
+	SECONDARY_ADD 2		// push
 	SECONDARY_DATA 1	// literal 1
 	SECONDARY_ADD 5		// SUB
 	SECONDARY_ADDRESS L_factorial	// FACTORIAL

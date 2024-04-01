@@ -22,6 +22,7 @@ _start:
 	bl pop_should_remove_one_item
 	bl dup_duplicates_top_item
 	bl swap_should_swap_top_two_items
+	bl cab_puts_third_item_on_top
 
 	unix_exit
 	STD_EPILOG
@@ -41,7 +42,7 @@ TEST_START push_pushes_one_item
 	LOAD_ADDRESS VSP, L_push_test_stack
 	adr VPC, L_data
 
-	bl _push
+	bl push
 
 	mov x0, VPC
 	adr x1, L_data
@@ -69,7 +70,7 @@ TEST_START dup_duplicates_top_item
 	LOAD_ADDRESS VSP, L_push_test_stack
 
 	adr VPC, L_data
-	bl _push
+	bl push
 
 	// Act:
 	bl dup
@@ -159,4 +160,40 @@ TEST_START swap_should_swap_top_two_items
 	LOAD_ADDRESS x1, L_push_test_stack
 	add x1, x1, #16
 	bl assertEqual
+TEST_END
+
+TEST_START cab_puts_third_item_on_top
+	// Arrange:
+	LOAD_ADDRESS VSP, L_push_test_stack
+
+	mov x0, #21
+	DATA_PUSH x0
+
+	mov x0, #17
+	DATA_PUSH x0
+
+	mov x0, #9
+	DATA_PUSH x0
+
+	// Act:
+	bl cab
+
+	// Assert:
+	mov x0, VSP
+	LOAD_ADDRESS x1, L_push_test_stack
+	add x1, x1, #24
+	bl assertEqual
+
+	DATA_POP x0
+	mov x1, #21
+	bl assertEqual
+
+	DATA_POP x0
+	mov x1, #9
+	bl assertEqual
+
+	DATA_POP x0
+	mov x1, #17
+	bl assertEqual
+
 TEST_END

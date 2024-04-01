@@ -117,7 +117,7 @@ L_compile_check_for_number:
 	cmp x0, #0
 	b.eq L_compile_word_not_found
 		// Write push_word_address and number to the secondary
-		LOAD_ADDRESS x1, _push_word_address
+		LOAD_ADDRESS x1, push_word_address
 		str x1, [SEC_SPACE], #8		// push_word_address
 		str x0, [SEC_SPACE], #8		// number
 		b L_exiting_compile

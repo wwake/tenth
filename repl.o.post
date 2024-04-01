@@ -8,12 +8,25 @@
 .macro DATA_PUSH register
  str \register, [x19], #8
 .endm
+.macro DATA_PUSH_AB register1, register2
+ DATA_PUSH \register2
+ DATA_PUSH \register1
+.endm
+.macro DATA_PUSH_ABC register1, register2, register3
+ DATA_PUSH \register3
+ DATA_PUSH \register2
+ DATA_PUSH \register1
+.endm
 .macro DATA_POP register
  ldr \register, [x19, #-8]!
 .endm
 .macro DATA_POP_AB register1, register2
  DATA_POP \register1
  DATA_POP \register2
+.endm
+.macro DATA_POP_ABC register1, register2, register3
+ DATA_POP_AB \register1, \register2
+ DATA_POP \register3
 .endm
 .macro DATA_TOP register
  ldr \register, [x19, #-8]
@@ -127,7 +140,7 @@ L_compile_check_for_number:
  cmp x0, #0
  b.eq L_compile_word_not_found
   // Write push_word_address and number to the secondary
-  LOAD_ADDRESS x1, _push_word_address
+  LOAD_ADDRESS x1, push_word_address
   str x1, [x25], #8 // push_word_address
   str x0, [x25], #8 // number
   b L_exiting_compile

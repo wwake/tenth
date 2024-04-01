@@ -8,12 +8,25 @@
 .macro DATA_PUSH register
  str \register, [x19], #8
 .endm
+.macro DATA_PUSH_AB register1, register2
+ DATA_PUSH \register2
+ DATA_PUSH \register1
+.endm
+.macro DATA_PUSH_ABC register1, register2, register3
+ DATA_PUSH \register3
+ DATA_PUSH \register2
+ DATA_PUSH \register1
+.endm
 .macro DATA_POP register
  ldr \register, [x19, #-8]!
 .endm
 .macro DATA_POP_AB register1, register2
  DATA_POP \register1
  DATA_POP \register2
+.endm
+.macro DATA_POP_ABC register1, register2, register3
+ DATA_POP_AB \register1, \register2
+ DATA_POP \register3
 .endm
 .macro DATA_TOP register
  ldr \register, [x19, #-8]
@@ -33,13 +46,14 @@
 
 .global data_stack
 .global data_stack_init
-.global _push_word_address
-.global _push
+.global push_word_address
+.global push
 .global push0
 .global push1
 .global pop
 .global dup
 .global swap
+.global cab
 .global countData
 .equ DATA_STACK_SIZE, 10000
 .data
@@ -66,11 +80,11 @@ data_stack_init:
 //
 .data
 .p2align 3
-_push_word_address:
- .quad _push
+push_word_address:
+ .quad push
 .text
 .align 2
-_push:
+push:
  ldr x0, [x20], #8
  DATA_PUSH x0
  ret
@@ -118,4 +132,9 @@ swap:
  DATA_POP_AB x0, x1
  DATA_PUSH x0
  DATA_PUSH x1
+ ret
+// CAB - put third item on top
+cab:
+ DATA_POP_ABC x0, x1, x2
+ DATA_PUSH_ABC x2, x0, x1
  ret

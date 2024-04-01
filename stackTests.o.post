@@ -8,12 +8,25 @@
 .macro DATA_PUSH register
  str \register, [x19], #8
 .endm
+.macro DATA_PUSH_AB register1, register2
+ DATA_PUSH \register2
+ DATA_PUSH \register1
+.endm
+.macro DATA_PUSH_ABC register1, register2, register3
+ DATA_PUSH \register3
+ DATA_PUSH \register2
+ DATA_PUSH \register1
+.endm
 .macro DATA_POP register
  ldr \register, [x19, #-8]!
 .endm
 .macro DATA_POP_AB register1, register2
  DATA_POP \register1
  DATA_POP \register2
+.endm
+.macro DATA_POP_ABC register1, register2, register3
+ DATA_POP_AB \register1, \register2
+ DATA_POP \register3
 .endm
 .macro DATA_TOP register
  ldr \register, [x19, #-8]
@@ -45,6 +58,7 @@ _start:
  bl pop_should_remove_one_item
  bl dup_duplicates_top_item
  bl swap_should_swap_top_two_items
+ bl cab_puts_third_item_on_top
  unix_exit
  STD_EPILOG
  ret
@@ -56,7 +70,7 @@ L_data: .quad 142, 58
 TEST_START push_pushes_one_item
  LOAD_ADDRESS x19, L_push_test_stack
  adr x20, L_data
- bl _push
+ bl push
  mov x0, x20
  adr x1, L_data
  add x1, x1, #8 // expect VPC to increment
@@ -74,7 +88,7 @@ TEST_START dup_duplicates_top_item
  // Arrange:
  LOAD_ADDRESS x19, L_push_test_stack
  adr x20, L_data
- bl _push
+ bl push
  // Act:
  bl dup
  // Assert:
@@ -141,5 +155,31 @@ TEST_START swap_should_swap_top_two_items
  mov x0, x19
  LOAD_ADDRESS x1, L_push_test_stack
  add x1, x1, #16
+ bl assertEqual
+TEST_END
+TEST_START cab_puts_third_item_on_top
+ // Arrange:
+ LOAD_ADDRESS x19, L_push_test_stack
+ mov x0, #21
+ DATA_PUSH x0
+ mov x0, #17
+ DATA_PUSH x0
+ mov x0, #9
+ DATA_PUSH x0
+ // Act:
+ bl cab
+ // Assert:
+ mov x0, x19
+ LOAD_ADDRESS x1, L_push_test_stack
+ add x1, x1, #24
+ bl assertEqual
+ DATA_POP x0
+ mov x1, #21
+ bl assertEqual
+ DATA_POP x0
+ mov x1, #9
+ bl assertEqual
+ DATA_POP x0
+ mov x1, #17
  bl assertEqual
 TEST_END

@@ -8,6 +8,17 @@
 	str \register, [VSP], #8
 .endm
 
+.macro DATA_PUSH_AB register1, register2
+	DATA_PUSH \register2
+	DATA_PUSH \register1
+.endm
+
+.macro DATA_PUSH_ABC register1, register2, register3
+	DATA_PUSH \register3
+	DATA_PUSH \register2
+	DATA_PUSH \register1
+.endm
+
 .macro DATA_POP register
 	ldr \register, [VSP, #-8]!
 .endm
@@ -15,6 +26,11 @@
 .macro DATA_POP_AB register1, register2
 	DATA_POP \register1
 	DATA_POP \register2
+.endm
+
+.macro DATA_POP_ABC register1, register2, register3
+	DATA_POP_AB \register1, \register2
+	DATA_POP \register3
 .endm
 
 .macro DATA_TOP register
