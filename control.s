@@ -3,9 +3,10 @@
 
 .global init_control_stack
 
-.global jump_if_false
 .global jump_if_false_word_address
+.global jump_if_false
 
+.global jump_word_address
 .global jump
 
 .global repeat
@@ -24,6 +25,9 @@ control_stack: .fill 20, 8, 0
 jump_if_false_word_address:
 	.quad jump_if_false
 
+
+jump_word_address:
+	.quad jump
 
 .text
 
@@ -111,6 +115,23 @@ if:
 // else - handles else clause
 //
 else:
+	// Generate the jump
+	LOAD_ADDRESS x0, jump_word_address
+	STORE_SEC x0
+
+	// Get the patch location
+	CONTROL_POP x0
+
+	// Push the current secondary address to the control stack
+	CONTROL_PUSH SEC_SPACE
+
+	// Generate placeholder address
+	mov x1, #-1
+	STORE_SEC x1
+
+	// Store address of else body to the patch location
+	str SEC_SPACE, [x0]
+
 	ret
 
 // fi - handles end of if statement

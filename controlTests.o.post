@@ -62,6 +62,7 @@ _start:
  bl repeat_until_generates_right_code
  bl nested_repeat_until_generates_right_code
  bl if_fi_generates_right_code
+ bl if_else_fi_generates_right_code
  unix_exit
  STD_EPILOG
  ret
@@ -305,7 +306,7 @@ TEST_START if_else_fi_generates_right_code
  LOAD_ADDRESS x0, L_test_secondary_area
  ldr x0, [x0, #16]
  LOAD_ADDRESS x1, L_test_secondary_area
- add x1, x1, #32
+ add x1, x1, #48
  bl assertEqual
  LOAD_ADDRESS x0, L_test_secondary_area
  ldr x0, [x0, #24]
@@ -313,7 +314,20 @@ TEST_START if_else_fi_generates_right_code
  bl assertEqual
  LOAD_ADDRESS x0, L_test_secondary_area
  ldr x0, [x0, #32]
+ LOAD_ADDRESS x1, jump_word_address
+ bl assertEqual
+ LOAD_ADDRESS x0, L_test_secondary_area
+ ldr x0, [x0, #40]
+ LOAD_ADDRESS x1, L_test_secondary_area
+ add x1, x1, #56
+ bl assertEqual
+ LOAD_ADDRESS x0, L_test_secondary_area
+ ldr x0, [x0, #48]
  mov x1, #3
+ bl assertEqual
+ LOAD_ADDRESS x0, L_test_secondary_area
+ ldr x0, [x0, #56]
+ mov x1, #4
  bl assertEqual
  // Make sure CONTROL_STACK is back where it started
  mov x0, x27

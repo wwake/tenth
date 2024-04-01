@@ -43,6 +43,10 @@
 .macro STD_EPILOG
  ldr lr, [sp], #16
 .endm
+// Store register contents into next slot in secondary
+.macro STORE_SEC register
+ str \register, [x25], #8
+.endm
 .equ META, 1
 .equ REGULAR, 0
 // DICT_HEADER name, codeAddress
@@ -137,6 +141,7 @@ L_load_system_dictionary:
  DICT_HEADER "repeat", repeat, META
  DICT_HEADER "until", until, META
  DICT_HEADER "if", if, META
+ DICT_HEADER "else", else, META
  DICT_HEADER "fi", fi, META
  DICT_HEADER "#", countData
  DICT_HEADER "==", eq

@@ -77,6 +77,7 @@ L_load_system_dictionary:
 	DICT_HEADER "repeat", repeat, META
 	DICT_HEADER "until", until, META
 	DICT_HEADER "if", if, META
+	DICT_HEADER "else", else, META
 	DICT_HEADER "fi", fi, META
 
 	DICT_HEADER "#", countData
