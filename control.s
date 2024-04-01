@@ -12,6 +12,7 @@
 .global until
 
 .global if
+.global else
 .global fi
 
 .data
@@ -82,12 +83,12 @@ repeat:
 until:
 	// Write jump_if_false to secondary
 	LOAD_ADDRESS x0, jump_if_false_word_address
-	str x0, [SEC_SPACE], #8
+	STORE_SEC x0
 
 	// Pop control stack and write that 
 	//    address to secondary
 	CONTROL_POP x0
-	str x0, [SEC_SPACE], #8
+	STORE_SEC x0
 
 	ret
 
@@ -96,15 +97,20 @@ until:
 if:
 	// Generate jump_if_false
 	LOAD_ADDRESS x0, jump_if_false_word_address
-	str x0, [SEC_SPACE], #8
+	STORE_SEC x0
 
 	// Save addr to backpatch
 	CONTROL_PUSH SEC_SPACE
 
 	// Generate -1 as a placeholder
 	mov x0, #-1
-	str x0, [SEC_SPACE], #8
+	STORE_SEC x0
 
+	ret
+
+// else - handles else clause
+//
+else:
 	ret
 
 // fi - handles end of if statement

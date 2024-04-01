@@ -52,3 +52,9 @@
 .macro STD_EPILOG
 	ldr lr, [sp], #16
 .endm
+
+
+// Store register contents into next slot in secondary
+.macro STORE_SEC register
+	str \register, [SEC_SPACE], #8
+.endm

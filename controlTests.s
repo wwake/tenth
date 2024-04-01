@@ -196,17 +196,17 @@ TEST_START nested_repeat_until_generates_right_code
 
 	// Act:
 	mov x0, #1		// @ space + 0
-	str x0, [SEC_SPACE], #8
-	
+	STORE_SEC x0
+
 	bl repeat
 
 		mov x0, #2	// @ space + 8
-		str x0, [SEC_SPACE], #8
+		STORE_SEC x0
 
 		bl repeat
 
 		mov x0, #3	// @ space + 16
-		str x0, [SEC_SPACE], #8
+		STORE_SEC x0
 
 		bl until
 
@@ -242,10 +242,6 @@ TEST_START nested_repeat_until_generates_right_code
 
 	ldr x28, [sp, #8]
 TEST_END
-
-.macro STORE_SEC register
-	str \register, [SEC_SPACE], #8
-.endm
 
 TEST_START if_fi_generates_right_code
 	str x28, [sp, #8]
@@ -303,3 +299,66 @@ TEST_START if_fi_generates_right_code
 
 	ldr x28, [sp, #8]
 TEST_END
+
+TEST_START if_else_fi_generates_right_code
+	str x28, [sp, #8]
+
+	// Arrange:
+	LOAD_ADDRESS SEC_SPACE, L_test_secondary_area
+	bl init_control_stack
+	mov x28, CONTROL_STACK
+
+	// Act:
+	mov x0, #1		// @ space + 0
+	STORE_SEC x0
+
+	bl if
+
+	mov x0, #2	// @ space + 24
+	STORE_SEC x0
+
+	bl else
+
+	mov x0, #3	// @ space +
+	STORE_SEC x0
+
+	bl fi
+
+	mov x0, #4	// @ space +
+	STORE_SEC x0
+
+	// Assert:
+	LOAD_ADDRESS x0, L_test_secondary_area
+	ldr x0, [x0, #0]
+	mov x1, #1
+	bl assertEqual
+
+	LOAD_ADDRESS x0, L_test_secondary_area
+	ldr x0, [x0, #8]
+	LOAD_ADDRESS x1, jump_if_false_word_address
+	bl assertEqual
+
+	LOAD_ADDRESS x0, L_test_secondary_area
+	ldr x0, [x0, #16]
+	LOAD_ADDRESS x1, L_test_secondary_area
+	add x1, x1, #32
+	bl assertEqual
+
+	LOAD_ADDRESS x0, L_test_secondary_area
+	ldr x0, [x0, #24]
+	mov x1, #2
+	bl assertEqual
+
+	LOAD_ADDRESS x0, L_test_secondary_area
+	ldr x0, [x0, #32]
+	mov x1, #3
+	bl assertEqual
+
+	// Make sure CONTROL_STACK is back where it started
+	mov x0, CONTROL_STACK
+	mov x1, x28
+	bl assertEqual
+
+	ldr x28, [sp, #8]
+TEST_END
+

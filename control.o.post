@@ -43,6 +43,10 @@
 .macro STD_EPILOG
  ldr lr, [sp], #16
 .endm
+// Store register contents into next slot in secondary
+.macro STORE_SEC register
+ str \register, [x25], #8
+.endm
 
 .global init_control_stack
 .global jump_if_false
@@ -51,6 +55,7 @@
 .global repeat
 .global until
 .global if
+.global else
 .global fi
 .data
 .p2align 3
@@ -105,23 +110,27 @@ repeat:
 until:
  // Write jump_if_false to secondary
  LOAD_ADDRESS x0, jump_if_false_word_address
- str x0, [x25], #8
+ STORE_SEC x0
  // Pop control stack and write that 
  //    address to secondary
  CONTROL_POP x0
- str x0, [x25], #8
+ STORE_SEC x0
  ret
 // if - handles beginning of if statement
 // Generate jump_if_false, store addr on control stack
 if:
  // Generate jump_if_false
  LOAD_ADDRESS x0, jump_if_false_word_address
- str x0, [x25], #8
+ STORE_SEC x0
  // Save addr to backpatch
  CONTROL_PUSH x25
  // Generate -1 as a placeholder
  mov x0, #-1
- str x0, [x25], #8
+ STORE_SEC x0
+ ret
+// else - handles else clause
+//
+else:
  ret
 // fi - handles end of if statement
 // Pop address from control stack, backpatch current SEC_SPACE there
