@@ -1,0 +1,61 @@
+// Global register values
+// Free: x23, x28
+
+.macro LOAD_ADDRESS register, location
+ adrp \register, \location@PAGE
+ add \register, \register, \location@PAGEOFF
+.endm
+.macro DATA_PUSH register
+ str \register, [x19], #8
+.endm
+.macro DATA_PUSH_AB register1, register2
+ DATA_PUSH \register2
+ DATA_PUSH \register1
+.endm
+.macro DATA_PUSH_ABC register1, register2, register3
+ DATA_PUSH \register3
+ DATA_PUSH \register2
+ DATA_PUSH \register1
+.endm
+.macro DATA_POP register
+ ldr \register, [x19, #-8]!
+.endm
+.macro DATA_POP_AB register1, register2
+ DATA_POP \register1
+ DATA_POP \register2
+.endm
+.macro DATA_POP_ABC register1, register2, register3
+ DATA_POP_AB \register1, \register2
+ DATA_POP \register3
+.endm
+.macro DATA_TOP register
+ ldr \register, [x19, #-8]
+.endm
+.macro CONTROL_PUSH register
+ str \register, [x27], #8
+.endm
+.macro CONTROL_POP register
+ ldr \register, [x27, #-8]!
+.endm
+.macro STD_PROLOG
+ str lr, [sp, #-16]!
+.endm
+.macro STD_EPILOG
+ ldr lr, [sp], #16
+.endm
+// Store register contents into next slot in secondary
+.macro STORE_SEC register
+ str \register, [x25], #8
+.endm
+
+.include "unix_functions.macros"
+.global loadAddress
+.text
+.align 2
+// loadAddress - given address of secondary, push the following address
+// Input: x0 = address of secondary
+//
+loadAddress:
+ add x0, x0, #8
+ DATA_PUSH x0
+ ret

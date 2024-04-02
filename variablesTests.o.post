@@ -1,0 +1,81 @@
+// Global register values
+// Free: x23, x28
+
+.macro LOAD_ADDRESS register, location
+ adrp \register, \location@PAGE
+ add \register, \register, \location@PAGEOFF
+.endm
+.macro DATA_PUSH register
+ str \register, [x19], #8
+.endm
+.macro DATA_PUSH_AB register1, register2
+ DATA_PUSH \register2
+ DATA_PUSH \register1
+.endm
+.macro DATA_PUSH_ABC register1, register2, register3
+ DATA_PUSH \register3
+ DATA_PUSH \register2
+ DATA_PUSH \register1
+.endm
+.macro DATA_POP register
+ ldr \register, [x19, #-8]!
+.endm
+.macro DATA_POP_AB register1, register2
+ DATA_POP \register1
+ DATA_POP \register2
+.endm
+.macro DATA_POP_ABC register1, register2, register3
+ DATA_POP_AB \register1, \register2
+ DATA_POP \register3
+.endm
+.macro DATA_TOP register
+ ldr \register, [x19, #-8]
+.endm
+.macro CONTROL_PUSH register
+ str \register, [x27], #8
+.endm
+.macro CONTROL_POP register
+ ldr \register, [x27, #-8]!
+.endm
+.macro STD_PROLOG
+ str lr, [sp, #-16]!
+.endm
+.macro STD_EPILOG
+ ldr lr, [sp], #16
+.endm
+// Store register contents into next slot in secondary
+.macro STORE_SEC register
+ str \register, [x25], #8
+.endm
+
+.include "unix_functions.macros"
+.include "asUnit.macros"
+.include "coreTests.macros"
+.global _start
+.text
+.p2align 2
+_start:
+ STD_PROLOG
+ TEST_ALL "variablesTests"
+ bl loadAddress_pushes_address_of_secondary
+ unix_exit
+ STD_EPILOG
+ ret
+.data
+.p2align 3
+L_test_address:
+ .quad 0
+.text
+.align 2
+//
+TEST_START loadAddress_pushes_address_of_secondary
+ // Arrange:
+ LOAD_ADDRESS x0, L_test_address
+ // Act
+ bl loadAddress
+ // Assert:
+ DATA_POP x0
+ LOAD_ADDRESS x1, L_test_address
+ add x1, x1, #8
+ bl assertEqual
+TEST_END

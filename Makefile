@@ -91,7 +91,7 @@ replTests.o: replTests.s $(MACROS) $(TEST_MACROS)
 
 replTests.out: replTests.o repl.o asUnit.o cLike.o compile.o control.o dictionary.o input.o interpreter.o stack.o
 
-repl.out: repl.o arithmetic.o cLike.o compile.o control.o dictionary.o input.o interpreter.o io.o logical.o main.o relational.o stack.o
+repl.out: repl.o arithmetic.o cLike.o compile.o control.o dictionary.o input.o interpreter.o io.o logical.o main.o relational.o stack.o variables.o
 
 
 stack.o: stack.s $(MACROS)
@@ -106,6 +106,13 @@ unitTestDemo.o: unitTestDemo.s $(MACROS) $(TEST_MACROS)
 unitTestDemo.out: unitTestDemo.o cLike.o compile.o asUnit.o
 
 
+variables.o: variables.s $(MACROS)
+
+variablesTests.o: variablesTests.s $(MACROS) $(TEST_MACROS)
+
+variablesTests.out: variablesTests.o variables.o asUnit.o cLike.o
+
+
 clean:
 	rm -f *.o *.out *.post
 
@@ -113,8 +120,8 @@ clean:
 repl: repl.out
 	./repl.out
 
-tests: arithmeticTests.out cLikeTests.out compileTests.out controlTests.out dictionaryTests.out inputTests.out interpreterTests.out logicalTests.out relationalTests.out replTests.out stackTests.out
-	./arithmeticTests.out ; ./cLikeTests.out ; ./compileTests.out ; ./controlTests.out ;  ./dictionaryTests.out; ./inputTests.out; ./interpreterTests.out; ./logicalTests.out; ./relationalTests.out; ./replTests.out; ./stackTests.out
+tests: arithmeticTests.out cLikeTests.out compileTests.out controlTests.out dictionaryTests.out inputTests.out interpreterTests.out logicalTests.out relationalTests.out replTests.out stackTests.out variablesTests.out
+	./arithmeticTests.out ; ./cLikeTests.out ; ./compileTests.out ; ./controlTests.out ;  ./dictionaryTests.out; ./inputTests.out; ./interpreterTests.out; ./logicalTests.out; ./relationalTests.out; ./replTests.out; ./stackTests.out; ./variablesTests.out
 
 playground: unitTestDemo.out
 	./unitTestDemo.out
