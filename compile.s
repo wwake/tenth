@@ -6,17 +6,19 @@
 
 .global _colon
 .global _semicolon
+.global define_word
 
 .text
 .p2align 2
 
-
-// _colon (:) - enter compile mode
-_colon:
+// define_word:
+// Input: x0 = ptr to word string
+// Effects: store word string to secondary, create first two slots of header
+//   (ptr to previous dictionary, ptr to word string)
+//   DICT_PTR is updated, SEC_SPACE points to not-yet-filled third slot of header
+//
+define_word:
 	STD_PROLOG
-
-	// Read the word to be defined
-	bl readWord
 
 	// Put word string after last secondary
 	mov x1, SEC_SPACE
@@ -37,6 +39,19 @@ _colon:
 
 	// Put pointer to word string in 2d slot
 	STORE_SEC x1
+
+	STD_EPILOG
+	ret
+
+// _colon (:) - enter compile mode
+_colon:
+	STD_PROLOG
+
+	// Read the word to be defined
+	bl readWord
+
+	// Save word and create first two cells of header
+	bl define_word
 
 	// Put pointer to start2d in the third slot
 	LOAD_ADDRESS x0, start2d
