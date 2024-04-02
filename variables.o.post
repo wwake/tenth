@@ -95,13 +95,12 @@ array:
  STD_PROLOG
  bl variable
  DATA_POP x0 // number of cells
- sub x0, x0, #1
  // write n-1 zeroes to secondary
 array_loop:
+  sub x0, x0, #1
   cmp x0, #0
   b.eq array_after
   STORE_SEC xzr
-  sub x0, x0, #1
  b array_loop
 array_after:
  STD_EPILOG
