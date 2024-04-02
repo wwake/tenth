@@ -49,18 +49,16 @@
 .endm
 
 .include "repl.macros"
+.global define_string
+.global define_word
 .global colon
 .global semicolon
-.global define_word
 .text
 .p2align 2
-// define_word:
-// Input: x0 = ptr to word string
-// Effects: store word string to secondary, create first two slots of header
-//   (ptr to previous dictionary, ptr to word string)
-//   DICT_PTR is updated, SEC_SPACE points to not-yet-filled third slot of header
-//
-define_word:
+// define_string:
+// Input: x0 = ptr to string
+// Effect: store word string to secondary, adjust SEC_SPACE to a 64-bit boundary
+define_string:
  STD_PROLOG
  // Put word string after last secondary
  mov x1, x25
@@ -70,13 +68,26 @@ define_word:
  bl strlen
  add x0, x0, #8
  and x0, x0, #-8
- mov x1, x25
  add x25, x25, x0
+ STD_EPILOG
+ ret
+// define_word:
+// Input: x0 = ptr to word string
+// Effects: store word string to secondary, create first two slots of header
+//   (ptr to previous dictionary, ptr to word string)
+//   DICT_PTR is updated, SEC_SPACE points to not-yet-filled third slot of header
+//
+define_word:
+ STD_PROLOG
+ str x28, [sp, #8]
+ mov x28, x25 // save old value of SEC_SPACE for string pointer
+ bl define_string
  // Put old dictionary at first slot; update dictionary
  STORE_SEC x21
  sub x21, x25, #8
  // Put pointer to word string in 2d slot
- STORE_SEC x1
+ STORE_SEC x28
+ ldr x28, [sp, #8]
  STD_EPILOG
  ret
 // colon (:) - enter compile mode
