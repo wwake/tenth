@@ -60,6 +60,7 @@ _start:
  bl loadAddress_pushes_address_of_secondary
  bl variable_writes_header_and_value_to_secondary
  bl at_replaces_variable_with_value
+ bl assign_stores_a_at_b
  unix_exit
  STD_EPILOG
  ret
@@ -167,5 +168,30 @@ TEST_START at_replaces_variable_with_value
  // Assert
  DATA_POP x0
  mov x1, #42
+ bl assertEqual
+TEST_END
+TEST_START assign_stores_a_at_b
+ // Arrange
+ bl data_stack_init
+ // Push guard value
+ mov x0, #999
+ DATA_PUSH x0
+ // Push variable address on stack
+ LOAD_ADDRESS x0, L_at_variable
+ DATA_PUSH x0
+ // Push value to assign
+ mov x0, #27
+ DATA_PUSH x0
+ // Act
+ bl assign
+ // Assert
+ // Right value stored to variable
+ LOAD_ADDRESS x0, L_at_variable
+ ldr x0, [x0]
+ mov x1, #27
+ bl assertEqual
+ // Check that stack was popped twice
+ DATA_POP x0
+ mov x1, #999
  bl assertEqual
 TEST_END

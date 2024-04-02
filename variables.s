@@ -6,6 +6,7 @@
 .global loadAddress
 .global variable
 .global at
+.global assign
 
 .text
 .align 2
@@ -45,3 +46,14 @@ at:
 	ldr x0, [x0]
 	DATA_PUSH x0
 	ret
+
+
+// Assign - pop value, then pop address of variable, store value at variable
+//
+assign:
+	DATA_POP x1
+	DATA_POP x2
+	str x1, [x2]
+	ret
+
+
