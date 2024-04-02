@@ -10,6 +10,7 @@
 .global assign
 
 .global array
+.global array_at
 
 .text
 .align 2
@@ -79,4 +80,14 @@ array_loop:
 
 array_after:
 	STD_EPILOG
+	ret
+
+
+// array_at - pop index and address, push mem[address + 8 * index]
+//
+array_at:
+	DATA_POP x1  // index
+	DATA_POP x2  // variable address
+	ldr x0, [x2, x1, lsl #3]
+	DATA_PUSH x0
 	ret

@@ -21,6 +21,7 @@ _start:
 	bl assign_stores_a_at_b
 
 	bl array_writes_header_and_values_to_secondary
+	bl array_at_replaces_variable_and_index_with_value
 
 	unix_exit
 	STD_EPILOG
@@ -148,6 +149,8 @@ TEST_END
 
 L_at_variable:
 	.quad 42
+	.quad 2
+	.quad 3
 
 .text
 .align 2
@@ -277,6 +280,35 @@ TEST_START array_writes_header_and_values_to_secondary
 	// Assert: Sixth cell contains initial value (0)
 	ldr x0, [SYS_DICT, #40]
 	mov x1, #0
+	bl assertEqual
+TEST_END
+
+
+TEST_START array_at_replaces_variable_and_index_with_value
+	// Arrange
+	bl data_stack_init
+
+	mov x0, #999
+	DATA_PUSH x0
+
+	LOAD_ADDRESS x0, L_at_variable
+	DATA_PUSH x0
+
+	mov x1, #1
+	DATA_PUSH x1
+
+	// Act
+	bl array_at
+
+	// Assert
+		// Check that returned value is right
+	DATA_POP x0
+	mov x1, #2
+	bl assertEqual
+
+		// Check that right values were popped
+	DATA_POP x0
+	mov x1, #999
 	bl assertEqual
 TEST_END
 
