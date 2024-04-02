@@ -70,9 +70,12 @@ L_load_system_dictionary:
 	DICT_HEADER "~", notRoutine
 	DICT_HEADER "!", bangRoutine
 
+	DICT_HEADER ".", dotprint
+
+
 	DICT_HEADER ":", colon, META
 	DICT_HEADER ";", semicolon, META
-	DICT_HEADER ".", dotprint
+	DICT_HEADER "variable", variable, META
 
 	DICT_HEADER "repeat", repeat, META
 	DICT_HEADER "until", until, META
