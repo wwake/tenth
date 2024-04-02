@@ -70,8 +70,8 @@ L_load_system_dictionary:
 	DICT_HEADER "~", notRoutine
 	DICT_HEADER "!", bangRoutine
 
-	DICT_HEADER ":", _colon, META
-	DICT_HEADER ";", _semicolon, META
+	DICT_HEADER ":", colon, META
+	DICT_HEADER ";", semicolon, META
 	DICT_HEADER ".", dotprint
 
 	DICT_HEADER "repeat", repeat, META

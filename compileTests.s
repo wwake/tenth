@@ -36,7 +36,7 @@ TEST_START colon_switches_to_compile_mode
 	mov FLAGS, RUN_MODE
 
 	// Act:
-	bl _colon
+	bl colon
 
 	// Assert:
 	mov x0, FLAGS
@@ -80,7 +80,7 @@ TEST_START colon_writes_header_to_secondary
 	mov SYS_DICT, #800	// starting dictionary
 
 	// Act:
-	bl _colon
+	bl colon
 
 	// Assert: String was written to dictionary
 	LOAD_ADDRESS x0, L_test_secondary_area
@@ -126,7 +126,7 @@ TEST_START semicolon_switches_to_run_mode
 	mov FLAGS, COMPILE_MODE
 
 	// Act:
-	bl _semicolon
+	bl semicolon
 
 	// Assert:
 	mov x0, FLAGS
@@ -143,7 +143,7 @@ TEST_START semicolon_writes_end2d_in_secondary
 	LOAD_ADDRESS SEC_SPACE, L_test_secondary_area
 
 	// Act:
-	bl _semicolon
+	bl semicolon
 
 	// Assert:
 	// Check that cell gets end2d's word address

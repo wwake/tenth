@@ -230,7 +230,7 @@ TEST_START evalAll_calls_meta_even_in_compile_mode
 	LOAD_ADDRESS SEC_SPACE, L_evalAll_test_space
 
 	bl dict_init
-	DICT_HEADER ";", _semicolon, META
+	DICT_HEADER ";", semicolon, META
 	DICT_END
 
 	mov FLAGS, COMPILE_MODE

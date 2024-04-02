@@ -86,7 +86,7 @@ TEST_START adding_meta_to_dictionary
 	bl dict_init
 
 	// Act:
-	DICT_HEADER ":", _colon, META
+	DICT_HEADER ":", colon, META
 	DICT_END
 
 	// Assert:
@@ -110,8 +110,8 @@ TEST_END
 
 TEST_START isMeta_finds_only_metas
 	bl dict_init
-	DICT_HEADER ":", _colon, META
-	DICT_HEADER ";", _colon, META
+	DICT_HEADER ":", colon, META
+	DICT_HEADER ";", semicolon, META
 	DICT_END
 
 	LOAD_ADDRESS x0, L_colon_string

@@ -4,8 +4,8 @@
 .include "repl.macros"
 
 
-.global _colon
-.global _semicolon
+.global colon
+.global semicolon
 .global define_word
 
 .text
@@ -43,8 +43,8 @@ define_word:
 	STD_EPILOG
 	ret
 
-// _colon (:) - enter compile mode
-_colon:
+// colon (:) - enter compile mode
+colon:
 	STD_PROLOG
 
 	// Read the word to be defined
@@ -63,10 +63,10 @@ _colon:
 	STD_EPILOG
 	ret
 
-// _semicolon (;) - exit compile mode
+// semicolon (;) - exit compile mode
 // Write a pointer to end2d's word address as last entry in secondary
 //
-_semicolon:
+semicolon:
 	STD_PROLOG
 
 	LOAD_ADDRESS x0, end2d_wordAddress
