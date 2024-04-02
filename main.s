@@ -99,6 +99,7 @@ L_load_system_dictionary:
 	DICT_HEADER "==0", eq0
 
 	DICT_HEADER "@", at
+	DICT_HEADER "@=", assign
 
 	DICT_END
 
