@@ -101,6 +101,7 @@ L_load_system_dictionary:
 
 	DICT_HEADER "@", at
 	DICT_HEADER "@=", assign
+	DICT_HEADER "+@", array_at
 
 	DICT_END
 
