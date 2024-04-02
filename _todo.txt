@@ -1,7 +1,5 @@
-
-* Operators: @, !
 * array name size [define array]
-* Operators: +@, +!
+* Operators: +@, +@=
 Variables and Arrays
 
 * Run-time constant
@@ -33,7 +31,7 @@ Variables
 * Created loadAddress that loads address of variable
 * Rename _colon into colon and _semicolon to semicolon (no underscore)
 * variable name [define variable]
-* Operator: @
+* Operator: @, @=
 
 TEN-24-32: 2024-04-01 - Stack Operations, if, and while
 * [offline] Renamed _push* to push*, _jump* to jump*

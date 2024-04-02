@@ -4,9 +4,12 @@
 .include "unix_functions.macros"
 
 .global loadAddress
+
 .global variable
 .global at
 .global assign
+
+.global array
 
 .text
 .align 2
@@ -57,3 +60,24 @@ assign:
 	ret
 
 
+// Array - pop value, use that as number of cells to create. a array name - creates header for name as a variable
+//
+array:
+	STD_PROLOG
+
+	bl variable
+
+	DATA_POP x0		// number of cells
+	sub x0, x0, #1
+
+	// write n-1 zeroes to secondary
+array_loop:
+		cmp x0, #0
+		b.eq array_after
+		STORE_SEC xzr
+		sub x0, x0, #1
+	b array_loop
+
+array_after:
+	STD_EPILOG
+	ret

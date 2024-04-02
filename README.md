@@ -59,15 +59,14 @@ In these descriptions, a, b, and c represent the first, second, and third elemen
 * nl - print newline
 * . - print number on top of stack (non-destructive)
 
-## Control - somewhat TBD
+## Control
 * repeat .. flag until - repeats until flag at top of stack is true; consumes flag
-* flag if [else] endif
-* do .. flag while
-* flag while .. flag end
-* end start FOR.. NEXT
+* flag if [else] fi
+* while .. do .. od
 
-## Memory - TBD
-* Variables - TBD
-* !   mem[a] = b
+## Memory - 
+* variable name - makes 'name' a variable and initializes it to 0
 * @   a = mem[a]
+* @=   mem[a] = b
+* a array name - makes 'name' an array, pops a and initializes that many cells to 0
 
