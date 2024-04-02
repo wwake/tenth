@@ -18,6 +18,7 @@ Compiler
 * Read from a file
 Input
 
+* Turn _colon into colon (no underscore)
 * Check for data stack underflow
 * Debugging tools for Tenth users
 * String functions

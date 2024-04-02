@@ -32,18 +32,15 @@ _colon:
 	add SEC_SPACE, SEC_SPACE, x0
 
 	// Put old dictionary at first slot; update dictionary
-	str SYS_DICT, [SEC_SPACE]
-	mov SYS_DICT, SEC_SPACE
+	STORE_SEC SYS_DICT
+	sub SYS_DICT, SEC_SPACE, #8
 
 	// Put pointer to word string in 2d slot
-	str x1, [SYS_DICT, #8]
+	STORE_SEC x1
 
 	// Put pointer to start2d in the third slot
 	LOAD_ADDRESS x0, start2d
-	str x0, [SYS_DICT, #16]
-
-	// Move SEC_SPACE past the headers
-	add SEC_SPACE, SEC_SPACE, #24
+	STORE_SEC x0
 
 	// Change to Compile mode
 	mov FLAGS, COMPILE_MODE

@@ -69,15 +69,13 @@ _colon:
  mov x1, x25
  add x25, x25, x0
  // Put old dictionary at first slot; update dictionary
- str x21, [x25]
- mov x21, x25
+ STORE_SEC x21
+ sub x21, x25, #8
  // Put pointer to word string in 2d slot
- str x1, [x21, #8]
+ STORE_SEC x1
  // Put pointer to start2d in the third slot
  LOAD_ADDRESS x0, start2d
- str x0, [x21, #16]
- // Move SEC_SPACE past the headers
- add x25, x25, #24
+ STORE_SEC x0
  // Change to Compile mode
  mov x24, COMPILE_MODE
  STD_EPILOG
