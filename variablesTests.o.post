@@ -63,6 +63,7 @@ _start:
  bl assign_stores_a_at_b
  bl array_writes_header_and_values_to_secondary
  bl array_at_replaces_variable_and_index_with_value
+ bl array_assign_stores_a_at_b_indexed_by_c
  unix_exit
  STD_EPILOG
  ret
@@ -279,6 +280,34 @@ TEST_START array_at_replaces_variable_and_index_with_value
  mov x1, #2
  bl assertEqual
   // Check that right values were popped
+ DATA_POP x0
+ mov x1, #999
+ bl assertEqual
+TEST_END
+TEST_START array_assign_stores_a_at_b_indexed_by_c
+ // Arrange
+ bl data_stack_init
+ // Push guard value
+ mov x0, #999
+ DATA_PUSH x0
+ // Push variable address on stack
+ LOAD_ADDRESS x0, L_at_variable
+ DATA_PUSH x0
+ // Push index onto stack
+ mov x0, #2
+ DATA_PUSH x0
+ // Push value to assign
+ mov x0, #27
+ DATA_PUSH x0
+ // Act
+ bl array_assign
+ // Assert
+ // Right value stored to variable
+ LOAD_ADDRESS x0, L_at_variable
+ ldr x0, [x0, #16]
+ mov x1, #27
+ bl assertEqual
+ // Check that stack was popped three times
  DATA_POP x0
  mov x1, #999
  bl assertEqual

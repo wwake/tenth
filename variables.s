@@ -11,6 +11,7 @@
 
 .global array
 .global array_at
+.global array_assign
 
 .text
 .align 2
@@ -90,4 +91,14 @@ array_at:
 	DATA_POP x2  // variable address
 	ldr x0, [x2, x1, lsl #3]
 	DATA_PUSH x0
+	ret
+
+
+// array_assign - pop value, index, and address; store mem[address + 8 * index] = value
+//
+array_assign:
+	DATA_POP x1		// value
+	DATA_POP x2		// index
+	DATA_POP x3		// address
+	str x1, [x3, x2, lsl #3]
 	ret

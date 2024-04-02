@@ -21,6 +21,7 @@ Input
 Primaries
 
 Ideas
+* Fill command for arrays - push n values, then n, write to array[0..n-1]
 * Detect stack underflow and overflow (data, control)
 * Warn if you use control statements in run mode?
 * Debugging - print stack before each step in start2d; dump secondary contents;
