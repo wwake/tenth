@@ -98,6 +98,8 @@ L_load_system_dictionary:
 	DICT_HEADER "<0", lt0
 	DICT_HEADER "==0", eq0
 
+	DICT_HEADER "@", at
+
 	DICT_END
 
 	STD_EPILOG

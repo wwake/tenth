@@ -51,6 +51,7 @@
 .include "unix_functions.macros"
 .global loadAddress
 .global variable
+.global at
 .text
 .align 2
 // loadAddress - given address of secondary, push the following address
@@ -71,4 +72,11 @@ variable:
  STORE_SEC x0
  STORE_SEC xzr
  STD_EPILOG
+ ret
+// At - pop address of variable, push its contents
+//
+at:
+ DATA_POP x0
+ ldr x0, [x0]
+ DATA_PUSH x0
  ret

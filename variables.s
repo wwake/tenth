@@ -5,6 +5,7 @@
 
 .global loadAddress
 .global variable
+.global at
 
 .text
 .align 2
@@ -34,4 +35,13 @@ variable:
 	STORE_SEC xzr
 
 	STD_EPILOG
+	ret
+
+
+// At - pop address of variable, push its contents
+//
+at:
+	DATA_POP x0
+	ldr x0, [x0]
+	DATA_PUSH x0
 	ret

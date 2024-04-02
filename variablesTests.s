@@ -17,6 +17,7 @@ _start:
 
 	bl loadAddress_pushes_address_of_secondary
 	bl variable_writes_header_and_value_to_secondary
+	bl at_replaces_variable_with_value
 
 	unix_exit
 	STD_EPILOG
@@ -137,3 +138,27 @@ TEST_START variable_writes_header_and_value_to_secondary
 	bl assertEqual
 TEST_END
 
+
+.data
+.p2align 3
+
+L_at_variable:
+	.quad 42
+
+.text
+.align 2
+
+TEST_START at_replaces_variable_with_value
+	// Arrange
+	bl data_stack_init
+	LOAD_ADDRESS x0, L_at_variable
+	DATA_PUSH x0
+
+	// Act
+	bl at
+
+	// Assert
+	DATA_POP x0
+	mov x1, #42
+	bl assertEqual
+TEST_END
