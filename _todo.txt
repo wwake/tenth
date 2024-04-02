@@ -18,7 +18,6 @@ Compiler
 * Read from a file
 Input
 
-* Turn _colon into colon (no underscore)
 * Check for data stack underflow
 * Debugging tools for Tenth users
 * String functions
@@ -33,6 +32,7 @@ Ideas
 TEN-24-33: 2024-04-02 - Variables and Arrays
 Variables
 * Created loadAddress that loads address of variable
+* Rename _colon into colon and _semicolon to semicolon (no underscore)
 
 TEN-24-32: 2024-04-01 - Stack Operations, if, and while
 * [offline] Renamed _push* to push*, _jump* to jump*

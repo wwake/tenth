@@ -110,7 +110,7 @@ variables.o: variables.s $(MACROS)
 
 variablesTests.o: variablesTests.s $(MACROS) $(TEST_MACROS)
 
-variablesTests.out: variablesTests.o variables.o asUnit.o cLike.o input.o
+variablesTests.out: variablesTests.o variables.o asUnit.o cLike.o compile.o input.o interpreter.o stack.o
 
 
 clean:

@@ -16,7 +16,7 @@ _start:
 	TEST_ALL "variablesTests"
 
 	bl loadAddress_pushes_address_of_secondary
-	//bl variable_writes_header_and_value_to_secondary
+	bl variable_writes_header_and_value_to_secondary
 
 	unix_exit
 	STD_EPILOG
@@ -122,18 +122,17 @@ TEST_START variable_writes_header_and_value_to_secondary
 	bl assertEqual
 
 	// Assert: Second cell is pointer to new string
-	ldr x0, [SYS_DICT, #16]
+	ldr x0, [SYS_DICT, #8]
 	LOAD_ADDRESS x1, L_test_secondary_area
 	bl assertEqual
 
 	// Assert: Third cell points to loadAddress
-	ldr x0, [SYS_DICT, #24]
+	ldr x0, [SYS_DICT, #16]
 	LOAD_ADDRESS x1, loadAddress
 	bl assertEqual
 
 	// Assert: Fourth cell contains initial value (0)
-	ldr x0, [SYS_DICT, #32]
-	ldr x0, [x0]
+	ldr x0, [SYS_DICT, #24]
 	mov x1, #0
 	bl assertEqual
 TEST_END

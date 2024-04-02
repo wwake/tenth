@@ -23,4 +23,15 @@ loadAddress:
 //   passive word for it.
 //
 variable:
+	STD_PROLOG
+
+	bl readWord
+	bl define_word
+
+	LOAD_ADDRESS x0, loadAddress
+	STORE_SEC x0
+
+	STORE_SEC xzr
+
+	STD_EPILOG
 	ret

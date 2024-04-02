@@ -58,7 +58,7 @@ _start:
  STD_PROLOG
  TEST_ALL "variablesTests"
  bl loadAddress_pushes_address_of_secondary
- //bl variable_writes_header_and_value_to_secondary
+ bl variable_writes_header_and_value_to_secondary
  unix_exit
  STD_EPILOG
  ret
@@ -138,16 +138,15 @@ TEST_START variable_writes_header_and_value_to_secondary
  add x1, x1, #8
  bl assertEqual
  // Assert: Second cell is pointer to new string
- ldr x0, [x21, #16]
+ ldr x0, [x21, #8]
  LOAD_ADDRESS x1, L_test_secondary_area
  bl assertEqual
  // Assert: Third cell points to loadAddress
- ldr x0, [x21, #24]
+ ldr x0, [x21, #16]
  LOAD_ADDRESS x1, loadAddress
  bl assertEqual
  // Assert: Fourth cell contains initial value (0)
- ldr x0, [x21, #32]
- ldr x0, [x0]
+ ldr x0, [x21, #24]
  mov x1, #0
  bl assertEqual
 TEST_END
