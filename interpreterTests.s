@@ -20,6 +20,8 @@ _start:
 	bl secondary_calls_another_secondary
 	bl recursive_factorial
 
+	bl loadAddress_pushes_address_of_secondary
+
 	unix_exit
 	STD_EPILOG
 	ret
@@ -223,5 +225,29 @@ TEST_START recursive_factorial
 	// Assert
 	DATA_POP x0
 	mov x1, #720
+	bl assertEqual
+TEST_END
+
+.data
+.p2align 3
+
+L_test_address:
+	.quad 0
+
+.text
+.align 2
+
+//
+TEST_START loadAddress_pushes_address_of_secondary
+	// Arrange:
+	LOAD_ADDRESS x0, L_test_address
+
+	// Act
+	bl loadAddress
+
+	// Assert:
+	DATA_POP x0
+	LOAD_ADDRESS x1, L_test_address
+	add x1, x1, #8
 	bl assertEqual
 TEST_END

@@ -7,6 +7,7 @@
 .global start2d
 .global end2d
 .global end2d_wordAddress
+.global loadAddress
 
 .text
 .p2align 2
@@ -70,3 +71,11 @@ end2d:
 	STD_EPILOG				//   ... LR from system stack
 	ret						// Return
 
+
+// loadAddress - given address of secondary, push the following address
+// Input: x0 = address of secondary
+//
+loadAddress:
+	add x0, x0, #8
+	DATA_PUSH x0
+	ret

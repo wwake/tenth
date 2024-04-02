@@ -1,34 +1,47 @@
 
-* Control: while-do-od
-* Debugging tools for Tenth users
-* Memory: variable, array, !, @, +!, +@
-* Strings: constants, print$, split$, make$
-* Check for data stack underflow
-Primaries
+* variable name [define variable]
+* Operators: @, !
+* array name size [define array]
+* Operators: +@, +!
+Variables and Arrays
+
+* Run-time constant
+* Compile-time constant
+* Operators: print$, split$, make$
+* Try arrays of strings?
+Strings
 
 * Explore whether we can use relocatable addresses elsewhere [seems ok in data segment]
-* Strings (eval and compile)
 Compiler
 
-Ideas
-* Should VSP point to the last element? instead of next free slot.
-* Read a string from a file
-* Detect stack underflow and overflow (data, control)
-* Warn if you use repeat-until in run mode?
-* Debugging - print stack before each step in start2d; dump secondary contents; 
+* Read by character from terminal
+* Read from a file
+Input
 
+* Check for data stack underflow
+* Debugging tools for Tenth users
+* String functions
+Primaries
+
+Ideas
+* Detect stack underflow and overflow (data, control)
+* Warn if you use control statements in run mode?
+* Debugging - print stack before each step in start2d; dump secondary contents;
+
+
+TEN-24-33: 2024-04-02 - Variables and Arrays
 
 TEN-24-32: 2024-04-01 - Stack Operations, if, and while
 * [offline] Renamed _push* to push*, _jump* to jump*
-* Check CAB - seems off - repl called wrong function
+* Check CAB - seems off - repl called pop instead of cab
 * Stack operations: CAB, CBA, BAB
-* Control: if-else-fi
+* Control: if-else-fi, while-do-od
 
 TEN-24-31: 2024-03-28 - Nested Repeat-Until
 * Verify nested control structures work (lang level, unit test, lldb)
 Operators
   * Relational: ==, !=, <, <=, >, >=, <0, ==0
-  * Stack: pop, swap, 
+  * Stack: pop, swap
 
 TEN-24-30: 2024-03-27 - Repeat-Until
 Control
