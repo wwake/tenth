@@ -147,7 +147,6 @@ TEST_START eval_pushes_number_on_data_stack
 TEST_END
 
 
-
 L_eval_word:
 	.asciz "1"
 

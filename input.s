@@ -85,14 +85,22 @@ L_check_if_at_end:
 L_find_word_start:
 		ldrb w0, [NEXT_WORD]
 		cmp w0, #0x20		// space (skip)
-		b.ne not_a_space
+		b.ne L_look_for_string
 			add NEXT_WORD, NEXT_WORD, #1
 			b L_find_word_start
-not_a_space:
+
+L_look_for_string:
+		cmp w0, #34		// double quote
+		b.ne L_word_start
+			bl read_string
+			b L_exit_word
+
+L_word_start:
+			// Look for a regular word or number
 		mov x0, NEXT_WORD			// Set the return to point to this word
 
 		ldrb w1, [NEXT_WORD]
-		cmp w1, 0x0a
+		cmp w1, 0x0a		// newline
 		b.ne find_trailing_space_or_nl	// At end of line - go back & read more
 		add NEXT_WORD, NEXT_WORD, #1
 		b L_check_if_at_end
@@ -100,14 +108,32 @@ not_a_space:
 find_trailing_space_or_nl:
 		ldrb w1, [NEXT_WORD], #1
 		cmp w1, 0x0a		// newline
-		b.eq exit_space_or_nl
+		b.eq L_exit_word
 		cmp w1, 0x20		// space
-		b.eq exit_space_or_nl
+		b.eq L_exit_word
 		b find_trailing_space_or_nl
 
-exit_space_or_nl:
+L_exit_word:
 	strb wzr, [NEXT_WORD, #-1]
 
 	STD_EPILOG
 	ret
 
+
+// read_string - look for contents of quoted string
+read_string:
+	// Skip past the first quote
+	add NEXT_WORD, NEXT_WORD, #1
+	mov x0, NEXT_WORD			// Set the return to point to this word
+
+L_loop_string:
+		ldrb w1, [NEXT_WORD], #1
+//		cmp w1, 0x0a		// newline
+//		b.eq L_exit_string
+		cmp w1, #34			// double quote
+		b.eq L_exit_string
+		b L_loop_string
+
+L_exit_string:
+
+	ret

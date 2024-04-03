@@ -23,6 +23,8 @@
 		91D342EB2B98F8A4001B1D00 /* main.s in Sources */ = {isa = PBXBuildFile; fileRef = 91D342EA2B98F8A4001B1D00 /* main.s */; };
 		91D58B9D2BBC813B004311FB /* variables.s in Sources */ = {isa = PBXBuildFile; fileRef = 91D58B9C2BBC813B004311FB /* variables.s */; };
 		91D58B9F2BBC8152004311FB /* variablesTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91D58B9E2BBC8152004311FB /* variablesTests.s */; };
+		91D58BA12BBDD17A004311FB /* string.s in Sources */ = {isa = PBXBuildFile; fileRef = 91D58BA02BBDD17A004311FB /* string.s */; };
+		91D58BA32BBDD18F004311FB /* stringTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91D58BA22BBDD18F004311FB /* stringTests.s */; };
 		91E41A242BB20C0000F83677 /* arithmeticTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91E41A232BB20C0000F83677 /* arithmeticTests.s */; };
 		91E41A262BB2E94E00F83677 /* stack.s in Sources */ = {isa = PBXBuildFile; fileRef = 91E41A252BB2E94E00F83677 /* stack.s */; };
 		91E41A2A2BB2EEAA00F83677 /* stackTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91E41A292BB2EEAA00F83677 /* stackTests.s */; };
@@ -80,6 +82,8 @@
 		91D342EA2B98F8A4001B1D00 /* main.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = main.s; path = ../main.s; sourceTree = "<group>"; };
 		91D58B9C2BBC813B004311FB /* variables.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = variables.s; path = ../variables.s; sourceTree = "<group>"; };
 		91D58B9E2BBC8152004311FB /* variablesTests.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = variablesTests.s; path = ../variablesTests.s; sourceTree = "<group>"; };
+		91D58BA02BBDD17A004311FB /* string.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = string.s; path = ../string.s; sourceTree = "<group>"; };
+		91D58BA22BBDD18F004311FB /* stringTests.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = stringTests.s; path = ../stringTests.s; sourceTree = "<group>"; };
 		91E41A1E2BB2056400F83677 /* io.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = io.s; path = ../io.s; sourceTree = "<group>"; };
 		91E41A202BB20ACA00F83677 /* arithmetic.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = arithmetic.s; path = ../arithmetic.s; sourceTree = "<group>"; };
 		91E41A232BB20C0000F83677 /* arithmeticTests.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = arithmeticTests.s; path = ../arithmeticTests.s; sourceTree = "<group>"; };
@@ -165,6 +169,7 @@
 				91E41A2C2BB2F0B600F83677 /* relational.s */,
 				91E41A252BB2E94E00F83677 /* stack.s */,
 				91D58B9C2BBC813B004311FB /* variables.s */,
+				91D58BA02BBDD17A004311FB /* string.s */,
 			);
 			name = core;
 			sourceTree = "<group>";
@@ -193,6 +198,7 @@
 				91E41A2E2BB2F1B600F83677 /* relationalTests.s */,
 				91908DBD2B966ABC008CC466 /* replTests.s */,
 				91E41A292BB2EEAA00F83677 /* stackTests.s */,
+				91D58BA22BBDD18F004311FB /* stringTests.s */,
 				91451FC32B73E40500D8C89A /* unitTestPlayground.s */,
 				91D58B9E2BBC8152004311FB /* variablesTests.s */,
 			);
@@ -267,6 +273,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91D58BA12BBDD17A004311FB /* string.s in Sources */,
 				91E41A372BB350CE00F83677 /* logicalTests.s in Sources */,
 				91D342EB2B98F8A4001B1D00 /* main.s in Sources */,
 				913B91FA2B9A57AB00943E4E /* input.s in Sources */,
@@ -286,6 +293,7 @@
 				91908DBE2B966ABC008CC466 /* replTests.s in Sources */,
 				912FE2722B9121400065D33E /* dictionary.s in Sources */,
 				91CAE5EB2BA23EB7001E8E9E /* repl.macros in Sources */,
+				91D58BA32BBDD18F004311FB /* stringTests.s in Sources */,
 				91451FBF2B73E3C700D8C89A /* compileTests.s in Sources */,
 				912FE2702B9111330065D33E /* dictionaryTests.s in Sources */,
 				916C5CB82B7C155E00EA6FE5 /* coreTests.macros in Sources */,

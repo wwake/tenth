@@ -1,10 +1,8 @@
-* array name size [define array]
-* Operators: +@, +@=
-Variables and Arrays
-
-* Run-time constant
-* Compile-time constant
-* Operators: print$, split$, make$
+* Run-time string constant
+* Compile-time string constant
+* How to put " in strings?
+* What if strings don't end by end of line?
+* Operators: .$, split$, join$, make$, @$+ (?)
 * Try arrays of strings?
 Strings
 
@@ -16,15 +14,17 @@ Compiler
 Input
 
 * Check for data stack underflow
-* Debugging tools for Tenth users
-* String functions
-Primaries
+* Debugging tools for Tenth users?
+Environment
 
 Ideas
-* Fill command for arrays - push n values, then n, write to array[0..n-1]
+* Fill command for arrays - push n values, then n, then a, write to a[0..n-1]
 * Detect stack underflow and overflow (data, control)
 * Warn if you use control statements in run mode?
 * Debugging - print stack before each step in start2d; dump secondary contents;
+
+
+TEN-24-34: 2024-04-03 - Strings
 
 
 TEN-24-33: 2024-04-02 - Variables and Arrays
@@ -33,6 +33,11 @@ Variables
 * Rename _colon into colon and _semicolon to semicolon (no underscore)
 * variable name [define variable]
 * Operator: @, @=
+
+Arrays
+* size array name [define array with size from data stack]
+* Operators: @+, @+=
+
 
 TEN-24-32: 2024-04-01 - Stack Operations, if, and while
 * [offline] Renamed _push* to push*, _jump* to jump*

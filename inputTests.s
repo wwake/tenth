@@ -21,6 +21,8 @@ _start:
 
 	bl read_from_newline_only_line_causes_readLine
 
+	bl read_reads_whole_string
+
 	unix_exit
 	STD_EPILOG
 	ret
@@ -64,6 +66,13 @@ L_read_multiline_nonempty:
 
 L_expect_read_multiline_1:
 	.asciz "1"
+
+
+L_simple_string:
+	.asciz "\"I'm a string\""
+
+L_simple_string_expected:
+	.asciz "I'm a string"
 
 .data
 .p2align 3
@@ -154,6 +163,7 @@ TEST_START read_with_word_starting_with_spaces
 TEST_END
 
 TEST_START read_read_multiple_words_separated_by_spaces
+	// Arrange
 	bl inputInit
 
 	READ_STUB_INIT
@@ -161,6 +171,8 @@ TEST_START read_read_multiple_words_separated_by_spaces
 	READ_STUB_READY
 
 	LOAD_ADDRESS READ_LINE_ROUTINE, stub_readLine
+
+	// Act
 	bl readWord
 
 	LOAD_ADDRESS x1, L_expect_source3a
@@ -170,6 +182,7 @@ TEST_START read_read_multiple_words_separated_by_spaces
 	LOAD_ADDRESS READ_LINE_ROUTINE, stub_readLine
 	bl readWord
 
+	// Assert
 	LOAD_ADDRESS x1, L_expect_source3b
 	bl assertEqualStrings
 
@@ -192,5 +205,22 @@ TEST_START read_from_newline_only_line_causes_readLine
 	bl readWord
 
 	LOAD_ADDRESS x1, L_expect_read_multiline_1
+	bl assertEqualStrings
+TEST_END
+
+
+TEST_START read_reads_whole_string
+	// Arrange
+	READ_STUB_INIT
+	READ_STUB_ADD L_simple_string
+	READ_STUB_READY
+	LOAD_ADDRESS READ_LINE_ROUTINE, stub_readLine
+
+	// Act
+	bl readWord
+
+	// Assert
+	// x0 is returned string
+	LOAD_ADDRESS x1, L_simple_string_expected
 	bl assertEqualStrings
 TEST_END
