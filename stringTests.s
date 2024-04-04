@@ -4,6 +4,7 @@
 .include "unix_functions.macros"
 
 .include "asUnit.macros"
+.include "repl.macros"
 
 .global _start
 
@@ -15,7 +16,7 @@ _start:
 
 	TEST_ALL "stringTests"
 
-	//bl eval_pushes_string_address_on_data_stack
+	bl eval_pushes_string_address_on_data_stack
 
 	unix_exit
 	STD_EPILOG
@@ -25,10 +26,8 @@ _start:
 
 .data
 .p2align 3
-L_string:
-	.asciz "\"a string \""
 
-L_string_expected:
+L_string:
 	.asciz "a string "
 
 .text
@@ -36,15 +35,18 @@ L_string_expected:
 
 TEST_START eval_pushes_string_address_on_data_stack
 	// Arrange:
+	bl sec_space_init
+	bl dict_init
 	bl data_stack_init
 
 	LOAD_ADDRESS x0, L_string
+	mov x1, STRING_FOUND
 
 	// Act:
 	bl eval
 
 	// Assert:
 	DATA_POP x0
-	LOAD_ADDRESS x1, L_string_expected
+	LOAD_ADDRESS x1, L_string
 	bl assertEqualStrings
 TEST_END

@@ -126,20 +126,22 @@ else:
 	// Get the patch location
 	CONTROL_POP x0
 
-	// Push the current secondary address to the control stack
+	// Push the current secondary address 
+	//   to the control stack
 	CONTROL_PUSH SEC_SPACE
 
 	// Generate placeholder address
 	mov x1, #-1
 	STORE_SEC x1
 
-	// Store address of else body to the patch location
+	// Store addr. of else body to patch loc
 	str SEC_SPACE, [x0]
 
 	ret
 
 // fi - handles end of if statement
-// Pop address from control stack, backpatch current SEC_SPACE there
+// Pop address from control stack, 
+//   backpatch current SEC_SPACE there
 fi:
 	CONTROL_POP x0
 	str SEC_SPACE, [x0]
@@ -176,14 +178,15 @@ od:
 	LOAD_ADDRESS x0, jump_word_address
 	STORE_SEC x0
 
-	// Pop jump_if_false (x0) and start address (x1)
+	// Pop jump_if_false (x0) and 
+	//   start address (x1)
 	CONTROL_POP x0
 	CONTROL_POP x1
 
 	// Write start address for jump
 	STORE_SEC x1
 
-	// Patch jump_if_false address to point to end
+	// Patch jump_if_false address
 	str SEC_SPACE, [x0]
 
 	ret

@@ -3,13 +3,27 @@
 
 .include "repl.macros"
 
+.global sec_space_init
 .global define_string
 .global define_word
 .global colon
 .global semicolon
 
+.data
+.p2align 3
+
+L_secondary_space:
+	.fill 20000, 8, 0
+
+
 .text
 .p2align 2
+
+sec_space_init:
+	// Setup SEC_SPACE
+	LOAD_ADDRESS SEC_SPACE, L_secondary_space
+	ret
+
 
 // define_string:
 // Input: x0 = ptr to string

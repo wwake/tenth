@@ -15,7 +15,7 @@ _start:
 
 	bl data_stack_init
 
-	bl L_sec_space_init
+	bl sec_space_init
 
 	bl L_load_system_dictionary
 
@@ -29,11 +29,6 @@ _start:
 
 	ret
 
-
-L_sec_space_init:
-	// Setup SEC_SPACE
-	LOAD_ADDRESS SEC_SPACE, L_secondary_space
-	ret
 
 L_load_system_dictionary:
 	STD_PROLOG
@@ -71,6 +66,7 @@ L_load_system_dictionary:
 	DICT_HEADER "!", bangRoutine
 
 	DICT_HEADER ".", dotprint
+	DICT_HEADER ".$", dot_print_string
 
 
 	DICT_HEADER ":", colon, META
@@ -117,8 +113,3 @@ L_error_handler_init:
 	str x1, [x0]
 	ret
 
-.data
-.p2align 3
-
-L_secondary_space:
-	.fill 20000, 8, 0

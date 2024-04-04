@@ -2,6 +2,7 @@
 #include "assembler.macros"
 
 .global dotprint
+.global dot_print_string
 
 .global nl
 
@@ -19,6 +20,16 @@ dotprint:
 	bl printnum
 
 	LOAD_ADDRESS x0, L_space
+	bl print
+
+	STD_EPILOG
+	ret
+
+
+dot_print_string:
+	STD_PROLOG
+
+	DATA_TOP x0
 	bl print
 
 	STD_EPILOG

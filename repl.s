@@ -15,9 +15,10 @@
 // eval - evaluates one instruction
 // Input:
 //   x0 - word to execute
+//   x1 - word type
 //   x22 - next word in input
 // Uses:
-//   x28 - temp
+//   x28 - temp - input word
 // Assumes - first dictionary entry is the syntax error routine (uses x22)
 // Output:
 //   side effect from execution
@@ -28,6 +29,14 @@ eval:
 
 	mov x28, x0
 
+	cmp x1, STRING_FOUND
+	b.ne L_check_word_or_number
+		// Push string address and store string in secondary
+		DATA_PUSH SEC_SPACE
+		bl define_string
+	b L_eval_exiting
+
+L_check_word_or_number:
 	bl dict_search
 	cmp x0, #0
 	b.eq L_check_for_numeric
@@ -67,8 +76,8 @@ evalAll:
 
 	mov x28, x0
 
-	and x1, FLAGS, COMPILE_MODE
-	cmp x1, COMPILE_MODE
+	and x2, FLAGS, COMPILE_MODE
+	cmp x2, COMPILE_MODE
 	b.ne L_evaluate
 
 	bl isMeta

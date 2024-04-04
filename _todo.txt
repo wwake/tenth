@@ -1,8 +1,8 @@
-* Run-time string constant
-* Compile-time string constant
-* How to put " in strings?
+
+* Compile-time string constant - note we overwrite x1 from readWord
+* Operators: split$, join$, make$, @$+ (?)
+* How to put " in strings?  Try c's \"
 * What if strings don't end by end of line?
-* Operators: .$, split$, join$, make$, @$+ (?)
 * Try arrays of strings?
 Strings
 
@@ -25,6 +25,8 @@ Ideas
 
 
 TEN-24-34: 2024-04-03 - Strings
+* Run-time string constant for correct strings
+* Operators: .$
 
 
 TEN-24-33: 2024-04-02 - Variables and Arrays

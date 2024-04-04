@@ -68,6 +68,7 @@ L_reading:
 //   READ_LINE_ROUTINE (register) - address of the routine to call to read a line
 // Output:
 //   x0 - ptr to start of returned word (0-terminated string)
+//   x1 - 0 for word, 1 for a string, 2 for a number
 //   NEXT_WORD (register) - updated NEXT_WORD
 //
 readWord:
@@ -83,11 +84,11 @@ L_check_if_at_end:
 		LOAD_ADDRESS NEXT_WORD, inputBuffer
 
 L_find_word_start:
-		ldrb w0, [NEXT_WORD]
-		cmp w0, #0x20		// space (skip)
-		b.ne L_look_for_string
-			add NEXT_WORD, NEXT_WORD, #1
-			b L_find_word_start
+	ldrb w0, [NEXT_WORD]
+	cmp w0, #0x20		// space (skip)
+	b.ne L_look_for_string
+		add NEXT_WORD, NEXT_WORD, #1
+		b L_find_word_start
 
 L_look_for_string:
 		cmp w0, #34		// double quote
@@ -98,18 +99,19 @@ L_look_for_string:
 L_word_start:
 			// Look for a regular word or number
 		mov x0, NEXT_WORD			// Set the return to point to this word
+		mov x1, WORD_FOUND
 
-		ldrb w1, [NEXT_WORD]
-		cmp w1, 0x0a		// newline
+		ldrb w2, [NEXT_WORD]
+		cmp w2, 0x0a		// newline
 		b.ne find_trailing_space_or_nl	// At end of line - go back & read more
 		add NEXT_WORD, NEXT_WORD, #1
 		b L_check_if_at_end
 
 find_trailing_space_or_nl:
-		ldrb w1, [NEXT_WORD], #1
-		cmp w1, 0x0a		// newline
+		ldrb w2, [NEXT_WORD], #1
+		cmp w2, 0x0a		// newline
 		b.eq L_exit_word
-		cmp w1, 0x20		// space
+		cmp w2, 0x20		// space
 		b.eq L_exit_word
 		b find_trailing_space_or_nl
 
@@ -121,16 +123,22 @@ L_exit_word:
 
 
 // read_string - look for contents of quoted string
+// Output:
+//   x0 = pointer to unterminated string
+//   x1 = STRING_FOUND code
+//   NEXTWORD - points one past terminating character
+//
 read_string:
 	// Skip past the first quote
 	add NEXT_WORD, NEXT_WORD, #1
 	mov x0, NEXT_WORD			// Set the return to point to this word
+	mov x1, STRING_FOUND
 
 L_loop_string:
-		ldrb w1, [NEXT_WORD], #1
-//		cmp w1, 0x0a		// newline
+		ldrb w2, [NEXT_WORD], #1
+//		cmp w2, 0x0a		// newline
 //		b.eq L_exit_string
-		cmp w1, #34			// double quote
+		cmp w2, #34			// double quote
 		b.eq L_exit_string
 		b L_loop_string
 

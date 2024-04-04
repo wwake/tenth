@@ -3,7 +3,7 @@
 .include "unix_functions.macros"
 .include "asUnit.macros"
 .include "dictionary.macros"
-
+.include "repl.macros"
 
 .global _start
 
@@ -135,6 +135,9 @@ stub_readLine:
 	ret
 
 TEST_START read_with_word_at_start
+	str x28, [sp, #8]
+
+	// Arrange:
 	bl inputInit
 
 	READ_STUB_INIT
@@ -142,10 +145,22 @@ TEST_START read_with_word_at_start
 	READ_STUB_READY
 
 	LOAD_ADDRESS READ_LINE_ROUTINE, stub_readLine
+
+	// Act:
 	bl readWord
 
+	// Assert:
+	mov x28, x1		// Word type
+
+	// x0 is found word
 	LOAD_ADDRESS x1, L_expect_source1
 	bl assertEqualStrings
+
+	mov x0, x28
+	mov x1, WORD_FOUND
+	bl assertEqual
+
+	ldr x28, [sp, #8]
 TEST_END
 
 TEST_START read_with_word_starting_with_spaces
@@ -210,6 +225,8 @@ TEST_END
 
 
 TEST_START read_reads_whole_string
+	str x28, [sp, #8]
+
 	// Arrange
 	READ_STUB_INIT
 	READ_STUB_ADD L_simple_string
@@ -220,7 +237,15 @@ TEST_START read_reads_whole_string
 	bl readWord
 
 	// Assert
-	// x0 is returned string
+	mov x28, x0
+
+	mov x0, x1
+	mov x1, STRING_FOUND
+	bl assertEqual
+
+	mov x0, x28
 	LOAD_ADDRESS x1, L_simple_string_expected
 	bl assertEqualStrings
+
+	ldr x28, [sp, #8]
 TEST_END

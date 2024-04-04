@@ -12,3 +12,10 @@
 	ldr x1, [x1]
 	blr x1
 .endm
+
+
+// Return codes for readWord
+
+.equ WORD_FOUND, 0
+.equ STRING_FOUND, 1
+.equ NUMBER_FOUND, 2
