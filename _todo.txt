@@ -1,6 +1,5 @@
-
 * Compile-time string constant - note we overwrite x1 from readWord
-* Operators: split$, join$, make$, @$+ (?)
+* Operators: split$, join$, make$, @+$ (?)
 * How to put " in strings?  Try c's \"
 * What if strings don't end by end of line?
 * Try arrays of strings?
@@ -25,9 +24,8 @@ Ideas
 
 
 TEN-24-34: 2024-04-03 - Strings
-* Run-time string constant for correct strings
-* Operators: .$
-
+* Run-time string constant for well-formed strings
+* Operators: .$ (print)
 
 TEN-24-33: 2024-04-02 - Variables and Arrays
 Variables
@@ -39,7 +37,6 @@ Variables
 Arrays
 * size array name [define array with size from data stack]
 * Operators: @+, @+=
-
 
 TEN-24-32: 2024-04-01 - Stack Operations, if, and while
 * [offline] Renamed _push* to push*, _jump* to jump*

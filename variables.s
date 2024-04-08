@@ -67,7 +67,7 @@ assign:
 array:
 	STD_PROLOG
 
-	bl variable
+	bl variable		// make header
 
 	DATA_POP x0		// number of cells
 

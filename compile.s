@@ -27,7 +27,8 @@ sec_space_init:
 
 // define_string:
 // Input: x0 = ptr to string
-// Effect: store word string to secondary, adjust SEC_SPACE to a 64-bit boundary
+// Effect: store word string to secondary, 
+//   adjust SEC_SPACE to a 64-bit boundary
 define_string:
 	STD_PROLOG
 

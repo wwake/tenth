@@ -31,7 +31,8 @@ eval:
 
 	cmp x1, STRING_FOUND
 	b.ne L_check_word_or_number
-		// Push string address and store string in secondary
+		// Push string address and 
+		//   store string in secondary
 		DATA_PUSH SEC_SPACE
 		bl define_string
 	b L_eval_exiting
@@ -67,14 +68,18 @@ L_eval_exiting:
 .text
 .align 2
 // evalAll: evaluate or compile
-// Input: x0 - current word
+// Input: 
+//   x0 - current word
+//   x1 - type of word
 // Uses: x28 - temp pointing to the current word
 //
 evalAll:
 	STD_PROLOG
-	str x28, [sp, #8]
+	str x28, [sp, #8]		// x28 - holds word pointed to
+//	str x27, [sp, #-16]!	// x27 - holds type of word
 
 	mov x28, x0
+//	mov x27, x1
 
 	and x2, FLAGS, COMPILE_MODE
 	cmp x2, COMPILE_MODE
@@ -83,15 +88,18 @@ evalAll:
 	bl isMeta
 	cmp x0, #1
 	b.eq L_evaluate
-		mov x0, x28
+		mov x0, x28		// Restore pointer to word
+		//mov x1, x27		// Restore word type
 		bl compile
 		b L_end_evalAll
 
 	L_evaluate:
-		mov x0, x28
+		mov x0, x28		// Restore pointer to word
+		//mov x1, x27		// Restore word type
 		bl eval
 
 L_end_evalAll:
+//	ldr x27, [sp], #16
 	ldr x28, [sp, #8]
 	STD_EPILOG
 	ret
@@ -101,7 +109,9 @@ L_end_evalAll:
 .align 2
 
 // compile - put word address for a name into the currently-building secondary
-// Input: x0 = pointer to string name
+// Input: 
+//   x0 = pointer to word
+//   x1 = type of word found
 // Uses: x0 = temp
 // Output:
 //   If word is found, it's added to current secondary
@@ -113,6 +123,12 @@ compile:
 
 	mov x29, x0
 
+	cmp x1, STRING_FOUND
+	b.ne L_compile_check_word_or_number
+		bl compile_string
+	b L_exiting_compile
+
+L_compile_check_word_or_number:
 	bl dict_search
 	cmp x0, #0
 	b.eq L_compile_check_for_number
@@ -136,6 +152,47 @@ L_compile_word_not_found:
 
 L_exiting_compile:
 	ldr x29, [sp, #8]
+	STD_EPILOG
+	ret
+
+
+.text
+.align 2
+
+// compile_string - generate code to save string and load its address
+// Input:
+//   x0 = pointer to word
+//   x1 = type of word found
+// Uses: x28 = saved pointer to secondary
+// Output: generated code
+//
+compile_string:
+	STD_PROLOG
+
+	// Store push in secondary
+	LOAD_ADDRESS x2, push_word_address
+	STORE_SEC x2
+
+	// Store address of (not-yet-created string)
+	add x2, SEC_SPACE, #24
+	STORE_SEC x2
+
+	// Store jump in secondary
+	LOAD_ADDRESS x2, jump_word_address
+	STORE_SEC x2
+
+	// Save address to control stack, store -1 for now
+	CONTROL_PUSH SEC_SPACE
+	mov x2, #-1
+	STORE_SEC x2
+
+	// Store string (pointed to by x0) into the secondary
+	bl define_string
+
+	// Backpatch target of jump
+	CONTROL_POP x2
+	str SEC_SPACE, [x2]
+
 	STD_EPILOG
 	ret
 
