@@ -1,0 +1,168 @@
+// Global register values
+// Free: x23, x28
+
+.macro LOAD_ADDRESS register, location
+ adrp \register, \location@PAGE
+ add \register, \register, \location@PAGEOFF
+.endm
+.macro DATA_PUSH register
+ str \register, [x19], #8
+.endm
+.macro DATA_PUSH_AB register1, register2
+ DATA_PUSH \register2
+ DATA_PUSH \register1
+.endm
+.macro DATA_PUSH_ABC register1, register2, register3
+ DATA_PUSH \register3
+ DATA_PUSH \register2
+ DATA_PUSH \register1
+.endm
+.macro DATA_POP register
+ ldr \register, [x19, #-8]!
+.endm
+.macro DATA_POP_AB register1, register2
+ DATA_POP \register1
+ DATA_POP \register2
+.endm
+.macro DATA_POP_ABC register1, register2, register3
+ DATA_POP_AB \register1, \register2
+ DATA_POP \register3
+.endm
+.macro DATA_TOP register
+ ldr \register, [x19, #-8]
+.endm
+.macro CONTROL_PUSH register
+ str \register, [x27], #8
+.endm
+.macro CONTROL_POP register
+ ldr \register, [x27, #-8]!
+.endm
+.macro STD_PROLOG
+ str lr, [sp, #-16]!
+.endm
+.macro STD_EPILOG
+ ldr lr, [sp], #16
+.endm
+// Store register contents into next slot in secondary
+.macro STORE_SEC register
+ str \register, [x25], #8
+.endm
+.equ META, 1
+.equ REGULAR, 0
+// DICT_HEADER name, codeAddress
+// Input:
+//   name of the entry "in quotes"
+//   codeAddress of code in entry
+//   x21 [SYS_DICT = dictionary pointer] points to newest dictionary entry
+// Process:
+//   Store 3 words in next entry: link to previous dictionary entry, pointer to name string, and pointer to code
+//   Increment SYS_DICT by 3 words
+// Uses:
+//   x0-x4 as a temp
+//   SYS_DICT is increased for new entry
+//
+.macro DICT_HEADER name, codeAddress, isMeta=REGULAR
+ str x21, [x21, #24]
+ add x21, x21, #24
+ LOAD_ADDRESS x0, L_DICT_HEADER_\@
+ str x0, [x21, #8]
+ mov x3, \isMeta
+ mov x4, META
+ cmp x3, x4
+ b.ne L_skip_meta\@
+  LOAD_ADDRESS x1, metaNext
+  ldr x2, [x1]
+  str x0, [x2]
+  add x2, x2, #8
+  str x2, [x1]
+L_skip_meta\@:
+ LOAD_ADDRESS x0, \codeAddress
+ str x0, [x21, #16]
+ .data
+ L_DICT_HEADER_\@: .asciz "\name"
+ .text
+.endm
+.macro DICT_END
+ LOAD_ADDRESS x0, metaNext
+ ldr x0, [x0]
+ str xzr, [x0]
+.endm
+
+.include "unix_functions.macros"
+.global _start
+.text
+.align 2
+_start:
+ STD_PROLOG
+ str x22, [sp, #8]
+ bl data_stack_init
+ bl sec_space_init
+ bl L_load_system_dictionary
+ bl L_error_handler_init
+ // Run
+ bl repl
+ ldr x22, [sp, #8]
+ STD_EPILOG
+ ret
+L_load_system_dictionary:
+ STD_PROLOG
+ bl dict_init
+ DICT_HEADER "0", push0
+ DICT_HEADER "1", push1
+ DICT_HEADER "dup", dup
+ DICT_HEADER "pop", pop
+ DICT_HEADER "swap", swap
+ DICT_HEADER "cab", cab
+ DICT_HEADER "cba", cba
+ DICT_HEADER "bab", bab
+ DICT_HEADER "nl", nl
+ DICT_HEADER "+", add
+ DICT_HEADER "-", sub
+ DICT_HEADER "*", mul
+ DICT_HEADER "/", div
+ DICT_HEADER "%", mod
+ DICT_HEADER "/%", divmod
+ DICT_HEADER "min", min
+ DICT_HEADER "max", max
+ DICT_HEADER "neg", neg
+ DICT_HEADER "abs", abs
+ DICT_HEADER "&", andRoutine
+ DICT_HEADER "|", orRoutine
+ DICT_HEADER "^", xorRoutine
+ DICT_HEADER "~", notRoutine
+ DICT_HEADER "!", bangRoutine
+ DICT_HEADER ".", dotprint
+ DICT_HEADER ".$", dot_print_string
+ DICT_HEADER ":", colon, META
+ DICT_HEADER ";", semicolon, META
+ DICT_HEADER "variable", variable, META
+ DICT_HEADER "array", array, META
+ DICT_HEADER "repeat", repeat, META
+ DICT_HEADER "until", until, META
+ DICT_HEADER "if", if, META
+ DICT_HEADER "else", else, META
+ DICT_HEADER "fi", fi, META
+ DICT_HEADER "while", while, META
+ DICT_HEADER "do", do, META
+ DICT_HEADER "od", od, META
+ DICT_HEADER "#", countData
+ DICT_HEADER "==", eq
+ DICT_HEADER "!=", neq
+ DICT_HEADER "<", lt
+ DICT_HEADER "<=", le
+ DICT_HEADER ">", gt
+ DICT_HEADER ">=", ge
+ DICT_HEADER "<0", lt0
+ DICT_HEADER "==0", eq0
+ DICT_HEADER "@", at
+ DICT_HEADER "@=", assign
+ DICT_HEADER "@+", array_at
+ DICT_HEADER "@+=", array_assign
+ DICT_END
+ STD_EPILOG
+ ret
+L_error_handler_init:
+ LOAD_ADDRESS x0, global_word_not_found_handler
+ LOAD_ADDRESS x1, wordNotFoundError
+ str x1, [x0]
+ ret

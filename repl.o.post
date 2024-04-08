@@ -109,13 +109,14 @@ L_eval_exiting:
 //   x0 - current word
 //   x1 - type of word
 // Uses: x28 - temp pointing to the current word
+//   x23 - temp holding type of word
 //
 evalAll:
  STD_PROLOG
  str x28, [sp, #8] // x28 - holds word pointed to
-//	str x27, [sp, #-16]!	// x27 - holds type of word
+ str x23, [sp, #-16]! // x27 - holds type of word
  mov x28, x0
-//	mov x27, x1
+ mov x23, x1
  and x2, x24, COMPILE_MODE
  cmp x2, COMPILE_MODE
  b.ne L_evaluate
@@ -123,15 +124,15 @@ evalAll:
  cmp x0, #1
  b.eq L_evaluate
   mov x0, x28 // Restore pointer to word
-  //mov x1, x27		// Restore word type
+  mov x1, x23 // Restore word type
   bl compile
   b L_end_evalAll
  L_evaluate:
   mov x0, x28 // Restore pointer to word
-  //mov x1, x27		// Restore word type
+  mov x1, x23 // Restore word type
   bl eval
 L_end_evalAll:
-//	ldr x27, [sp], #16
+ ldr x23, [sp], #16
  ldr x28, [sp, #8]
  STD_EPILOG
  ret
