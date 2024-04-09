@@ -23,6 +23,9 @@ Ideas
 * Warn if you use control statements in run mode?
 * Debugging - print stack before each step in start2d; dump secondary contents;
 
+TEN-24-36: 2024-04-09 - Raw Input
+* Spike - ran C program off internet that switches to raw mode (https://viewsourcecode.org/snaptoken/kilo/02.enteringRawMode.html)
+
 TEN-24-35: 2024-04-08 - Compile Strings
 * Compile-time string constant
 

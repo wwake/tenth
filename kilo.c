@@ -17,17 +17,39 @@ void disableRawMode() {
     die("tcsetattr");
 }
 
-void enableRawMode() {
-  if (tcgetattr(STDIN_FILENO, &orig_termios) == -1) die("tcgetattr");
-  atexit(disableRawMode);
+union bytes72 {
+	unsigned char bytes[72];
+	struct termios term;
+};
 
-  struct termios raw = orig_termios;
+void printTermStruct(struct termios *pStruct) {
+	union bytes72 mybytes;
+	mybytes.term = *pStruct;
+	for (int i = 0; i < 72; i++) {
+		printf("%02x ", mybytes.bytes[i]);
+		if (i % 8 == 7) { printf("\n"); }
+	}
+}
+
+void enableRawMode() {
+	if (tcgetattr(STDIN_FILENO, &orig_termios) == -1) die("tcgetattr");
+	atexit(disableRawMode);
+
+	struct termios raw = orig_termios;
+
+	printf("Before:\n");
+	printTermStruct(&raw);
+
+
   raw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
   raw.c_oflag &= ~(OPOST);
   raw.c_cflag |= (CS8);
   raw.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
   raw.c_cc[VMIN] = 0;
   raw.c_cc[VTIME] = 1;
+
+	printf("After:\n");
+	printTermStruct(&raw);
 
   if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1) die("tcsetattr");
 }

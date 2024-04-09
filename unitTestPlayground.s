@@ -22,6 +22,20 @@ _start:
 	STD_PROLOG
 	
 	mov x0, #0
+				// 0x7413 = t ^m - we think 13 is the sub-code
+				// 0x4048 = @ (72 base 10) - we think 72 is the size of the struct
+	mov w1, #0x7413
+	movk w1, #0x4048, lsl #16
+	LOAD_ADDRESS x2, L_input_buffer
+
+	mov x16, #54		// ioctl
+	svc 0
+
+	unix_exit
+	STD_EPILOG
+	ret
+
+	mov x0, #0
 	LOAD_ADDRESS x1, L_input_buffer
 	mov x2, #99
 	unix_read #0, L_input_buffer, #99
@@ -33,7 +47,7 @@ _start:
 
 	mov x0, #0
 	LOAD_ADDRESS x1, L_input_buffer
-	mov x2, INPUT_BUFFER_SIZE
+	mov x2, #100 // INPUT_BUFFER_SIZE??
 	unix_read #0, L_input_buffer, #99
 
 	bl printnum
@@ -56,7 +70,6 @@ _start:
    // bl test1
 	// bl test2
 
-	unix_exit
 	STD_EPILOG
 	ret
 

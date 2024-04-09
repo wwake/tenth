@@ -108,6 +108,12 @@ stringTests.o: stringTests.s $(MACROS) $(TEST_MACROS)
 stringTests.out: stringTests.o stack.o arithmetic.o asUnit.o cLike.o compile.o control.o dictionary.o input.o interpreter.o io.o logical.o relational.o repl.o stack.o variables.o
 
 
+unitTestPlayground.o: unitTestPlayground.s assembler.macros unix_functions.macros asUnit.macros
+
+unitTestPlayground.out: unitTestPlayground.o asUnit.o cLike.o
+
+
+
 unitTestDemo.o: unitTestDemo.s $(MACROS) $(TEST_MACROS)
 
 unitTestDemo.out: unitTestDemo.o cLike.o compile.o asUnit.o
