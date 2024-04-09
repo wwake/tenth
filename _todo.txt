@@ -25,6 +25,31 @@ Ideas
 
 TEN-24-36: 2024-04-09 - Raw Input
 * Spike - ran C program off internet that switches to raw mode (https://viewsourcecode.org/snaptoken/kilo/02.enteringRawMode.html)
+* We figured out how to call the equivalent of tcgetattr and were able to examine its effect
+* Finding - we need to change "cb 05" to "43 00" (and maybe more) to change to raw(ish) mode
+
+Termios struct before and after setting flags:
+Before:
+02 6b 00 00 00 00 00 00
+03 00 00 00 00 00 00 00
+00 4b 00 00 00 00 00 00
+cb 05 00 20 00 00 00 00
+04 ff ff 7f 17 15 12 ff
+03 1c 1a 19 11 13 16 0f
+01 00 14 ff 00 00 00 00
+80 25 00 00 00 00 00 00
+80 25 00 00 00 00 00 00
+
+After:
+00 68 00 00 00 00 00 00
+02 00 00 00 00 00 00 00
+00 4b 00 00 00 00 00 00
+43 00 00 20 00 00 00 00
+04 ff ff 7f 17 15 12 ff
+03 1c 1a 19 11 13 16 0f
+00 01 14 ff 00 00 00 00
+80 25 00 00 00 00 00 00
+80 25 00 00 00 00 00 00
 
 TEN-24-35: 2024-04-08 - Compile Strings
 * Compile-time string constant

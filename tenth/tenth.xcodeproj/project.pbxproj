@@ -26,6 +26,7 @@
 		91D58BA12BBDD17A004311FB /* string.s in Sources */ = {isa = PBXBuildFile; fileRef = 91D58BA02BBDD17A004311FB /* string.s */; };
 		91D58BA32BBDD18F004311FB /* stringTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91D58BA22BBDD18F004311FB /* stringTests.s */; };
 		91D58BA62BC5BE0D004311FB /* kilo.c in Sources */ = {isa = PBXBuildFile; fileRef = 91D58BA52BC5BE0D004311FB /* kilo.c */; };
+		91D58BA82BC5DCCE004311FB /* ioTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91D58BA72BC5DCCE004311FB /* ioTests.s */; };
 		91E41A242BB20C0000F83677 /* arithmeticTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91E41A232BB20C0000F83677 /* arithmeticTests.s */; };
 		91E41A262BB2E94E00F83677 /* stack.s in Sources */ = {isa = PBXBuildFile; fileRef = 91E41A252BB2E94E00F83677 /* stack.s */; };
 		91E41A2A2BB2EEAA00F83677 /* stackTests.s in Sources */ = {isa = PBXBuildFile; fileRef = 91E41A292BB2EEAA00F83677 /* stackTests.s */; };
@@ -86,6 +87,7 @@
 		91D58BA02BBDD17A004311FB /* string.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = string.s; path = ../string.s; sourceTree = "<group>"; };
 		91D58BA22BBDD18F004311FB /* stringTests.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = stringTests.s; path = ../stringTests.s; sourceTree = "<group>"; };
 		91D58BA52BC5BE0D004311FB /* kilo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = kilo.c; path = ../kilo.c; sourceTree = "<group>"; };
+		91D58BA72BC5DCCE004311FB /* ioTests.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = ioTests.s; path = ../ioTests.s; sourceTree = "<group>"; };
 		91E41A1E2BB2056400F83677 /* io.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = io.s; path = ../io.s; sourceTree = "<group>"; };
 		91E41A202BB20ACA00F83677 /* arithmetic.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = arithmetic.s; path = ../arithmetic.s; sourceTree = "<group>"; };
 		91E41A232BB20C0000F83677 /* arithmeticTests.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = arithmeticTests.s; path = ../arithmeticTests.s; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 				912FE26F2B9111330065D33E /* dictionaryTests.s */,
 				913B91FD2B9A5AB400943E4E /* inputTests.s */,
 				91451FC12B73E3F000D8C89A /* interpreterTests.s */,
+				91D58BA72BC5DCCE004311FB /* ioTests.s */,
 				91E41A362BB350CE00F83677 /* logicalTests.s */,
 				91E41A2E2BB2F1B600F83677 /* relationalTests.s */,
 				91908DBD2B966ABC008CC466 /* replTests.s */,
@@ -294,6 +297,7 @@
 				91451FC42B73E40500D8C89A /* unitTestPlayground.s in Sources */,
 				91D58B9F2BBC8152004311FB /* variablesTests.s in Sources */,
 				91451FC02B73E3D400D8C89A /* cLikeTests.s in Sources */,
+				91D58BA82BC5DCCE004311FB /* ioTests.s in Sources */,
 				91E41A352BB350BB00F83677 /* logical.s in Sources */,
 				913B91FE2B9A5AB400943E4E /* inputTests.s in Sources */,
 				91E41A2F2BB2F1B600F83677 /* relationalTests.s in Sources */,
