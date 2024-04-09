@@ -1,4 +1,8 @@
-* Compile-time string constant - note we overwrite x1 from readWord
+
+* Read by character from terminal
+* Read from a file
+Input
+
 * Operators: split$, join$, make$, @+$ (?)
 * How to put " in strings?  Try c's \"
 * What if strings don't end by end of line?
@@ -8,9 +12,6 @@ Strings
 * Explore whether we can use relocatable addresses elsewhere [seems ok in data segment]
 Compiler
 
-* Read by character from terminal
-* Read from a file
-Input
 
 * Check for data stack underflow
 * Debugging tools for Tenth users?
@@ -22,6 +23,8 @@ Ideas
 * Warn if you use control statements in run mode?
 * Debugging - print stack before each step in start2d; dump secondary contents;
 
+TEN-24-35: 2024-04-08 - Compile Strings
+* Compile-time string constant
 
 TEN-24-34: 2024-04-03 - Strings
 * Run-time string constant for well-formed strings
