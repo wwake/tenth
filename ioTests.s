@@ -15,6 +15,7 @@ _start:
 	TEST_ALL "ioTests"
 
 	bl clear_bits_at_clears_bits
+	bl set_bits_at_sets_bits
 
 	unix_exit
 	STD_EPILOG
@@ -50,6 +51,32 @@ TEST_START clear_bits_at_clears_bits
 	bl assertEqual
 TEST_END
 
-TEST_START ioctl_before_and_after
 
+.data
+L_set_bits:
+.quad 0x107
+.quad 0x200004c3
+
+L_set_bits_expected:
+.quad 0x200005cb
+
+.text
+.align 2
+
+TEST_START set_bits_at_sets_bits
+	// Arrange:
+	LOAD_ADDRESS x0, L_set_bits
+	mov x1, #8
+	mov x2, #0x108		// Bits to flip
+
+	// Act:
+	bl set_bits_at
+
+	// Assert:
+	LOAD_ADDRESS x0, L_set_bits
+	add x0, x0, #8
+	ldr x0, [x0]
+	LOAD_ADDRESS x1, L_set_bits_expected
+	ldr x1, [x1]
+	bl assertEqual
 TEST_END

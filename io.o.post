@@ -86,6 +86,7 @@
 .global dot_print_string
 .global nl
 .global clear_bits_at
+.global set_bits_at
 .global enter_raw_mode
 .data
 L_space:
@@ -121,16 +122,27 @@ nl:
 L_nl_character:
  .asciz "\n"
 .align 2
-// clear_bits_at: clear bits in a given byte
+// clear_bits_at: clear bits in a given word
 // Input:
-//   x0 - pointer to byte sequence
-//   x1 - index to change
+//   x0 - pointer to word array
+//   x1 - byte offset from x0
 //   x2 - bits to clear
 //
 clear_bits_at:
  ldr x3, [x0, x1]
  mvn x2, x2
  and x3, x3, x2
+ str x3, [x0, x1]
+ ret
+// set_bits_at: clear bits in a given word
+// Input:
+//   x0 - pointer to word array
+//   x1 - byte offset from x0
+//   x2 - bits to set
+//
+set_bits_at:
+ ldr x3, [x0, x1]
+ orr x3, x3, x2
  str x3, [x0, x1]
  ret
 // The termios structure contains a word each for input, output, control, & local flags, followed by a number of characters for line discipline and other control.

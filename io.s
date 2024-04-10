@@ -8,6 +8,8 @@
 .global nl
 
 .global clear_bits_at
+.global set_bits_at
+
 .global enter_raw_mode
 
 .data
@@ -62,10 +64,10 @@ L_nl_character:
 
 .align 2
 
-// clear_bits_at: clear bits in a given byte
+// clear_bits_at: clear bits in a given word
 // Input:
-//   x0 - pointer to byte sequence
-//   x1 - index to change
+//   x0 - pointer to word array
+//   x1 - byte offset from x0
 //   x2 - bits to clear
 //
 clear_bits_at:
@@ -75,6 +77,18 @@ clear_bits_at:
 	str x3, [x0, x1]
 	ret
 
+
+// set_bits_at: clear bits in a given word
+// Input:
+//   x0 - pointer to word array
+//   x1 - byte offset from x0
+//   x2 - bits to set
+//
+set_bits_at:
+	ldr x3, [x0, x1]
+	orr x3, x3, x2
+	str x3, [x0, x1]
+	ret
 
 // The termios structure contains a word each for input, output, control, & local flags, followed by a number of characters for line discipline and other control.
 // From examining C code that sets raw mode, and tracing into the unix calls,
