@@ -123,13 +123,6 @@ set_bits_at:
 // See https://codebrowser.dev/glibc/glibc/sysdeps/unix/sysv/linux/bits/termios-c_lflag.h.html
 // for "approximate" definitions (can't find Mac-specific documentation)
 
-.data
-L_termios:
-  .fill 100, 8, 0
-
-.text
-.align 2
-
 
 // tcgetattrs - Call ioctl to get terminal attributes
 // Input:
@@ -173,20 +166,29 @@ L_termios:
 .equ icanon_flag, 0x100
 
 
+.data
+L_termios_original:
+  .fill 100, 8, 0
+
+.text
+.align 2
+
+
+
 // enter_raw_mode - sets terminal mode to raw (ish) - clear echo & icanon
 //
 enter_raw_mode:
 	STD_PROLOG
 
-	get_terminal_attributes #0, L_termios
+	get_terminal_attributes #0, L_termios_original
 
 	// Clear echo and icanon flags
-	LOAD_ADDRESS x0, L_termios
+	LOAD_ADDRESS x0, L_termios_original
 	mov x1, index_of_lflag
 	mov x2, (echo_flag + icanon_flag)
 	bl clear_bits_at
 
-	set_terminal_attributes #0, L_termios
+	set_terminal_attributes #0, L_termios_original
 
 	STD_EPILOG
 	ret
@@ -194,15 +196,15 @@ enter_raw_mode:
 exit_raw_mode:
 	STD_PROLOG
 
-	get_terminal_attributes #0, L_termios
+	get_terminal_attributes #0, L_termios_original
 
 	// Clear echo and icanon flags
-	LOAD_ADDRESS x0, L_termios
+	LOAD_ADDRESS x0, L_termios_original
 	mov x1, index_of_lflag
 	mov x2, (echo_flag + icanon_flag)
 	bl clear_bits_at
 
-	set_terminal_attributes #0, L_termios
+	set_terminal_attributes #0, L_termios_original
 
 	STD_EPILOG
 	ret
