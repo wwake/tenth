@@ -6,6 +6,8 @@
 
 .global nl
 
+.global clear_bits_at
+
 .data
 L_space:
 	.asciz " "
@@ -56,4 +58,17 @@ L_nl_character:
 
 
 
+.align 2
 
+// clear_bits_at: clear bits in a given byte
+// Input:
+//   x0 - pointer to byte sequence
+//   x1 - index to change
+//   w2 - bits to clear
+//
+clear_bits_at:
+	ldrb w3, [x0, x1]
+	mvn w2, w2
+	and w3, w3, w2
+	strb w3, [x0, x1]
+	ret

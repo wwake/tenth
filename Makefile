@@ -59,6 +59,10 @@ inputTests.out: inputTests.o asUnit.o cLike.o input.o
 
 io.o: io.s core.defines assembler.macros
 
+ioTests.o: ioTests.s io.s $(MACROS) $(TEST_MACROS)
+
+ioTests.out: ioTests.o io.o cLike.o asUnit.o
+
 
 interpreter.o: interpreter.s unix_functions.macros assembler.macros core.defines
 
@@ -133,8 +137,8 @@ clean:
 repl: repl.out
 	./repl.out
 
-tests: arithmeticTests.out cLikeTests.out compileTests.out controlTests.out dictionaryTests.out inputTests.out interpreterTests.out logicalTests.out relationalTests.out replTests.out stackTests.out stringTests.out variablesTests.out
-	./arithmeticTests.out ; ./cLikeTests.out ; ./compileTests.out ; ./controlTests.out ;  ./dictionaryTests.out; ./inputTests.out; ./interpreterTests.out; ./logicalTests.out; ./relationalTests.out; ./replTests.out; ./stackTests.out; ./stringTests.out ; ./variablesTests.out
+tests: arithmeticTests.out cLikeTests.out compileTests.out controlTests.out dictionaryTests.out inputTests.out interpreterTests.out ioTests.out logicalTests.out relationalTests.out replTests.out stackTests.out stringTests.out variablesTests.out
+	./arithmeticTests.out ; ./cLikeTests.out ; ./compileTests.out ; ./controlTests.out ;  ./dictionaryTests.out; ./inputTests.out; ./interpreterTests.out; ./ioTests.out ; ./logicalTests.out; ./relationalTests.out; ./replTests.out; ./stackTests.out; ./stringTests.out ; ./variablesTests.out
 
 playground: unitTestDemo.out
 	./unitTestDemo.out

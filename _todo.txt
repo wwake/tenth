@@ -1,4 +1,4 @@
-
+* Create routine clear_bits_at that can clear bits in an indexed character
 * Read by character from terminal
 * Read from a file
 Input
