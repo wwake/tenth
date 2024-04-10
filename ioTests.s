@@ -36,7 +36,7 @@ L_clear_bits_expected:
 TEST_START clear_bits_at_clears_bits
 	// Arrange:
 	LOAD_ADDRESS x0, L_clear_bits
-	mov x1, #8
+	mov x1, #1
 	mov x2, #0x108		// Bits to flip
 
 	// Act:
@@ -66,7 +66,7 @@ L_set_bits_expected:
 TEST_START set_bits_at_sets_bits
 	// Arrange:
 	LOAD_ADDRESS x0, L_set_bits
-	mov x1, #8
+	mov x1, #1
 	mov x2, #0x108		// Bits to flip
 
 	// Act:

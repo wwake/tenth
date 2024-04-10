@@ -88,6 +88,7 @@
 .global clear_bits_at
 .global set_bits_at
 .global enter_raw_mode
+.global exit_raw_mode
 .data
 L_space:
  .asciz " "
@@ -125,26 +126,27 @@ L_nl_character:
 // clear_bits_at: clear bits in a given word
 // Input:
 //   x0 - pointer to word array
-//   x1 - byte offset from x0
+//   x1 - word offset from x0
 //   x2 - bits to clear
 //
 clear_bits_at:
- ldr x3, [x0, x1]
+ ldr x3, [x0, x1, lsl #3]
  mvn x2, x2
  and x3, x3, x2
- str x3, [x0, x1]
+ str x3, [x0, x1, lsl #3]
  ret
 // set_bits_at: clear bits in a given word
 // Input:
 //   x0 - pointer to word array
-//   x1 - byte offset from x0
+//   x1 - word offset from x0
 //   x2 - bits to set
 //
 set_bits_at:
- ldr x3, [x0, x1]
+ ldr x3, [x0, x1, lsl #3]
  orr x3, x3, x2
- str x3, [x0, x1]
+ str x3, [x0, x1, lsl #3]
  ret
+// Entering raw mode -
 // The termios structure contains a word each for input, output, control, & local flags, followed by a number of characters for line discipline and other control.
 // From examining C code that sets raw mode, and tracing into the unix calls,
 // we determined that this is the termios struct we need, before and after:
@@ -215,6 +217,17 @@ L_termios:
 // enter_raw_mode - sets terminal mode to raw (ish) - clear echo & icanon
 //
 enter_raw_mode:
+ STD_PROLOG
+ get_terminal_attributes #0, L_termios
+ // Clear echo and icanon flags
+ LOAD_ADDRESS x0, L_termios
+ mov x1, index_of_lflag
+ mov x2, (echo_flag + icanon_flag)
+ bl clear_bits_at
+ set_terminal_attributes #0, L_termios
+ STD_EPILOG
+ ret
+exit_raw_mode:
  STD_PROLOG
  get_terminal_attributes #0, L_termios
  // Clear echo and icanon flags
