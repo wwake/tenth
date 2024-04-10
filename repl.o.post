@@ -220,6 +220,7 @@ repl:
  bl init_control_stack
  LOAD_ADDRESS x26, readLine
  mov x24, RUN_MODE
+ //bl enter_raw_mode
 L_repl_loop:
  // read
  bl readWord

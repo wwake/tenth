@@ -1,5 +1,6 @@
 #include "core.defines"
 #include "assembler.macros"
+#include "unix_functions.macros"
 
 .global dotprint
 .global dot_print_string
@@ -7,6 +8,7 @@
 .global nl
 
 .global clear_bits_at
+.global enter_raw_mode
 
 .data
 L_space:
@@ -104,6 +106,71 @@ clear_bits_at:
 // See https://codebrowser.dev/glibc/glibc/sysdeps/unix/sysv/linux/bits/termios-c_lflag.h.html
 // for "approximate" definitions (can't find Mac-specific documentation)
 
+.data
+L_termios:
+  .fill 100, 8, 0
+
+.text
+.align 2
+
+
+// tcgetattrs - Call ioctl to get terminal attributes
+// Input:
+//   fileDescriptor number (0=stdin, 1=stdout, 2=stderr)
+//   termiosStruct - address to write to
+// Note:
+	// The code 0x40487413 specifies that it's get:
+	//    0x40 = '@' sign (marker??) (read mode?)
+	//    0x48 = 72 base 10 = size of termios struct
+	//    0x74 = 't' = code to say it's terminal control
+	//    0x13 = 19 = code for get attributes
+//
+.macro get_terminal_attributes fileDescriptor, termiosStruct
+	mov x0, \fileDescriptor
+	mov w1, #0x7413	// see above
+	movk w1, #0x4048, lsl #16
+	LOAD_ADDRESS x2, \termiosStruct
+	unix_ioctl
+.endm
+
+
+// set_terminal_attributes
+
+// The code 0x80487414 specifies set terminal attributes
+//		0x80 = 128 decimal (marker?) (write mode?)
+//     0x48 = 72 base 10 = size of termios struct
+//     0x74 = 't' = code to say it's terminal control
+//     0x14 = 20 = code for set attributes
+//
+.macro set_terminal_attributes fileDescriptor, termiosStruct
+	mov x0, \fileDescriptor
+	mov w1, #0x7414	// see above
+	movk w1, #0x8048, lsl #16
+	LOAD_ADDRESS x2, \termiosStruct
+	unix_ioctl
+
+.endm
+
 .equ index_of_lflag, 24
 .equ echo_flag, 0x8
 .equ icanon_flag, 0x100
+
+
+// enter_raw_mode - sets terminal mode to raw (ish) - clear echo & icanon
+//
+enter_raw_mode:
+	STD_PROLOG
+
+	get_terminal_attributes #0, L_termios
+
+	// Clear echo and icanon flags
+	LOAD_ADDRESS x0, L_termios
+	mov x1, index_of_lflag
+	mov x2, (echo_flag + icanon_flag)
+	bl clear_bits_at
+
+	set_terminal_attributes #0, L_termios
+
+	STD_EPILOG
+	ret
+

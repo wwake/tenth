@@ -27,3 +27,14 @@
 	strb wzr, [x1, x0]
 .endm
 
+
+// ioctl - i/o control
+// Input:
+//   x0 = file descriptor
+//   x1 = command
+//   x2 = address of termios struct [could be a different struct in general]
+//
+.macro unix_ioctl
+	mov x16, #54		// ioctl
+	svc 0
+.endm

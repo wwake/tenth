@@ -57,7 +57,7 @@ inputTests.o: inputTests.s $(MACROS) $(TEST_MACROS)
 inputTests.out: inputTests.o asUnit.o cLike.o input.o
 
 
-io.o: io.s core.defines assembler.macros
+io.o: io.s core.defines assembler.macros unix_functions.macros
 
 ioTests.o: ioTests.s io.s $(MACROS) $(TEST_MACROS)
 
@@ -93,7 +93,7 @@ repl.o: repl.s core.defines
 
 replTests.o: replTests.s $(MACROS) $(TEST_MACROS)
 
-replTests.out: replTests.o repl.o asUnit.o cLike.o compile.o control.o dictionary.o input.o interpreter.o stack.o
+replTests.out: replTests.o repl.o asUnit.o cLike.o compile.o control.o dictionary.o input.o io.o interpreter.o stack.o
 
 repl.out: repl.o arithmetic.o cLike.o compile.o control.o dictionary.o input.o interpreter.o io.o logical.o main.o relational.o stack.o variables.o
 
@@ -114,7 +114,7 @@ stringTests.out: stringTests.o stack.o arithmetic.o asUnit.o cLike.o compile.o c
 
 unitTestPlayground.o: unitTestPlayground.s assembler.macros unix_functions.macros asUnit.macros
 
-unitTestPlayground.out: unitTestPlayground.o asUnit.o cLike.o
+unitTestPlayground.out: unitTestPlayground.o asUnit.o cLike.o io.o
 
 
 

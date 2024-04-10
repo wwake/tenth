@@ -21,6 +21,12 @@ L_input_buffer:
 _start:
 	STD_PROLOG
 	
+	bl enter_raw_mode
+
+	unix_exit
+	STD_EPILOG
+	ret
+
 	mov x0, #0
 				// 0x7413 = t ^m - we think 13 is the sub-code
 				// 0x4048 = @ (72 base 10) - we think 72 is the size of the struct
