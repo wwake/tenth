@@ -62,6 +62,7 @@
 .global max
 .global neg
 .global abs
+.global random
 .text
 .align 2
 // add - replace top two a,b with b+a
@@ -159,4 +160,26 @@ abs:
  cmp x0, #0
  csneg x0, x0, x0, GE
  DATA_PUSH x0
+ ret
+.data
+L_seed:
+ .quad 3459173429
+.text
+.align 2
+// random - replace a with random number in range 0..<a
+// Input: a = max of range
+// Output: top of stack = number in range 0..<a
+random:
+ STD_PROLOG
+ LOAD_ADDRESS x0, L_seed
+ ldr x1, [x0]
+ // equivalent to "mov w2, #910230123"
+ mov w2, #0x026b
+ movk w2, #0x3641, lsl #16
+ add w1, w1, w2
+ str x1, [x0]
+ DATA_PUSH x1
+ bl swap
+ bl mod
+ STD_EPILOG
  ret

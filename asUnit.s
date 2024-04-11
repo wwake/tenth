@@ -121,7 +121,7 @@ exit_assertEqualString:
 
 
 // assertTrue - check that x0 == 1 (true)
-// Uses x0, x1
+// Uses x0
 // Returns result in x0; prints message if x0 == 0
 //
 assertTrue:

@@ -1,5 +1,5 @@
-* make$ - convert array of integers (one word per character) to a string
-Strings
+* random - generate a value in 0..<1
+Arithmetic
 
 * Why does unix_read have parameters?
 * Read from a file (?)
@@ -29,6 +29,9 @@ TEN-24-38: 2024-04-11 - REPL in Cooked Mode
 Character I/O
 * Double-check index_of_lflag in io.s - it was byte index instead of word index; fixed.
 * Read by character from terminal - getc
+
+Strings
+* make$ - convert array of integers (one word per character) to a string
 
 TEN-24-37: 2024-04-10 - Implement Raw Input
 * Create routine clear_bits_at that can clear bits in an indexed word

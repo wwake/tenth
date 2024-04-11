@@ -54,7 +54,7 @@ L_load_system_dictionary:
 	DICT_HEADER "/", div
 	DICT_HEADER "%", mod
 	DICT_HEADER "/%", divmod
-
+	DICT_HEADER "random", random
 	DICT_HEADER "min", min
 	DICT_HEADER "max", max
 

@@ -47,6 +47,10 @@
 .macro STORE_SEC register
  str \register, [x25], #8
 .endm
+.macro ROUND_UP_8 register
+ add \register, \register, #8
+ and \register, \register, #-8
+.endm
 
 .global assertEqual
 .global assertEqualStrings
@@ -132,7 +136,7 @@ exit_assertEqualString:
  STD_EPILOG
  ret
 // assertTrue - check that x0 == 1 (true)
-// Uses x0, x1
+// Uses x0
 // Returns result in x0; prints message if x0 == 0
 //
 assertTrue:

@@ -79,6 +79,7 @@ _start:
  bl pos_a_goes_to_negative_a
  bl abs_of_neg_a_goes_to_positive_a
  bl abs_of_pos_a_goes_to_positive_a
+ bl random_puts_number_on_stack_in_range
  unix_exit
  STD_EPILOG
  ret
@@ -140,3 +141,29 @@ UNARY_OP_TEST "neg_a_goes_to_positive_a", 16, neg, 7
 UNARY_OP_TEST "pos_a_goes_to_negative_a", 8, neg, -58
 UNARY_OP_TEST "abs_of_neg_a_goes_to_positive_a", 16, abs, 7
 UNARY_OP_TEST "abs_of_pos_a_goes_to_positive_a", 8, abs, 58
+TEST_START random_puts_number_on_stack_in_range
+ // Arrange:
+ bl data_stack_init
+ mov x0, #7
+ DATA_PUSH x0
+ // Act:
+ bl random
+ // Assert:
+ // Check that value >= 0
+ DATA_TOP x0
+ cmp x0, #0
+ b.gt L_random_lt
+ mov x1, #0
+ bl assertEqual
+ // Check that value < original value (7)
+L_random_lt:
+ DATA_POP x0
+ mov x1, #7
+ cmp x0, x1
+ b.lt L_random_exiting
+ mov x1, 0
+ bl assertEqual
+L_random_exiting:
+ mov x0, #1
+ bl assertTrue
+TEST_END

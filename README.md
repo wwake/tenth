@@ -24,6 +24,7 @@ In these descriptions, *a*, *b*, and *c* represent the first, second, and third 
 * max &emsp;&emsp;&emsp;&emsp;abc ⇒ (max(a,b))c
 * abs &emsp;&emsp;&emsp;&emsp;ab ⇒ (|a|)b
 * neg &emsp;&emsp;&emsp;&emsp;ab ⇒ (-a)b
+* random &emsp;&emsp;&emsp;&emsp;a ⇒ r, where r is in the range [0, a)
 
 ## Logical Words
 * & &emsp;&emsp;&emsp;&emsp;abc ⇒ (b & a)c - and
@@ -75,4 +76,4 @@ In these descriptions, *a*, *b*, and *c* represent the first, second, and third 
 ## String
 * .$ - prints string from address a (non-destructive)
 * make$ - a is address of array, with one character number per word, followed by a 0 word; it gets converted to string and the array address replaced by the string address on the stack
-**
+
