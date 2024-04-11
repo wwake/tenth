@@ -1,5 +1,6 @@
+
 * Read by character from terminal
-* Read from a file
+* Read from a file (?)
 Input
 
 * Operators: split$, join$, make$, @+$ (?)
@@ -22,8 +23,13 @@ Ideas
 * Warn if you use control statements in run mode?
 * Debugging - print stack before each step in start2d; dump secondary contents;
 
+TEN-24-38: 2024-04-11 - REPL in Cooked Mode
+* Double-check index_of_lflag in io.s - it was byte index instead of word index; fixed.
+
 TEN-24-37: 2024-04-10 - Implement Raw Input
-* Create routine clear_bits_at that can clear bits in an indexed character
+* Create routine clear_bits_at that can clear bits in an indexed word
+* Create routine set_bits_at that can set bits in an indexed word
+* enter_raw_mode to enter something like cbreak mode (no echo, no canonical input, but accepts ^C)
 
 cb 05   1100 1011 0000 0101
 c3 04   1100 0011 0000 0100

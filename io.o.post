@@ -206,12 +206,13 @@ set_bits_at:
  LOAD_ADDRESS x2, \termiosStruct
  unix_ioctl
 .endm
-.equ index_of_lflag, 24
+.equ index_of_lflag, 3
 .equ echo_flag, 0x8
 .equ icanon_flag, 0x100
 .data
+.p2align 3
 L_termios_original:
-  .fill 100, 8, 0
+ .fill 100, 8, 0
 .text
 .align 2
 // enter_raw_mode - sets terminal mode to raw (ish) - clear echo & icanon

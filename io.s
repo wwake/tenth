@@ -161,14 +161,15 @@ set_bits_at:
 
 .endm
 
-.equ index_of_lflag, 24
+.equ index_of_lflag, 3
 .equ echo_flag, 0x8
 .equ icanon_flag, 0x100
 
 
 .data
+.p2align 3
 L_termios_original:
-  .fill 100, 8, 0
+	.fill 100, 8, 0
 
 .text
 .align 2
