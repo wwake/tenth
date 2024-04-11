@@ -13,6 +13,8 @@
 .global enter_raw_mode
 .global exit_raw_mode
 
+.global getc
+
 .data
 L_space:
 	.asciz " "
@@ -199,14 +201,45 @@ exit_raw_mode:
 
 	get_terminal_attributes #0, L_termios_original
 
-	// Clear echo and icanon flags
+	// Set echo and icanon flags
 	LOAD_ADDRESS x0, L_termios_original
 	mov x1, index_of_lflag
 	mov x2, (echo_flag + icanon_flag)
-	bl clear_bits_at
+	bl set_bits_at
 
 	set_terminal_attributes #0, L_termios_original
 
 	STD_EPILOG
 	ret
 
+
+.data
+.p2align 3
+
+L_getc_buffer:
+	.quad 0
+
+.text
+.align 2
+
+// getc - gets one character, pushes it on the stack as an integer
+//
+getc:
+	STD_PROLOG
+
+	bl enter_raw_mode
+
+	mov x0, #0
+	LOAD_ADDRESS x1, L_getc_buffer
+	mov x2, #1
+
+	unix_read #0, L_getc_buffer, 1
+
+	LOAD_ADDRESS x0, L_getc_buffer
+	ldr x0, [x0]
+	DATA_PUSH x0
+
+	bl exit_raw_mode
+
+	STD_EPILOG
+	ret

@@ -37,6 +37,8 @@ L_load_system_dictionary:
 	DICT_HEADER "0", push0
 	DICT_HEADER "1", push1
 
+	DICT_HEADER "getc", getc
+
 	DICT_HEADER "dup", dup
 	DICT_HEADER "pop", pop
 	DICT_HEADER "swap", swap

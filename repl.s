@@ -212,8 +212,6 @@ repl:
 	LOAD_ADDRESS READ_LINE_ROUTINE, readLine
 	mov FLAGS, RUN_MODE
 
-	bl enter_raw_mode
-
 L_repl_loop:
 	// read
 	bl readWord
