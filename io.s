@@ -204,7 +204,6 @@ exit_raw_mode:
 	STD_PROLOG
 
 	set_terminal_attributes #0, L_termios_original
-	set_terminal_attributes #0, L_termios_original
 
 	STD_EPILOG
 	ret
