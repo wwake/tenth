@@ -11,7 +11,7 @@ A threaded interpreter for a Forth-like language, in Arm64 assembler; for demo p
 
 
 # The Tenth Programming Language
-In these descriptions, a, b, and c represent the first, second, and third elements on the stack, respectively.
+In these descriptions, *a*, *b*, and *c* represent the first, second, and third elements on the stack, respectively.
 
 ## Arithmetic Words
 * + &emsp;&emsp;&emsp;&emsp;abc ⇒ (b+a)c
@@ -72,3 +72,7 @@ In these descriptions, a, b, and c represent the first, second, and third elemen
 * @+   a = mem[b[a]]
 * @+=   mem[c[b]] = a
 
+## String
+* .$ - prints string from address a (non-destructive)
+* make$ - a is address of array, with one character number per word, followed by a 0 word; it gets converted to string and the array address replaced by the string address on the stack
+**

@@ -70,6 +70,7 @@ L_load_system_dictionary:
 	DICT_HEADER ".", dotprint
 	DICT_HEADER ".$", dot_print_string
 
+	DICT_HEADER "make$", make_string
 
 	DICT_HEADER ":", colon, META
 	DICT_HEADER ";", semicolon, META

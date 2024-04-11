@@ -47,6 +47,10 @@
 .macro STORE_SEC register
  str \register, [x25], #8
 .endm
+.macro ROUND_UP_8 register
+ add \register, \register, #8
+ and \register, \register, #-8
+.endm
 .equ META, 1
 .equ REGULAR, 0
 // DICT_HEADER name, codeAddress
@@ -134,6 +138,7 @@ L_load_system_dictionary:
  DICT_HEADER "!", bangRoutine
  DICT_HEADER ".", dotprint
  DICT_HEADER ".$", dot_print_string
+ DICT_HEADER "make$", make_string
  DICT_HEADER ":", colon, META
  DICT_HEADER ";", semicolon, META
  DICT_HEADER "variable", variable, META
