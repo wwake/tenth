@@ -1,4 +1,4 @@
-* Read by character from terminal
+
 * Why does unix_read have parameters?
 * Read from a file (?)
 Input
@@ -25,6 +25,7 @@ Ideas
 
 TEN-24-38: 2024-04-11 - REPL in Cooked Mode
 * Double-check index_of_lflag in io.s - it was byte index instead of word index; fixed.
+* Read by character from terminal - getc
 
 TEN-24-37: 2024-04-10 - Implement Raw Input
 * Create routine clear_bits_at that can clear bits in an indexed word

@@ -170,7 +170,10 @@ set_bits_at:
 
 .data
 .p2align 3
-L_termios_original:
+L_termios_original:			// Saved for exit_raw_mode
+	.fill 100, 8, 0
+
+L_termios_altered:			// Altered for set_terminal_attributes
 	.fill 100, 8, 0
 
 .text
@@ -184,14 +187,15 @@ enter_raw_mode:
 	STD_PROLOG
 
 	get_terminal_attributes #0, L_termios_original
+	get_terminal_attributes #0, L_termios_altered
 
 	// Clear echo and icanon flags
-	LOAD_ADDRESS x0, L_termios_original
+	LOAD_ADDRESS x0, L_termios_altered
 	mov x1, index_of_lflag
 	mov x2, (echo_flag + icanon_flag)
 	bl clear_bits_at
 
-	set_terminal_attributes #0, L_termios_original
+	set_terminal_attributes #0, L_termios_altered
 
 	STD_EPILOG
 	ret
@@ -199,14 +203,7 @@ enter_raw_mode:
 exit_raw_mode:
 	STD_PROLOG
 
-	get_terminal_attributes #0, L_termios_original
-
-	// Set echo and icanon flags
-	LOAD_ADDRESS x0, L_termios_original
-	mov x1, index_of_lflag
-	mov x2, (echo_flag + icanon_flag)
-	bl set_bits_at
-
+	set_terminal_attributes #0, L_termios_original
 	set_terminal_attributes #0, L_termios_original
 
 	STD_EPILOG
