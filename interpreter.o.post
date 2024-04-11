@@ -47,6 +47,10 @@
 .macro STORE_SEC register
  str \register, [x25], #8
 .endm
+.macro ROUND_UP_8 register
+ add \register, \register, #8
+ and \register, \register, #-8
+.endm
 
 .include "unix_functions.macros"
 .global runInterpreter

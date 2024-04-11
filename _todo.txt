@@ -1,9 +1,11 @@
+* make$ - convert array of integers (one word per character) to a string
+Strings
 
 * Why does unix_read have parameters?
 * Read from a file (?)
 Input
 
-* Operators: split$, join$, make$, @+$ (?)
+* Operators: split$, join$, @+$ (?)
 * How to put " in strings?  Try c's \"
 * What if strings don't end by end of line?
 * Try arrays of strings?
@@ -24,6 +26,7 @@ Ideas
 * Debugging - print stack before each step in start2d; dump secondary contents;
 
 TEN-24-38: 2024-04-11 - REPL in Cooked Mode
+Character I/O
 * Double-check index_of_lflag in io.s - it was byte index instead of word index; fixed.
 * Read by character from terminal - getc
 

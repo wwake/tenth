@@ -109,7 +109,7 @@ string.o: string.s $(MACROS)
 
 stringTests.o: stringTests.s $(MACROS) $(TEST_MACROS)
 
-stringTests.out: stringTests.o stack.o arithmetic.o asUnit.o cLike.o compile.o control.o dictionary.o input.o interpreter.o io.o logical.o relational.o repl.o stack.o variables.o
+stringTests.out: stringTests.o stack.o arithmetic.o asUnit.o cLike.o compile.o control.o dictionary.o input.o interpreter.o io.o logical.o relational.o repl.o stack.o string.o variables.o
 
 
 unitTestPlayground.o: unitTestPlayground.s assembler.macros unix_functions.macros asUnit.macros

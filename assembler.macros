@@ -58,3 +58,8 @@
 .macro STORE_SEC register
 	str \register, [SEC_SPACE], #8
 .endm
+
+.macro ROUND_UP_8 register
+	add \register, \register, #8
+	and \register, \register, #-8
+.endm
