@@ -151,16 +151,17 @@ random:
 	ldr x1, [x0]
 
 	// equivalent to "mov w2, #910230123"
+	// Add "weird" number -> random-ish
 	mov w2, #0x026b
 	movk w2, #0x3641, lsl #16
 
 	add w1, w1, w2
-	str x1, [x0]
+	str x1, [x0]	// save last generated
 
-	DATA_PUSH x1
+	DATA_PUSH x1	// push random #
 
-	bl swap
-	bl mod
+	bl swap			// swap random and modulo base
+	bl mod			// modulo
 
 	STD_EPILOG
 	ret

@@ -1,5 +1,3 @@
-* random - generate a value in 0..<1
-Arithmetic
 
 * Why does unix_read have parameters?
 * Read from a file (?)
@@ -23,7 +21,8 @@ Ideas
 * Fill command for arrays - push n values, then n, then a, write to a[0..n-1]
 * Detect stack underflow and overflow (data, control)
 * Warn if you use control statements in run mode?
-* Debugging - print stack before each step in start2d; dump secondary contents;
+* Debugging - print stack before each step in start2d; dump secondary contents
+
 
 TEN-24-38: 2024-04-11 - REPL in Cooked Mode
 Character I/O
@@ -32,6 +31,9 @@ Character I/O
 
 Strings
 * make$ - convert array of integers (one word per character) to a string
+
+Arithmetic
+* random - generate a value in 0..<a
 
 TEN-24-37: 2024-04-10 - Implement Raw Input
 * Create routine clear_bits_at that can clear bits in an indexed word

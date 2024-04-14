@@ -75,7 +75,7 @@ L_nl_character:
 //
 clear_bits_at:
 	ldr x3, [x0, x1, lsl #3]
-	mvn x2, x2
+	mvn x2, x2		// logical not
 	and x3, x3, x2
 	str x3, [x0, x1, lsl #3]
 	ret
@@ -127,7 +127,7 @@ set_bits_at:
 
 
 // tcgetattrs - Call ioctl to get terminal attributes
-// Input:
+// Input
 //   fileDescriptor number (0=stdin, 1=stdout, 2=stderr)
 //   termiosStruct - address to write to
 // Note:
@@ -139,8 +139,10 @@ set_bits_at:
 //
 .macro get_terminal_attributes fileDescriptor, termiosStruct
 	mov x0, \fileDescriptor
-	mov w1, #0x7413	// see above
+		// Magic number; see above
+	mov w1, #0x7413
 	movk w1, #0x4048, lsl #16
+
 	LOAD_ADDRESS x2, \termiosStruct
 	unix_ioctl
 .endm
@@ -156,11 +158,12 @@ set_bits_at:
 //
 .macro set_terminal_attributes fileDescriptor, termiosStruct
 	mov x0, \fileDescriptor
-	mov w1, #0x7414	// see above
+	// Magic number; see above
+	mov w1, #0x7414
 	movk w1, #0x8048, lsl #16
+
 	LOAD_ADDRESS x2, \termiosStruct
 	unix_ioctl
-
 .endm
 
 .equ index_of_lflag, 3
@@ -225,12 +228,13 @@ getc:
 
 	bl enter_raw_mode
 
+	// Read
 	mov x0, #0
 	LOAD_ADDRESS x1, L_getc_buffer
 	mov x2, #1
-
 	unix_read #0, L_getc_buffer, 1
 
+	// Push onto stack
 	LOAD_ADDRESS x0, L_getc_buffer
 	ldr x0, [x0]
 	DATA_PUSH x0
