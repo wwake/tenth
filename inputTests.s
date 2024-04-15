@@ -17,6 +17,7 @@ _start:
 
 	bl read_with_word_at_start
 	bl read_with_word_starting_with_spaces
+	bl read_with_word_starting_with_spaces_and_tabs
 	bl read_read_multiple_words_separated_by_spaces
 
 	bl read_from_newline_only_line_causes_readLine
@@ -36,6 +37,13 @@ L_read_source2:
 	.asciz "  sub\n"
 L_expect_source2:
 	.asciz "sub"
+
+
+L_read_source_tabs:
+	.asciz "\t  \t\tword\n"
+
+L_read_source_expected:
+	.asciz "word"
 
 
 L_read_source3:
@@ -176,6 +184,22 @@ TEST_START read_with_word_starting_with_spaces
 	LOAD_ADDRESS x1, L_expect_source2
 	bl assertEqualStrings
 TEST_END
+
+
+TEST_START read_with_word_starting_with_spaces_and_tabs
+	bl inputInit
+
+	READ_STUB_INIT
+	READ_STUB_ADD L_read_source_tabs
+	READ_STUB_READY
+
+	LOAD_ADDRESS READ_LINE_ROUTINE, stub_readLine
+	bl readWord
+
+	LOAD_ADDRESS x1, L_read_source_expected
+	bl assertEqualStrings
+TEST_END
+
 
 TEST_START read_read_multiple_words_separated_by_spaces
 	// Arrange

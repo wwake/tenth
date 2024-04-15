@@ -87,6 +87,8 @@ L_find_word_start:
 	ldrb w0, [NEXT_WORD]
 	cmp w0, #0x20		// space (skip)
 	b.eq L_move_forward
+	cmp w0, #0x09		// tab (skip)
+	b.eq L_move_forward
 	b L_look_for_string
 
 L_move_forward:
