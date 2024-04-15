@@ -1,9 +1,55 @@
+: acb cab swap ;
 
+: dup2
+	bab
+	swap
+	dup
+	acb
+;
 
-: assertEqualStrings  // stack: s2 s1 ...
+: ==$  // stack: s2 s1 ...
 	head$
 	cab
+	head$ 	// s1[0] s1+1, s2[0], s2+1
+	cab	  	// s2[0] s1[0] s1+1 s2+1
+	dup		// s2[0] s2[0] s1[0] s1' s2'
+	dup cab  // s1[0] s2[0] s2[0] s1+1 s2+1 ...
+
+	while
+		==
+		==0
+		!
+		and
+	do
+		head$		// c1 s1' s2'
+		cab			// s2' c1 s1'
+		head$		// c2 s2 c1 s1
+		cab			// c1 c2 s2 s1
+		dup			// c1 c1 c2 s2 s1
+		cab			// c2 c1 c1 s2 s1
+	od
+
+	// s1 s2 - at least one empty
+	head$		// c1 s1 s2
+	cab			// s2 c1 s1
+	head$		// c2 s2 c1 s1
+	cab			// c1 c2 s2 s1
+
+	==
+
+	if
+		pop pop
+		1
+	else
+		pop pop
+		0
+	end
 ;
+
+assertEqualStrings
+
+;
+
 
 : tests test_title ;
 

@@ -86,7 +86,10 @@ L_check_if_at_end:
 L_find_word_start:
 	ldrb w0, [NEXT_WORD]
 	cmp w0, #0x20		// space (skip)
-	b.ne L_look_for_string
+	b.eq L_move_forward
+	b L_look_for_string
+
+L_move_forward:
 		add NEXT_WORD, NEXT_WORD, #1
 		b L_find_word_start
 
