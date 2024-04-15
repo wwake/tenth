@@ -7,13 +7,17 @@
 	acb
 ;
 
+: head2$	` In: s2 s1 ...
+	head$	// c2 s2' s1
+	cab		// s1 c2 s2'
+	head$ 	// c1 s1' c2 s2'
+	cab	  	// c2 c1 s1' s2'
+;
+
 : ==$  // stack: s2 s1 ...
-	head$
-	cab
-	head$ 	// s1[0] s1+1, s2[0], s2+1
-	cab	  	// s2[0] s1[0] s1+1 s2+1
-	dup		// s2[0] s2[0] s1[0] s1' s2'
-	dup cab  // s1[0] s2[0] s2[0] s1+1 s2+1 ...
+	head2$  // c2 c1 s1' s2'
+	dup2	// c2 c1 c2 c1 s1' s2'
+	dup2	// c2 c1 c2 c1 c2 c1 s1' s2'
 
 	while
 		==
@@ -21,22 +25,16 @@
 		!
 		and
 	do
-		head$		// c1 s1' s2'
-		cab			// s2' c1 s1'
-		head$		// c2 s2 c1 s1
-		cab			// c1 c2 s2 s1
-		dup			// c1 c1 c2 s2 s1
-		cab			// c2 c1 c1 s2 s1
+		// characters are == and not 0
+		pop pop pop
+		head2$		// c1 c2 s1' s2'
+		dup2
+		dup2
 	od
 
-	// s1 s2 - at least one empty
-	head$		// c1 s1 s2
-	cab			// s2 c1 s1
-	head$		// c2 s2 c1 s1
-	cab			// c1 c2 s2 s1
+	pop
 
 	==
-
 	if
 		pop pop
 		1

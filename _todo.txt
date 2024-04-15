@@ -1,3 +1,4 @@
+* ==$
 * Print "HANGMAN" at the top
 * Given the word, draw the initial dashes
 * Draw the scaffold
@@ -37,6 +38,8 @@ Ideas
 
 
 TEN-24-39: 2024-04-15 - HANGMAN
+* Implemented head$ (splits off first character of a string)
+* Skip over tabs like we do spaces
 
 TEN-24-38: 2024-04-11 - REPL in Cooked Mode
 Character I/O

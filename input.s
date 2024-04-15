@@ -107,14 +107,24 @@ L_word_start:
 		mov x1, WORD_FOUND
 
 		ldrb w2, [NEXT_WORD]
+		cmp w2, 0x60	// backtick
+		b.eq L_handle_backtick
 		cmp w2, 0x0a		// newline
 		b.ne find_trailing_space_or_nl	// At end of line - go back & read more
 		add NEXT_WORD, NEXT_WORD, #1
 		b L_check_if_at_end
 
+L_handle_backtick:
+		strb wzr, [NEXT_WORD], #1
+		strb wzr, [NEXT_WORD]
+		b L_check_if_at_end
+
+
 find_trailing_space_or_nl:
 		ldrb w2, [NEXT_WORD], #1
 		cmp w2, 0x0a		// newline
+		b.eq L_exit_word
+		cmp w2, 0x60		// backtick
 		b.eq L_exit_word
 		cmp w2, 0x20		// space
 		b.eq L_exit_word

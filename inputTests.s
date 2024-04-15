@@ -18,9 +18,11 @@ _start:
 	bl read_with_word_at_start
 	bl read_with_word_starting_with_spaces
 	bl read_with_word_starting_with_spaces_and_tabs
-	bl read_read_multiple_words_separated_by_spaces
 
 	bl read_from_newline_only_line_causes_readLine
+
+	bl read_read_multiple_words_separated_by_spaces
+	bl backtick_creates_comment_to_end_of_line
 
 	bl read_reads_whole_string
 
@@ -76,11 +78,22 @@ L_expect_read_multiline_1:
 	.asciz "1"
 
 
+L_read_backtick_line:
+	.asciz "  ` a comment\n"
+
+L_read_backtick_nonempty:
+	.asciz "word\n"
+
+L_expect_backtick:
+	.asciz "word"
+
+
 L_simple_string:
 	.asciz "\"I'm a string\""
 
 L_simple_string_expected:
 	.asciz "I'm a string"
+
 
 .data
 .p2align 3
@@ -247,6 +260,20 @@ TEST_START read_from_newline_only_line_causes_readLine
 	bl assertEqualStrings
 TEST_END
 
+
+TEST_START backtick_creates_comment_to_end_of_line
+	READ_STUB_INIT
+	READ_STUB_ADD L_read_backtick_line
+	READ_STUB_ADD L_read_backtick_nonempty
+	READ_STUB_READY
+
+	LOAD_ADDRESS READ_LINE_ROUTINE, stub_readLine
+	bl readWord
+
+	LOAD_ADDRESS x1, L_expect_backtick
+	bl assertEqualStrings
+
+TEST_END
 
 TEST_START read_reads_whole_string
 	str x28, [sp, #8]
