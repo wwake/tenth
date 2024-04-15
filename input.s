@@ -128,6 +128,8 @@ find_trailing_space_or_nl:
 		b.eq L_exit_word
 		cmp w2, 0x20		// space
 		b.eq L_exit_word
+		cmp w2, 0x09		// tab
+		b.eq L_exit_word
 		b find_trailing_space_or_nl
 
 L_exit_word:

@@ -79,13 +79,16 @@ L_expect_read_multiline_1:
 
 
 L_read_backtick_line:
-	.asciz "  ` a comment\n"
+	.asciz " word1 ` a comment\n"
 
 L_read_backtick_nonempty:
-	.asciz "word\n"
+	.asciz "word2\n"
 
-L_expect_backtick:
-	.asciz "word"
+L_expect_backtick1:
+	.asciz "word1"
+
+L_expect_backtick2:
+	.asciz "word2"
 
 
 L_simple_string:
@@ -262,15 +265,24 @@ TEST_END
 
 
 TEST_START backtick_creates_comment_to_end_of_line
+	// Arrange
 	READ_STUB_INIT
 	READ_STUB_ADD L_read_backtick_line
 	READ_STUB_ADD L_read_backtick_nonempty
 	READ_STUB_READY
 
+	// Act & Assert
 	LOAD_ADDRESS READ_LINE_ROUTINE, stub_readLine
 	bl readWord
 
-	LOAD_ADDRESS x1, L_expect_backtick
+	LOAD_ADDRESS x1, L_expect_backtick1
+	bl assertEqualStrings
+
+	// Act & Assert
+	LOAD_ADDRESS READ_LINE_ROUTINE, stub_readLine
+	bl readWord
+
+	LOAD_ADDRESS x1, L_expect_backtick2
 	bl assertEqualStrings
 
 TEST_END
