@@ -75,6 +75,7 @@
 		916C5CB72B7C155E00EA6FE5 /* coreTests.macros */ = {isa = PBXFileReference; lastKnownFileType = text; name = coreTests.macros; path = ../coreTests.macros; sourceTree = "<group>"; };
 		91908DBD2B966ABC008CC466 /* replTests.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = replTests.s; path = ../replTests.s; sourceTree = "<group>"; };
 		91908DC02B97B19E008CC466 /* repl.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = repl.s; path = ../repl.s; sourceTree = "<group>"; };
+		919EA19A2BCDA35B007FA010 /* hangman.10 */ = {isa = PBXFileReference; lastKnownFileType = text; path = hangman.10; sourceTree = "<group>"; };
 		91B9F1322B742898005730DF /* interpreter.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; name = interpreter.s; path = ../interpreter.s; sourceTree = "<group>"; };
 		91CAE5EA2BA23EB7001E8E9E /* repl.macros */ = {isa = PBXFileReference; lastKnownFileType = text; name = repl.macros; path = ../repl.macros; sourceTree = "<group>"; };
 		91CAE5EC2BA374B2001E8E9E /* EnvironmentNotes.key */ = {isa = PBXFileReference; lastKnownFileType = file; name = EnvironmentNotes.key; path = ../EnvironmentNotes.key; sourceTree = "<group>"; };
@@ -123,6 +124,7 @@
 				91238D8B2B730AD800052895 /* LICENSE */,
 				91238D7F2B730AD800052895 /* Makefile */,
 				91238D862B730AD800052895 /* README.md */,
+				919EA1992BCDA336007FA010 /* tenth */,
 				91D58BA42BC5BDEF004311FB /* cDemo */,
 				91238D982B730B8200052895 /* asUnit */,
 				91238D972B730B7200052895 /* macros */,
@@ -220,6 +222,14 @@
 				91908DC02B97B19E008CC466 /* repl.s */,
 			);
 			name = repl;
+			sourceTree = "<group>";
+		};
+		919EA1992BCDA336007FA010 /* tenth */ = {
+			isa = PBXGroup;
+			children = (
+				919EA19A2BCDA35B007FA010 /* hangman.10 */,
+			);
+			name = tenth;
 			sourceTree = "<group>";
 		};
 		91D58BA42BC5BDEF004311FB /* cDemo */ = {

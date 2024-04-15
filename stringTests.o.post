@@ -63,6 +63,8 @@ _start:
  TEST_ALL "stringTests"
  bl eval_pushes_string_address_on_data_stack
  bl make_creates_string_from_array
+ bl head_empty_string_pushes_0_but_not_string
+ bl head_splits_first_character_from_string
  unix_exit
  STD_EPILOG
  ret
@@ -110,5 +112,45 @@ TEST_START make_creates_string_from_array
  // Assert:
  DATA_POP x0
  LOAD_ADDRESS x1, L_make_expected
+ bl assertEqualStrings
+TEST_END
+L_empty_string:
+ .asciz ""
+.align 2
+TEST_START head_empty_string_pushes_0_but_not_string
+ // Arrange
+ bl data_stack_init
+ mov x0, #42 // guard value
+ DATA_PUSH x0
+ LOAD_ADDRESS x0, L_empty_string
+ DATA_PUSH x0
+ // Act
+ bl head_string
+ // Assert
+ DATA_POP x0
+ mov x1, #0 // 0 byte to terminate string
+ bl assertEqual
+ DATA_POP x0
+ mov x1, #42
+ bl assertEqual
+TEST_END
+L_head_string:
+ .asciz "CAB"
+L_head_expected:
+ .asciz "AB"
+.align 2
+TEST_START head_splits_first_character_from_string
+ // Arrange
+ bl data_stack_init
+ LOAD_ADDRESS x0, L_head_string
+ DATA_PUSH x0
+ // Act
+ bl head_string
+ // Assert
+ DATA_POP x0
+ mov x1, #67 // letter C
+ bl assertEqual
+ DATA_POP x0
+ LOAD_ADDRESS x1, L_head_expected
  bl assertEqualStrings
 TEST_END

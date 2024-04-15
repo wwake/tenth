@@ -1,9 +1,21 @@
+* Print "HANGMAN" at the top
+* Given the word, draw the initial dashes
+* Draw the scaffold
+* Print "Guessed:"
+* Read character
+  - if already used, ignore it
+  - if in word, place it (in all places)
+  - if not in word, draw next body part and add guess to list
+* If word is guessed - you win
+* If out of body parts, you lose
+Hangman
 
+* Redirected input - gets error at end
 * Why does unix_read have parameters?
-* Read from a file (?)
+* Read from file - not supported
 Input
 
-* Operators: split$, join$, @+$ (?)
+* Operators: head$, join$, @+$ (?), #$ [string length]
 * How to put " in strings?  Try c's \"
 * What if strings don't end by end of line?
 * Try arrays of strings?
@@ -23,6 +35,8 @@ Ideas
 * Warn if you use control statements in run mode?
 * Debugging - print stack before each step in start2d; dump secondary contents
 
+
+TEN-24-39: 2024-04-15 - HANGMAN
 
 TEN-24-38: 2024-04-11 - REPL in Cooked Mode
 Character I/O

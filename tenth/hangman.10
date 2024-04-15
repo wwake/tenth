@@ -1,0 +1,15 @@
+
+
+: assertEqualStrings
+
+;
+
+: tests test_title ;
+
+: test_title
+  title
+  "HANGMAN"
+  assertEqualStrings
+;
+
+
