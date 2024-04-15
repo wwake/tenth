@@ -1,7 +1,8 @@
 
 
-: assertEqualStrings
-
+: assertEqualStrings  // stack: s2 s1 ...
+	head$
+	cab
 ;
 
 : tests test_title ;

@@ -39,9 +39,10 @@ head_string:
 	ldrb w1, [x0], #1
 	
 	cmp w1, #0
-	b.eq L_end_head_string
-	DATA_PUSH x0
+	b.ne L_end_head_string
+		sub x0, x0, #1
 
 L_end_head_string:
+	DATA_PUSH x0
 	DATA_PUSH x1
 	ret

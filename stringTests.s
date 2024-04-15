@@ -19,7 +19,7 @@ _start:
 	bl eval_pushes_string_address_on_data_stack
 	bl make_creates_string_from_array
 
-	bl head_empty_string_pushes_0_but_not_string
+	bl head_empty_string_pushes_ptr_to_empty_string_and_0
 	bl head_splits_first_character_from_string
 
 	unix_exit
@@ -96,12 +96,9 @@ L_empty_string:
 
 .align 2
 
-TEST_START head_empty_string_pushes_0_but_not_string
+TEST_START head_empty_string_pushes_ptr_to_empty_string_and_0
 	// Arrange
 	bl data_stack_init
-
-	mov x0, #42		// guard value
-	DATA_PUSH x0
 
 	LOAD_ADDRESS x0, L_empty_string
 	DATA_PUSH x0
@@ -115,8 +112,8 @@ TEST_START head_empty_string_pushes_0_but_not_string
 	bl assertEqual
 
 	DATA_POP x0
-	mov x1, #42
-	bl assertEqual
+	LOAD_ADDRESS x1, L_empty_string
+	bl assertEqualStrings
 TEST_END
 
 

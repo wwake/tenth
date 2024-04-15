@@ -75,6 +75,6 @@ In these descriptions, *a*, *b*, and *c* represent the first, second, and third 
 
 ## String
 * .$ - prints string from address a (non-destructive)
-* head$ - takes a string address from stack, moves forward one character and pushes that address, then pushes the character (as an int). However, if the character is 0, the address isn't pushed.
+* head$ - takes a string address from stack, moves forward one character and pushes that address, then pushes the character (as an int). However, if the character is 0, the address is the address of the empty string.
 * make$ - a is address of array, with one character number per word, followed by a 0 word; it gets converted to string and the array address replaced by the string address on the stack
 
