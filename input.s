@@ -63,6 +63,9 @@ L_reading:
 	STD_EPILOG
 	ret
 
+
+.equ COMMENT_MARKER, 0x60		// backtick
+
 // readWord - get next word, reading new lines if necessary
 // Inputs:
 //   READ_LINE_ROUTINE (register) - address of the routine to call to read a line
@@ -107,7 +110,7 @@ L_word_start:
 		mov x1, WORD_FOUND
 
 		ldrb w2, [NEXT_WORD]
-		cmp w2, 0x60	// backtick
+		cmp w2, COMMENT_MARKER	// comment marker
 		b.eq L_handle_backtick
 		cmp w2, 0x0a		// newline
 		b.ne find_trailing_space_or_nl	// At end of line - go back & read more
@@ -124,7 +127,7 @@ find_trailing_space_or_nl:
 		ldrb w2, [NEXT_WORD], #1
 		cmp w2, 0x0a		// newline
 		b.eq L_exit_word
-		cmp w2, 0x60		// backtick
+		cmp w2, COMMENT_MARKER		// comment marker
 		b.eq L_exit_word
 		cmp w2, 0x20		// space
 		b.eq L_exit_word

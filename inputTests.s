@@ -22,7 +22,7 @@ _start:
 	bl read_from_newline_only_line_causes_readLine
 
 	bl read_read_multiple_words_separated_by_spaces
-	bl backtick_creates_comment_to_end_of_line
+	bl comment_marker_creates_comment_to_end_of_line
 
 	bl read_reads_whole_string
 
@@ -78,16 +78,16 @@ L_expect_read_multiline_1:
 	.asciz "1"
 
 
-L_read_backtick_line:
+L_read_commented_line:
 	.asciz " \t word1 ` a comment\n"
 
-L_read_backtick_nonempty:
+L_read_comment_nonempty:
 	.asciz "word2\n"
 
-L_expect_backtick1:
+L_expect_comment_word1:
 	.asciz "word1"
 
-L_expect_backtick2:
+L_expect_comment_word2:
 	.asciz "word2"
 
 
@@ -264,25 +264,25 @@ TEST_START read_from_newline_only_line_causes_readLine
 TEST_END
 
 
-TEST_START backtick_creates_comment_to_end_of_line
+TEST_START comment_marker_creates_comment_to_end_of_line
 	// Arrange
 	READ_STUB_INIT
-	READ_STUB_ADD L_read_backtick_line
-	READ_STUB_ADD L_read_backtick_nonempty
+	READ_STUB_ADD L_read_commented_line
+	READ_STUB_ADD L_read_comment_nonempty
 	READ_STUB_READY
 
 	// Act & Assert
 	LOAD_ADDRESS READ_LINE_ROUTINE, stub_readLine
 	bl readWord
 
-	LOAD_ADDRESS x1, L_expect_backtick1
+	LOAD_ADDRESS x1, L_expect_comment_word1
 	bl assertEqualStrings
 
 	// Act & Assert
 	LOAD_ADDRESS READ_LINE_ROUTINE, stub_readLine
 	bl readWord
 
-	LOAD_ADDRESS x1, L_expect_backtick2
+	LOAD_ADDRESS x1, L_expect_comment_word2
 	bl assertEqualStrings
 
 TEST_END
