@@ -79,7 +79,7 @@ L_expect_read_multiline_1:
 
 
 L_read_backtick_line:
-	.asciz " word1 ` a comment\n"
+	.asciz " \t word1 ` a comment\n"
 
 L_read_backtick_nonempty:
 	.asciz "word2\n"

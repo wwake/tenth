@@ -1,3 +1,5 @@
+
+* Consider # instead of ` for comment
 * ==$
 * Print "HANGMAN" at the top
 * Given the word, draw the initial dashes
@@ -40,6 +42,9 @@ Ideas
 TEN-24-39: 2024-04-15 - HANGMAN
 * Implemented head$ (splits off first character of a string)
 * Skip over tabs like we do spaces
+* Backtick to end of line makes a comment
+* Implemented in tenth: acb, dup2, head2$ [get heads of two strings]
+* Started work on ==$ and assertEqual$
 
 TEN-24-38: 2024-04-11 - REPL in Cooked Mode
 Character I/O
