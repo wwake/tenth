@@ -46,6 +46,7 @@ L_load_system_dictionary:
 	DICT_HEADER "cba", cba
 	DICT_HEADER "bab", bab
 
+	DICT_HEADER "esc", esc
 	DICT_HEADER "nl", nl
 
 	DICT_HEADER "+", add

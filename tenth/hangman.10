@@ -7,54 +7,108 @@
 	acb
 ;
 
-: head2$	` In: s2 s1 ...
-	head$	` c2 s2' s1
-	cab		` s1 c2 s2'
-	head$ 	` c1 s1' c2 s2'
-	cab	  	` c2 c1 s1' s2'
+: .$^ .$ pop ;
+
+: head2$	# In: s2 s1 ...
+	head$	# c2 s2' s1
+	cab		# s1 c2 s2'
+	head$ 	# c1 s1' c2 s2'
+	cab	  	# c2 c1 s1' s2'
 ;
 
-: ==$  ` stack: s2 s1 ...
-	head2$  ` c2 c1 s1' s2'
-	dup2	` c2 c1 c2 c1 s1' s2'
-	dup2	` c2 c1 c2 c1 c2 c1 s1' s2'
+: ==$  # stack: s2 s1 ...
+	head2$  # c2 c1 s1' s2'
+	dup2	# c2 c1 c2 c1 s1' s2'
+	dup2	# c2 c1 c2 c1 c2 c1 s1' s2'
 
 	while
 		==
 		==0
 		!
-		and
+		&
 	do
-		` characters are == and not 0
-		pop pop pop
-		head2$		` c1 c2 s1' s2'
+		# characters are == and not 0
+		# c1 c2 c1 s1' s2'
+
+		pop pop pop	# s1' s2'
+		head2$		# c1 c2 s1' s2'
 		dup2
-		dup2
+		dup2		# c2 c1 c2 c1 c2 c1 s1' s2'
 	od
 
-	pop
+	# c1 c2 c1 s1' s2'
+	pop  		# c2 c1 s1' s2'
+
+	==
+
+	cba
+	pop pop
+;
+
+: assertEqual
+	dup2
 
 	==
 	if
 		pop pop
-		1
 	else
-		pop pop
-		0
+		"Error: values differ" .$ pop nl
+		"  a=" .$ pop
+		. pop nl
+		"  b=" .$ pop
+		. pop nl
 	fi
 ;
 
-assertEqual$
+: assertEqual$
+	dup2
 
+	==$
+	if
+		pop pop
+	else
+		"Error: string values differ" .$ pop nl
+		"  a=" .$ pop
+		.$ pop nl
+		"  b=" .$ pop
+		.$ pop nl
+	fi
 ;
 
 
-: tests test_title ;
+: test_empty_strings_equal "" "" ==$ 1 assertEqual ;
+
+: test_different_strings_unequal  "one" "seven" ==$ 0 assertEqual ;
+
+: test_strings test_empty_strings_equal test_different_strings_unequal ;
+
+#####
+
+2 array escape_array
+variable esc
+
+: init_escape escape_array 0 27 @+= esc escape_array make$ @= ;  #27=ESC
+
+: screen_clear esc "[2J" .$^ ;
+
+#####
+
+: title "HANGMAN" ;
+
+
+
+
+: hangman
+	title .$^ nl
+;
 
 : test_title
   title
   "HANGMAN"
-  assertEqualStrings
+  assertEqual$
 ;
 
+: test_hangman test_title ;
+
+: test_all test_strings test_hangman ;
 

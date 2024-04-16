@@ -6,6 +6,7 @@
 .global dot_print_string
 
 .global nl
+.global esc
 
 .global clear_bits_at
 .global set_bits_at
@@ -62,6 +63,22 @@ nl:
 
 L_nl_character:
 	.asciz "\n"
+
+.align 2
+
+
+// esc - print an escape
+esc:
+	STD_PROLOG
+
+	LOAD_ADDRESS x0, L_escape_sequence
+	bl print
+
+	STD_EPILOG
+	ret
+
+L_escape_sequence:
+	.asciz "\x1B"
 
 
 

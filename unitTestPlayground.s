@@ -11,6 +11,9 @@
 L_input_buffer:
   .fill 100, 8, 0
 
+
+escape_sequence:
+	.asciz "\x1B[2J"
 .text
 
 
@@ -21,7 +24,10 @@ L_input_buffer:
 _start:
 	STD_PROLOG
 	
-	bl enter_raw_mode
+	LOAD_ADDRESS x0, escape_sequence
+	bl print
+
+//	bl enter_raw_mode
 
 	unix_exit
 	STD_EPILOG

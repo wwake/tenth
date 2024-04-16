@@ -118,11 +118,6 @@ unitTestPlayground.out: unitTestPlayground.o asUnit.o cLike.o io.o
 
 
 
-unitTestDemo.o: unitTestDemo.s $(MACROS) $(TEST_MACROS)
-
-unitTestDemo.out: unitTestDemo.o cLike.o compile.o asUnit.o
-
-
 variables.o: variables.s $(MACROS)
 
 variablesTests.o: variablesTests.s $(MACROS) $(TEST_MACROS)
@@ -140,5 +135,5 @@ repl: repl.out
 tests: arithmeticTests.out cLikeTests.out compileTests.out controlTests.out dictionaryTests.out inputTests.out interpreterTests.out ioTests.out logicalTests.out relationalTests.out replTests.out stackTests.out stringTests.out variablesTests.out
 	./arithmeticTests.out ; ./cLikeTests.out ; ./compileTests.out ; ./controlTests.out ;  ./dictionaryTests.out; ./inputTests.out; ./interpreterTests.out; ./ioTests.out ; ./logicalTests.out; ./relationalTests.out; ./replTests.out; ./stackTests.out; ./stringTests.out ; ./variablesTests.out
 
-playground: unitTestDemo.out
-	./unitTestDemo.out
+playground: unitTestPlayground.out
+	./unitTestPlayground.out

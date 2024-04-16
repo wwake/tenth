@@ -1,5 +1,3 @@
-* Use # instead of ` for comment
-* ==$, assertEqual$
 * Print "HANGMAN" at the top
 * Given the word, draw the initial dashes
 * Draw the scaffold
@@ -17,6 +15,7 @@ Hangman
 * Read from file - not supported
 Input
 
+* .pop and .pop$ - by some name
 * Operators: join$, @+$ (?), length$ [string length]
 * How to put " in strings?  Try c's \"
 * What if strings don't end by end of line?
@@ -38,6 +37,9 @@ Ideas
 * Debugging - print stack before each step in start2d; dump secondary contents
 
 TEN-24-40: 2024-04-16 - ==$ and assertEqual$
+* Use # instead of ` for comment
+* ==$, assertEqual$, assertEqual
+
 
 TEN-24-39: 2024-04-15 - HANGMAN
 * Implemented head$ (splits off first character of a string)
