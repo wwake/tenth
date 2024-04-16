@@ -99,7 +99,7 @@ L_reading:
  unix_read #0, L_input_buffer, INPUT_BUFFER_SIZE
  STD_EPILOG
  ret
-.equ COMMENT_MARKER, 0x60 // backtick
+.equ COMMENT_MARKER, 0x23 // #
 // readWord - get next word, reading new lines if necessary
 // Inputs:
 //   READ_LINE_ROUTINE (register) - address of the routine to call to read a line

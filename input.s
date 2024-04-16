@@ -64,7 +64,7 @@ L_reading:
 	ret
 
 
-.equ COMMENT_MARKER, 0x60		// backtick
+.equ COMMENT_MARKER, 0x23		// #
 
 // readWord - get next word, reading new lines if necessary
 // Inputs:

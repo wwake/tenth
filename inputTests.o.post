@@ -104,7 +104,7 @@ L_read_multiline_nonempty:
 L_expect_read_multiline_1:
  .asciz "1"
 L_read_commented_line:
- .asciz " \t word1 ` a comment\n"
+ .asciz " \t word1 # a comment\n"
 L_read_comment_nonempty:
  .asciz "word2\n"
 L_expect_comment_word1:
