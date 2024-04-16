@@ -26,15 +26,15 @@ Strings
 Compiler
 
 
-* Check for data stack underflow
+* Detect stack underflow and overflow (data, control)
 * Debugging tools for Tenth users?
-Environment
+* Print secondary
+* Debugging - print stack before each step in start2d; dump secondary contents
+Debugging
 
 Ideas
 * Fill command for arrays - push n values, then n, then a, write to a[0..n-1]
-* Detect stack underflow and overflow (data, control)
 * Warn if you use control statements in run mode?
-* Debugging - print stack before each step in start2d; dump secondary contents
 
 TEN-24-40: 2024-04-16 - ==$ and assertEqual$
 * Use # instead of ` for comment

@@ -1,5 +1,9 @@
 // Global register values
 // Free: x23, x28
+// Return codes for readWord
+.equ WORD_FOUND, 0
+.equ STRING_FOUND, 1
+.equ NUMBER_FOUND, 2
 
 .macro LOAD_ADDRESS register, location
  adrp \register, \location@PAGE

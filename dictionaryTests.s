@@ -20,6 +20,7 @@ _start:
 	bl adding_to_dictionary_adds_item
 	bl adding_meta_to_dictionary
 	bl isMeta_finds_only_metas
+	bl isMeta_always_false_for_strings
 
 	bl search_empty_dictionary
 	bl search_word_found_returns_word_address
@@ -115,15 +116,34 @@ TEST_START isMeta_finds_only_metas
 	DICT_END
 
 	LOAD_ADDRESS x0, L_colon_string
+	mov x1, WORD_FOUND
 	bl isMeta
 	bl assertTrue
 
 	LOAD_ADDRESS x0, L_semicolon_string
+	mov x1, WORD_FOUND
 	bl isMeta
 	bl assertTrue
 
 	LOAD_ADDRESS x0, L_notmeta_string
+	mov x1, WORD_FOUND
 	bl isMeta
+	bl assertFalse
+TEST_END
+
+TEST_START isMeta_always_false_for_strings
+	// Arrange
+	bl dict_init
+	DICT_HEADER ";", semicolon, META
+	DICT_END
+
+	LOAD_ADDRESS x0, L_semicolon_string
+	mov x1, STRING_FOUND
+
+	// Act
+	bl isMeta
+
+	// Assert
 	bl assertFalse
 TEST_END
 

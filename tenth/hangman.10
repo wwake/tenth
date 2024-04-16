@@ -84,12 +84,10 @@
 
 #####
 
-2 array escape_array
-variable esc
-
-: init_escape escape_array 0 27 @+= esc escape_array make$ @= ;  #27=ESC
-
 : screen_clear esc "[2J" .$^ ;
+
+#  in: row col ...
+: screen_move_to swap esc "[" .$^ .$^ ";" .$^ .$^ "H" .$^ ;
 
 #####
 
@@ -99,7 +97,10 @@ variable esc
 
 
 : hangman
+	screen_clear
+	"1" "40" screen_move_to
 	title .$^ nl
+	nl nl nl
 ;
 
 : test_title

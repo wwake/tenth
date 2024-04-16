@@ -89,6 +89,7 @@ L_exit_search:
 
 // isMeta - search for string in meta list; return 0 if missing, 1 if found
 // Input: x0 - pointer to string to search for
+//        x1 - type of input (word, number, or string)
 // Output: x0 is 0 or 1 (false or true)
 //
 isMeta:
@@ -96,6 +97,13 @@ isMeta:
 	str x28, [sp, #8]
 	str x27, [sp, #-16]!
 
+	// Strings cannot be meta - return 0
+	cmp x1, STRING_FOUND
+	b.ne L_meta_start_looking
+		mov x0, #0
+	b L_isMetaEnd
+
+L_meta_start_looking:
 	mov x27, x0
 	LOAD_ADDRESS x28, metaList
 

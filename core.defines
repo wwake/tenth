@@ -20,4 +20,11 @@
 
 
 
+// Return codes for readWord
+
+.equ WORD_FOUND, 0
+.equ STRING_FOUND, 1
+.equ NUMBER_FOUND, 2
+
+
 #endif
