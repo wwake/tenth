@@ -16,7 +16,7 @@
 	cab	  	# c2 c1 s1' s2'
 ;
 
-: ==$  # stack: s2 s1 ...
+: ==$  # stack= s2 s1 ...
 	head2$  # c2 c1 s1' s2'
 	dup2	# c2 c1 c2 c1 s1' s2'
 	dup2	# c2 c1 c2 c1 c2 c1 s1' s2'
@@ -86,28 +86,95 @@
 
 : screen_clear esc "[2J" .$^ ;
 
-#  in: row col ...
-: screen_move_to swap esc "[" .$^ .$^ ";" .$^ .$^ "H" .$^ ;
+#  in: col row ... => ...
+: screen_move_to swap esc "[" .$^ . pop ";" .$^ . pop "H" .$^ ;
 
 #####
 
 : title "HANGMAN" ;
 
 # returns array of strings
-: scaffold ;
+8 array scaffold
+
+: scaffold_init
+	scaffold 0 "_____" @+=
+	scaffold 1 "|/   |" @+=
+	scaffold 2 "|" @+=
+	scaffold 3 "|" @+=
+	scaffold 4 "|" @+=
+	scaffold 5 "|" @+=
+	scaffold 6 "|" @+=
+	scaffold 7 "" @+=
+;
+
+scaffold_init
+
+
+# string ... -> bool string ...
+: isEmpty$
+	dup		# string string
+	head$	# char string' string
+	swap pop # char string
+	==0		# bool string
+;
+
+# abc => bca
+: bca cab cab ;
+
+#	string col row ... => ...
+: drawAt
+	bca				# col row string
+	screen_move_to	# string
+	.$^
+;
+
+: ...
+   "S= " .$^
+   . " " .$^ bca
+   . " " .$^ bca
+   . " " .$^ bca
+   nl
+;
+
+variable draw_index
+variable draw_column
+variable draw_row
 
 # Draw array of strings, one per line, starting in given col and row
-#   S: scaffold col row ... => ...
+#   S= string-array col row ... => ...
 : draw
+	draw_index 0 @=
+	cba 						# row col array
+	draw_row swap @=			# col array
+	draw_column swap @=			# array
+
+		# string-array
+	while
+		dup				# array array
+		draw_index @	# int array array
+		@+				# string array
+		isEmpty$ !		# bool string array
+	do					# string array
+		draw_index @	# index string array
+		draw_row @		# row index string array
+		+				# (index+row) string array
+		draw_column @	# col row string array
+		cab				# string col row array
+		drawAt			# array
+
+		draw_index @	# index array
+		1 + draw_index	# draw_index index+1 array
+		swap @=			# array
+	od
 ;
 
 : hangman
 	screen_clear
 
-	"2" "40" screen_move_to
+	2 40 screen_move_to
 	title .$^ nl
 
-	"10" "35" scaffold draw
+	10 35 scaffold draw
 
 
 	nl nl nl
