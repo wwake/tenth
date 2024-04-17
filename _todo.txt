@@ -1,4 +1,6 @@
-* Draw the scaffold
+
+* Define call that takes a string on the stack and calls the named method
+* Use call to define a test for draw()
 * Given the word, draw the initial dashes
 * Print "Guessed:"
 * Read character
@@ -34,6 +36,12 @@ Debugging
 Ideas
 * Fill command for arrays - push n values, then n, then a, write to a[0..n-1]
 * Warn if you use control statements in run mode?
+
+TEN-24-41: 2024-04-17 - Screen Drawing
+* Created a ... debugging print
+* Created isEmpty$ for string length
+* Created @++ to increment a variable
+* Draw the scaffold
 
 TEN-24-40: 2024-04-16 - ==$ and assertEqual$
 * Use # instead of ` for comment
