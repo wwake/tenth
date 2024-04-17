@@ -71,7 +71,7 @@ In these descriptions, *a*, *b*, and *c* represent the first, second, and third 
 * @=   mem[b] = a (pop both)
 * a array name - makes 'name' an array, pops a and initializes that many cells to 0
 * @+   a = mem[b[a]]
-* @+=   mem[c[b]] = a
+* @+=   mem[c[b]] = a     (pop all three)
 
 ## String
 * .$ - prints string from address a (non-destructive)
