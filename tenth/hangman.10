@@ -93,13 +93,23 @@
 
 : title "HANGMAN" ;
 
+# returns array of strings
+: scaffold ;
 
-
+# Draw array of strings, one per line, starting in given col and row
+#   S: scaffold col row ... => ...
+: draw
+;
 
 : hangman
 	screen_clear
-	"1" "40" screen_move_to
+
+	"2" "40" screen_move_to
 	title .$^ nl
+
+	"10" "35" scaffold draw
+
+
 	nl nl nl
 ;
 

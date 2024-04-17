@@ -1,6 +1,5 @@
-* Print "HANGMAN" at the top
-* Given the word, draw the initial dashes
 * Draw the scaffold
+* Given the word, draw the initial dashes
 * Print "Guessed:"
 * Read character
   - if already used, ignore it
@@ -39,7 +38,10 @@ Ideas
 TEN-24-40: 2024-04-16 - ==$ and assertEqual$
 * Use # instead of ` for comment
 * ==$, assertEqual$, assertEqual
-
+* Define screen_clear
+* Define first cut at "hangman"
+* Make isMeta check for string type; fails if so
+* Print "HANGMAN" at the top
 
 TEN-24-39: 2024-04-15 - HANGMAN
 * Implemented head$ (splits off first character of a string)

@@ -29,9 +29,6 @@ dotprint:
 	DATA_TOP x0
 	bl printnum
 
-	LOAD_ADDRESS x0, L_space
-	bl print
-
 	STD_EPILOG
 	ret
 
