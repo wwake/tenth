@@ -184,9 +184,7 @@ variable draw_row
 		draw_column @	# col row string array
 		drawAt			# array
 
-		draw_index @	# index array
-		1 + draw_index	# draw_index index+1 array
-		swap @=			# array
+		draw_index @++	# array
 	od
 ;
 
