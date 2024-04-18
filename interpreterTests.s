@@ -1,5 +1,6 @@
 #include "core.defines"
 #include "assembler.macros"
+#include "dictionary.macros"
 
 .include "unix_functions.macros"
 .include "asUnit.macros"
@@ -16,9 +17,12 @@ _start:
 	TEST_ALL "interpreterTests"
 
 	bl interpret_empty_program
+
 	bl secondary_runs_yielding_result_on_stack
 	bl secondary_calls_another_secondary
 	bl recursive_factorial
+
+	bl call_word_looks_up_and_calls_it
 
 	unix_exit
 	STD_EPILOG
@@ -232,6 +236,39 @@ TEST_END
 L_test_address:
 	.quad 0
 
+
+L_call_string_found:
+	.asciz "+"
+
 .text
 .align 2
 
+TEST_START call_word_looks_up_and_calls_it
+	// Arrange
+	bl data_stack_init
+
+	mov x0, #7
+	DATA_PUSH x0
+
+	mov x0, #12
+	DATA_PUSH x0
+
+	LOAD_ADDRESS x0, L_call_string_found
+	DATA_PUSH x0
+
+	bl dict_init
+	DICT_HEADER "+", add
+	DICT_END
+
+	// Act
+	bl call
+
+	// Assert
+	DATA_POP x0
+	mov x1, #19
+	bl assertEqual
+TEST_END
+
+TEST_START call_handles_word_not_found
+
+TEST_END

@@ -16,7 +16,7 @@ arithmetic.o: arithmetic.s core.defines assembler.macros
 
 arithmeticTests.o: arithmeticTests.s $(MACROS) $(TEST_MACROS)
 
-arithmeticTests.out: arithmeticTests.o arithmetic.o asUnit.o cLike.o compile.o interpreter.o input.o stack.o
+arithmeticTests.out: arithmeticTests.o arithmetic.o asUnit.o cLike.o compile.o dictionary.o interpreter.o input.o stack.o
 
 
 asUnit.o: asUnit.s
@@ -33,14 +33,14 @@ compile.o: compile.s assembler.macros core.defines
 
 compileTests.o: compileTests.s $(MACROS) $(TEST_MACROS)
 
-compileTests.out: compileTests.o asUnit.o cLike.o compile.o interpreter.o input.o relational.o stack.o
+compileTests.out: compileTests.o asUnit.o cLike.o compile.o dictionary.o interpreter.o input.o relational.o stack.o
 
 
 control.o: control.s assembler.macros core.defines
 
 controlTests.o: controlTests.s $(MACROS) $(TEST_MACROS)
 
-controlTests.out: controlTests.o asUnit.o cLike.o control.o interpreter.o input.o io.o relational.o stack.o
+controlTests.out: controlTests.o asUnit.o cLike.o control.o dictionary.o interpreter.o input.o io.o relational.o stack.o
 
 
 dictionary.o: dictionary.s dictionary.macros unix_functions.macros assembler.macros core.defines
@@ -57,18 +57,18 @@ inputTests.o: inputTests.s $(MACROS) $(TEST_MACROS)
 inputTests.out: inputTests.o asUnit.o cLike.o input.o
 
 
+interpreter.o: interpreter.s unix_functions.macros assembler.macros core.defines
+
+interpreterTests.o: interpreterTests.s interpreter.o $(MACROS) $(TEST_MACROS)
+
+interpreterTests.out: interpreterTests.o interpreter.o arithmetic.o asUnit.o cLike.o compile.o control.o input.o dictionary.o relational.o stack.o
+
+
 io.o: io.s core.defines assembler.macros unix_functions.macros
 
 ioTests.o: ioTests.s io.s $(MACROS) $(TEST_MACROS)
 
 ioTests.out: ioTests.o io.o cLike.o asUnit.o
-
-
-interpreter.o: interpreter.s unix_functions.macros assembler.macros core.defines
-
-interpreterTests.o: interpreterTests.s interpreter.o $(MACROS) $(TEST_MACROS)
-
-interpreterTests.out: interpreterTests.o interpreter.o arithmetic.o asUnit.o cLike.o compile.o control.o input.o relational.o stack.o
 
 
 logical.o: logical.s unix_functions.macros assembler.macros core.defines
@@ -122,7 +122,7 @@ variables.o: variables.s $(MACROS)
 
 variablesTests.o: variablesTests.s $(MACROS) $(TEST_MACROS)
 
-variablesTests.out: variablesTests.o variables.o asUnit.o cLike.o compile.o input.o interpreter.o stack.o
+variablesTests.out: variablesTests.o variables.o asUnit.o cLike.o compile.o dictionary.o input.o interpreter.o stack.o
 
 
 clean:

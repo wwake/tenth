@@ -1,5 +1,6 @@
 #include "core.defines"
 #include "assembler.macros"
+#include "dictionary.macros"
 
 .include "unix_functions.macros"
 
@@ -7,6 +8,7 @@
 .global start2d
 .global end2d
 .global end2d_wordAddress
+.global call
 
 .text
 .p2align 2
@@ -70,3 +72,21 @@ end2d:
 	STD_EPILOG				//   ... LR from system stack
 	ret						// Return
 
+
+
+// call - calls routine corresponding to string at top of stack
+//
+call:
+	STD_PROLOG
+
+	DATA_POP x0
+
+	bl dict_search
+	#cmp x0, #0
+	#b.eq L_check_for_numeric
+		// Handle a known word
+	ldr x1, [x0]			// load ptr to code
+	blr x1					// call code
+
+	STD_EPILOG
+	ret

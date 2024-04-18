@@ -60,7 +60,7 @@ L_word_not_found:
 	WORD_NOT_FOUND x28
 
 L_eval_exiting:
-	str x28, [sp, #8]
+	ldr x28, [sp, #8]
 	STD_EPILOG
 	ret
 
