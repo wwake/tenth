@@ -30,9 +30,9 @@
 ;
 
 
-: test_empty_strings_equal "" "" ==$ 1 assertEqual ;
+: test_empty_strings_equal 	"." .$^ "" "" ==$ 1 assertEqual ;
 
-: test_different_strings_unequal  "one" "seven" ==$ 0 assertEqual ;
+: test_different_strings_unequal "." .$^ "one" "seven" ==$ 0 assertEqual ;
 
 : test_strings test_empty_strings_equal test_different_strings_unequal ;
 
@@ -40,6 +40,8 @@
 
 variable test_inc_var
 : test_increment
+	"." .$^
+
 	# arrange
 	test_inc_var 7 @=
 
@@ -54,14 +56,11 @@ variable test_inc_var
 
 
 : test_title
-  title
-  "HANGMAN"
-  assertEqual$
+	"." .$^
+	title
+	"HANGMAN"
+	assertEqual$
 ;
-
-: test_hangman test_title ;
-
-: test_all test_strings test_increment test_hangman ;
 
 
 variable test_draw_count
@@ -74,7 +73,15 @@ variable test_draw_count
 ;
 
 : test_draw
+	"." .$^
 	test_draw_count 0 @=
 	scaffold 10 35 "draw_at_spy" draw
 	test_draw_count @ 7 assertEqual
 ;
+
+: test_hangman test_title test_draw ;
+
+
+#####
+
+: test_all test_strings test_increment test_hangman ;
