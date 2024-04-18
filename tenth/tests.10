@@ -63,3 +63,18 @@ variable test_inc_var
 
 : test_all test_strings test_increment test_hangman ;
 
+
+variable test_draw_count
+
+: draw_at_spy
+	test_draw_count dup		# test_draw_count test_draw_count col row string ...
+	@ 1 +					# (test_draw_count+1) test_draw_count col row string ...
+	@=						# col row string ...
+	pop pop pop 			# ...
+;
+
+: test_draw
+	test_draw_count 0 @=
+	scaffold 10 35 "draw_at_spy" draw
+	test_draw_count @ 7 assertEqual
+;
