@@ -23,6 +23,7 @@ _start:
 	bl recursive_factorial
 
 	bl call_word_looks_up_and_calls_it
+	bl call_handles_word_not_found
 
 	unix_exit
 	STD_EPILOG
@@ -240,6 +241,9 @@ L_test_address:
 L_call_string_found:
 	.asciz "+"
 
+L_call_string_not_found:
+	.asciz "????"
+
 .text
 .align 2
 
@@ -269,6 +273,46 @@ TEST_START call_word_looks_up_and_calls_it
 	bl assertEqual
 TEST_END
 
-TEST_START call_handles_word_not_found
 
+.data
+.p2align 3
+L_capture_error_message:
+	.fill 20, 8, 0
+
+L_expected_error_message:
+
+.text
+.align 2
+
+L_test_error_handler:
+	STD_PROLOG
+
+	LOAD_ADDRESS x1, L_capture_error_message
+	bl strcpyz
+
+	STD_EPILOG
+	ret
+
+
+TEST_START call_handles_word_not_found
+	// Arrange
+	bl data_stack_init
+
+	LOAD_ADDRESS x0, L_call_string_not_found
+	DATA_PUSH x0
+
+	bl dict_init
+	DICT_END
+
+	LOAD_ADDRESS x0, global_word_not_found_handler
+	LOAD_ADDRESS x1, L_test_error_handler
+	str x1, [x0]
+
+	// Act
+	bl call
+
+	// Assert
+	LOAD_ADDRESS x0, L_capture_error_message
+	LOAD_ADDRESS x1, L_call_string_not_found
+	bl assertEqualStrings
 TEST_END

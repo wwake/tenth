@@ -16,7 +16,7 @@ arithmetic.o: arithmetic.s core.defines assembler.macros
 
 arithmeticTests.o: arithmeticTests.s $(MACROS) $(TEST_MACROS)
 
-arithmeticTests.out: arithmeticTests.o arithmetic.o asUnit.o cLike.o compile.o dictionary.o interpreter.o input.o stack.o
+arithmeticTests.out: arithmeticTests.o arithmetic.o asUnit.o cLike.o compile.o control.o dictionary.o interpreter.o input.o repl.o stack.o
 
 
 asUnit.o: asUnit.s
@@ -33,21 +33,21 @@ compile.o: compile.s assembler.macros core.defines
 
 compileTests.o: compileTests.s $(MACROS) $(TEST_MACROS)
 
-compileTests.out: compileTests.o asUnit.o cLike.o compile.o dictionary.o interpreter.o input.o relational.o stack.o
+compileTests.out: compileTests.o asUnit.o cLike.o compile.o control.o dictionary.o interpreter.o input.o relational.o repl.o stack.o
 
 
 control.o: control.s assembler.macros core.defines
 
 controlTests.o: controlTests.s $(MACROS) $(TEST_MACROS)
 
-controlTests.out: controlTests.o asUnit.o cLike.o control.o dictionary.o interpreter.o input.o io.o relational.o stack.o
+controlTests.out: controlTests.o asUnit.o cLike.o compile.o control.o dictionary.o interpreter.o input.o io.o relational.o repl.o stack.o
 
 
 dictionary.o: dictionary.s dictionary.macros unix_functions.macros assembler.macros core.defines
 
 dictionaryTests.o: dictionaryTests.s dictionary.o $(MACROS) $(TEST_MACROS)
 
-dictionaryTests.out: dictionaryTests.o dictionary.o arithmetic.o asUnit.o interpreter.o compile.o cLike.o input.o io.o stack.o
+dictionaryTests.out: dictionaryTests.o dictionary.o arithmetic.o asUnit.o compile.o cLike.o control.o input.o interpreter.o io.o repl.o stack.o
 
 
 input.o: input.s $(MACROS)
@@ -61,7 +61,7 @@ interpreter.o: interpreter.s unix_functions.macros assembler.macros core.defines
 
 interpreterTests.o: interpreterTests.s interpreter.o $(MACROS) $(TEST_MACROS)
 
-interpreterTests.out: interpreterTests.o interpreter.o arithmetic.o asUnit.o cLike.o compile.o control.o input.o dictionary.o relational.o stack.o
+interpreterTests.out: interpreterTests.o interpreter.o arithmetic.o asUnit.o cLike.o compile.o control.o input.o dictionary.o relational.o repl.o stack.o
 
 
 io.o: io.s core.defines assembler.macros unix_functions.macros
@@ -95,7 +95,7 @@ replTests.o: replTests.s $(MACROS) $(TEST_MACROS)
 
 replTests.out: replTests.o repl.o asUnit.o cLike.o compile.o control.o dictionary.o input.o io.o interpreter.o stack.o
 
-repl.out: repl.o arithmetic.o cLike.o compile.o control.o dictionary.o input.o interpreter.o io.o logical.o main.o relational.o stack.o string.o variables.o
+repl.out: repl.o arithmetic.o cLike.o compile.o control.o dictionary.o input.o interpreter.o io.o logical.o main.o relational.o repl.o stack.o string.o variables.o
 
 
 stack.o: stack.s $(MACROS)
@@ -122,7 +122,7 @@ variables.o: variables.s $(MACROS)
 
 variablesTests.o: variablesTests.s $(MACROS) $(TEST_MACROS)
 
-variablesTests.out: variablesTests.o variables.o asUnit.o cLike.o compile.o dictionary.o input.o interpreter.o stack.o
+variablesTests.out: variablesTests.o variables.o asUnit.o cLike.o compile.o control.o dictionary.o input.o interpreter.o repl.o stack.o
 
 
 clean:

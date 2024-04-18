@@ -104,7 +104,7 @@ L_missing_word:
 TEST_START eval_calls_syntax_error_routine_for_unknown_word
 	// Arrange
 	LOAD_ADDRESS x0, global_word_not_found_handler
-	LOAD_ADDRESS x1, L_local_error_handler
+	LOAD_ADDRESS x1, test_error_handler
 	str x1, [x0]
 
 	LOAD_ADDRESS x0, L_missing_word
@@ -306,7 +306,7 @@ TEST_START compile_emits_push_when_number_found
 TEST_END
 
 // x0 = word not found
-L_local_error_handler:
+test_error_handler:
 	STD_PROLOG
 
 	LOAD_ADDRESS x1, L_capture_error_message
@@ -318,7 +318,7 @@ L_local_error_handler:
 TEST_START compile_writes_error_message_if_not_found
 	// Arrange:
 	LOAD_ADDRESS x0, global_word_not_found_handler
-	LOAD_ADDRESS x1, L_local_error_handler
+	LOAD_ADDRESS x1, test_error_handler
 	str x1, [x0]
 
 	LOAD_ADDRESS x0, L_compile_word_to_not_find

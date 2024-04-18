@@ -3,6 +3,7 @@
 #include "dictionary.macros"
 
 .include "unix_functions.macros"
+.include "repl.macros"
 
 .global runInterpreter
 .global start2d
@@ -78,15 +79,24 @@ end2d:
 //
 call:
 	STD_PROLOG
+	str x28, [sp, #8]
 
 	DATA_POP x0
+	mov x28, x0
 
 	bl dict_search
-	#cmp x0, #0
-	#b.eq L_check_for_numeric
+	cmp x0, #0
+	b.eq L_call_word_not_found
+
 		// Handle a known word
 	ldr x1, [x0]			// load ptr to code
 	blr x1					// call code
+	b L_call_exiting
 
+L_call_word_not_found:
+	WORD_NOT_FOUND x28
+
+L_call_exiting:
+	ldr x28, [sp, #8]
 	STD_EPILOG
 	ret
