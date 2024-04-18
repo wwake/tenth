@@ -45,42 +45,6 @@
 	pop pop
 ;
 
-: assertEqual
-	dup2
-
-	==
-	if
-		pop pop
-	else
-		"Error: values differ" .$ pop nl
-		"  a=" .$ pop
-		. pop nl
-		"  b=" .$ pop
-		. pop nl
-	fi
-;
-
-: assertEqual$
-	dup2
-
-	==$
-	if
-		pop pop
-	else
-		"Error: string values differ" .$ pop nl
-		"  a=" .$ pop
-		.$ pop nl
-		"  b=" .$ pop
-		.$ pop nl
-	fi
-;
-
-
-: test_empty_strings_equal "" "" ==$ 1 assertEqual ;
-
-: test_different_strings_unequal  "one" "seven" ==$ 0 assertEqual ;
-
-: test_strings test_empty_strings_equal test_different_strings_unequal ;
 
 #####
 
@@ -122,9 +86,9 @@ scaffold_init
 : bca cab cab ;
 
 
-# drawAt - moves to row/col and draws the string
+# draw_at - moves to row/col and draws the string
 #	col row string ... => ...
-: drawAt
+: draw_at
 	screen_move_to	# string
 	.$^
 ;
@@ -147,27 +111,15 @@ scaffold_init
 	@=  # ...
 ;
 
-variable test_inc_var
-: test_increment
-	# arrange
-	test_inc_var 7 @=
-
-	# act
-	test_inc_var @++
-
-	# assert
-	test_inc_var @
-	8
-	assertEqual
-;
-
+variable draw_routine
 variable draw_index
 variable draw_column
 variable draw_row
 
 # Draw array of strings, one per line, starting in given col and row
-#   S= col row array ... => ...
+#   S= routine_name col row array ... => ...
 : draw
+	draw_routine swap @=		# col row array
 	draw_index 0 @=
 	draw_column swap @=			# row array
 	draw_row swap @=			# array
@@ -182,7 +134,9 @@ variable draw_row
 		draw_row @		# row index string array
 		+				# (index+row) string array
 		draw_column @	# col row string array
-		drawAt			# array
+
+		draw_routine @	# routine_name col row string array
+		call			# array
 
 		draw_index @++	# array
 	od
@@ -194,19 +148,10 @@ variable draw_row
 	2 40 screen_move_to
 	title .$^ nl
 
-	scaffold 10 35 draw
+	scaffold 10 35 "draw_at" draw
 
 
 	nl nl nl
 ;
 
-: test_title
-  title
-  "HANGMAN"
-  assertEqual$
-;
-
-: test_hangman test_title ;
-
-: test_all test_strings test_increment test_hangman ;
 

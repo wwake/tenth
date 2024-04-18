@@ -1,0 +1,65 @@
+
+: assertEqual
+	dup2
+
+	==
+	if
+		pop pop
+	else
+		"Error: values differ" .$ pop nl
+		"  a=" .$ pop
+		. pop nl
+		"  b=" .$ pop
+		. pop nl
+	fi
+;
+
+: assertEqual$
+	dup2
+
+	==$
+	if
+		pop pop
+	else
+		"Error: string values differ" .$ pop nl
+		"  a=" .$ pop
+		.$ pop nl
+		"  b=" .$ pop
+		.$ pop nl
+	fi
+;
+
+
+: test_empty_strings_equal "" "" ==$ 1 assertEqual ;
+
+: test_different_strings_unequal  "one" "seven" ==$ 0 assertEqual ;
+
+: test_strings test_empty_strings_equal test_different_strings_unequal ;
+
+#####
+
+variable test_inc_var
+: test_increment
+	# arrange
+	test_inc_var 7 @=
+
+	# act
+	test_inc_var @++
+
+	# assert
+	test_inc_var @
+	8
+	assertEqual
+;
+
+
+: test_title
+  title
+  "HANGMAN"
+  assertEqual$
+;
+
+: test_hangman test_title ;
+
+: test_all test_strings test_increment test_hangman ;
+
