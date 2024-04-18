@@ -1,3 +1,40 @@
+# include tenthUnit
+: assertEqual
+	dup2
+
+	==
+	if
+		pop pop
+	else
+		"Error: values differ" .$ pop nl
+		"  a=" .$ pop
+		. pop nl
+		"  b=" .$ pop
+		. pop nl
+	fi
+;
+
+: assertEqual$
+	dup2
+
+	==$
+	if
+		pop pop
+	else
+		"Error: string values differ" .$ pop nl
+		"  a=" .$ pop
+		.$ pop nl
+		"  b=" .$ pop
+		.$ pop nl
+	fi
+;
+
+
+####
+
+# Words that could be built in
+
+
 : acb cab swap ;
 
 : dup2
@@ -8,6 +45,9 @@
 ;
 
 : .$^ .$ pop ;
+
+
+#  On to Hangman...
 
 : head2$	# In: s2 s1 ...
 	head$	# c2 s2' s1
@@ -56,9 +96,18 @@
 #####
 
 : title "HANGMAN" ;
+2 array title	# array of strings
 
-# returns array of strings
-8 array scaffold
+: title_init
+	title 0 "HANGMAN" @+=
+	title 1 "" @+=
+;
+
+title_init
+
+#####
+
+8 array scaffold  # array of strings
 
 : scaffold_init
 	scaffold 0 "_____" @+=
@@ -142,15 +191,41 @@ variable draw_row
 	od
 ;
 
+100 array guess
+
+100 array answer
+
+variable answerString
+
+: initialize
+	pop
+	answer make$
+	answerString swap @=
+;
+
+: game_over
+	guess make$
+	answer make$
+	==$
+;
+
 : hangman
 	screen_clear
 
-	2 40 screen_move_to
-	title .$^ nl
+	title 2 35 "draw_at" draw
 
-	scaffold 10 35 "draw_at" draw
-
+	scaffold 6 35 "draw_at" draw
 
 	nl nl nl
 ;
 
+
+: test_empty_answer
+	"." .$^
+
+	"" initialize
+
+	game_over
+	1
+	assertEqual
+;

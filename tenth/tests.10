@@ -1,33 +1,4 @@
 
-: assertEqual
-	dup2
-
-	==
-	if
-		pop pop
-	else
-		"Error: values differ" .$ pop nl
-		"  a=" .$ pop
-		. pop nl
-		"  b=" .$ pop
-		. pop nl
-	fi
-;
-
-: assertEqual$
-	dup2
-
-	==$
-	if
-		pop pop
-	else
-		"Error: string values differ" .$ pop nl
-		"  a=" .$ pop
-		.$ pop nl
-		"  b=" .$ pop
-		.$ pop nl
-	fi
-;
 
 
 : test_empty_strings_equal 	"." .$^ "" "" ==$ 1 assertEqual ;

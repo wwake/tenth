@@ -1,8 +1,12 @@
+* Given the word, create the initial guess
+* Game loop: while not done, read & process
 
-* Define call that takes a string on the stack and calls the named method
-* Use call to define a test for draw()
-* Given the word, draw the initial dashes
-* Print "Guessed:"
+* Given the word, draw the initial underscores
+* Given a letter, update the guess
+* Determine if guess matches answer
+
+* Print "Guessed:" and wrong letters
+
 * Read character
   - if already used, ignore it
   - if in word, place it (in all places)
@@ -36,6 +40,11 @@ Debugging
 Ideas
 * Fill command for arrays - push n values, then n, then a, write to a[0..n-1]
 * Warn if you use control statements in run mode?
+
+TEN-24-42: 20240-04-18 - Indirect Call
+* Define call that takes a string on the stack and calls the named method
+* Use call to define a test for draw()
+* Refactored title to use draw() as well
 
 TEN-24-41: 2024-04-17 - Screen Drawing
 * Created a ... debugging print
