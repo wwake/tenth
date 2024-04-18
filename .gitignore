@@ -5,6 +5,7 @@ UserInterfaceState.xcuserstate
 *.d
 
 # Object files
+*.post
 *.o
 *.ko
 *.obj
