@@ -32,7 +32,11 @@ L_make_exiting:
 	ret
 
 
-// head_string - pop address of string, push address of string with first character removed, and push that character (as an integer)
+// head_string - pop address of string, 
+// push address of string with first character removed,
+// and push that character (as an integer)
+// Effect: string ... => string[0] string[rest] ...
+// Note: empty string pushes an empty string and a 0
 //
 head_string:
 	DATA_POP x0

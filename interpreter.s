@@ -89,8 +89,8 @@ call:
 	b.eq L_call_word_not_found
 
 		// Handle a known word
-	ldr x1, [x0]			// load ptr to code
-	blr x1					// call code
+	ldr x1, [x0]		// load ptr to code
+	blr x1				// call code
 	b L_call_exiting
 
 L_call_word_not_found:

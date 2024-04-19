@@ -135,7 +135,7 @@ scaffold_init
 # draw_at - moves to row/col and draws the string
 #	col row string ... => ...
 : draw_at
-	screen_move_to	# string
+	screen_move_to
 	.$^
 ;
 

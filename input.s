@@ -111,13 +111,13 @@ L_word_start:
 
 		ldrb w2, [NEXT_WORD]
 		cmp w2, COMMENT_MARKER	// comment marker
-		b.eq L_handle_backtick
+		b.eq L_handle_comment
 		cmp w2, 0x0a		// newline
 		b.ne find_trailing_space_or_nl	// At end of line - go back & read more
 		add NEXT_WORD, NEXT_WORD, #1
 		b L_check_if_at_end
 
-L_handle_backtick:
+L_handle_comment:
 		strb wzr, [NEXT_WORD], #1
 		strb wzr, [NEXT_WORD]
 		b L_check_if_at_end
