@@ -78,7 +78,7 @@ L_load_system_dictionary:
 
 	DICT_HEADER ":", colon, META
 	DICT_HEADER ";", semicolon, META
-	DICT_HEADER "variable", variable, META
+	DICT_HEADER "var", variable, META
 	DICT_HEADER "array", array, META
 
 	DICT_HEADER "repeat", repeat, META

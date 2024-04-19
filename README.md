@@ -66,7 +66,7 @@ In these descriptions, *a*, *b*, and *c* represent the first, second, and third 
 * while .. do .. od
 
 ## Memory - 
-* variable name - makes 'name' a variable and initializes it to 0
+* var name - makes 'name' a variable and initializes it to 0
 * @   a = mem[a]
 * @=   mem[b] = a (pop both)
 * a array name - makes 'name' an array, pops a and initializes that many cells to 0

@@ -1,39 +1,4 @@
-# include tenthUnit
-: assertEqual
-	dup2
-
-	==
-	if
-		pop pop
-	else
-		"Error: values differ" .$ pop nl
-		"  a=" .$ pop
-		. pop nl
-		"  b=" .$ pop
-		. pop nl
-	fi
-;
-
-: assertEqual$
-	dup2
-
-	==$
-	if
-		pop pop
-	else
-		"Error: string values differ" .$ pop nl
-		"  a=" .$ pop
-		.$ pop nl
-		"  b=" .$ pop
-		.$ pop nl
-	fi
-;
-
-
-####
-
 # Words that could be built in
-
 
 : acb cab swap ;
 
@@ -45,9 +10,6 @@
 ;
 
 : .$^ .$ pop ;
-
-
-#  On to Hangman...
 
 : head2$	# In: s2 s1 ...
 	head$	# c2 s2' s1
@@ -85,8 +47,43 @@
 	pop pop
 ;
 
+#####
+
+# include tenthUnit
+: assertEqual
+	dup2
+
+	==
+	if
+		pop pop
+	else
+		"Error: values differ" .$ pop nl
+		"  a=" .$ pop
+		. pop nl
+		"  b=" .$ pop
+		. pop nl
+	fi
+;
+
+: assertEqual$
+	dup2
+
+	==$
+	if
+		pop pop
+	else
+		"Error: string values differ" .$ pop nl
+		"  a=" .$ pop
+		.$ pop nl
+		"  b=" .$ pop
+		.$ pop nl
+	fi
+;
+
 
 #####
+#  On to Hangman...
+
 
 : screen_clear esc "[2J" .$^ ;
 
@@ -151,8 +148,8 @@ scaffold_init
 ;
 
 
-// @++ - increment variable
-//   variable-addr => ...   [but variable is incremented]
+# @++ - increment variable
+#   variable-addr => ...   [but variable is incremented]
 : @++
 	dup	# var var
 	@	# int var
@@ -160,10 +157,10 @@ scaffold_init
 	@=  # ...
 ;
 
-variable draw_routine
-variable draw_index
-variable draw_column
-variable draw_row
+var draw_routine
+var draw_index
+var draw_column
+var draw_row
 
 # Draw array of strings, one per line, starting in given col and row
 #   S= routine_name col row array ... => ...
@@ -194,11 +191,58 @@ variable draw_row
 100 array guess
 
 100 array answer
+var answer_index
 
-variable answerString
+var answerString
 
-: initialize
-	pop
+var s2a_index
+
+# string_to_array - convert string to array
+# Effect:  string arrayPtr => ...
+#
+: string_to_array
+
+;
+
+10 array test_s2a_array
+
+: test_string_to_array_for_empty "." .$^
+	test_s2a_array "" string_to_array
+
+	test_s2a_array make$ "" assertEqual$
+;
+
+: test_string_to_array_for_string "." .$^
+	test_s2a_array "cat" string_to_array
+
+	1 0 assertEqual
+
+	test_s2a_array 0 @+ . nl 67 . nl ... assertEqual
+
+	test_s2a_array make$ "cat" assertEqual$
+;
+
+: test_s2a_tests test_string_to_array_for_empty test_string_to_array_for_string ;
+
+# initialize - saves answer string
+# Input: answer - top of stack
+# Output: sets answerString
+#
+: initialize			# string
+	answer_index 0 @=	# answer_index = 0
+
+	head$   # c string'
+
+	while
+		dup 	# c c string'
+		0
+		!=
+	do			# c string'
+		answer answer_index cab	# c answer_index answer string'
+		@+=		# string'
+		head$	# c string'
+	od
+
 	answer make$
 	answerString swap @=
 ;
@@ -229,3 +273,10 @@ variable answerString
 	1
 	assertEqual
 ;
+
+: test_string_answer "." .$^
+	"hi" initialize
+
+	game_over 0 assertEqual
+;
+

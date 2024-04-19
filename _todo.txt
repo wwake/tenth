@@ -1,4 +1,6 @@
-* Given the word, create the initial guess
+
+* string_to_array
+* Given the word, create the initial guess (using string_to_array)
 * Game loop: while not done, read & process
 
 * Given the word, draw the initial underscores
@@ -45,6 +47,7 @@ TEN-24-42: 20240-04-18 - Indirect Call
 * Define call that takes a string on the stack and calls the named method
 * Use call to define a test for draw()
 * Refactored title to use draw() as well
+* Started work on initialize and game_over
 
 TEN-24-41: 2024-04-17 - Screen Drawing
 * Created a ... debugging print
