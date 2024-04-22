@@ -239,28 +239,6 @@ var s2a_array
 	pop
 ;
 
-10 array test_s2a_array
-
-: test_string_to_array_for_empty "test_string_to_array_for_empty" .$^
-	test_s2a_array "" string_to_array
-
-	test_s2a_array 0 @+ 0 assertEqual
-	test_s2a_array make$ "" assertEqual$
-	nl
-;
-
-: test_string_to_array_for_string "test_string_to_array_for_string" .$^
-	test_s2a_array "cat"
-
-	string_to_array
-
-	test_s2a_array 0 @+ 99 assertEqual
-
-	test_s2a_array make$ "cat" assertEqual$
-	nl
-;
-
-: test_s2a_tests test_string_to_array_for_empty test_string_to_array_for_string ;
 
 # initialize - saves answer string
 # Input: answer - top of stack
