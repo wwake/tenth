@@ -331,3 +331,28 @@ var draw_row
 	game_over 0 assertEqual
 ;
 
+# handle_guess - adjust guess if character is found
+#   ch => ...
+: update_guess
+
+	dup			# ch ch
+	answer 0	# index answer ch ch
+	@+			# ch-ans ch ch
+
+	==			# ch
+	if
+		guess 0 cab @+=
+	fi
+;
+
+: test_update_guess
+	"cat" game_init
+
+	99 update_guess
+
+	guess make$ "c__" assertEqual$
+	game_over 0 assertEqual
+;
+
+# future tests: test for a in cat, test for a in canal
+# do drawing too
