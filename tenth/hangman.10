@@ -63,6 +63,45 @@
 	pop pop
 ;
 
+
+
+var s2a_index
+var s2a_array
+
+# string_to_array - convert string to array
+# Effect:  string arrayPtr => ...
+#
+: string_to_array
+	s2a_index 0 @=
+
+	swap		# array string
+	s2a_array swap @=	# string
+
+	head$   # c string'
+
+	while
+		dup 	# c c string'
+		0
+		!=
+	do			# c string'
+		s2a_array @ swap	# c array string'
+		s2a_index @		# index c array string'
+		swap	# c index array string'
+		@+=		# string'
+
+		s2a_index @++
+		head$	# c string'
+	od
+
+	# c string'
+	s2a_array		# array c string'
+	s2a_index @		# index array c string'
+	cab		# c index array string'
+	@+=		# string'
+	pop
+;
+
+
 #####
 
 # include tenthUnit
@@ -109,7 +148,6 @@
 
 #####
 
-: title "HANGMAN" ;
 2 array title	# array of strings
 
 : title_init
@@ -194,71 +232,20 @@ var draw_row
 	od
 ;
 
+
 100 array guess
 
 100 array answer
-var answer_index
 
-var answerString
-
-var s2a_index
-var s2a_array
-
-# string_to_array - convert string to array
-# Effect:  string arrayPtr => ...
-#
-: string_to_array
-	s2a_index 0 @=
-
-	swap		# array string
-	s2a_array swap @=	# string
-
-	head$   # c string'
-
-	while
-		dup 	# c c string'
-		0
-		!=
-	do			# c string'
-		s2a_array @ swap	# c array string'
-		s2a_index @		# index c array string'
-		swap	# c index array string'
-		@+=		# string'
-
-		s2a_index @++
-		head$	# c string'
-	od
-
-	# c string'
-	s2a_array		# array c string'
-	s2a_index @		# index array c string'
-	cab		# c index array string'
-	@+=		# string'
-	pop
-;
-
-
-# initialize - saves answer string
+# game_init - saves answer string
 # Input: answer - top of stack
 # Output: sets answerString
 #
-: initialize			# string
-	answer_index 0 @=	# answer_index = 0
+: game_init			# string
+	dup							# string string
+	answer swap	string_to_array	# string
 
-	head$   # c string'
-
-	while
-		dup 	# c c string'
-		0
-		!=
-	do			# c string'
-		answer answer_index cab	# c answer_index answer string'
-		@+=		# string'
-		head$	# c string'
-	od
-
-	answer make$
-	answerString swap @=
+	pop
 ;
 
 : game_over
@@ -279,17 +266,20 @@ var s2a_array
 
 
 : test_empty_answer
-	"." .$^
+	" test_empty_answer " .$^
 
-	"" initialize
+	"" game_init
 
-	game_over
-	1
-	assertEqual
+	game_over 1 assertEqual
+
+	nl
 ;
 
-: test_string_answer "." .$^
-	"hi" initialize
+: test_string_answer " test_string_answer " .$^
+	"hi" game_init
+
+	answer make$ "hi" assertEqual$
+	guess make$ "" assertEqual$
 
 	game_over 0 assertEqual
 ;
