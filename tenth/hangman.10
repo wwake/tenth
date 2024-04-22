@@ -307,6 +307,8 @@ var draw_row
 
 	title 2 35 "draw_at" draw
 
+	guess make$ 4 35 draw_at
+
 	scaffold 6 35 "draw_at" draw
 
 	nl nl nl

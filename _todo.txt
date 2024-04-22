@@ -1,4 +1,3 @@
-* Given the word, create the initial guess
 * Given the word, draw the initial underscores
 * Game loop: while not done, read & process
 * Given a letter, update the guess
@@ -43,6 +42,8 @@ TEN-24-43: 2024-04-22 - Get a Clue
 * Simplify dup2
 * Make C10> print yellow, so syntax errors more visible
 * length$
+* repeat$
+* Given the word, create the initial guess
 
 TEN-24-42: 2024-04-18 - Indirect Call
 * Define call that takes a string on the stack and calls the named method
