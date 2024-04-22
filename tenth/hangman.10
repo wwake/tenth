@@ -8,6 +8,14 @@
 #   abc => bca
 : bca cab cab ;
 
+# @++ - increment variable
+#   variable-addr => ...   [but variable is incremented]
+: @++
+	dup	# var var
+	@	# int var
+	1 + # (int+1) var
+	@=  # ...
+;
 
 # dup2 - duplicate top two items of stack
 #   abc => ababc
@@ -17,6 +25,15 @@
 ;
 
 : .$^ .$ pop ;
+
+: ...
+   "S= " .$^
+   . " " .$^ bca
+   . " " .$^ bca
+   . " " .$^ bca
+   nl
+;
+
 
 # string ... -> bool string ...
 : isEmpty$
@@ -183,23 +200,6 @@ scaffold_init
 	.$^
 ;
 
-: ...
-   "S= " .$^
-   . " " .$^ bca
-   . " " .$^ bca
-   . " " .$^ bca
-   nl
-;
-
-
-# @++ - increment variable
-#   variable-addr => ...   [but variable is incremented]
-: @++
-	dup	# var var
-	@	# int var
-	1 + # (int+1) var
-	@=  # ...
-;
 
 var draw_routine
 var draw_index

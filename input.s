@@ -13,7 +13,7 @@
 
 .data
 L_compile_prompt:
-	.asciz "\033[31mⒸ 10>\033[0m "
+	.asciz "\033[33mⒸ 10>\033[0m "
 
 L_run_prompt:
 	.asciz "\033[32mⓇ 10>\033[0m "
