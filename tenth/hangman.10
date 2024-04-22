@@ -1,7 +1,16 @@
 # Words that could be built in
 
+# acb - move third item to second in stack
+#   abc => acb
 : acb cab swap ;
 
+# bca - move top item to third in stack
+#   abc => bca
+: bca cab cab ;
+
+
+# dup2 - duplicate top two items of stack
+#   abc => ababc
 : dup2
 	bab
 	swap
@@ -10,6 +19,15 @@
 ;
 
 : .$^ .$ pop ;
+
+# string ... -> bool string ...
+: isEmpty$
+	dup		# string string
+	head$	# char string' string
+	swap pop # char string
+	==0		# bool string
+;
+
 
 : head2$	# In: s2 s1 ...
 	head$	# c2 s2' s1
@@ -84,9 +102,10 @@
 #####
 #  On to Hangman...
 
-
+# Clear the screen (VT100 commands)
 : screen_clear esc "[2J" .$^ ;
 
+# screen_move_to - move the cursor to the specified position
 #  in: col row ... => ...
 : screen_move_to swap esc "[" .$^ . pop ";" .$^ . pop "H" .$^ ;
 
@@ -120,17 +139,6 @@ title_init
 scaffold_init
 
 
-# string ... -> bool string ...
-: isEmpty$
-	dup		# string string
-	head$	# char string' string
-	swap pop # char string
-	==0		# bool string
-;
-
-# abc => bca
-: bca cab cab ;
-
 
 # draw_at - moves to row/col and draws the string
 #	col row string ... => ...
@@ -163,7 +171,7 @@ var draw_column
 var draw_row
 
 # Draw array of strings, one per line, starting in given col and row
-#   S= routine_name col row array ... => ...
+#    routine_name col row array ... => ...
 : draw
 	draw_routine swap @=		# col row array
 	draw_index 0 @=
@@ -196,30 +204,60 @@ var answer_index
 var answerString
 
 var s2a_index
+var s2a_array
 
 # string_to_array - convert string to array
 # Effect:  string arrayPtr => ...
 #
 : string_to_array
+	s2a_index 0 @=
 
+	swap		# array string
+	s2a_array swap @=	# string
+
+	head$   # c string'
+
+	while
+		dup 	# c c string'
+		0
+		!=
+	do			# c string'
+		s2a_array @ swap	# c array string'
+		s2a_index @		# index c array string'
+		swap	# c index array string'
+		@+=		# string'
+
+		s2a_index @++
+		head$	# c string'
+	od
+
+	# c string'
+	s2a_array		# array c string'
+	s2a_index @		# index array c string'
+	cab		# c index array string'
+	@+=		# string'
+	pop
 ;
 
 10 array test_s2a_array
 
-: test_string_to_array_for_empty "." .$^
+: test_string_to_array_for_empty "test_string_to_array_for_empty" .$^
 	test_s2a_array "" string_to_array
 
+	test_s2a_array 0 @+ 0 assertEqual
 	test_s2a_array make$ "" assertEqual$
+	nl
 ;
 
-: test_string_to_array_for_string "." .$^
-	test_s2a_array "cat" string_to_array
+: test_string_to_array_for_string "test_string_to_array_for_string" .$^
+	test_s2a_array "cat"
 
-	1 0 assertEqual
+	string_to_array
 
-	test_s2a_array 0 @+ . nl 67 . nl ... assertEqual
+	test_s2a_array 0 @+ 99 assertEqual
 
 	test_s2a_array make$ "cat" assertEqual$
+	nl
 ;
 
 : test_s2a_tests test_string_to_array_for_empty test_string_to_array_for_string ;

@@ -1,9 +1,9 @@
 
 * string_to_array
+* Simplify dup2
 * Given the word, create the initial guess (using string_to_array)
-* Game loop: while not done, read & process
-
 * Given the word, draw the initial underscores
+* Game loop: while not done, read & process
 * Given a letter, update the guess
 * Determine if guess matches answer
 
@@ -22,11 +22,9 @@ Hangman
 * Read from file - not supported
 Input
 
-* .pop and .pop$ - by some name
 * Operators: join$, @+$ (?), length$ [string length]
 * How to put " in strings?  Try c's \"
 * What if strings don't end by end of line?
-* Try arrays of strings?
 Strings
 
 * Explore whether we can use relocatable addresses elsewhere [seems ok in data segment]
