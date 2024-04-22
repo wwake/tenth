@@ -251,10 +251,12 @@ var draw_row
 ;
 
 var repeat_array
+var repeat_char
 
 # repeat$ - repeats characters to create a string
-#   array length
+#   character array length
 : repeat$
+	repeat_char swap @=		# [store repeat character]
 	repeat_array swap @=	# [store the array]
 	0			# index length
 
@@ -263,7 +265,8 @@ var repeat_array
 		!=		# index length
 	do
 		dup		# index index length
-		repeat_array @ swap 95 		# '_' index array index length
+		repeat_array @ swap	# index array index length
+		repeat_char @ 		# '_' index array index length
 		@+=		# index length
 		1 + 	# index' length
 	od
@@ -288,6 +291,7 @@ var repeat_array
 
 	length$		# length
 	guess 		# array length
+	95			# '_' array length
 	repeat$
 ;
 
