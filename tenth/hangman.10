@@ -12,10 +12,8 @@
 # dup2 - duplicate top two items of stack
 #   abc => ababc
 : dup2
-	bab
-	swap
-	dup
-	acb
+	bab	# babc
+	bab # ababc
 ;
 
 : .$^ .$ pop ;

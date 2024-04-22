@@ -1,5 +1,3 @@
-
-* string_to_array
 * Simplify dup2
 * Given the word, create the initial guess (using string_to_array)
 * Given the word, draw the initial underscores
@@ -41,7 +39,11 @@ Ideas
 * Fill command for arrays - push n values, then n, then a, write to a[0..n-1]
 * Warn if you use control statements in run mode?
 
-TEN-24-42: 20240-04-18 - Indirect Call
+TEN-24-43: 2024-04-22 - Get a Clue
+* string_to_array
+
+
+TEN-24-42: 2024-04-18 - Indirect Call
 * Define call that takes a string on the stack and calls the named method
 * Use call to define a test for draw()
 * Refactored title to use draw() as well
