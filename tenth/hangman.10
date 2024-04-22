@@ -137,6 +137,32 @@ var s2a_array
 ;
 
 
+var repeat_array
+var repeat_char
+
+# repeat$ - repeats characters to create a string
+#   character array length
+: repeat$
+	repeat_char swap @=		# [store repeat character]
+	repeat_array swap @=	# [store the array]
+	0			# index length
+
+	while
+		dup2	# index length index length
+		!=		# index length
+	do
+		dup		# index index length
+		repeat_array @ swap	# index array index length
+		repeat_char @ 		# '_' index array index length
+		@+=		# index length
+		1 + 	# index' length
+	od
+
+	repeat_array @ swap 0	# 0 index array length
+	@+=			# length
+	pop
+;
+
 #####
 
 # include tenthUnit
@@ -250,31 +276,6 @@ var draw_row
 	od
 ;
 
-var repeat_array
-var repeat_char
-
-# repeat$ - repeats characters to create a string
-#   character array length
-: repeat$
-	repeat_char swap @=		# [store repeat character]
-	repeat_array swap @=	# [store the array]
-	0			# index length
-
-	while
-		dup2	# index length index length
-		!=		# index length
-	do
-		dup		# index index length
-		repeat_array @ swap	# index array index length
-		repeat_char @ 		# '_' index array index length
-		@+=		# index length
-		1 + 	# index' length
-	od
-
-	repeat_array @ swap 0	# 0 index array length
-	@+=			# length
-	pop
-;
 
 100 array guess
 
