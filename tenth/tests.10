@@ -1,6 +1,4 @@
 
-
-
 : test_empty_strings_equal 	" test_empty_strings_equal " .$^ "" "" ==$ 1 assertEqual ;
 
 : test_different_strings_unequal " test_different_strings_unequal " .$^ "one" "seven" ==$ 0 assertEqual ;
@@ -55,15 +53,14 @@ var test_draw_count
 
 10 array test_s2a_array
 
-: test_string_to_array_for_empty "test_string_to_array_for_empty" .$^
+: test_string_to_array_for_empty " test_string_to_array_for_empty " .$^
 	test_s2a_array "" string_to_array
 
 	test_s2a_array 0 @+ 0 assertEqual
 	test_s2a_array make$ "" assertEqual$
-	nl
 ;
 
-: test_string_to_array_for_string "test_string_to_array_for_string" .$^
+: test_string_to_array_for_string " test_string_to_array_for_string " .$^
 	test_s2a_array "cat"
 
 	string_to_array
@@ -71,12 +68,24 @@ var test_draw_count
 	test_s2a_array 0 @+ 99 assertEqual
 
 	test_s2a_array make$ "cat" assertEqual$
-	nl
 ;
 
 : test_s2a_tests test_string_to_array_for_empty test_string_to_array_for_string ;
 
 
+
+: test_length_of_empty_string " test_length_of_empty_string " .$^
+	"" length$
+	0 assertEqual
+;
+
+: test_length_of_nonempty_string " test_length_of_nonempty_string " .$^
+	"rabbit" length$
+	6 assertEqual
+;
+
+: test_length_of_strings test_length_of_empty_string test_length_of_nonempty_string ;
+
 ###
 
-: test_all test_strings test_increment test_hangman test_s2a_tests ;
+: test_all test_strings test_increment test_hangman test_s2a_tests test_length_of_strings ;

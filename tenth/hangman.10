@@ -118,6 +118,24 @@ var s2a_array
 	pop
 ;
 
+# length$ - get length of string
+#   string => int
+: length$
+	0 swap	# string count(0)
+	head$	# c string count
+
+	while
+		0 !=	# string count
+	do
+		swap 1 +	# count' string
+		swap	# string count'
+		head$	# c string' count'
+	od
+
+	# string count
+	pop
+;
+
 
 #####
 
@@ -232,20 +250,45 @@ var draw_row
 	od
 ;
 
+var repeat_array
+
+# repeat$ - repeats characters to create a string
+#   array length
+: repeat$
+	repeat_array swap @=	# [store the array]
+	0			# index length
+
+	while
+		dup2	# index length index length
+		!=		# index length
+	do
+		dup		# index index length
+		repeat_array @ swap 95 		# '_' index array index length
+		@+=		# index length
+		1 + 	# index' length
+	od
+
+	repeat_array @ swap 0	# 0 index array length
+	@+=			# length
+	pop
+;
 
 100 array guess
 
 100 array answer
 
-# game_init - saves answer string
+# game_init - saves answer string and creates initial guess
+#  Note: 95=_
 # Input: answer - top of stack
 # Output: sets answerString
 #
 : game_init			# string
 	dup							# string string
-	answer swap	string_to_array	# string
+	answer swap	string_to_array	# string [and builds the answer array]
 
-	pop
+	length$		# length
+	guess 		# array length
+	repeat$
 ;
 
 : game_over
@@ -264,22 +307,19 @@ var draw_row
 	nl nl nl
 ;
 
-
 : test_empty_answer
 	" test_empty_answer " .$^
 
 	"" game_init
 
 	game_over 1 assertEqual
-
-	nl
 ;
 
 : test_string_answer " test_string_answer " .$^
 	"hi" game_init
 
 	answer make$ "hi" assertEqual$
-	guess make$ "" assertEqual$
+	guess make$ "__" assertEqual$
 
 	game_over 0 assertEqual
 ;
