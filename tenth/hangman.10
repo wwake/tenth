@@ -352,6 +352,9 @@ var clue_index
 		fi			# ch
 		clue_index @++
 	od
+#...
+	pop pop pop
+#"after" .$^ .
 ;
 
 : test_update_clue_first_letter_match " test_update_clue_first_letter_match " .$^
