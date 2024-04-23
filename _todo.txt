@@ -1,4 +1,6 @@
-* Given a letter, update the guess
+
+* Guess a wrong letter - update used letters
+* Guess a wrong letter - add body parts
 * Game loop: while not done, read & process
 * Determine if all guesses used
 * Print "Guessed:" and wrong letters
@@ -35,6 +37,10 @@ Ideas
 * Fill command for arrays - push n values, then n, then a, write to a[0..n-1]
 * Warn if you use control statements in run mode?
 
+TEN-24-44: 2024-04-23 - Guess a Letter
+* Guess a letter successfully - multiple occurrences
+
+
 TEN-24-43: 2024-04-22 - Get a Clue
 * string_to_array
 * Simplify dup2
@@ -43,6 +49,7 @@ TEN-24-43: 2024-04-22 - Get a Clue
 * repeat$
 * Given the word, create the initial guess and draw it
 * Determine if guess matches answer
+* Start updating guess with matched letters
 
 TEN-24-42: 2024-04-18 - Indirect Call
 * Define call that takes a string on the stack and calls the named method

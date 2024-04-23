@@ -331,28 +331,50 @@ var draw_row
 	game_over 0 assertEqual
 ;
 
-# handle_guess - adjust guess if character is found
+# update_guess - adjust guess if character is found
 #   ch => ...
+var clue_index
+
 : update_guess
-
 	dup			# ch ch
-	answer 0	# index answer ch ch
-	@+			# ch-ans ch ch
+	clue_index 0 @=		# ch ch
 
-	==			# ch
-	if
-		guess 0 cab @+=
-	fi
+	while
+		answer clue_index @ @+	# ch-ans ch ch
+		dup		# ch-ans ch-ans ch ch
+		0		# 0 ch-ans ch-ans ch ch
+		!=		# bool ch-ans ch ch
+	do			# ch-ans ch ch
+		bab swap	# ch-ans ch ch ch
+		==			# bool ch ch
+		if			# ch
+			dup
+			guess clue_index @ cab @+=
+		fi			# ch
+		dup			# ch ch
+		clue_index @++
+	od
 ;
 
-: test_update_guess
+: test_update_guess_first_letter_match " test_update_guess_first_letter_match " .$^
 	"cat" game_init
 
-	99 update_guess
+	99 update_guess	# 'c'
 
 	guess make$ "c__" assertEqual$
 	game_over 0 assertEqual
 ;
 
+: test_update_guess_other_letter_match " test_update_guess_other_letter_match " .$^
+	"canal" game_init
+
+	97 update_guess	# 'a'
+
+	guess make$ "_a_a_" assertEqual$
+	game_over 0 assertEqual
+;
+
 # future tests: test for a in cat, test for a in canal
 # do drawing too
+
+: test_update_guess test_update_guess_first_letter_match test_update_guess_other_letter_match ;
