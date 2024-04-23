@@ -277,11 +277,11 @@ var draw_row
 ;
 
 
-100 array guess
+100 array clue
 
 100 array answer
 
-# game_init - saves answer string and creates initial guess
+# game_init - saves answer string and creates initial clue
 #  Note: 95=_
 # Input: answer - top of stack
 # Output: sets answerString
@@ -291,13 +291,13 @@ var draw_row
 	answer swap	string_to_array	# string [and builds the answer array]
 
 	length$		# length
-	guess 		# array length
+	clue 		# array length
 	95			# '_' array length
 	repeat$
 ;
 
 : game_over
-	guess make$
+	clue make$
 	answer make$
 	==$
 ;
@@ -307,7 +307,7 @@ var draw_row
 
 	title 2 35 "draw_at" draw
 
-	guess make$ 4 35 draw_at
+	clue make$ 4 35 draw_at
 
 	scaffold 6 35 "draw_at" draw
 
@@ -326,16 +326,16 @@ var draw_row
 	"hi" game_init
 
 	answer make$ "hi" assertEqual$
-	guess make$ "__" assertEqual$
+	clue make$ "__" assertEqual$
 
 	game_over 0 assertEqual
 ;
 
-# update_guess - adjust guess if character is found
+# update_clue - adjust clue if character is found
 #   ch => ...
 var clue_index
 
-: update_guess
+: update_clue
 	clue_index 0 @=		# ch
 
 	while
@@ -348,31 +348,31 @@ var clue_index
 		==			# bool ch
 		if			# ch
 			dup		# ch ch
-			guess clue_index @ cab @+=  	# ch
+			clue clue_index @ cab @+=  	# ch
 		fi			# ch
 		clue_index @++
 	od
 ;
 
-: test_update_guess_first_letter_match " test_update_guess_first_letter_match " .$^
+: test_update_clue_first_letter_match " test_update_clue_first_letter_match " .$^
 	"cat" game_init
 
-	99 update_guess	# 'c'
+	99 update_clue	# 'c'
 
-	guess make$ "c__" assertEqual$
+	clue make$ "c__" assertEqual$
 	game_over 0 assertEqual
 ;
 
-: test_update_guess_other_letter_match " test_update_guess_other_letter_match " .$^
+: test_update_clue_other_letter_match " test_update_clue_other_letter_match " .$^
 	"canal" game_init
 
-	97 update_guess	# 'a'
+	97 update_clue	# 'a'
 
-	guess make$ "_a_a_" assertEqual$
+	clue make$ "_a_a_" assertEqual$
 	game_over 0 assertEqual
 ;
 
 # future tests: test for a in cat, test for a in canal
 # do drawing too
 
-: test_update_guess test_update_guess_first_letter_match test_update_guess_other_letter_match ;
+: test_update_clue test_update_clue_first_letter_match test_update_clue_other_letter_match ;
