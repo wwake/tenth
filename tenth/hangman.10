@@ -331,25 +331,27 @@ var draw_row
 	game_over 0 assertEqual
 ;
 
-# update_clue - adjust clue if character is found
-#   ch => ...
+# update_clue - adjust clue if character is found. Return true if character found.
+#   ch ... => bool ...
 var clue_index
 
 : update_clue
 	clue_index 0 @=		# ch
+	0 swap				# ch result(0)
 
 	while
-		answer clue_index @ @+	# ch-ans ch
-		dup		# ch-ans ch-ans ch
-		0		# 0 ch-ans ch-ans ch
-		!=		# bool ch-ans ch
-	do			# ch-ans ch
-		bab		# ch ch-ans ch
-		==			# bool ch
-		if			# ch
-			dup		# ch ch
-			clue clue_index @ cab @+=  	# ch
-		fi			# ch
+		answer clue_index @ @+	# ch-ans ch result
+		dup		# ch-ans ch-ans ch result
+		0		# 0 ch-ans ch-ans ch result
+		!=		# bool ch-ans ch result
+	do			# ch-ans ch result
+		bab		# ch ch-ans ch result
+		==			# bool ch result
+		if			# ch result
+			dup		# ch ch result
+			clue clue_index @ cab @+=  	# ch result
+			swap pop 1 swap		# ch result(true)
+		fi			# ch result
 		clue_index @++
 	od
 #...
@@ -358,21 +360,27 @@ var clue_index
 ;
 
 : test_update_clue_first_letter_match " test_update_clue_first_letter_match " .$^
+	37172	# guard word
 	"cat" game_init
 
 	99 update_clue	# 'c'
 
 	clue make$ "c__" assertEqual$
 	game_over 0 assertEqual
+	1 assertEqual
+	37172 assertEqual
 ;
 
 : test_update_clue_other_letter_match " test_update_clue_other_letter_match " .$^
+	4321 	# guard word
 	"canal" game_init
 
 	97 update_clue	# 'a'
 
 	clue make$ "_a_a_" assertEqual$
 	game_over 0 assertEqual
+	1 assertEqual
+	4321 assertEqual
 ;
 
 # future tests: test for a in cat, test for a in canal
