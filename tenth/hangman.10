@@ -88,7 +88,7 @@ var s2a_array
 # string_to_array - convert string to array
 # Effect:  string arrayPtr => ...
 #
-: string_to_array
+: string_to_array " s2a started " .$^ dup .$^ nl
 	s2a_index 0 @=
 
 	swap		# array string
@@ -101,7 +101,9 @@ var s2a_array
 		0
 		!=
 	do			# c string'
+" s2a_array " .$^ s2a_array @ . pop
 		s2a_array @ swap	# c array string'
+" s2a_index " .$^ s2a_index @ . pop
 		s2a_index @		# index c array string'
 		swap	# c index array string'
 		@+=		# string'
@@ -110,10 +112,10 @@ var s2a_array
 		head$	# c string'
 	od
 
-	# c string'
-	s2a_array		# array c string'
-	s2a_index @		# index array c string'
-	cab		# c index array string'
+	# c(0) string'
+	s2a_array		# array 0 string'
+	s2a_index @		# index array 0 string'
+	cab		# 0 index array string'
 	@+=		# string'
 	pop
 ;
@@ -121,9 +123,10 @@ var s2a_array
 # length$ - get length of string
 #   string => int
 : length$
+" length$ " .$^ dup .$^  nl
 	0 swap	# string count(0)
 	head$	# c string count
-
+...
 	while
 		0 !=	# string count
 	do
@@ -149,8 +152,8 @@ var repeat_char
 
 	while
 		dup2	# index length index length
-		!=		# index length
-	do
+		!=		# bool index length
+	do			# index length
 		dup		# index index length
 		repeat_array @ swap	# index array index length
 		repeat_char @ 		# '_' index array index length
@@ -158,6 +161,7 @@ var repeat_char
 		1 + 	# index' length
 	od
 
+							# index length
 	repeat_array @ swap 0	# 0 index array length
 	@+=			# length
 	pop
@@ -281,19 +285,33 @@ var draw_row
 
 100 array answer
 
+30 array wrong_guesses
+var wrong_guesses_index
+
+: wrong_guesses_init
+	wrong_guesses_index 0 @=
+;
+
 # game_init - saves answer string and creates initial clue
 #  Note: 95=_
 # Input: answer - top of stack
 # Output: sets answerString
 #
 : game_init			# string
+" game_init " .$^ dup .$^ nl
+	wrong_guesses_init
+	
 	dup							# string string
-	answer swap	string_to_array	# string [and builds the answer array]
-
+" answer=" .$^ answer . pop nl
+	answer swap		# string answer string
+" before s2a call in game_init " .$^
+	string_to_array	# string [and builds the answer array]
+" s2a done " .$^
 	length$		# length
 	clue 		# array length
 	95			# '_' array length
 	repeat$
+"done " .$^
 ;
 
 : game_over
@@ -335,6 +353,7 @@ var draw_row
 #   ch ... => bool ...
 var clue_index
 
+
 : update_clue
 	clue_index 0 @=		# ch
 	0 swap				# ch result(0)
@@ -359,6 +378,16 @@ var clue_index
 #"after" .$^ .
 ;
 
+# update_wrong_guess - stores character in list of wrong guesses
+#   ch => ...
+: update_wrong_guess
+	wrong_guesses wrong_guesses_index @	# index wrong_guesses ch
+	cab		# ch index wrong_guesses
+	@+=		#
+
+	wrong_guesses_index @++
+;
+
 : test_update_clue_first_letter_match " test_update_clue_first_letter_match " .$^
 	37172	# guard word
 	"cat" game_init
@@ -377,13 +406,35 @@ var clue_index
 
 	97 update_clue	# 'a'
 
+	1 assertEqual
 	clue make$ "_a_a_" assertEqual$
 	game_over 0 assertEqual
-	1 assertEqual
 	4321 assertEqual
 ;
 
-# future tests: test for a in cat, test for a in canal
-# do drawing too
+: test_update_clue_wins " test_update_clue_wins " .$^
+	37172	# guard word
+"start " .$^
+	"aa" game_init
+"inited " .$^
 
-: test_update_clue test_update_clue_first_letter_match test_update_clue_other_letter_match ;
+	97 update_clue	# 'a'
+"past " .$^
+
+	1 assertEqual			# check update_clue result
+	clue make$ "aa" assertEqual$
+	game_over 1 assertEqual
+	37172 assertEqual
+;
+
+: test_update_wrong_guesses " test_update_wrong_guesses " .$^
+	135		# guard word
+	"fish" game_init
+
+	97 update_wrong_guess	# 'a'
+
+	wrong_guesses make$ "a" assertEqual$
+	135 assertEqual
+;
+
+: test_update_clue test_update_clue_first_letter_match test_update_clue_other_letter_match test_update_clue_wins test_update_wrong_guesses nl ;

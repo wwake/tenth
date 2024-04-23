@@ -13,7 +13,7 @@
 .p2align 3
 
 L_secondary_space:
-	.fill 2000000, 8, 0
+	.fill 20000000, 8, 0
 
 
 .text

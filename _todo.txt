@@ -1,4 +1,3 @@
-
 * Guess a wrong letter - update used letters
 * Guess a wrong letter - add body parts
 * Game loop: while not done, read & process
