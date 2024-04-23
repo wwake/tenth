@@ -336,22 +336,20 @@ var draw_row
 var clue_index
 
 : update_guess
-	dup			# ch ch
-	clue_index 0 @=		# ch ch
+	clue_index 0 @=		# ch
 
 	while
+		dup			# ch ch
 		answer clue_index @ @+	# ch-ans ch ch
 		dup		# ch-ans ch-ans ch ch
 		0		# 0 ch-ans ch-ans ch ch
 		!=		# bool ch-ans ch ch
 	do			# ch-ans ch ch
-		bab swap	# ch-ans ch ch ch
-		==			# bool ch ch
+		==			# bool ch
 		if			# ch
-			dup
-			guess clue_index @ cab @+=
+			dup		# ch ch
+			guess clue_index @ cab @+=  	# ch
 		fi			# ch
-		dup			# ch ch
 		clue_index @++
 	od
 ;
