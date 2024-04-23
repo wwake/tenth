@@ -339,12 +339,12 @@ var clue_index
 	clue_index 0 @=		# ch
 
 	while
-		dup			# ch ch
-		answer clue_index @ @+	# ch-ans ch ch
-		dup		# ch-ans ch-ans ch ch
-		0		# 0 ch-ans ch-ans ch ch
-		!=		# bool ch-ans ch ch
-	do			# ch-ans ch ch
+		answer clue_index @ @+	# ch-ans ch
+		dup		# ch-ans ch-ans ch
+		0		# 0 ch-ans ch-ans ch
+		!=		# bool ch-ans ch
+	do			# ch-ans ch
+		bab		# ch ch-ans ch
 		==			# bool ch
 		if			# ch
 			dup		# ch ch
@@ -353,7 +353,7 @@ var clue_index
 		clue_index @++
 	od
 #...
-	pop pop pop
+	pop pop
 #"after" .$^ .
 ;
 
