@@ -329,6 +329,10 @@ var wrong_guesses_index
 
 	scaffold 6 35 "draw_at" draw
 
+	"Wrong guesses: " 15 20 draw_at
+
+	wrong_guesses make$ 15 35 draw_at
+
 	nl nl nl
 ;
 
@@ -374,7 +378,8 @@ var clue_index
 		clue_index @++
 	od
 
-	pop pop
+			# ch-ans ch result
+	pop pop	# result
 ;
 
 # update_wrong_guess - stores character in list of wrong guesses
@@ -400,10 +405,15 @@ var clue_index
 ;
 
 : test_update_clue_other_letter_match " test_update_clue_other_letter_match " .$^
+	531
 	"canal" game_init
 
 	97 update_clue	# 'a'
 
+	clue make$ "_a_a_" assertEqual$
+	game_over 0 assertEqual
+	1 assertEqual
+	531 assertEqual
 ;
 
 : test_update_clue_wins " test_update_clue_wins " .$^
@@ -418,16 +428,6 @@ var clue_index
 	37172 assertEqual
 ;
 
-: test_update_wrong_guesses " test_update_wrong_guesses " .$^
-	135		# guard word
-	"fish" game_init
-
-	97 update_wrong_guess	# 'a'
-
-	wrong_guesses make$ "a" assertEqual$
-	135 assertEqual
-;
-
 : test_calling_string_to_array_multiple_times_doesnt_crash
 	answer "canal"
 	string_to_array
@@ -435,6 +435,18 @@ var clue_index
 	answer "canal"
 	string_to_array
  ;
+
+: test_update_wrong_guesses " test_update_wrong_guesses " .$^
+	135		# guard word
+	"fish" game_init
+
+	97 update_wrong_guess	# 'a'
+	100 update_wrong_guess	# 'd'
+	99 update_wrong_guess	# 'c'
+
+	wrong_guesses make$ "adc" assertEqual$
+	135 assertEqual
+;
 
 : test_update_clue test_update_clue_first_letter_match test_update_clue_other_letter_match test_update_clue_wins test_update_wrong_guesses test_calling_string_to_array_multiple_times_doesnt_crash nl
 ;
