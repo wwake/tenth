@@ -1,8 +1,6 @@
-* Guess a wrong letter - update used letters
-* Guess a wrong letter - add body parts
 * Game loop: while not done, read & process
+* Guess a wrong letter - add body parts
 * Determine if all guesses used
-* Print "Guessed:" and wrong letters
 
 * Read character
   - if already used, ignore it
@@ -38,6 +36,8 @@ Ideas
 
 TEST-24-45: 2024-04-24 - Debug Test Interaction
 * Fixed defect where running test_update_clue_other_letter_match multiple times (fails) - string_to_array wrongly used a pointer as an array
+* Guess a wrong letter - update used letters
+* Print "Guessed:" and wrong letters
 
 TEN-24-44: 2024-04-23 - Guess a Letter
 * Guess a letter successfully - multiple occurrences

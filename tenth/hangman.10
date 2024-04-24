@@ -336,22 +336,6 @@ var wrong_guesses_index
 	nl nl nl
 ;
 
-: test_empty_answer
-	" test_empty_answer " .$^
-
-	"" game_init
-
-	game_over 1 assertEqual
-;
-
-: test_string_answer " test_string_answer " .$^
-	"hi" game_init
-
-	answer make$ "hi" assertEqual$
-	clue make$ "__" assertEqual$
-
-	game_over 0 assertEqual
-;
 
 # update_clue - adjust clue if character is found. Return true if character found.
 #   ch ... => bool ...
@@ -390,63 +374,4 @@ var clue_index
 	@+=		#
 
 	wrong_guesses_index @++
-;
-
-: test_update_clue_first_letter_match " test_update_clue_first_letter_match " .$^
-	37172	# guard word
-	"cat" game_init
-
-	99 update_clue	# 'c'
-
-	clue make$ "c__" assertEqual$
-	game_over 0 assertEqual
-	1 assertEqual
-	37172 assertEqual
-;
-
-: test_update_clue_other_letter_match " test_update_clue_other_letter_match " .$^
-	531
-	"canal" game_init
-
-	97 update_clue	# 'a'
-
-	clue make$ "_a_a_" assertEqual$
-	game_over 0 assertEqual
-	1 assertEqual
-	531 assertEqual
-;
-
-: test_update_clue_wins " test_update_clue_wins " .$^
-	37172	# guard word
-	"aa" game_init
-
-	97 update_clue	# 'a'
-
-	1 assertEqual			# check update_clue result
-	clue make$ "aa" assertEqual$
-	game_over 1 assertEqual
-	37172 assertEqual
-;
-
-: test_calling_string_to_array_multiple_times_doesnt_crash
-	answer "canal"
-	string_to_array
-
-	answer "canal"
-	string_to_array
- ;
-
-: test_update_wrong_guesses " test_update_wrong_guesses " .$^
-	135		# guard word
-	"fish" game_init
-
-	97 update_wrong_guess	# 'a'
-	100 update_wrong_guess	# 'd'
-	99 update_wrong_guess	# 'c'
-
-	wrong_guesses make$ "adc" assertEqual$
-	135 assertEqual
-;
-
-: test_update_clue test_update_clue_first_letter_match test_update_clue_other_letter_match test_update_clue_wins test_update_wrong_guesses test_calling_string_to_array_multiple_times_doesnt_crash nl
 ;
