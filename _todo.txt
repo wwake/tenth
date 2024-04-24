@@ -1,3 +1,5 @@
+
+* Running test_update_clue_other_letter_match multiple times (fails) - look at update_clue
 * Guess a wrong letter - update used letters
 * Guess a wrong letter - add body parts
 * Game loop: while not done, read & process
@@ -17,8 +19,8 @@ Hangman
 * Read from file - not supported
 Input
 
-* Operators: join$, @+$ (?), length$ [string length]
-* How to put " in strings?  Try c's \"
+* Operators: join$, @+$ (?)
+* How to put " in strings?  Try C's \"
 * What if strings don't end by end of line?
 Strings
 
@@ -38,7 +40,8 @@ Ideas
 
 TEN-24-44: 2024-04-23 - Guess a Letter
 * Guess a letter successfully - multiple occurrences
-
+* Started to implement updating wrong letters list
+* But ran into a test that fails if repeated (or if other test runs after it)
 
 TEN-24-43: 2024-04-22 - Get a Clue
 * string_to_array

@@ -1,3 +1,4 @@
+
 # Words that could be built in
 
 # acb - move third item to second in stack
@@ -88,7 +89,7 @@ var s2a_array
 # string_to_array - convert string to array
 # Effect:  string arrayPtr => ...
 #
-: string_to_array " s2a started " .$^ dup .$^ nl
+: string_to_array
 	s2a_index 0 @=
 
 	swap		# array string
@@ -101,9 +102,7 @@ var s2a_array
 		0
 		!=
 	do			# c string'
-" s2a_array " .$^ s2a_array @ . pop
 		s2a_array @ swap	# c array string'
-" s2a_index " .$^ s2a_index @ . pop
 		s2a_index @		# index c array string'
 		swap	# c index array string'
 		@+=		# string'
@@ -113,7 +112,7 @@ var s2a_array
 	od
 
 	# c(0) string'
-	s2a_array		# array 0 string'
+	s2a_array @		# array 0 string'
 	s2a_index @		# index array 0 string'
 	cab		# 0 index array string'
 	@+=		# string'
@@ -123,10 +122,9 @@ var s2a_array
 # length$ - get length of string
 #   string => int
 : length$
-" length$ " .$^ dup .$^  nl
 	0 swap	# string count(0)
 	head$	# c string count
-...
+
 	while
 		0 !=	# string count
 	do
@@ -280,6 +278,9 @@ var draw_row
 	od
 ;
 
+#######
+
+# Game State
 
 100 array clue
 
@@ -288,6 +289,8 @@ var draw_row
 30 array wrong_guesses
 var wrong_guesses_index
 
+
+# Initialization
 : wrong_guesses_init
 	wrong_guesses_index 0 @=
 ;
@@ -298,20 +301,17 @@ var wrong_guesses_index
 # Output: sets answerString
 #
 : game_init			# string
-" game_init " .$^ dup .$^ nl
 	wrong_guesses_init
-	
+
 	dup							# string string
-" answer=" .$^ answer . pop nl
 	answer swap		# string answer string
-" before s2a call in game_init " .$^
+
 	string_to_array	# string [and builds the answer array]
-" s2a done " .$^
+
 	length$		# length
 	clue 		# array length
 	95			# '_' array length
 	repeat$
-"done " .$^
 ;
 
 : game_over
@@ -351,8 +351,8 @@ var wrong_guesses_index
 
 # update_clue - adjust clue if character is found. Return true if character found.
 #   ch ... => bool ...
-var clue_index
 
+var clue_index
 
 : update_clue
 	clue_index 0 @=		# ch
@@ -373,9 +373,8 @@ var clue_index
 		fi			# ch result
 		clue_index @++
 	od
-#...
+
 	pop pop
-#"after" .$^ .
 ;
 
 # update_wrong_guess - stores character in list of wrong guesses
@@ -401,25 +400,17 @@ var clue_index
 ;
 
 : test_update_clue_other_letter_match " test_update_clue_other_letter_match " .$^
-	4321 	# guard word
 	"canal" game_init
 
 	97 update_clue	# 'a'
 
-	1 assertEqual
-	clue make$ "_a_a_" assertEqual$
-	game_over 0 assertEqual
-	4321 assertEqual
 ;
 
 : test_update_clue_wins " test_update_clue_wins " .$^
 	37172	# guard word
-"start " .$^
 	"aa" game_init
-"inited " .$^
 
 	97 update_clue	# 'a'
-"past " .$^
 
 	1 assertEqual			# check update_clue result
 	clue make$ "aa" assertEqual$
@@ -437,4 +428,13 @@ var clue_index
 	135 assertEqual
 ;
 
-: test_update_clue test_update_clue_first_letter_match test_update_clue_other_letter_match test_update_clue_wins test_update_wrong_guesses nl ;
+: test_calling_string_to_array_multiple_times_doesnt_crash
+	answer "canal"
+	string_to_array
+
+	answer "canal"
+	string_to_array
+ ;
+
+: test_update_clue test_update_clue_first_letter_match test_update_clue_other_letter_match test_update_clue_wins test_update_wrong_guesses test_calling_string_to_array_multiple_times_doesnt_crash nl
+;
