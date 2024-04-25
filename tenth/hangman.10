@@ -430,14 +430,3 @@ var read_stub_index
 
 : display_stub ;
 
-: test_game_loop " test_game_loop " .$^
-	90210
-	"aa" game_init
-	"ba" read_stub_init
-
-	"display_stub" "read_stub" game_loop
-
-	clue make$ "aa" assertEqual$
-	wrong_guesses make$ "b" assertEqual$
-	90210 assertEqual
-;

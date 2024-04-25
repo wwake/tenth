@@ -202,4 +202,28 @@ var test_draw_count
 ;
 
 #####
-: test_all test_update_clue test_strings test_increment test_hangman test_s2a_tests test_length_of_strings nl ;
+: test_game_loop " test_game_loop " .$^
+	90210
+	"aa" game_init
+	"ba" read_stub_init
+
+	"display_stub" "read_stub" game_loop
+
+	clue make$ "aa" assertEqual$
+	wrong_guesses make$ "b" assertEqual$
+	90210 assertEqual
+;
+
+: test_game test_game_loop nl ;
+
+#####
+: test_all
+	test_update_clue
+	test_strings
+	test_increment
+	test_game
+	test_hangman
+	test_length_of_strings
+	test_s2a_tests
+	nl
+;
