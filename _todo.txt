@@ -1,5 +1,4 @@
 
-* Game loop: while not done, read & process
 * Draw body parts for wrong guesses
 * Print "game over" (win or lose)
 * Determine if all guesses used
@@ -37,6 +36,7 @@ Ideas
 * Warn if you use control statements in run mode?
 
 TEST-24-46: 2024-04-25 - Game Loop
+* Game loop: while not done, read & process
 
 
 TEST-24-45: 2024-04-24 - Debug Test Interaction

@@ -1,15 +1,28 @@
 
-: test_empty_strings_equal 	" test_empty_strings_equal " .$^ "" "" ==$ 1 assertEqual ;
+: test_empty_strings_equal 	" test_empty_strings_equal " .$^
+	1234
 
-: test_different_strings_unequal " test_different_strings_unequal " .$^ "one" "seven" ==$ 0 assertEqual ;
+	"" "" ==$
+
+	1 assertEqual
+	1234 assertEqual
+;
+
+: test_different_strings_unequal " test_different_strings_unequal " .$^
+	2171
+	"one" "seven" ==$
+
+	0 assertEqual
+	2171 assertEqual
+;
 
 : test_strings test_empty_strings_equal test_different_strings_unequal ;
 
 #####
 
 var test_inc_var
-: test_increment
-	" test_increment " .$^
+: test_increment " test_increment " .$^
+	43209
 
 	# arrange
 	test_inc_var 7 @=
@@ -21,14 +34,19 @@ var test_inc_var
 	test_inc_var @
 	8
 	assertEqual
+
+	43209 assertEqual
 ;
 
 
-: test_title
-	" test_title " .$^
+: test_title " test_title " .$^
+	411
 	title 0 @+
+
 	"HANGMAN"
+
 	assertEqual$
+	411 assertEqual
 ;
 
 
@@ -57,13 +75,16 @@ var test_draw_count
 10 array test_s2a_array
 
 : test_string_to_array_for_empty " test_string_to_array_for_empty " .$^
+	14417
 	test_s2a_array "" string_to_array
 
 	test_s2a_array 0 @+ 0 assertEqual
 	test_s2a_array make$ "" assertEqual$
+	14417 assertEqual
 ;
 
 : test_string_to_array_for_string " test_string_to_array_for_string " .$^
+	315
 	test_s2a_array "cat"
 
 	string_to_array
@@ -71,6 +92,7 @@ var test_draw_count
 	test_s2a_array 0 @+ 99 assertEqual
 
 	test_s2a_array make$ "cat" assertEqual$
+	315 assertEqual
 ;
 
 : test_s2a_tests test_string_to_array_for_empty test_string_to_array_for_string ;
@@ -78,13 +100,17 @@ var test_draw_count
 
 
 : test_length_of_empty_string " test_length_of_empty_string " .$^
+	37281
 	"" length$
 	0 assertEqual
+	37281 assertEqual
 ;
 
 : test_length_of_nonempty_string " test_length_of_nonempty_string " .$^
+	415585
 	"rabbit" length$
 	6 assertEqual
+	415585 assertEqual
 ;
 
 : test_length_of_strings test_length_of_empty_string test_length_of_nonempty_string ;
@@ -94,20 +120,24 @@ var test_draw_count
 
 
 : test_empty_answer
+	37056
 	" test_empty_answer " .$^
 
 	"" game_init
 
 	game_over 1 assertEqual
+	37056 assertEqual
 ;
 
 : test_string_answer " test_string_answer " .$^
+	8785
 	"hi" game_init
 
 	answer make$ "hi" assertEqual$
 	clue make$ "__" assertEqual$
 
 	game_over 0 assertEqual
+	8785 assertEqual
 ;
 
 : test_update_clue_first_letter_match " test_update_clue_first_letter_match " .$^
@@ -147,12 +177,14 @@ var test_draw_count
 ;
 
 : test_calling_string_to_array_multiple_times_doesnt_crash
+	34127
 	answer "canal"
 	string_to_array
 
 	answer "canal"
 	string_to_array
- ;
+	34127 assertEqual
+;
 
 : test_update_wrong_guesses " test_update_wrong_guesses " .$^
 	135		# guard word
