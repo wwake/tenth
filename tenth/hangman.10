@@ -413,20 +413,68 @@ var clue_index
 	pop pop
 ;
 
-
-10 array read_stub_array
-var read_stub_index
-
-: read_stub_init
-	read_stub_array swap string_to_array
-	read_stub_index 0 @=
+: draw_head
 ;
 
-: read_stub
-	read_stub_array read_stub_index @
-	@+
-	read_stub_index @++
+
+50 array test_draw_area
+var test_draw_index
+
+# test_draw_spy
+# col row string => ...
+: test_draw_spy
+	swap
+	test_draw_area test_draw_index @ cab 48 + @+=	# row (add '0')
+	test_draw_index @++
+
+	test_draw_area test_draw_index @ 45 @+=		# write '-'
+	test_draw_index @++
+
+	test_draw_area test_draw_index @ cab 48 + @+=	# col (add '0')
+	test_draw_index @++
+
+	test_draw_area test_draw_index @ 45 @+=		# write '-'
+	test_draw_index @++
+
+	head$
+	test_draw_area test_draw_index @ cab @+=	# first char of string
+	pop
+	test_draw_index @++
+
+	test_draw_area test_draw_index @ 126 @+=	# write '~'
 ;
 
-: display_stub ;
+: test_draw_spy_check " test_draw_spy_check " .$^
+	1029
+	test_draw_index 0 @=
+
+	"*/" 2 4 test_draw_spy
+
+	test_draw_area test_draw_index @ 0 @+=
+	test_draw_area make$ "2-4-*~" assertEqual$
+	1029 assertEqual
+;
+
+: test_draw_head
+	6738
+	test_draw_index 0 @=
+
+	1 2 "test_draw_spy" "draw_head" call
+
+	test_draw_area test_draw_index @ 0 @+=
+	test_draw_area make$ "1-4-O~" assertEqual$
+
+	6738 assertEqual
+;
+
+: update_wrong_body
+;
+
+: test_update_wrong_body
+	8873
+
+
+
+	8873 assertEqual
+;
 

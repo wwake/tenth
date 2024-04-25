@@ -202,6 +202,25 @@ var test_draw_count
 ;
 
 #####
+
+
+10 array read_stub_array
+var read_stub_index
+
+: read_stub_init
+	read_stub_array swap string_to_array
+	read_stub_index 0 @=
+;
+
+: read_stub
+	read_stub_array read_stub_index @
+	@+
+	read_stub_index @++
+;
+
+: display_stub ;
+
+
 : test_game_loop " test_game_loop " .$^
 	90210
 	"aa" game_init
