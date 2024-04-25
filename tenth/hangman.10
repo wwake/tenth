@@ -413,12 +413,24 @@ var clue_index
 	pop pop
 ;
 
+
+var body_draw_routine
+
+# draw_head
+#   draw_routine col row ... =>  ...
+
 : draw_head
+	body_draw_routine swap @=	# col row
+	2 + 		# col+2 row
+	"O"			# string col row
+	bca			# col row string
+	body_draw_routine @ call	 # [empty]
 ;
 
 
 50 array test_draw_area
 var test_draw_index
+
 
 # test_draw_spy
 # col row string => ...
@@ -455,11 +467,14 @@ var test_draw_index
 	1029 assertEqual
 ;
 
-: test_draw_head
+
+
+: test_draw_head " test_draw_head " .$^
 	6738
+
 	test_draw_index 0 @=
 
-	1 2 "test_draw_spy" "draw_head" call
+	1 2 "test_draw_spy" draw_head
 
 	test_draw_area test_draw_index @ 0 @+=
 	test_draw_area make$ "1-4-O~" assertEqual$
@@ -467,13 +482,34 @@ var test_draw_index
 	6738 assertEqual
 ;
 
+
+# update_wrong_body
+#   draw_routine col row
 : update_wrong_body
+	wrong_guesses make$ length$
+	pop		# really should look up the right drawing routine
+
+	"draw_head"	call	# draw_routine
+
+
 ;
 
-: test_update_wrong_body
+
+: test_update_wrong_body " test_update_wrong_body " .$^
+	# arrange
 	8873
 
+	test_draw_index 0 @=
 
+	wrong_guesses 0 97 @+=	# wrong guess = 'a'
+	wrong_guesses 1 0 @+=		# end string
+
+	# act
+	2 3 "test_draw_spy" update_wrong_body
+
+	# assert
+	test_draw_area test_draw_index @ 0 @+=
+	test_draw_area make$ "2-5-O~" assertEqual$
 
 	8873 assertEqual
 ;
