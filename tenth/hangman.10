@@ -36,12 +36,11 @@
 ;
 
 
-# string ... -> bool string ...
+# string ... -> bool ...
 : isEmpty$
-	dup		# string string
-	head$	# char string' string
-	swap pop # char string
-	==0		# bool string
+	head$	# char string'
+	swap pop # char
+	==0		# bool
 ;
 
 
@@ -260,22 +259,28 @@ var draw_row
 	draw_column swap @=			# row array
 	draw_row swap @=			# array
 
-	while
+	while				# array
 		dup				# array array
 		draw_index @	# int array array
 		@+				# string array
-		isEmpty$ !		# bool string array
+
+		dup				# string string array
+		isEmpty$		# bool string array
+		!				# bool string array
 	do					# string array
 		draw_index @	# index string array
 		draw_row @		# row index string array
 		+				# (index+row) string array
-		draw_column @	# col row string array
+		draw_column @	# col (index+row) string array
 
 		draw_routine @	# routine_name col row string array
 		call			# array
 
 		draw_index @++	# array
 	od
+
+	# string array
+	pop pop
 ;
 
 #######
@@ -314,13 +319,18 @@ var wrong_guesses_index
 	repeat$
 ;
 
+
+# game_over - is game over? ie answer is guessed
+#	In: none
+#
 : game_over
 	clue make$
 	answer make$
 	==$
 ;
 
-: hangman
+# game_display - show game state
+: game_display
 	screen_clear
 
 	title 2 35 "draw_at" draw
@@ -374,4 +384,60 @@ var clue_index
 	@+=		#
 
 	wrong_guesses_index @++
+;
+
+
+# game_loop - given answer, run the game until game is over
+#   readRoutine displayRoutine => ...
+: game_loop
+	while		# read display
+		game_over	# bool read display
+		!			# bool read display
+	do			# read display
+		dup		# read read display
+		call	# ch read display
+		dup		# ch ch read display
+		update_clue	# bool ch read display
+		!			# bool ch read display
+		if			# ch read display
+			update_wrong_guess # read display
+		else		# ch read display
+			pop		# read display
+		fi
+
+		bab		# display read display
+		call	# read display
+	od
+
+	# read display
+	pop pop
+;
+
+
+10 array read_stub_array
+var read_stub_index
+
+: read_stub_init
+	read_stub_array swap string_to_array
+	read_stub_index 0 @=
+;
+
+: read_stub
+	read_stub_array read_stub_index @
+	@+
+	read_stub_index @++
+;
+
+: display_stub ;
+
+: test_game_loop " test_game_loop " .$^
+	90210
+	"aa" game_init
+	"ba" read_stub_init
+
+	"display_stub" "read_stub" game_loop
+
+	clue make$ "aa" assertEqual$
+	wrong_guesses make$ "b" assertEqual$
+	90210 assertEqual
 ;

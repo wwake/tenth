@@ -1,5 +1,7 @@
+
 * Game loop: while not done, read & process
-* Guess a wrong letter - add body parts
+* Draw body parts for wrong guesses
+* Print "game over" (win or lose)
 * Determine if all guesses used
 
 * Read character
@@ -23,8 +25,8 @@ Strings
 * Explore whether we can use relocatable addresses elsewhere [seems ok in data segment]
 Compiler
 
-
 * Detect stack underflow and overflow (data, control)
+* Detect array access out of range
 * Debugging tools for Tenth users?
 * Print secondary
 * Debugging - print stack before each step in start2d; dump secondary contents
@@ -34,10 +36,14 @@ Ideas
 * Fill command for arrays - push n values, then n, then a, write to a[0..n-1]
 * Warn if you use control statements in run mode?
 
+TEST-24-46: 2024-04-25 - Game Loop
+
+
 TEST-24-45: 2024-04-24 - Debug Test Interaction
-* Fixed defect where running test_update_clue_other_letter_match multiple times (fails) - string_to_array wrongly used a pointer as an array
+* Fixed defect where running test_update_clue_other_letter_match multiple times (fails) - string_to_array wrongly used a pointer as an array. (Found problem using Saff squeeze.)
 * Guess a wrong letter - update used letters
 * Print "Guessed:" and wrong letters
+* Started work on the game loop
 
 TEN-24-44: 2024-04-23 - Guess a Letter
 * Guess a letter successfully - multiple occurrences

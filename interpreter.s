@@ -76,6 +76,7 @@ end2d:
 
 
 // call - calls routine corresponding to string at top of stack
+//   routine ... => ...
 //
 call:
 	STD_PROLOG

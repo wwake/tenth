@@ -39,11 +39,14 @@ var test_draw_count
 	pop pop pop 			# ...
 ;
 
-: test_draw
-	" test_draw " .$^
+: test_draw " test_draw " .$^
+	314159
 	test_draw_count 0 @=
+
 	scaffold 10 35 "draw_at_spy" draw
+
 	test_draw_count @ 7 assertEqual
+	314159 assertEqual
 ;
 
 : test_hangman test_title test_draw ;
