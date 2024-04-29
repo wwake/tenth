@@ -301,7 +301,7 @@ var test_draw_index
 	6738 assertEqual
 ;
 
-: test_draw_torso
+: test_draw_torso " test_draw_torso " .$^
 	67389
 
 	test_draw_index 0 @=
@@ -312,8 +312,21 @@ var test_draw_index
 	test_draw_area make$ "2-4-|~3-4-|~" assertEqual$
 
 	67389 assertEqual
-
 ;
+
+: test_draw_left_arm " test_draw_left_arm " .$^
+	6738
+
+	test_draw_index 0 @=
+
+	1 2 "test_draw_spy" draw_left_arm
+
+	test_draw_area test_draw_index @ 0 @+=
+	test_draw_area make$ "2-3-/~" assertEqual$
+
+	6738 assertEqual
+;
+
 
 
 : test_update_wrong_body " test_update_wrong_body " .$^
@@ -378,7 +391,7 @@ var test_draw_sum
 ;
 
 : test_drawing
-test_draw_spy_check test_draw_head test_update_wrong_body test_draw_partial_body_no_errors test_draw_partial_body_with_errors
+test_draw_spy_check test_draw_head test_draw_torso test_draw_left_arm test_update_wrong_body test_draw_partial_body_no_errors test_draw_partial_body_with_errors
 ;
 
 
