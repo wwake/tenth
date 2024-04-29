@@ -1,5 +1,5 @@
 
-* Draw body parts for wrong guesses
+* Draw remaining body parts for wrong guesses
 * Print "game over" (win or lose)
 * Determine if all guesses used
 
@@ -36,8 +36,10 @@ Ideas
 * Warn if you use control statements in run mode?
 
 TEST-24-46: 2024-04-25 - Game Loop
+* Fixed defect in draw (wasn't cleaning up stack right)
 * Game loop: while not done, read & process
-
+* Can draw head for the first failed answer
+* Learned: watch out for missing @ (since there's no pointer type checking); stack on entry to while must match stack at end before "od"; stack on exit at do must match stack after "od"; the stack is effectively global state, so make tests put a guard value before the test body and check it afterwards (this catches junk left on stack); make sure the right stuff is on the stack at routine end. Forth is lower-level than I remembered!
 
 TEST-24-45: 2024-04-24 - Debug Test Interaction
 * Fixed defect where running test_update_clue_other_letter_match multiple times (fails) - string_to_array wrongly used a pointer as an array. (Found problem using Saff squeeze.)

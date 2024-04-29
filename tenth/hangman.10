@@ -18,6 +18,16 @@
 	@=  # ...
 ;
 
+# @-- - decrement variable
+#   variable-addr => ...   [but variable is decremented]
+: @--
+	dup	# var var
+	@	# int var
+	1 - # (int+1) var
+	@=  # ...
+;
+
+
 # dup2 - duplicate top two items of stack
 #   abc => ababc
 : dup2
@@ -298,6 +308,7 @@ var wrong_guesses_index
 # Initialization
 : wrong_guesses_init
 	wrong_guesses_index 0 @=
+	wrong_guesses 0 0 @+=
 ;
 
 # game_init - saves answer string and creates initial clue
@@ -308,7 +319,7 @@ var wrong_guesses_index
 : game_init			# string
 	wrong_guesses_init
 
-	dup							# string string
+	dup				# string string
 	answer swap		# string answer string
 
 	string_to_array	# string [and builds the answer array]
@@ -418,7 +429,6 @@ var body_draw_routine
 
 # draw_head
 #   draw_routine col row ... =>  ...
-
 : draw_head
 	body_draw_routine swap @=	# col row
 	2 + 		# col+2 row
@@ -430,7 +440,6 @@ var body_draw_routine
 
 50 array test_draw_area
 var test_draw_index
-
 
 # test_draw_spy
 # col row string => ...
@@ -490,8 +499,6 @@ var test_draw_index
 	pop		# really should look up the right drawing routine
 
 	"draw_head"	call	# draw_routine
-
-
 ;
 
 
@@ -514,3 +521,70 @@ var test_draw_index
 	8873 assertEqual
 ;
 
+# draw_partial_body - calls routines in the array, up to but not including the given count
+#   In: array count draw_routine col row
+var drawing_array
+var draw_count
+var draw_routine
+
+: draw_partial_body
+	drawing_array swap @=	# count draw_routine col row
+	draw_count swap @=		# draw_routine col row
+	draw_routine swap @=	# col row
+
+	while		# col row
+		draw_count @
+		0
+		!=		# bool col row
+	do			# col row
+		draw_count @--
+		dup2	# col row col row
+		draw_routine @	# draw-routine col row col row
+		drawing_array @ draw_count @ @+	# part-routine draw_routine col row col row
+		call	# col row
+	od
+			# col row
+	pop pop # [empty]
+;
+
+5 array test_partial_array
+
+var test_draw_sum
+
+: test_empty_draw_routine ;
+
+: test_draw_helper1 pop pop pop 111 bca ;
+
+: test_draw_helper2 pop pop pop 222 bca ;
+
+: test_draw_partial_body_no_errors " test_draw_partial_body_no_errors " .$^
+	# arrange
+	22202
+	test_draw_sum 0 @=
+	test_partial_array 0 "test_draw_helper1" @+=
+	test_partial_array 1 "dont_call_this" @+=
+
+	# act
+	2 3 "test_empty_draw_routine" 0 test_partial_array draw_partial_body
+
+	# assert
+	# no draw_helper was called
+	22202 assertEqual
+;
+
+: test_draw_partial_body_with_errors " test_draw_partial_body_with_errors " .$^
+	# arrange
+	22203
+	test_draw_sum 0 @=
+	test_partial_array 0 "test_draw_helper1" @+=
+	test_partial_array 1 "test_draw_helper2" @+=
+	test_partial_array 2 "dont_call_this" @+=
+
+	# act
+	2 3 "test_empty_draw_routine" 2 test_partial_array draw_partial_body
+
+	# assert
+	111 assertEqual
+	222 assertEqual
+	22203 assertEqual
+;
