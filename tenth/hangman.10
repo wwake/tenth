@@ -449,6 +449,8 @@ var draw_routine
 # game_loop - given answer, run the game until game is over
 #   readRoutine displayRoutine => ...
 : game_loop
+	bab call	# read display
+	
 	while		# read display
 		game_over	# bool read display
 		!			# bool read display
