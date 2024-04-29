@@ -291,6 +291,63 @@ var draw_row
 	pop pop
 ;
 
+
+
+var body_draw_routine
+
+# draw_head
+#   draw_routine col row ... =>  ...
+: draw_head
+	body_draw_routine swap @=	# col row
+	2 + 		# col+2 row
+	"O"			# string col row
+	bca			# col row string
+	body_draw_routine @ call	 # [empty]
+;
+
+
+# draw_partial_body - calls routines in the array, up to but not including the given count
+#   In: array count draw_routine col row
+var drawing_array
+var draw_count
+var draw_routine
+
+: draw_partial_body
+	drawing_array swap @=	# count draw_routine col row
+	draw_count swap @=		# draw_routine col row
+	draw_routine swap @=	# col row
+
+	while		# col row
+		draw_count @
+		0
+		!=		# bool col row
+	do			# col row
+		draw_count @--
+		dup2	# col row col row
+		draw_routine @	# draw-routine col row col row
+		drawing_array @ draw_count @ @+	# part-routine draw_routine col row col row
+		call	# col row
+	od
+			# col row
+	pop pop # [empty]
+;
+
+
+12 array draw_body_array
+
+: draw_body_init
+	draw_body_array 0 "draw_head" @+=
+	draw_body_array 1 "draw_head" @+=
+	draw_body_array 2 "draw_head" @+=
+	draw_body_array 3 "draw_head" @+=
+	draw_body_array 4 "draw_head" @+=
+	draw_body_array 5 "draw_head" @+=
+	draw_body_array 6 "draw_head" @+=
+	draw_body_array 7 "draw_head" @+=
+	draw_body_array 8 "draw_head" @+=
+	draw_body_array 9 "draw_head" @+=
+;
+
 #######
 
 # Game State
@@ -316,6 +373,7 @@ var wrong_guesses_index
 #
 : game_init			# string
 	wrong_guesses_init
+	draw_body_init
 
 	dup				# string string
 	answer swap		# string answer string
@@ -347,6 +405,8 @@ var wrong_guesses_index
 	clue make$ 4 35 draw_at
 
 	scaffold 6 35 "draw_at" draw
+
+	8 38 "draw_at" wrong_guesses make$ length$ draw_body_array draw_partial_body
 
 	"Wrong guesses: " 15 20 draw_at
 
@@ -397,46 +457,6 @@ var clue_index
 
 
 
-var body_draw_routine
-
-# draw_head
-#   draw_routine col row ... =>  ...
-: draw_head
-	body_draw_routine swap @=	# col row
-	2 + 		# col+2 row
-	"O"			# string col row
-	bca			# col row string
-	body_draw_routine @ call	 # [empty]
-;
-
-
-# draw_partial_body - calls routines in the array, up to but not including the given count
-#   In: array count draw_routine col row
-var drawing_array
-var draw_count
-var draw_routine
-
-: draw_partial_body
-	drawing_array swap @=	# count draw_routine col row
-	draw_count swap @=		# draw_routine col row
-	draw_routine swap @=	# col row
-
-	while		# col row
-		draw_count @
-		0
-		!=		# bool col row
-	do			# col row
-		draw_count @--
-		dup2	# col row col row
-		draw_routine @	# draw-routine col row col row
-		drawing_array @ draw_count @ @+	# part-routine draw_routine col row col row
-		call	# col row
-	od
-			# col row
-	pop pop # [empty]
-;
-
-
 # update_wrong_body
 #   draw_routine col row
 : update_wrong_body
@@ -450,7 +470,7 @@ var draw_routine
 #   readRoutine displayRoutine => ...
 : game_loop
 	bab call	# read display
-	
+
 	while		# read display
 		game_over	# bool read display
 		!			# bool read display
@@ -462,12 +482,6 @@ var draw_routine
 		!			# bool ch read display
 		if			# ch read display
 			update_wrong_guess # read display
-
-			#bab		# display read display
-			#17 35	# col row display | read display
-			#cab		# display col row | read display
-			#wrong_guesses make$ length$	# count display col row | read display
-
 		else		# ch read display
 			pop		# read display
 		fi
@@ -480,3 +494,10 @@ var draw_routine
 	pop pop
 ;
 
+# hangman - run the game
+#   Input: top of stack = answer
+#   Result: empty stack
+: hangman
+	game_init
+	"game_display" "getc" game_loop
+;
