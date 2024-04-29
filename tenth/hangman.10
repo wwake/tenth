@@ -306,6 +306,35 @@ var body_draw_routine
 ;
 
 
+: draw_torso
+	body_draw_routine swap @=	# col row
+	dup2		# col row col row
+	2 + 		# col+2 row col row
+	swap 1 + swap # col+2 row+1 col row
+	"|"			# string col row col row
+	bca			# col row string col row
+	body_draw_routine @ call	 # col row
+
+	2 + 		# col+2 row
+	swap 2 + swap # col+2 row+2
+	"|"			# string col row
+	bca			# col row string
+	body_draw_routine @ call	 # col row
+ ;
+
+: test_draw_torso
+	67389
+
+	test_draw_index 0 @=
+
+	1 2 "test_draw_spy" draw_torso
+
+	test_draw_area test_draw_index @ 0 @+=
+	test_draw_area make$ "2-4-|~3-4-|~" assertEqual$
+
+	67389 assertEqual
+;
+
 # draw_partial_body - calls routines in the array, up to but not including the given count
 #   In: array count draw_routine col row
 var drawing_array
@@ -337,7 +366,7 @@ var draw_routine
 
 : draw_body_init
 	draw_body_array 0 "draw_head" @+=
-	draw_body_array 1 "draw_head" @+=
+	draw_body_array 1 "draw_torso" @+=
 	draw_body_array 2 "draw_head" @+=
 	draw_body_array 3 "draw_head" @+=
 	draw_body_array 4 "draw_head" @+=
