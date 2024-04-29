@@ -1,5 +1,6 @@
-
-* Draw remaining body parts for wrong guesses
+* Try the game
+* Draw individual body parts
+* Make game over detect too many guesses
 * Print "game over" (win or lose)
 * Determine if all guesses used
 
@@ -34,6 +35,9 @@ Debugging
 Ideas
 * Fill command for arrays - push n values, then n, then a, write to a[0..n-1]
 * Warn if you use control statements in run mode?
+
+TEST-24-47: 2024-04-29 - Drawing the Body
+* Draw remaining body parts for wrong guesses
 
 TEST-24-46: 2024-04-25 - Game Loop
 * Fixed defect in draw (wasn't cleaning up stack right)

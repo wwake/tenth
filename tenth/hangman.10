@@ -66,31 +66,39 @@
 	dup2	# c2 c1 c2 c1 s1' s2'
 	dup2	# c2 c1 c2 c1 c2 c1 s1' s2'
 
-	while
-		==
-		==0
-		!
-		&
+	while	# c2 c1 c2 c1 c2 c1 s1' s2'
+		==	# bool c2 c1 c2 c1 s1' s2'
+		bca	# c2 c1 bool c2 c1 s1' s2'
+		pop # c1 bool c2 c1 s1' s2'
+		==0	# bool bool c2 c1 s1' s2'
+		!	# bool bool c2 c1 s1' s2'
+		&	# bool c2 c1 s1' s2'
 	do
 		# characters are == and not 0
-		# c1 c2 c1 s1' s2'
+		# c2 c1 s1' s2'
 
-		pop pop pop	# s1' s2'
+		pop pop	# s1' s2'
 		head2$		# c1 c2 s1' s2'
 		dup2
 		dup2		# c2 c1 c2 c1 c2 c1 s1' s2'
 	od
 
-	# c1 c2 c1 s1' s2'
-	pop  		# c2 c1 s1' s2'
+	# c2 c1 s1' s2'
 
-	==
+	==			# bool s1' s2'
 
-	cba
-	pop pop
+	cba			# s2' s1' bool
+	pop pop		# bool
 ;
 
 
+: test_equal_string_underscores
+	7892
+	"f_sh_" "fishy" ==$
+
+	0 assertEqual
+	7892 assertEqual
+;
 
 var s2a_index
 var s2a_array
@@ -335,9 +343,13 @@ var wrong_guesses_index
 #	In: none
 #
 : game_over
+"game_over " .$^
 	clue make$
+.$
 	answer make$
+.$
 	==$
+... nl
 ;
 
 # game_display - show game state
@@ -412,6 +424,12 @@ var clue_index
 		!			# bool ch read display
 		if			# ch read display
 			update_wrong_guess # read display
+
+			#bab		# display read display
+			#17 35	# col row display | read display
+			#cab		# display col row | read display
+			#wrong_guesses make$ length$	# count display col row | read display
+
 		else		# ch read display
 			pop		# read display
 		fi
