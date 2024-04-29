@@ -271,6 +271,9 @@ var test_draw_index
 	test_draw_index @++
 
 	test_draw_area test_draw_index @ 126 @+=	# write '~'
+	test_draw_index @++
+
+	test_draw_area test_draw_index @ 0 @+=		# write \0
 ;
 
 : test_draw_spy_check " test_draw_spy_check " .$^
