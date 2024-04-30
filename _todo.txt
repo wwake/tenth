@@ -1,4 +1,3 @@
-* Make game over detect too many guesses
 * Print "game over" (win or lose)
 * Determine if all guesses used
 
@@ -37,6 +36,7 @@ Ideas
 TEST-24-48: 2024-04-30 - Wrap Up
 * Start at "Redo this" in draw_body_common - extract common drawing method
 * Draw remaining body parts
+* Make game over detect too many guesses
 
 TEST-24-47: 2024-04-29 - Drawing the Body
 * Draw remaining body parts for wrong guesses

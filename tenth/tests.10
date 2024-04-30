@@ -185,7 +185,7 @@ var test_draw_count
 	37172 assertEqual
 ;
 
-: test_only_9_wrong_hasnt_lost_yet
+: test_only_9_wrong_hasnt_lost_yet " test_only_9_wrong_hasnt_lost_yet " .$^
 	6362
 
 	answer "umbrella" string_to_array	# provide answer
@@ -198,7 +198,7 @@ var test_draw_count
 	6362 assertEqual
 ;
 
-: test_10_wrong_makes_game_over
+: test_10_wrong_makes_game_over " test_10_wrong_makes_game_over " .$^
 	6362
 
 	answer "arbitrary" string_to_array	# provide answer
@@ -211,7 +211,7 @@ var test_draw_count
 	6362 assertEqual
 ;
 
-: test_11_wrong_still_has_game_over
+: test_11_wrong_still_has_game_over " test_11_wrong_still_has_game_over " .$^
 	6362
 
 	answer "unusual" string_to_array	# provide answer
@@ -224,7 +224,45 @@ var test_draw_count
 	6362 assertEqual
 ;
 
-: test_calling_string_to_array_multiple_times_doesnt_crash
+: test_game_state_empty_if_game_not_over " test_game_state_empty_if_game_not_over " .$^
+	1829
+	answer "oddly" string_to_array	# empty [answer set]
+	2 wrong_guesses 65 repeat$		# empty [wrong_guesses_set]
+
+	game_state		# string
+
+	"" assertEqual$
+	1829 assertEqual
+;
+
+: test_game_state_win_if_you_win " test_game_state_win_if_you_win " .$^
+	1892
+	answer "o" string_to_array	# empty [answer set]
+	clue "o" string_to_array	# empty [clue set]
+
+	game_state		# string
+
+	"GAME OVER - YOU WIN!!" assertEqual$
+	1892 assertEqual
+;
+
+: test_game_state_lose_if_you_lose " test_game_state_lose_if_you_lose " .$^
+	1895
+	answer "olive" string_to_array	# empty [answer set]
+	10 wrong_guesses 65 repeat$		# empty [wrong_guesses_set]
+
+	game_state		# string
+
+	"GAME OVER - YOU LOSE:(" assertEqual$
+	1895 assertEqual
+;
+
+: test_game_over test_only_9_wrong_hasnt_lost_yet test_10_wrong_makes_game_over test_11_wrong_still_has_game_over test_game_state_empty_if_game_not_over test_game_state_win_if_you_win test_game_state_lose_if_you_lose
+
+nl
+;
+
+: test_calling_string_to_array_multiple_times_doesnt_crash " test_calling_string_to_array_multiple_times_doesnt_crash " .$^
 	34127
 	answer "canal"
 	string_to_array
@@ -442,5 +480,6 @@ test_draw_spy_check test_draw_head test_draw_torso test_draw_left_arm test_updat
 	test_length_of_strings
 	test_s2a_tests
 	test_drawing
+	test_game_over
 	nl
 ;

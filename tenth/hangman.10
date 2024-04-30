@@ -517,6 +517,22 @@ var wrong_guesses_index
 	|
 ;
 
+# game_state - string showing win, lost, or neither
+#   ... => string ...
+: game_state
+	game_over
+	if
+		you_win
+		if
+			"GAME OVER - YOU WIN!!"
+		else
+			"GAME OVER - YOU LOSE:("
+		fi
+	else
+		""
+	fi
+;
+
 # game_display - show game state
 : game_display
 	screen_clear
@@ -533,7 +549,9 @@ var wrong_guesses_index
 
 	wrong_guesses make$ 15 35 draw_at
 
-	nl nl nl
+	game_state 9 47 draw_at
+
+	"" 24 1 draw_at
 ;
 
 
