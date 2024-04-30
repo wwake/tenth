@@ -27,9 +27,11 @@ loadAddress:
 
 
 // make_passive_word - read word and make passive word
-// Inputs: none [secondary space is implicit]
+// Inputs: x0=size of array (1 for a simple variable) [secondary space is implicit]
 make_passive_word:
 	STD_PROLOG
+	str x28, [sp, #8]
+	mov x28, x0
 
 	bl readWord
 	bl define_word
@@ -39,8 +41,8 @@ make_passive_word:
 
 	STORE_SEC xzr
 
+	ldr x28, [sp, #8]
 	STD_EPILOG
-
 	ret
 
 // Variable - meta word that takes the following name and makes a
@@ -49,6 +51,7 @@ make_passive_word:
 variable:
 	STD_PROLOG
 
+	mov x0, #1
 	bl make_passive_word
 
 	STD_EPILOG
@@ -77,20 +80,23 @@ assign:
 //
 array:
 	STD_PROLOG
+	str x28, [sp, #8]
+
+	DATA_POP x28	// number of cells
 
 	bl make_passive_word	// make header
 
-	DATA_POP x0		// number of cells
-
 	// write n-1 zeroes to secondary
+
 array_loop:
-		sub x0, x0, #1
-		cmp x0, #0
+		sub x28, x28, #1
+		cmp x28, #0
 		b.eq array_after
 		STORE_SEC xzr
 	b array_loop
 
 array_after:
+	ldr x28, [sp, #8]
 	STD_EPILOG
 	ret
 
