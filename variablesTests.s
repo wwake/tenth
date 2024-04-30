@@ -48,7 +48,7 @@ TEST_START loadAddress_pushes_address_of_secondary
 	// Assert:
 	DATA_POP x0
 	LOAD_ADDRESS x1, L_test_address
-	add x1, x1, #8
+	add x1, x1, #16
 	bl assertEqual
 TEST_END
 
@@ -109,10 +109,10 @@ TEST_START variable_writes_header_and_value_to_secondary
 	bl assertEqualStrings
 
 	// Assert: SEC_SPACE was adjusted to the right boundary
-	// That's 8 bytes for the string, 3*8 bytes for the header cells, 8 bytes for the variable initial value
+	// That's 8 bytes for the string, 3*8 bytes for the header cells, 16 bytes for the variable count (1) and initial value
 	mov x0, SEC_SPACE
 	LOAD_ADDRESS x1, L_test_secondary_area
-	add x1, x1, #40
+	add x1, x1, #48
 	bl assertEqual
 
 	// Assert: First cell is pointer to old dictionary
@@ -138,8 +138,13 @@ TEST_START variable_writes_header_and_value_to_secondary
 	LOAD_ADDRESS x1, loadAddress
 	bl assertEqual
 
-	// Assert: Fourth cell contains initial value (0)
+	// Assert: Fourth cell contains count (1)
 	ldr x0, [SYS_DICT, #24]
+	mov x1, #1
+	bl assertEqual
+
+	// Assert: Fourth cell contains initial value (0)
+	ldr x0, [SYS_DICT, #32]
 	mov x1, #0
 	bl assertEqual
 TEST_END
@@ -239,10 +244,10 @@ TEST_START array_writes_header_and_values_to_secondary
 	bl assertEqualStrings
 
 	// Assert: SEC_SPACE was adjusted to the right boundary
-	// That's 8 bytes for the string, 3*8 bytes for the header cells, 3*8 bytes for the variable initial value
+	// That's 8 bytes for the string, 3*8 bytes for the header cells, 8 bytes for the count, and 3*8 bytes for the variable initial value
 	mov x0, SEC_SPACE
 	LOAD_ADDRESS x1, L_test_secondary_area
-	add x1, x1, #56
+	add x1, x1, #64
 	bl assertEqual
 
 	// Assert: First cell is pointer to old dictionary
@@ -268,18 +273,23 @@ TEST_START array_writes_header_and_values_to_secondary
 	LOAD_ADDRESS x1, loadAddress
 	bl assertEqual
 
-	// Assert: Fourth cell contains initial value (0)
+	// Assert: Fourth cell contains count (3)
 	ldr x0, [SYS_DICT, #24]
-	mov x1, #0
+	mov x1, #3
 	bl assertEqual
 
-	// Assert: Fifth cell contains initial value (0)
+	// Assert: Fifth cell contains initial value for array[0] = 0
 	ldr x0, [SYS_DICT, #32]
 	mov x1, #0
 	bl assertEqual
 
-	// Assert: Sixth cell contains initial value (0)
+	// Assert: Sixth cell contains initial value array[1] = 0
 	ldr x0, [SYS_DICT, #40]
+	mov x1, #0
+	bl assertEqual
+
+	// Assert: Seventh cell contains initial value array[2] = 0
+	ldr x0, [SYS_DICT, #48]
 	mov x1, #0
 	bl assertEqual
 TEST_END

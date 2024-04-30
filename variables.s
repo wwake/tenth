@@ -21,7 +21,7 @@
 // Input: x0 = address of secondary
 //
 loadAddress:
-	add x0, x0, #8
+	add x0, x0, #16		// skip over size value
 	DATA_PUSH x0
 	ret
 
@@ -39,6 +39,7 @@ make_passive_word:
 	LOAD_ADDRESS x0, loadAddress
 	STORE_SEC x0
 
+	STORE_SEC x28
 	STORE_SEC xzr
 
 	ldr x28, [sp, #8]
@@ -83,6 +84,7 @@ array:
 	str x28, [sp, #8]
 
 	DATA_POP x28	// number of cells
+	mov x0, x28
 
 	bl make_passive_word	// make header
 
