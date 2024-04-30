@@ -492,14 +492,26 @@ var wrong_guesses_index
 	repeat$
 ;
 
-
-# game_over - is game over? ie answer is guessed
-#	In: none
-#
-: game_over
+# you_win - true iff your guesses match the answer
+#   ... => bool ...
+: you_win
 	clue make$
 	answer make$
 	==$
+;
+
+# you_lose - true iff you run out of guesses
+: you_lose
+	0
+;
+
+# game_over - is game over? ie answer is guessed
+#	In: none => bool
+#
+: game_over
+	you_win
+	you_lose
+	|
 ;
 
 # game_display - show game state
