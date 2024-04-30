@@ -1,13 +1,5 @@
-* Print "game over" (win or lose)
-* Determine if all guesses used
+* Detect array access out of range
 
-* Read character
-  - if already used, ignore it
-  - if in word, place it (in all places)
-  - if not in word, draw next body part and add guess to list
-* If word is guessed - you win
-* If out of body parts, you lose
-Hangman
 
 * Redirected input - gets error at end
 * Why does unix_read have parameters?
@@ -20,23 +12,32 @@ Input
 Strings
 
 * Explore whether we can use relocatable addresses elsewhere [seems ok in data segment]
+* Warn if you use control statements in run mode?
 Compiler
 
 * Detect stack underflow and overflow (data, control)
-* Detect array access out of range
 * Debugging tools for Tenth users?
 * Print secondary
 * Debugging - print stack before each step in start2d; dump secondary contents
 Debugging
 
-Ideas
-* Fill command for arrays - push n values, then n, then a, write to a[0..n-1]
-* Warn if you use control statements in run mode?
-
 TEST-24-48: 2024-04-30 - Wrap Up
+Hangman
 * Start at "Redo this" in draw_body_common - extract common drawing method
 * Draw remaining body parts
 * Make game over detect too many guesses
+* Determine if all guesses used
+* Print "game over" (win or lose)
+
+Hangman rules
+* Read character
+  - if already used, ignore it
+  - if in word, place it (in all places)
+  - if not in word, draw next body part and add guess to list
+* If word is guessed - you win
+* If out of body parts, you lose
+
+
 
 TEST-24-47: 2024-04-29 - Drawing the Body
 * Draw remaining body parts for wrong guesses

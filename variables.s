@@ -26,10 +26,9 @@ loadAddress:
 	ret
 
 
-// Variable - meta word that takes the following name and makes a
-//   passive word for it.
-//
-variable:
+// make_passive_word - read word and make passive word
+// Inputs: none [secondary space is implicit]
+make_passive_word:
 	STD_PROLOG
 
 	bl readWord
@@ -39,6 +38,18 @@ variable:
 	STORE_SEC x0
 
 	STORE_SEC xzr
+
+	STD_EPILOG
+
+	ret
+
+// Variable - meta word that takes the following name and makes a
+//   passive word for it.
+//
+variable:
+	STD_PROLOG
+
+	bl make_passive_word
 
 	STD_EPILOG
 	ret
@@ -67,7 +78,7 @@ assign:
 array:
 	STD_PROLOG
 
-	bl variable		// make header
+	bl make_passive_word	// make header
 
 	DATA_POP x0		// number of cells
 
