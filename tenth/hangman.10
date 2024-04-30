@@ -27,7 +27,6 @@
 	@=  # ...
 ;
 
-
 # dup2 - duplicate top two items of stack
 #   abc => ababc
 : dup2
@@ -44,7 +43,6 @@
    . " " .$^ bca
    nl
 ;
-
 
 # string ... -> bool ...
 : isEmpty$
@@ -293,16 +291,35 @@ var draw_row
 
 
 
+
+# draw_body_common
+#    string draw_routine col_offset row_offset col row ... => ...
+
+var body_string
 var body_draw_routine
+
+: draw_body_common
+	body_string swap @=			# col_offset row_offset col row
+	body_draw_routine swap @=	# string col_offset row_offset col row
+
+	cab							# col col_offset row_offset row
+	+							# col+col_offset row_offset row
+	bca							# row_offset row col+col_offset
+	+							# row+row_offset col+col_offset
+	swap						# col+col_offset row+row_offset
+	body_string @				# string col' row'
+	bca							# col' row' string
+
+	body_draw_routine @ call	# [empty]
+;
 
 # draw_head
 #   draw_routine col row ... =>  ...
 : draw_head
-	body_draw_routine swap @=	# col row
-	2 + 		# col+2 row
-	"O"			# string col row
-	bca			# col row string
-	body_draw_routine @ call	 # [empty]
+	0 2		# col_offset row_offset draw_routine col row
+	cab		# draw_routine col_offset row_offset col row
+	"O"		# string draw_routine col_offset row_offset col row
+	draw_body_common	# empty
 ;
 
 # draw_torso
@@ -326,12 +343,73 @@ var body_draw_routine
 # draw_left_arm
 #   draw_routine col row ... => ...
 : draw_left_arm
-	body_draw_routine swap @=	# col row
-	1 + 		# col+1 row
-	swap 1 + swap 	# col+1 row+1
-	"/"			# string col row
-	bca			# col row string
-	body_draw_routine @ call	 # [empty]
+	1 1		# col_offset row_offset draw_routine col row
+	cab		# draw_routine col_offset row_offset col row
+	"/"		# string draw_routine col_offset row_offset col row
+	draw_body_common	# empty
+;
+
+# draw_right_arm
+#   draw_routine col row ... => ...
+: draw_right_arm
+	1 3		# col_offset row_offset draw_routine col row
+	cab		# draw_routine col_offset row_offset col row
+	"\"		# string draw_routine col_offset row_offset col row
+	draw_body_common	# empty
+;
+
+# draw_left_hand
+#   draw_routine col row ... => ...
+: draw_left_hand
+	1 0		# col_offset row_offset draw_routine col row
+	cab		# draw_routine col_offset row_offset col row
+	"_"		# string draw_routine col_offset row_offset col row
+	draw_body_common	# empty
+;
+
+# draw_right_hand
+#   draw_routine col row ... => ...
+: draw_right_hand
+	1 4		# col_offset row_offset draw_routine col row
+	cab		# draw_routine col_offset row_offset col row
+	"_"		# string draw_routine col_offset row_offset col row
+	draw_body_common	# empty
+;
+
+# draw_left_leg
+#   draw_routine col row ... => ...
+: draw_left_leg
+	3 1		# col_offset row_offset draw_routine col row
+	cab		# draw_routine col_offset row_offset col row
+	"/"		# string draw_routine col_offset row_offset col row
+	draw_body_common	# empty
+;
+
+# draw_right_leg
+#   draw_routine col row ... => ...
+: draw_right_leg
+	3 3		# col_offset row_offset draw_routine col row
+	cab		# draw_routine col_offset row_offset col row
+	"\"		# string draw_routine col_offset row_offset col row
+	draw_body_common	# empty
+;
+
+# draw_left_foot
+#   draw_routine col row ... => ...
+: draw_left_foot
+	3 0		# col_offset row_offset draw_routine col row
+	cab		# draw_routine col_offset row_offset col row
+	"_"		# string draw_routine col_offset row_offset col row
+	draw_body_common	# empty
+;
+
+# draw_right_foot
+#   draw_routine col row ... => ...
+: draw_right_foot
+	3 4		# col_offset row_offset draw_routine col row
+	cab		# draw_routine col_offset row_offset col row
+	"_"		# string draw_routine col_offset row_offset col row
+	draw_body_common	# empty
 ;
 
 # draw_partial_body - calls routines in the array, up to but not including the given count
@@ -367,13 +445,13 @@ var draw_routine
 	draw_body_array 0 "draw_head" @+=
 	draw_body_array 1 "draw_torso" @+=
 	draw_body_array 2 "draw_left_arm" @+=
-	draw_body_array 3 "draw_head" @+=
-	draw_body_array 4 "draw_head" @+=
-	draw_body_array 5 "draw_head" @+=
-	draw_body_array 6 "draw_head" @+=
-	draw_body_array 7 "draw_head" @+=
-	draw_body_array 8 "draw_head" @+=
-	draw_body_array 9 "draw_head" @+=
+	draw_body_array 3 "draw_right_arm" @+=
+	draw_body_array 4 "draw_left_hand" @+=
+	draw_body_array 5 "draw_right_hand" @+=
+	draw_body_array 6 "draw_left_leg" @+=
+	draw_body_array 7 "draw_right_leg" @+=
+	draw_body_array 8 "draw_left_foot" @+=
+	draw_body_array 9 "draw_right_foot" @+=
 ;
 
 #######

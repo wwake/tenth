@@ -1,5 +1,6 @@
-* Try the game
-* Draw individual body parts
+
+* Start at "Redo this" in draw_body_common - extract common drawing method
+* Draw remaining body parts
 * Make game over detect too many guesses
 * Print "game over" (win or lose)
 * Determine if all guesses used
@@ -38,6 +39,11 @@ Ideas
 
 TEST-24-47: 2024-04-29 - Drawing the Body
 * Draw remaining body parts for wrong guesses
+* Fix defect in ==$ (was comparing boolean to 0 instead of character)
+* Try the game - make a "hangman" method
+* Move tests over - fix ones failing because of initialization not clearing things
+* Draw torso and left arm
+* Started extracting a common method
 
 TEST-24-46: 2024-04-25 - Game Loop
 * Fixed defect in draw (wasn't cleaning up stack right)

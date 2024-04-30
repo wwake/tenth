@@ -327,8 +327,6 @@ var test_draw_index
 	6738 assertEqual
 ;
 
-
-
 : test_update_wrong_body " test_update_wrong_body " .$^
 	# arrange
 	8873
