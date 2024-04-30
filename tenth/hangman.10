@@ -502,7 +502,10 @@ var wrong_guesses_index
 
 # you_lose - true iff you run out of guesses
 : you_lose
-	0
+	wrong_guesses make$	# string
+	length$				# length
+	10					# limit length
+	>=					# bool
 ;
 
 # game_over - is game over? ie answer is guessed

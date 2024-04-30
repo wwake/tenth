@@ -185,6 +185,45 @@ var test_draw_count
 	37172 assertEqual
 ;
 
+: test_only_9_wrong_hasnt_lost_yet
+	6362
+
+	answer "umbrella" string_to_array	# provide answer
+	9 wrong_guesses 65		# 'a' wrong_guesses count
+	repeat$					# [empty]
+
+	game_over				# bool
+
+	0 assertEqual
+	6362 assertEqual
+;
+
+: test_10_wrong_makes_game_over
+	6362
+
+	answer "arbitrary" string_to_array	# provide answer
+	10 wrong_guesses 65		# 'a' wrong_guesses count
+	repeat$					# [empty]
+
+	game_over				# bool
+
+	1 assertEqual
+	6362 assertEqual
+;
+
+: test_11_wrong_still_has_game_over
+	6362
+
+	answer "unusual" string_to_array	# provide answer
+	11 wrong_guesses 65		# 'a' wrong_guesses count
+	repeat$					# [empty]
+
+	game_over				# bool
+
+	1 assertEqual
+	6362 assertEqual
+;
+
 : test_calling_string_to_array_multiple_times_doesnt_crash
 	34127
 	answer "canal"
