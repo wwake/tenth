@@ -1,5 +1,6 @@
-* Detect array access out of range
 
+
+"Future" stories -
 
 * Redirected input - gets error at end
 * Why does unix_read have parameters?
@@ -15,11 +16,14 @@ Strings
 * Warn if you use control statements in run mode?
 Compiler
 
+* Detect array access out of range - call a global handler
 * Detect stack underflow and overflow (data, control)
 * Debugging tools for Tenth users?
 * Print secondary
 * Debugging - print stack before each step in start2d; dump secondary contents
 Debugging
+
+--------------------------------
 
 TEST-24-48: 2024-04-30 - Wrap Up
 Hangman
@@ -29,6 +33,9 @@ Hangman
 * Determine if all guesses used
 * Print "game over" (win or lose)
 
+Runtime
+* Detect array access out of range - substitutes index 0 for out of bound value
+
 Hangman rules
 * Read character
   - if already used, ignore it
@@ -37,6 +44,7 @@ Hangman rules
 * If word is guessed - you win
 * If out of body parts, you lose
 
+THAT'S A WRAP!!!
 
 
 TEST-24-47: 2024-04-29 - Drawing the Body

@@ -18,6 +18,8 @@ _start:
 	bl loadAddress_pushes_address_of_secondary
 	bl variable_writes_header_and_value_to_secondary
 	bl at_replaces_variable_with_value
+	bl array_at_index_too_low_accesses_at_index0
+	bl array_at_index_too_big_accesses_at_index0
 	bl assign_stores_a_at_b
 
 	bl array_writes_header_and_values_to_secondary
@@ -152,7 +154,9 @@ TEST_END
 
 .data
 .p2align 3
+	.quad 71713500
 
+	.quad 3			// size of array
 L_at_variable:
 	.quad 42
 	.quad 2
@@ -218,10 +222,10 @@ TEST_END
 // 8: ptr to previous dictionary
 // 16: ptr to named string
 // 24: ptr to routine to run
-// 32: 0 = default value
-// 40: 0
+// 32: 3 = count
+// 40: 0 = defined value
 // 48: 0
-// 56:
+// 56: 0
 
 
 TEST_START array_writes_header_and_values_to_secondary
@@ -322,6 +326,64 @@ TEST_START array_at_replaces_variable_and_index_with_value
 	mov x1, #999
 	bl assertEqual
 TEST_END
+
+
+TEST_START array_at_index_too_low_accesses_at_index0
+	// Arrange
+	bl data_stack_init
+
+	mov x0, #999
+	DATA_PUSH x0
+
+	LOAD_ADDRESS x0, L_at_variable
+	DATA_PUSH x0
+
+	mov x1, #-1
+	DATA_PUSH x1
+
+	// Act
+	bl array_at
+
+	// Assert
+		// Check that returned value is right
+	DATA_POP x0
+	mov x1, #42		// out of range => array[0]
+	bl assertEqual
+
+		// Check that right values were popped
+	DATA_POP x0
+	mov x1, #999
+	bl assertEqual
+TEST_END
+
+TEST_START array_at_index_too_big_accesses_at_index0
+	// Arrange
+	bl data_stack_init
+
+	mov x0, #999
+	DATA_PUSH x0
+
+	LOAD_ADDRESS x0, L_at_variable
+	DATA_PUSH x0
+
+	mov x1, #500
+	DATA_PUSH x1
+
+	// Act
+	bl array_at
+
+	// Assert
+		// Check that returned value is right
+	DATA_POP x0
+	mov x1, #42		// out of range => array[0]
+	bl assertEqual
+
+		// Check that right values were popped
+	DATA_POP x0
+	mov x1, #999
+	bl assertEqual
+TEST_END
+
 
 
 TEST_START array_assign_stores_a_at_b_indexed_by_c

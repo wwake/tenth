@@ -108,6 +108,13 @@ array_after:
 array_at:
 	DATA_POP x1  // index
 	DATA_POP x2  // variable address
+	sub x3, x2, #8			// count precedes array
+	ldr x3, [x3]	// count
+	sub x3, x3, #1
+	cmp x1, x3
+	b.ls L_access_array
+		mov x1, 0
+L_access_array:
 	ldr x0, [x2, x1, lsl #3]
 	DATA_PUSH x0
 	ret
